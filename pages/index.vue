@@ -1,8 +1,8 @@
 <template>
   <div class="min-h-screen flex">
     <!-- Left Section -->
-    <div class="w-1/2 flex justify-center items-center bg-white">
-      <div class="w-2/4">
+    <div class="lg:w-1/2 w-full flex justify-center items-center bg-white">
+      <div class="lg:w-2/4">
         <div class="flex flex-col items-center">
           <div class="">
             <svg width="51" height="82" viewBox="0 0 51 82" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -48,20 +48,24 @@
         </div>
       </div>
     </div>
-    
-    <!-- Right Section -->
-    <div class="w-1/2 bg-black text-white flex justify-center items-center relative">
-      <!-- <Carousel :images="carouselImages" />
-      <div class="absolute bottom-8 left-8 text-left">
-        <h2 class="text-xl font-semibold">Personalized Property Discovery</h2>
-        <p class="mt-2">Find your dream property with ease! Our search matches you with homes tailored to your preferences.</p>
-      </div> -->
+
+    <!-- <div class="w-1/2 bg-black text-white flex justify-center items-center relative">
       <div class="w-full h-screen bg-black flex justify-center items-center">
         <div class="relative w-full max-w-4xl h-[700px] flex justify-center items-center rounded-lg">
           <Carousel />
         </div>
       </div>
+    </div> -->
+    <div
+    class="hidden lg:w-1/2 lg:flex justify-center items-center bg-black bg-cover bg-no-repeat bg-opacity-70 text-white relative"
+    :style="{ backgroundImage: `url('@/assets/img/authBg.png')` }"
+  >
+    <div class="w-full hidden h-full lg:flex justify-center items-center">
+      <div class="relative w-full max-w-4xl h-[700px] flex justify-center items-center rounded-lg">
+        <Carousel />
+      </div>
     </div>
+  </div>
   </div>
 </template>
 

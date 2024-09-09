@@ -138,8 +138,10 @@
   
   <script setup lang="ts">
   import { dynamicIcons } from '@/utils/assets'
-  import { ref } from 'vue';
-  
+
+  definePageMeta({
+  middleware: "auth",
+});
   const setupActions = ref([
     { title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.' },
     { title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.' },

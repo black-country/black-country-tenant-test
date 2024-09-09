@@ -9,48 +9,114 @@
       </div>
   
       <!-- Login Form -->
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="login">
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium text-[#1D2739]">Email</label>
           <input
             type="email"
             id="email"
-            v-model="form.email"
+            v-model="credential.email.value"
             placeholder="Enter your email"
             class="mt-1 block w-full bg-[#E4E7EC] text-sm px-4 py-4 border-[0.5px] border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
         </div>
-        
-        <div class="mb-4">
-          <label for="password" class="block text-sm font-medium text-[#1D2739]">Password</label>
+
+        <div class="mb-4 relative">
+          <label for="password" class="block text-sm font-medium text-[#1D2739]"
+            >Password</label
+          >
           <input
-            type="password"
+            :type="showPassword ? 'text' : 'password'"
             id="password"
-            v-model="form.password"
+            v-model.trim="credential.password.value"
             placeholder="Enter your password"
             class="mt-1 block w-full bg-[#E4E7EC] text-sm px-4 py-4 border-[0.5px] border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
           />
+          <div
+            @click="toggleShowPassword"
+            class="absolute inset-y-0 right-4 top-6 flex items-center cursor-pointer"
+          >
+            <svg
+              v-if="!showPassword"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M18.3332 6.66669C18.3332 6.66669 14.9998 11.6667 9.99984 11.6667C4.99984 11.6667 1.6665 6.66669 1.6665 6.66669"
+                stroke="#1D2739"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+              <path
+                d="M12.5 11.25L13.75 13.3333"
+                stroke="#1D2739"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M16.6665 9.16669L18.3332 10.8334"
+                stroke="#1D2739"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M1.6665 10.8334L3.33317 9.16669"
+                stroke="#1D2739"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M7.5 11.25L6.25 13.3333"
+                stroke="#1D2739"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+  
+            <svg
+              v-if="showPassword"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M17.9532 9.20419C18.2065 9.55944 18.3332 9.7371 18.3332 10C18.3332 10.2629 18.2065 10.4406 17.9532 10.7959C16.8148 12.3922 13.9075 15.8334 9.99984 15.8334C6.09215 15.8334 3.18492 12.3922 2.04654 10.7959C1.79318 10.4406 1.6665 10.2629 1.6665 10C1.6665 9.7371 1.79318 9.55944 2.04654 9.20419C3.18492 7.60789 6.09215 4.16669 9.99984 4.16669C13.9075 4.16669 16.8148 7.60789 17.9532 9.20419Z"
+                stroke="#1D2739"
+                stroke-width="2"
+              />
+              <path
+                d="M12.5 10C12.5 8.61925 11.3807 7.5 10 7.5C8.61925 7.5 7.5 8.61925 7.5 10C7.5 11.3807 8.61925 12.5 10 12.5C11.3807 12.5 12.5 11.3807 12.5 10Z"
+                stroke="#1D2739"
+                stroke-width="1.5"
+              />
+            </svg>
+          </div>
         </div>
   
         <div class="flex justify-between items-center mb-6">
           <div></div>
           <div>
             <span class="text-[#1D2739] text-sm">Forgot password?</span>
-            <NuxtLink to="/reset-password" class="text-[#326543] text-sm ml-2">Reset it</NuxtLink>
+            <NuxtLink to="/forgot-password" class="text-[#326543] text-sm ml-2">Reset it</NuxtLink>
           </div>
         </div>
   
-        <!-- <button
+        <button
           type="submit"
-          class="bg-[#292929] py-4 px-4  text-white rounded-lg w-full  font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          :disabled="isFormDisabled"
+          class="bg-[#292929] disabled:cursor-not-allowed disabled:opacity-25 py-4 px-4  text-white rounded-lg w-full  font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
-          Login
-        </button> -->
-        <NuxtLink to="/dashboard"
-        class="bg-[#292929] py-4 px-4 flex justify-center items-center  text-white rounded-lg w-full  font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Login
-      </NuxtLink>
+        {{ loading ? "processing..." : "Continue" }}
+        </button>
       </form>
   
       <!-- Divider with "Or" -->
@@ -63,7 +129,6 @@
       <!-- Social Login Buttons -->
       <div class="flex flex-col space-y-4">
         <button class="bg-[#E4E7EC] text-[#1D2739] py-4 px-4 rounded-lg mb-4 w-full flex items-center justify-center">
-            <!-- <img src="/path/to/google-icon.svg" alt="Google" class="h-6 w-6 mr-3" /> -->
             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19.2509 10.1943C19.2509 9.47489 19.1913 8.94989 19.0624 8.40546H10.6794V11.6526H15.6C15.5009 12.4596 14.9652 13.6749 13.7747 14.4915L13.758 14.6002L16.4085 16.6125L16.5921 16.6305C18.2786 15.104 19.2509 12.8582 19.2509 10.1943Z" fill="#4285F4"/>
               <path d="M10.6788 18.75C13.0895 18.75 15.1133 17.9722 16.5915 16.6305L13.774 14.4916C13.0201 15.0068 12.0081 15.3666 10.6788 15.3666C8.31773 15.3666 6.31379 13.8402 5.59944 11.7305L5.49473 11.7392L2.73868 13.8295L2.70264 13.9277C4.17087 16.786 7.18674 18.75 10.6788 18.75Z" fill="#34A853"/>
@@ -74,7 +139,6 @@
             Sign Up with Google
           </button>
           <button class="bg-[#E4E7EC] text-[#1D2739] py-4 px-4 rounded-lg mb-4 w-full flex items-center justify-center">
-            <!-- <img src="/path/to/apple-icon.svg" alt="Apple" class="h-6 w-6 mr-3" /> -->
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.6477 4.31448C11.7446 5.21758 10.0315 4.96857 10.0315 4.96857C10.0315 4.96857 9.78239 3.25533 10.6856 2.35223C11.5886 1.44913 13.3018 1.69815 13.3018 1.69815C13.3018 1.69815 13.5509 3.41138 12.6477 4.31448Z" fill="#292929" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
               <path d="M3.33325 11.7161C3.33325 14.4509 5.16363 17.5919 7.01566 18.2558C7.65775 18.4859 8.3214 18.1683 8.87317 17.7729C9.29175 17.4729 9.79858 17.1864 10.208 17.1864C10.6173 17.1864 11.1242 17.4729 11.5428 17.7729C12.0945 18.1683 12.7582 18.4859 13.4003 18.2558C14.7163 17.7841 16.0214 16.0615 16.6666 14.1228C15.4173 13.7649 14.5047 12.6345 14.5047 11.2954C14.5047 10.0684 15.2706 9.01677 16.3598 8.57385C15.658 7.3276 14.5113 6.66669 13.2157 6.66669C12.5454 6.66669 11.9294 6.93687 11.4318 7.26074C10.6377 7.77764 9.77833 7.77765 8.98409 7.26074C8.4865 6.93687 7.87053 6.66669 7.20028 6.66669C5.06458 6.66669 3.33325 8.4626 3.33325 11.7161Z" fill="#292929" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
@@ -91,18 +155,15 @@
     </div>
   </template>
   
-  <script setup lang="ts">
-  import { ref } from 'vue';
-  
-  const form = ref({
-    email: '',
-    password: '',
-  });
-  
-  const handleSubmit = () => {
-    router.push('/dashboard')
-    // Handle form submission logic here
-  };
+<script setup lang="ts">
+import { use_auth_login } from '@/composables/auth/login'
+const { credential, login, loading, isFormDisabled } = use_auth_login()
+
+  const toggleShowPassword = () => {
+  showPassword.value = !showPassword.value;
+};
+
+  const showPassword = ref(false);
   </script>
   
   <style scoped>
