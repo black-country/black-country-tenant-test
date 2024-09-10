@@ -33,10 +33,12 @@
   
   <script setup lang="ts">
 import { use_auth_verify_otp } from '@/composables/auth/verifyOTP'
+import { use_initiate_otp } from '@/composables/auth/initiateOtp'
 import { use_auth_forgot_password }  from '@/composables/auth/forgot'
 
 const { credential, verify_OTP, loading, setPayload, errorMessage } = use_auth_verify_otp()
-const { forgot_password, setObj, loading: resending } = use_auth_forgot_password()
+const { loading: resending } = use_auth_forgot_password()
+const { initiate_otp, setObj } = use_initiate_otp()
 const route = useRoute()
 
 // Define a ref to hold each OTP digit
@@ -80,8 +82,8 @@ const handleResendOtp = () => {
   const payload = {
     email: route.query.email,
   }
-  setObj(payload)
-  forgot_password().then(() => {
+  setObj(payload.email)
+  initiate_otp().then(() => {
     // otp.value.length = 0
     // errorMessage.value = ''
   })

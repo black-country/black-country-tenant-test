@@ -31,6 +31,10 @@ export const auth_api = {
 	$_social_signup: (credential: any) => {
 		const url = '/auth/social-signup'
 		return GATEWAY_ENDPOINT.post(url, credential)
-	}
+	},
+	$_tenant_exist: (email: any) => {
+          const url = `/tenants/exists`
+		  return GATEWAY_ENDPOINT.get(`${url}?email=${encodeURIComponent(email)}`);
+	} 
 
 }

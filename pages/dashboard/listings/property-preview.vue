@@ -140,8 +140,8 @@
           <img :src="dynamicImage(secondaryImage1)" alt="Image 2" class="rounded-lg w-full" />
           <img :src="dynamicImage(secondaryImage2)" alt="Image 3" class="rounded-lg w-full" />
           <img :src="dynamicImage(secondaryImage3)" alt="Image 4" class="rounded-lg w-full" />
-          <div class="relative">
-            <img :src="dynamicImage(secondaryImage4)" alt="Image 5" class="rounded-lg w-full" />
+          <div  @click="router.push('/dashboard/listings/gallery')" class="relative cursor-pointer">
+            <img :src="dynamicImage(secondaryImage4)" alt="Image 5" class="rounded-lg w-full cursor-pointer" />
             <div
               class="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-lg font-bold rounded-lg"
             >
@@ -289,6 +289,7 @@
   <script setup lang="ts">
 import { ref } from "vue";
 import { dynamicImage } from "@/utils/assets";
+const router = useRouter()
 
 // Property Images
 const mainImage = ref("property1.png");
