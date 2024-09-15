@@ -2,12 +2,12 @@
  <main>
   <nav class="bg-[#292929] text-white py-3">
     <div class="container mx-auto flex justify-between items-center px-4">
-      <div class="flex items-center gap-x-3">
+      <NuxtLink to="/dashboard/listings" class="flex cursor-pointer items-center gap-x-3">
         <!-- Logo -->
         <div class="flex items-center space-x-2">
           <img src="@/assets/icons/logo-with-text.svg" alt="logo" class=" object-contain" />
         </div>
-      </div>
+      </NuxtLink>
 
       <!-- Hamburger Menu for mobile -->
       <div class="block md:hidden">
@@ -58,7 +58,7 @@
         </div>
 
         <!-- Right Side: Icons and Profile -->
-        <div class="flex items-center space-x-2">
+        <div class="flex items-center space-x-1">
           <slot name="extra" />
           <button class="p-2">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,7 +72,7 @@
               <path d="M21.4417 27.4998C21.2952 27.7524 21.0849 27.962 20.8319 28.1078C20.5788 28.2535 20.292 28.3302 20 28.3302C19.708 28.3302 19.4212 28.2535 19.1681 28.1078C18.9151 27.962 18.7048 27.7524 18.5583 27.4998M25 16.6665C25 15.3404 24.4732 14.0687 23.5355 13.131C22.5979 12.1933 21.3261 11.6665 20 11.6665C18.6739 11.6665 17.4021 12.1933 16.4645 13.131C15.5268 14.0687 15 15.3404 15 16.6665C15 22.4998 12.5 24.1665 12.5 24.1665H27.5C27.5 24.1665 25 22.4998 25 16.6665Z" stroke="#EBE5E0" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
           </button>
-          <div class="flex items-center space-x-1">
+          <div @click="router.push('/profile')" class="flex cursor-pointer items-center space-x-1">
             <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M38.9271 39.7854C40.9459 37.8885 42.5541 35.5977 43.6524 33.0546C44.7507 30.5115 45.3157 27.7701 45.3125 25C45.3125 13.7812 36.2188 4.6875 25 4.6875C13.7813 4.6875 4.68751 13.7812 4.68751 25C4.68431 27.7701 5.24932 30.5115 6.34762 33.0546C7.44592 35.5977 9.05416 37.8885 11.0729 39.7854C14.8374 43.3414 19.8216 45.3195 25 45.3125C30.1785 45.3195 35.1626 43.3414 38.9271 39.7854ZM12.8021 37.1083C14.2648 35.2784 16.1209 33.8015 18.2326 32.7873C20.3443 31.7731 22.6574 31.2477 25 31.25C27.3427 31.2477 29.6557 31.7731 31.7674 32.7873C33.8792 33.8015 35.7353 35.2784 37.1979 37.1083C35.6021 38.7202 33.7022 39.9992 31.6083 40.8711C29.5144 41.743 27.2682 42.1904 25 42.1875C22.7318 42.1904 20.4856 41.743 18.3917 40.8711C16.2978 39.9992 14.3979 38.7202 12.8021 37.1083ZM32.8125 18.75C32.8125 20.822 31.9894 22.8091 30.5243 24.2743C29.0592 25.7394 27.072 26.5625 25 26.5625C22.928 26.5625 20.9409 25.7394 19.4757 24.2743C18.0106 22.8091 17.1875 20.822 17.1875 18.75C17.1875 16.678 18.0106 14.6909 19.4757 13.2257C20.9409 11.7606 22.928 10.9375 25 10.9375C27.072 10.9375 29.0592 11.7606 30.5243 13.2257C31.9894 14.6909 32.8125 16.678 32.8125 18.75Z" fill="#D6D0CC"/>
               </svg>
@@ -181,13 +181,13 @@
                   </li>
                 </ul>
               </li>
-              <li class="-mx-6 mt-auto">
+              <NuxtLink  @click.native="isOpen = false" to="/profile" class="-mx-6 mt-auto">
                 <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800">
                   <img class="h-8 w-8 rounded-full bg-gray-800" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                   <span class="sr-only">Your profile</span>
                   <span aria-hidden="true">{{user?.firstName}} {{user?.firstName}}</span>
                 </a>
-              </li>
+              </NuxtLink>
             </ul>
           </nav>
         </div>
@@ -201,6 +201,7 @@
   import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
   const isOpen = ref(false)
+  const router = useRouter()
   </script>
   
   <style scoped>

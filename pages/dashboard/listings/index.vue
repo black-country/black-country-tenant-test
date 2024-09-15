@@ -364,14 +364,18 @@
           </button>
         </div>
       </div>
-      <div
+      <!-- <div
         class="flex overflow-x-auto hide-scroll-bar space-x-6 p-6 container mx-auto"
-      >
+      > -->
+      <div
+      class="p-6 container mx-auto space-y-6 lg:space-y-0 lg:flex flex-wrap gap-7"
+    >
         <!-- Property Card -->
         <div
-          v-for="(property, index) in properties"
+           v-if="!loadingProperties && propertiesList.length" 
+          v-for="(property, index) in propertiesList"
           :key="index"
-          class="relative cursor-pointer min-w-[300px] max-w-[350px] bg-white"
+          class="relative cursor-pointer min-w-[300px] w-full lg:max-w-[350px] bg-white"
         >
           <!-- Favorite Icon (Heart) -->
           <button
@@ -419,22 +423,14 @@
               />
             </svg>
           </button>
-
-          <!-- Property Image -->
-          <img
-            @click="router.push('/dashboard/listings/property-preview')"
-            :src="dynamicImage(property.image)"
-            alt="Property Image"
-            class="w-full h-72 object-cover rounded-lg"
-          />
-
-          <!-- Property Details -->
+          <PropertyImageCarousel v-if="property?.images?.length"  :images="property.images" :interval="5000" />
+           <img v-else class="rounded-lg" src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  alt="alt image"/>
           <section class="space-y-2">
             <div>
               <h3 class="text- font-medium text-[#1D2739] mt-4">
-                {{ property.title }}
+                {{ property?.name }}
               </h3>
-              <p class="text-[#79797F] text-xs flex">
+              <p class="text-[#79797F] text-sm items-center flex gap-x-2">
                 <svg
                   width="14"
                   height="14"
@@ -454,253 +450,27 @@
                   />
                 </svg>
 
-                {{ property.location }}
+                {{ property?.address }}
               </p>
             </div>
-            <p class="text-[#1D2739] font-medium text-xs">
-              {{ property.bedrooms }} bedrooms | {{ property.bathrooms }} baths
-              | {{ property.size }} sqft
+            <p class="text-[#1D2739] font-medium text-sm">
+              {{ property.bedroomCount }} bedrooms | {{ property.bathroomCount }} baths
+              | {{ property.size }} {{ property.sizeUnit }}
             </p>
             <p class="text-[#1D2739] text-xs">{{ property.available }}</p>
+            <p class="text-[#1D2739] text-xs">{{ property.availableRoomsCount }} rooms avail. <span class="font-medium text-[#326543]">Now</span> | {{ property.unavailableRoomsCount }} room avail. on 21/06/2024</p>
           </section>
         </div>
-      </div>
-      <div
-        class="flex overflow-x-auto hide-scroll-bar space-x-6 p-6 container mx-auto"
-      >
-        <!-- Property Card -->
-        <div
-          v-for="(property, index) in properties"
-          :key="index"
-          class="relative min-w-[300px] max-w-[350px] bg-white"
-        >
-          <!-- Favorite Icon (Heart) -->
-          <button
-            @click="toggleLike(index)"
-            class="absolute top-6 right-6 text-white hover:text-red-500 focus:outline-none"
-          >
-            <svg
-              v-if="property.liked"
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect width="40" height="40" rx="20" fill="#D42620" />
-              <path
-                d="M27.4626 11.9942C24.7809 10.3492 22.4404 11.0121 21.0344 12.068C20.4578 12.501 20.1696 12.7174 20 12.7174C19.8304 12.7174 19.5422 12.501 18.9656 12.068C17.5596 11.0121 15.2191 10.3492 12.5374 11.9942C9.01807 14.1529 8.22172 21.2749 16.3395 27.2834C17.8857 28.4278 18.6588 29 20 29C21.3412 29 22.1143 28.4278 23.6605 27.2834C31.7783 21.2749 30.9819 14.1529 27.4626 11.9942Z"
-                fill="white"
-                stroke="white"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
-
-            <svg
-              v-else
-              width="40"
-              height="40"
-              viewBox="0 0 40 40"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <rect
-                width="40"
-                height="40"
-                rx="20"
-                fill="black"
-                fill-opacity="0.6"
-              />
-              <path
-                d="M27.4626 11.9942C24.7809 10.3492 22.4404 11.0121 21.0344 12.068C20.4578 12.501 20.1696 12.7174 20 12.7174C19.8304 12.7174 19.5422 12.501 18.9656 12.068C17.5596 11.0121 15.2191 10.3492 12.5374 11.9942C9.01807 14.1529 8.22172 21.2749 16.3395 27.2834C17.8857 28.4278 18.6588 29 20 29C21.3412 29 22.1143 28.4278 23.6605 27.2834C31.7783 21.2749 30.9819 14.1529 27.4626 11.9942Z"
-                stroke="#F9FAFB"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
-          </button>
-
-          <!-- Property Image -->
-          <img
-            :src="dynamicImage(property.image)"
-            alt="Property Image"
-            class="w-full h-72 object-cover rounded-lg"
-          />
-
-          <!-- Property Details -->
-          <section class="space-y-2">
-            <div>
-              <h3 class="text- font-medium text-[#1D2739] mt-4">
-                {{ property.title }}
-              </h3>
-              <p class="text-[#79797F] text-xs flex">
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.94366 12.4644C7.69072 12.7012 7.35257 12.8337 7.00064 12.8337C6.64872 12.8337 6.31062 12.7012 6.05762 12.4644C3.74093 10.2822 0.636277 7.84435 2.15032 4.30513C2.96895 2.3915 4.93403 1.16699 7.00064 1.16699C9.06727 1.16699 11.0323 2.3915 11.851 4.30513C13.3631 7.83992 10.2661 10.2897 7.94366 12.4644Z"
-                    fill="#5B8469"
-                    stroke="#5B8469"
-                  />
-                  <path
-                    d="M9.04165 6.41667C9.04165 7.54425 8.12756 8.45833 6.99998 8.45833C5.8724 8.45833 4.95831 7.54425 4.95831 6.41667C4.95831 5.28908 5.8724 4.375 6.99998 4.375C8.12756 4.375 9.04165 5.28908 9.04165 6.41667Z"
-                    fill="#EAEAEA"
-                    stroke="#5B8469"
-                  />
-                </svg>
-
-                {{ property.location }}
-              </p>
-            </div>
-            <p class="text-[#1D2739] font-medium text-xs">
-              {{ property.bedrooms }} bedrooms | {{ property.bathrooms }} baths
-              | {{ property.size }} sqft
-            </p>
-            <p class="text-[#1D2739] text-xs">{{ property.available }}</p>
-          </section>
-        </div>
-      </div>
-    </section>
-    <section v-else class="max-w-7xl mx-auto">
-      <div class="relative h-screen w-full">
-        <!-- Search Bar and Filter Icon at the top center -->
-        <div
-          class="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 outline-none flex space-x-4 items-center"
-        >
-          <!-- Search Bar -->
-          <div class="relative">
-            <input
-              v-model="searchQuery"
-              @input="handleSearchInput"
-              type="text"
-              placeholder="Search"
-              class="bg-white shadow-md rounded-md text-sm px-4 py-3 w-64 pl-10"
-              @focus="isSearchModalVisible = true"
-            />
-            <svg
-              class="absolute top-4 left-3"
-              width="17"
-              height="16"
-              viewBox="0 0 17 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M12.1667 11.667L15.1667 14.667"
-                stroke="#667185"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M13.8333 7.33301C13.8333 4.0193 11.147 1.33301 7.83331 1.33301C4.51961 1.33301 1.83331 4.0193 1.83331 7.33301C1.83331 10.6467 4.51961 13.333 7.83331 13.333C11.147 13.333 13.8333 10.6467 13.8333 7.33301Z"
-                stroke="#667185"
-                stroke-width="1.5"
-                stroke-linejoin="round"
-              />
-            </svg>
+        <div v-if="loadingProperties" class="border-[0.5px] bg-gray-100 shadow rounded-md  w-full mx-auto">
+          <div class="animate-pulse flex space-x-4">
+            <div class="rounded-md bg-slate-100 h-96 w-full"></div>
           </div>
-
-          <!-- Filter Icon -->
-          <button
-            type="button"
-            class="bg-white p-2 rounded-md shadow-md hover:bg-gray-100 focus:outline-none flex items-center gap-x-3 text-sm px-3"
-          >
-            <svg
-              width="21"
-              height="20"
-              viewBox="0 0 21 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M11.3333 3.33301H3"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M9.66667 15.833H3"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M18 15.833H14.6666"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M18 9.58301H9.66663"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M18 3.33301H16.3334"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M4.66667 9.58301H3"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12.5834 1.66699C12.9716 1.66699 13.1658 1.66699 13.319 1.73043C13.5231 1.815 13.6854 1.97723 13.77 2.18143C13.8334 2.33457 13.8334 2.52871 13.8334 2.91699V3.75033C13.8334 4.13861 13.8334 4.33275 13.77 4.48589C13.6854 4.69008 13.5231 4.85232 13.319 4.93689C13.1658 5.00033 12.9716 5.00033 12.5834 5.00033C12.1951 5.00033 12.001 5.00033 11.8478 4.93689C11.6436 4.85232 11.4814 4.69008 11.3968 4.48589C11.3334 4.33275 11.3334 4.13861 11.3334 3.75033V2.91699C11.3334 2.52871 11.3334 2.33457 11.3968 2.18143C11.4814 1.97723 11.6436 1.815 11.8478 1.73043C12.001 1.66699 12.1951 1.66699 12.5834 1.66699Z"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M10.9166 14.167C11.3049 14.167 11.499 14.167 11.6522 14.2304C11.8564 14.315 12.0186 14.4772 12.1032 14.6814C12.1666 14.8346 12.1666 15.0287 12.1666 15.417V16.2503C12.1666 16.6386 12.1666 16.8327 12.1032 16.9859C12.0186 17.1901 11.8564 17.3523 11.6522 17.4369C11.499 17.5003 11.3049 17.5003 10.9166 17.5003C10.5284 17.5003 10.3342 17.5003 10.181 17.4369C9.97688 17.3523 9.81463 17.1901 9.73004 16.9859C9.66663 16.8327 9.66663 16.6386 9.66663 16.2503V15.417C9.66663 15.0287 9.66663 14.8346 9.73004 14.6814C9.81463 14.4772 9.97688 14.315 10.181 14.2304C10.3342 14.167 10.5284 14.167 10.9166 14.167Z"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M8.41663 7.91699C8.80491 7.91699 8.99904 7.91699 9.15221 7.98043C9.35638 8.065 9.51863 8.22723 9.60321 8.43141C9.66663 8.58458 9.66663 8.77874 9.66663 9.16699V10.0003C9.66663 10.3886 9.66663 10.5827 9.60321 10.7359C9.51863 10.9401 9.35638 11.1023 9.15221 11.1869C8.99904 11.2503 8.80491 11.2503 8.41663 11.2503C8.02834 11.2503 7.8342 11.2503 7.68106 11.1869C7.47687 11.1023 7.31463 10.9401 7.23006 10.7359C7.16663 10.5827 7.16663 10.3886 7.16663 10.0003V9.16699C7.16663 8.77874 7.16663 8.58458 7.23006 8.43141C7.31463 8.22723 7.47687 8.065 7.68106 7.98043C7.8342 7.91699 8.02834 7.91699 8.41663 7.91699Z"
-                stroke="#1D2739"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-            Filter
-          </button>
         </div>
-
-        <!-- Map Iframe -->
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126746.26575699888!2d3.245361318263777!3d6.548376092354154!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103bf50b720d9075%3A0xdee5fa622bdf4e93!2sLagos%2C%20Nigeria!5e0!3m2!1sen!2sng!4v1630942124939!5m2!1sen!2sng"
-          width="100%"
-          height="100%"
-          style="border: 0"
-          allowfullscreen=""
-          loading="lazy"
-          class="absolute top-0 left-0 w-full h-full rounded-md"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
       </div>
     </section>
-
-    <!-- Modals -->
+    <section v-else class="">
+      <PropertyMap :properties="propertiesList" />
+    </section>
 
     <CoreModal
       :isOpen="isSearchModalVisible"
@@ -710,7 +480,6 @@
         class="bg-white p-6 m-6 lg:m-0 rounded-lg w-full lg:w-1/2 relative space-y-5"
         @click.stop
       >
-        <!-- Close the modal when clicking outside -->
         <div class="relative">
           <input
             type="text"
@@ -877,27 +646,6 @@
       :isOpen="isFilterModalVisible"
       @close="isFilterModalVisible = false"
     >
-      <!-- <div class="bg-white p-6 rounded-lg w-5/12 relative" @click.stop>
-      <div class="flex justify-between items-center mb-4 py-3.5 px-4 border-[0.5px] rounded">
-        <h3 class="text-lg font-semibold">Filters</h3>
-        <button @click="resetFilters" class="text-blue-500">Reset</button>
-      </div>
-
-      <div class="mb-6">
-        <h4 class="text-md font-medium mb-2  py-3.5 pl-4 bg-white text-[#1D2739] border-[0.5px] rounded">Property type</h4>
-        <ul class="space-y-6 border-[0.5px] rounded  p-4">
-          <li v-for="(property, index) in propertyTypes" :key="index" class="flex mb-2 justify-between items-center">
-            <label class="ml-2 text-[#1D2739] font-medium">{{ property }}</label>
-            <input type="checkbox" class="h-4 w-4" v-model="selectedProperties" :value="property" />
-          </li>
-        </ul>
-      </div>
-
-      <div class="flex justify-between gap-x-6">
-        <button @click="resetFilters" class="bg-[#EBE5E0] font-medium w-full p-2 py-4 rounded-md">Reset</button>
-        <button @click="applyFilters" class="bg-[#292929] font-medium w-full text-white p-2 py-4 rounded-md">Show {{ filteredResults }} homes</button>
-      </div>
-    </div> -->
       <FilterSidebar />
     </CoreModal>
 
@@ -966,8 +714,6 @@
         <!-- </transition> -->
       </div>
     </CoreModal>
-
-    <!-- Search Results Modal (shown when the user types in the search input) -->
     <section>
       <div
         v-if="searchQuery"
@@ -975,17 +721,11 @@
       >
         <div class="bg-white rounded-lg p-4 shadow-lg w-96 border-4">
           <div class="relative">
-            <!-- Property Image -->
             <img
               :src="dynamicImage(property.image)"
               alt="Property"
               class="rounded-t-lg w-full"
             />
-            <!-- <button
-            class="absolute top-0 right-0 mt-2 mr-2 bg-[#292929] text-white rounded-md px-4 py-1"
-          >
-            Save search
-          </button> -->
           </div>
           <div class="space-y-4 mt-4">
             <div>
@@ -1030,13 +770,21 @@
 </template>
 
 <script setup lang="ts">
+import { useGetProperties } from '@/composables/modules/property/fetchProperties'
 import { dynamicImage } from "@/utils/assets";
-import { ref } from "vue";
 const router = useRouter();
 const isSearchModalVisible = ref(false);
 const successModal = ref(false);
 const searchQuery = ref("");
 const propertySearch = ref("");
+const { 
+  loadingProperties, 
+  propertiesList, 
+  currentPage, 
+  totalPages, 
+  debouncedGetProperties 
+
+ } = useGetProperties()
 
 const listView = ref(true);
 
@@ -1069,111 +817,14 @@ const selectSuggestion = (suggestion: string) => {
   router.push("/dashboard/listings/property-preview");
 };
 
-const properties = ref([
-  {
-    image: "listing2.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "2 rooms available now",
-    liked: false, // liked state
-  },
-  {
-    image: "listing2.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "1 room available on 21/06/2024",
-    liked: false, // liked state
-  },
-  {
-    image: "listing3.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "1 room available on 21/06/2024",
-    liked: false, // liked state
-  },
-  {
-    image: "listing2.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "2 rooms available now",
-    liked: false, // liked state
-  },
-  {
-    image: "listing2.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "1 room available on 21/06/2024",
-    liked: false, // liked state
-  },
-  {
-    image: "listing3.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "1 room available on 21/06/2024",
-    liked: false, // liked state
-  },
-  {
-    image: "listing2.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "2 rooms available now",
-    liked: false, // liked state
-  },
-  {
-    image: "listing2.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "1 room available on 21/06/2024",
-    liked: false, // liked state
-  },
-  {
-    image: "listing3.png",
-    title: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    bedrooms: 5,
-    bathrooms: 6,
-    size: "5254 sqft",
-    available: "1 room available on 21/06/2024",
-    liked: false, // liked state
-  },
-]);
+
 
 const toggleLike = (index: number) => {
   properties.value[index].liked = !properties.value[index].liked;
 };
-const property = ref({
-  image: "listing3.png",
-  name: "Jason Co-living Space",
-  address: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-  price: "100,000",
-  bedrooms: 5,
-  bathrooms: 6,
-  size: 5254,
-});
+// definePageMeta({
+//   layout: 'listing-layout'
+// })
 
 const handleSearchInput = () => {
   // Logic for handling search
@@ -1234,21 +885,21 @@ const sortOptions = ref([
   { value: "high-to-low", label: "Highest price to Lowest price" },
 ]);
 
-// State for the dropdown and selected option
+
 const isDropdownOpen = ref(false);
 const selectedOption = ref(sortOptions.value[1]);
 
-// Toggle the dropdown visibility
+
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
 };
 
-// Close the dropdown
+
 const closeDropdown = () => {
   isDropdownOpen.value = false;
 };
 
-// Select an option from the dropdown
+
 const selectOption = (option: any) => {
   selectedOption.value = option;
   closeDropdown();
@@ -1257,11 +908,10 @@ const selectOption = (option: any) => {
 
 <style scoped>
 .hide-scroll-bar {
-  /* Hide scrollbar for Chrome, Safari, and Opera */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .hide-scroll-bar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, and Opera */
+  display: none; 
 }
 </style>

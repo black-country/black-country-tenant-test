@@ -1,17 +1,8 @@
-import { GATEWAY_ENDPOINT_WITH_AUTH } from '@/api_factory/axios.config'
+import { GATEWAY_ENDPOINT } from '../axios.config'
 
-export const uploadProgress = ref(0)
-
-export const image_upload_api = {
-    $_upload_api: (credential: any) => {
-        const url = '/files'
-        uploadProgress.value = 0
-        return GATEWAY_ENDPOINT_WITH_AUTH.post(url, credential, {
-            onUploadProgress: (progressEvent: any) => {
-                uploadProgress.value = Math.round(
-                    (progressEvent.loaded / progressEvent.total) * 100
-                )
-            }
-        })
-    }
+export const core_apis = {
+	$_upload: (payload: any) => {
+		const url = '/utilities/files'
+		return GATEWAY_ENDPOINT.post(url, payload)
+	}
 }

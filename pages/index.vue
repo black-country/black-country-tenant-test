@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen flex">
-    <!-- Left Section -->
     <div class="lg:w-1/2 w-full flex justify-center items-center bg-white">
       <div class="lg:w-2/4">
         <div class="flex flex-col items-center">
@@ -11,8 +10,7 @@
               
           </div>
           <h1 class="text-2xl font-semibold mb-6 text-[#1D2739]">Create an account</h1>
-          <button class="bg-[#E4E7EC] text-[#1D2739] py-4 px-4 rounded-lg mb-4 w-full flex items-center justify-center">
-            <!-- <img src="/path/to/google-icon.svg" alt="Google" class="h-6 w-6 mr-3" /> -->
+          <button @click="signInWithGoogle"  :disabled="loading" class="bg-[#E4E7EC] text-[#1D2739] py-4 px-4 rounded-lg mb-4 w-full flex items-center justify-center">
             <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M19.2509 10.1943C19.2509 9.47489 19.1913 8.94989 19.0624 8.40546H10.6794V11.6526H15.6C15.5009 12.4596 14.9652 13.6749 13.7747 14.4915L13.758 14.6002L16.4085 16.6125L16.5921 16.6305C18.2786 15.104 19.2509 12.8582 19.2509 10.1943Z" fill="#4285F4"/>
               <path d="M10.6788 18.75C13.0895 18.75 15.1133 17.9722 16.5915 16.6305L13.774 14.4916C13.0201 15.0068 12.0081 15.3666 10.6788 15.3666C8.31773 15.3666 6.31379 13.8402 5.59944 11.7305L5.49473 11.7392L2.73868 13.8295L2.70264 13.9277C4.17087 16.786 7.18674 18.75 10.6788 18.75Z" fill="#34A853"/>
@@ -22,8 +20,7 @@
               
             Sign Up with Google
           </button>
-          <button class="bg-[#E4E7EC] text-[#1D2739] py-4 px-4 rounded-lg mb-4 w-full flex items-center justify-center">
-            <!-- <img src="/path/to/apple-icon.svg" alt="Apple" class="h-6 w-6 mr-3" /> -->
+          <button @click="signInWithApple" class="bg-[#E4E7EC] text-[#1D2739] py-4 px-4 rounded-lg mb-4 w-full flex items-center justify-center">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M12.6477 4.31448C11.7446 5.21758 10.0315 4.96857 10.0315 4.96857C10.0315 4.96857 9.78239 3.25533 10.6856 2.35223C11.5886 1.44913 13.3018 1.69815 13.3018 1.69815C13.3018 1.69815 13.5509 3.41138 12.6477 4.31448Z" fill="#292929" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
               <path d="M3.33325 11.7161C3.33325 14.4509 5.16363 17.5919 7.01566 18.2558C7.65775 18.4859 8.3214 18.1683 8.87317 17.7729C9.29175 17.4729 9.79858 17.1864 10.208 17.1864C10.6173 17.1864 11.1242 17.4729 11.5428 17.7729C12.0945 18.1683 12.7582 18.4859 13.4003 18.2558C14.7163 17.7841 16.0214 16.0615 16.6666 14.1228C15.4173 13.7649 14.5047 12.6345 14.5047 11.2954C14.5047 10.0684 15.2706 9.01677 16.3598 8.57385C15.658 7.3276 14.5113 6.66669 13.2157 6.66669C12.5454 6.66669 11.9294 6.93687 11.4318 7.26074C10.6377 7.77764 9.77833 7.77765 8.98409 7.26074C8.4865 6.93687 7.87053 6.66669 7.20028 6.66669C5.06458 6.66669 3.33325 8.4626 3.33325 11.7161Z" fill="#292929" stroke="black" stroke-width="1.5" stroke-linejoin="round"/>
@@ -48,14 +45,6 @@
         </div>
       </div>
     </div>
-
-    <!-- <div class="w-1/2 bg-black text-white flex justify-center items-center relative">
-      <div class="w-full h-screen bg-black flex justify-center items-center">
-        <div class="relative w-full max-w-4xl h-[700px] flex justify-center items-center rounded-lg">
-          <Carousel />
-        </div>
-      </div>
-    </div> -->
     <div
     class="hidden lg:w-1/2 lg:flex justify-center items-center bg-black bg-cover bg-no-repeat bg-opacity-70 text-white relative"
     :style="{ backgroundImage: `url('@/assets/img/authBg.png')` }"
@@ -69,17 +58,8 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import { useAuth } from '@/composables/auth/useAuth'
 import Carousel from '@/components/Carousel.vue';
-import { defineComponent } from 'vue';
-
-export default defineComponent({
-  name: 'IndexPage',
-  components: {
-    Carousel, // Ensure Carousel is imported or globally registered
-  },
-  setup() {
-    // Any setup logic here
-  },
-});
+const { signInWithGoogle, signInWithApple, loading, error } = useAuth()
 </script>

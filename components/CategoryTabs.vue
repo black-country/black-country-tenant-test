@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
     <div>
         <div class="sm:block">
           <div class="">
@@ -31,4 +31,56 @@ const props = defineProps({
     }
 })
 </script>
+ -->
 
+ <template>
+  <div>
+    <div class="sm:block">
+      <div>
+        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+          <a
+            :class="['whitespace-nowrap border-b-4 px-1 pt-4 pb-2 text-sm font-light', activeTab === 'upcoming_events' ? 'border-[#326543] text-[#326543]' : 'border-transparent text-gray-500']"
+            @click.prevent="emitTab('upcoming_events')"
+          >
+            Upcoming events
+          </a>
+          <a
+            :class="['whitespace-nowrap border-b-4 px-1 pt-4 pb-2 text-sm font-light', activeTab === 'overdue' ? 'border-[#326543] text-[#326543]' : 'border-transparent text-gray-500']"
+            @click.prevent="emitTab('overdue')"
+          >
+            Overdue
+          </a>
+          <a
+            :class="['whitespace-nowrap border-b-4 px-1 pt-4 pb-2 text-sm font-light', activeTab === 'recent_applications' ? 'border-[#326543] text-[#326543]' : 'border-transparent text-gray-500']"
+            @click.prevent="emitTab('recent_applications')"
+          >
+            Recent applications
+          </a>
+          <a
+            :class="['whitespace-nowrap border-b-4 px-1 pt-4 pb-2 text-sm font-light', activeTab === 'maintenance_requests' ? 'border-[#326543] text-[#326543]' : 'border-transparent text-gray-500']"
+            @click.prevent="emitTab('maintenance_requests')"
+          >
+            Maintenance requests
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const emit = defineEmits<{
+  (event: 'setTab', state: string): void
+}>()
+
+const props = defineProps({
+  activeTab: {
+    type: String,
+    required: true
+  }
+})
+
+const emitTab = (tab: string) => {
+  emit('setTab', tab)
+}
+</script>

@@ -18,21 +18,3 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue';
-import Carousel from '@/components/Carousel.vue'; // Import your Carousel component
-import LoginForm from '@/components/LoginForm.vue'; // Your login form component
-
-export default defineComponent({
-  name: 'LoginPage',
-  components: {
-    Carousel,
-    LoginForm,
-  },
-});
-</script>
-
-<style scoped>
-/* Add additional styling if needed */
-</style>

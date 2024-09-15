@@ -477,9 +477,9 @@
 <script setup lang="ts">
 import { dynamicIcons } from "@/utils/assets";
 const router = useRouter();
-definePageMeta({
-  middleware: "auth",
-});
+// definePageMeta({
+//   middleware: "auth",
+// });
 
 const sidebarItems = ref([
   {
