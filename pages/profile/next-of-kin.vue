@@ -11,7 +11,7 @@
         
       <h2 class="text-lg font-semibold text-[#1D2739] pt-3">Next of kin</h2>
     </div>
-  <form class="mt-6 space-y-4">
+  <form @submit.prevent="handleSave" class="mt-6 space-y-4">
     <section class="flex gap-x-6 justify-between items-center"></section>
     <section class="flex justify-between items-center gap-x-6">
       <div class="w-full">
@@ -61,6 +61,10 @@
 </section>
   </form>
 
+  <div class="flex justify-between p-4 bg-white mt-6 max-w-2xl mx-auto  w-full">
+    <button @click="router.back()" class="text-[#292929] border rounded-md px-4 py-3 hover:bg-gray-100">Cancel</button>
+    <button :disabled="updating" @click="handleSave" class="text-white disabled:opacity-25 disabled: cursor-not-allowed font-medium rounded-md px-6 py-3 bg-[#292929]">{{updating ? 'Processing..' : 'Save'}}</button>
+  </div>
   </div>
 </min>
   </template>
@@ -140,73 +144,26 @@ onMounted(() => {
     addressObj.value.lga = user.value.lga || '';
   }
 
-  // Set the query param for the step
-  if (!route.query.step) {
-    router.push({ query: { step: currentStep.value } });
-  } else {
-    currentStep.value = parseInt(route.query.step as string);
-  }
+  // // Set the query param for the step
+  // if (!route.query.step) {
+  //   router.push({ query: { step: currentStep.value } });
+  // } else {
+  //   currentStep.value = parseInt(route.query.step as string);
+  // }
 });
 
-// Function to go back to the previous step
-const goBack = () => {
-  if (currentStep.value > 1) {
-    currentStep.value -= 1;
-    router.push({ query: { step: currentStep.value } });
-  } else {
-    router.push('/profile/profile-settings')
-  }
-};
+// // Function to go back to the previous step
+// const goBack = () => {
+//   if (currentStep.value > 1) {
+//     currentStep.value -= 1;
+//     router.push({ query: { step: currentStep.value } });
+//   } else {
+//     router.push('/profile/profile-settings')
+//   }
+// };
 
-// Handle the save function (no changes here)
 const handleSave = async () => {
-  // Split full name into first and last name
-  const nameParts = addressObj.value.fullName.trim().split(" ");
-  const firstName = nameParts[0] || "";
-  const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
-
-  let savePromise;
-
-  switch (currentStep.value) {
-    case 1:
-      // Save Personal Information
-      savePromise = updateProfile({
-        firstName: firstName,
-        lastName: lastName,
-        email: credential.value.email,
-        phoneNumber: credential.value.phoneNumber,
-        dateOfBirth: credential.value.dateOfBirth,
-        gender: credential.value.gender,
-        maritalStatus: credential.value.maritalStatus,
-        state: addressObj.value.state,
-        lga: addressObj.value.lga,
-      });
-      break;
-
-    case 2:
-      // Save Rental History
-      savePromise = updateProfile({
-        currentLandlord: credential.value.currentLandlord,
-        rentalAddress: credential.value.rentalAddress,
-        lengthOfTenancy: credential.value.lengthOfTenancy,
-        reasonForMovingOut: credential.value.reasonForMovingOut,
-      });
-      break;
-
-    case 3:
-      // Save Employment Information
-      savePromise = updateProfile({
-        employmentStatus: credential.value.employmentStatus,
-        employerName: credential.value.employerName,
-        employerAddress: credential.value.employerAddress,
-        occupation: credential.value.occupation,
-        monthlyNetSalary: credential.value.monthlyNetSalary,
-      });
-      break;
-
-    case 4:
-      // Save Next of Kin Information
-      savePromise = updateProfile({
+  await updateProfile({
         nextOfKinName: credential.value.nextOfKinName,
         nextOfKinRelationship: credential.value.nextOfKinRelationship,
         nextOfKinEmail: credential.value.nextOfKinEmail,
@@ -216,28 +173,88 @@ const handleSave = async () => {
         nextOfKinEmployer: credential.value.nextOfKinEmployer,
         nextOfKinEmployerAddress: credential.value.nextOfKinEmployerAddress,
       });
-      break;
-  }
+      router.back()
+}
+// Handle the save function (no changes here)
+// const handleSave = async () => {
+//   // Split full name into first and last name
+//   const nameParts = addressObj.value.fullName.trim().split(" ");
+//   const firstName = nameParts[0] || "";
+//   const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "";
 
-  // Handle the result of the save operation
-  savePromise
-    .then((res) => {
-      console.log(res, 'res here')
-      // If save is successful, go to the next step
-      if (currentStep.value < 4) {
-        currentStep.value += 1;
-        router.push({ query: { step: currentStep.value } });
-      } else {
-        router.push('/profile')
-        // Optionally, show a success message when the final step is completed
-        useNuxtApp().$toast.success("Profile update completed successfully!");
-      }
-    }).catch((err) => {
-      console.error("Error saving data:", err);
-      // useNuxtApp().$toast.error("There was an error saving your data.");
-      // No step increment if an error occurs
-    });
-};
+//   let savePromise;
+
+//   // switch (currentStep.value) {
+//   //   case 1:
+//   //     // Save Personal Information
+//   //     savePromise = updateProfile({
+//   //       firstName: firstName,
+//   //       lastName: lastName,
+//   //       email: credential.value.email,
+//   //       phoneNumber: credential.value.phoneNumber,
+//   //       dateOfBirth: credential.value.dateOfBirth,
+//   //       gender: credential.value.gender,
+//   //       maritalStatus: credential.value.maritalStatus,
+//   //       state: addressObj.value.state,
+//   //       lga: addressObj.value.lga,
+//   //     });
+//   //     break;
+
+//   //   case 2:
+//   //     // Save Rental History
+//   //     savePromise = updateProfile({
+//   //       currentLandlord: credential.value.currentLandlord,
+//   //       rentalAddress: credential.value.rentalAddress,
+//   //       lengthOfTenancy: credential.value.lengthOfTenancy,
+//   //       reasonForMovingOut: credential.value.reasonForMovingOut,
+//   //     });
+//   //     break;
+
+//   //   case 3:
+//   //     // Save Employment Information
+//   //     savePromise = updateProfile({
+//   //       employmentStatus: credential.value.employmentStatus,
+//   //       employerName: credential.value.employerName,
+//   //       employerAddress: credential.value.employerAddress,
+//   //       occupation: credential.value.occupation,
+//   //       monthlyNetSalary: credential.value.monthlyNetSalary,
+//   //     });
+//   //     break;
+
+//   //   case 4:
+//   //     // Save Next of Kin Information
+//   //     savePromise = updateProfile({
+//   //       nextOfKinName: credential.value.nextOfKinName,
+//   //       nextOfKinRelationship: credential.value.nextOfKinRelationship,
+//   //       nextOfKinEmail: credential.value.nextOfKinEmail,
+//   //       nextOfKinAddress: credential.value.nextOfKinAddress,
+//   //       nextOfKinPhone: credential.value.nextOfKinPhone,
+//   //       nextOfKinOccupation: credential.value.nextOfKinOccupation,
+//   //       nextOfKinEmployer: credential.value.nextOfKinEmployer,
+//   //       nextOfKinEmployerAddress: credential.value.nextOfKinEmployerAddress,
+//   //     });
+//   //     break;
+//   // }
+
+//   // Handle the result of the save operation
+//   // savePromise
+//   //   .then((res) => {
+//   //     console.log(res, 'res here')
+//   //     // If save is successful, go to the next step
+//   //     if (currentStep.value < 4) {
+//   //       currentStep.value += 1;
+//   //       router.push({ query: { step: currentStep.value } });
+//   //     } else {
+//   //       router.push('/profile')
+//   //       // Optionally, show a success message when the final step is completed
+//   //       useNuxtApp().$toast.success("Profile update completed successfully!");
+//   //     }
+//   //   }).catch((err) => {
+//   //     console.error("Error saving data:", err);
+//   //     // useNuxtApp().$toast.error("There was an error saving your data.");
+//   //     // No step increment if an error occurs
+//   //   });
+// };
 </script>
 
   

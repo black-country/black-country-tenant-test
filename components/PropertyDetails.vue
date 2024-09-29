@@ -129,7 +129,7 @@
             </div>
           </div>
     
-          <div v-if="activeTab === 'common-areas'" class="mb-6 mt-4">
+          <div v-if="activeTab === 'common-areas'" class="mb-6 p-4 mt-4">
             <h3 class="font-semibold text-lg">Common Areas</h3>
             <p class="text-sm text-gray-600">This section provides details about the shared common areas of the property.</p>
             <div class="space-y-6">
@@ -188,7 +188,7 @@
             </div>
           </div>
 
-          <div v-if="activeTab !== 'property-overview' && activeTab !== 'common-areas'" class="">
+          <div class="p-4" v-if="activeTab !== 'property-overview' && activeTab !== 'common-areas'">
             <div @click="previewRoomImages(activeTab)" class="flex cursor-pointer mb-3 items-center border-[0.5px] border-gray-50 space-x-4 bg-white p-4 rounded-lg">
               <img :src="dynamicImage('placeholder.png')" alt="Gallery" class="w-12 h-12 rounded-full">
               <div class="flex-1">
@@ -278,7 +278,7 @@
         </div>
       </section>
       <!-- Right Section -->
-      <div class="lg:w-1/2 space-y-6 max-w-3xl mx-auto">
+      <div class="lg:w-1/2 space-y-6 p-4 lg:p-0">
         <!-- Property Manager -->
         <div class="bg-[#F0F2F5] p-6 rounded-md">
             <div class="flex items-center justify-between space-x-4">
@@ -578,9 +578,6 @@ const extractRoomImages = (room: any): string[] => {
 const previewRoomImages = (itemTab: any) => {
   const selectedRoom = props.property.rooms.find((room: any) => room?.name === itemTab)
     const allImages = extractRoomImages(selectedRoom);
-     console.log(allImages); // This will print all the images in the room and its features.
-    // const selectedImages = images.value[tabName];
-
     localStorage.setItem('selectedImages', JSON.stringify(allImages));
     router.push(`/dashboard/listings/${props.property.id}/room-interior-images`);
 }
@@ -603,7 +600,6 @@ const previewRoomImages = (itemTab: any) => {
     const allCommonAreaImages = extractCommonAreaImages(props.property.commonAreas);
     localStorage.setItem('selectedImages', JSON.stringify(allCommonAreaImages));
     router.push(`/dashboard/listings/${props.property.id}/room-interior-images`);
-    window.location.href=`/dashboard/listings/${props.property.id}/room-interior-images`
   }
 </script>
   

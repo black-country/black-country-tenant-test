@@ -183,7 +183,7 @@
         <!-- Separator -->
         <div class="h-6 w-px bg-gray-900/10 lg:hidden" aria-hidden="true"></div>
 
-        <div class="flex justify-between flex-1 gap-x-4 self-stretch lg:gap-x-6 border-4">
+        <div class="flex justify-between flex-1 gap-x-4 self-stretch lg:gap-x-6">
         
         </div>
       </div>
