@@ -1,21 +1,22 @@
 <template>
 <main>
   <TopNavBar />
+  
   <div class="bg-gray-25 min-h-screen p-6">
-    <div class="max-w-5xl mx-auto">
+    <div class="max-w-4xl mx-auto">
       <!-- Greeting Section -->
-      <h1 class="text-2xl text-[#1D2739] font-medium mb-6">Good morning, Ada</h1>
+      <h1 class="text-lg text-[#1D2739] font-medium mb-6">{{ greeting ?? 'Hello' }}, {{user.firstName ?? 'Nil'}} {{user.lastName ?? 'Nil'}}</h1>
 
       <!-- Setup Actions Section -->
       <div class="space-y-2 mb-8">
         <div v-for="action in setupActions" :key="action.title" class="flex justify-between items-center bg-white p-4 py-6 rounded-lg">
         <div class="flex items-center gap-x-3">
           <div>
-            <input type="checkbox" class="form-checkbox h-3 w-3 text-blue-600" />            
+            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" />            
           </div>
           <div>
-            <h2 class="text-sm font-medium text-[#1D2739]">{{ action.title }}</h2>
-            <p class="text-[#667185] text-xs font-light gap-x-2">{{ action.description }}</p>
+            <h2 class="text-base font-medium text-[#1D2739]">{{ action.title }}</h2>
+            <p class="text-[#667185] text-sm font-light gap-x-2">{{ action.description }}</p>
           </div>
         </div>
     <div>
@@ -28,7 +29,7 @@
 
       <!-- Payment Actions -->
       <div class="flex justify-between  mb-8 rounded-lg">
-        <div v-for="payment in paymentActions" :key="payment.title" class="w-1/3 bg-white p-6 text-center">
+        <div v-for="payment in paymentActions" :key="payment.title" class="w-1/3 cursor-pointer bg-white p-6 text-center">
           <img :src="dynamicIcons(payment.icon)" alt="" class="h-10 w-10 mx-auto mb-2" />
           <h3 class="text-xs font-medium text-[#1D2739]">{{ payment.title }}</h3>
         </div>
@@ -137,6 +138,10 @@
   </template>
   
   <script setup lang="ts">
+  import { useGreeting } from '@/composables/core/useGreeting'
+  import { useUser } from '@/composables/auth/user'
+  const { user } = useUser()
+  const { greeting } = useGreeting()
   import { dynamicIcons } from '@/utils/assets'
 
   definePageMeta({

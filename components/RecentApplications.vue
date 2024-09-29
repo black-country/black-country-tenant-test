@@ -14,7 +14,7 @@
           </div>
           <div class="p-4 space-y-2">
            <div>
-            <h3 class="text-base text-[#1A1A1A] font-medium">{{ property.name }}</h3>
+            <h3 class="text-sm text-[#1A1A1A] font-medium">{{ property.name }}</h3>
             <div class="text-gray-500 text-sm flex items-center gap-x-1">
         <div>
             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">

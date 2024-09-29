@@ -37,24 +37,24 @@
           <p class="mt-6">
             Have an account? <NuxtLink to="/login" class="text-[#326543]">Login</NuxtLink>
           </p>
-          <p class="text-sm text-gray-500 mt-4 max-w-sm mx-auto text-center">
-            By registering, you agree to BlackCountry’s
-            <a href="#" class="text-[#326543]">Terms of Service</a> and
-            <a href="#" class="text-[#326543]">Privacy Policy</a>
-          </p>
+       <div class="absolute bottom-20">
+        <p class="text-sm text-gray-500 font-medium mt-4 max-w-sm mx-auto text-center">
+          By registering, you agree to BlackCountry’s
+          <a href="#" class="text-[#326543]">Terms of Service</a> and
+          <a href="#" class="text-[#326543]">Privacy Policy</a>
+        </p>
+       </div>
         </div>
       </div>
     </div>
-    <div
-    class="hidden lg:w-1/2 lg:flex justify-center items-center bg-black bg-cover bg-no-repeat bg-opacity-70 text-white relative"
-    :style="{ backgroundImage: `url('@/assets/img/authBg.png')` }"
-  >
-    <div class="w-full hidden h-full lg:flex justify-center items-center">
-      <div class="relative w-full max-w-4xl h-[700px] flex justify-center items-center rounded-lg">
-        <Carousel />
-      </div>
+  <div
+  class="hidden lg:block w-1/2 bg-[url('@/assets/img/authBg.png')] bg-black/90 bg-cover bg-center">
+  <div class="w-full hidden h-full lg:flex justify-center items-center">
+    <div class="relative w-full max-w-4xl h-[700px] flex justify-center items-center rounded-lg">
+      <Carousel />
     </div>
   </div>
+</div>
   </div>
 </template>
 

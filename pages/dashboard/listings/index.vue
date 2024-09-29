@@ -103,17 +103,23 @@
         <!-- Location Filter Buttons -->
         <div class="flex space-x-2 justify-between lg:justify-start">
           <button
-            class="bg-[#5B8469] text-sm text-white px-6 py-2 rounded-md hover:bg-green-500"
+          @click="locationTab = 'all'"
+            :class="[locationTab === 'all' ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#1A1A1A]']"
+            class="text-sm px-6 py-2.5 rounded-md"
           >
             All
           </button>
           <button
-            class="text-[#1A1A1A] text-sm bg-[#F0F2F5] px-4 py-2 rounded-md hover:bg-gray-200"
+          @click="locationTab = 'mainland'"
+            :class="[locationTab === 'mainland' ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#1A1A1A]']"
+            class="text-sm px-4 py-2.5 rounded-md"
           >
             Mainland
           </button>
           <button
-            class="text-[#1A1A1A] text-sm bg-[#F0F2F5] px-4 py-2 rounded-md hover:bg-gray-200"
+          @click="locationTab = 'ireland'"
+            :class="[locationTab === 'ireland' ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#1A1A1A]']"
+            class="text-sm px-4 py-2.5 rounded-md"
           >
             Ireland
           </button>
@@ -124,7 +130,7 @@
               <!-- Dropdown Button -->
               <button
                 @click="toggleDropdown"
-                class="px-4 py-2 bg-[#F0F2F5] text-gray-800 rounded-md flex items-center justify-between w-64"
+                class="px-4 py-2.5 bg-[#F0F2F5] text-gray-800 rounded-md flex items-center justify-between w-64"
               >
                 <span class="text-sm">{{
                   selectedOption ? selectedOption.label : "Newest Listing"
@@ -256,7 +262,7 @@
               type="text"
               placeholder="Search"
               v-model="propertySearch"
-              class="bg-[#EAEAEA] text-gray-600 w-full lg:w-auto px-4 py-2 pl-10 rounded-md outline-none"
+              class="bg-[#EAEAEA] text-gray-600 text-sm w-full lg:w-auto px-4 py-3 pl-10 rounded-md outline-none"
             />
             <svg
               class="top-2 absolute left-3"
@@ -375,9 +381,9 @@
            v-if="!loadingProperties && propertiesList.length" 
           v-for="(property, index) in propertiesList"
           :key="index"
+          @click="router.push(`/dashboard/listings/${property.id}/preview`)"
           class="relative cursor-pointer min-w-[300px] w-full lg:max-w-[350px] bg-white"
         >
-          <!-- Favorite Icon (Heart) -->
           <button
             @click="toggleLike(index)"
             class="absolute top-6 right-6 text-white hover:text-red-500 focus:outline-none"
@@ -423,7 +429,8 @@
               />
             </svg>
           </button>
-          <PropertyImageCarousel v-if="property?.images?.length"  :images="property.images" :interval="5000" />
+          <!-- <PropertyImageCarousel v-if="property?.images?.length"  :images="property.images" :interval="5000" /> -->
+          <img v-if="property?.images?.length"  :src="property?.images[0]" class="rounded-lg" src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  alt="alt image"/>
            <img v-else class="rounded-lg" src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  alt="alt image"/>
           <section class="space-y-2">
             <div>
@@ -785,6 +792,8 @@ const {
   debouncedGetProperties 
 
  } = useGetProperties()
+
+ const locationTab = ref('all')
 
 const listView = ref(true);
 

@@ -2,8 +2,8 @@ import { ref, onMounted } from 'vue';
 import { property_api } from '@/api_factory/modules/property';
 import { useRoute, useRouter } from 'vue-router';
 
-export const useFetchProperty = () => {
-    const propertyObj = ref<Record<string, any>>({});
+export const useFetchSimilarProperty = () => {
+    const propertyList = ref<Record<string, any>>([]);
     const loading = ref(false);
     const error = ref<string | null>(null);
 
@@ -13,9 +13,9 @@ export const useFetchProperty = () => {
     // Ensure that route.params.id is reactive
     const queryId = ref<string | null>(null);
 
-    const { $_fetch_single_property } = property_api;
+    const { $_fetch_similar_properties } = property_api;
 
-    const getProperty = async () => {
+    const getSimilarProperties = async () => {
         console.log(route, 'route here')
         // Ensure the queryId is available before making the API call
         if (!queryId.value) {
@@ -26,11 +26,10 @@ export const useFetchProperty = () => {
         loading.value = true;
         error.value = null; // Reset error state
         try {
-            const res = await $_fetch_single_property(route.params.id) as any;
+            const res = await $_fetch_similar_properties(route.params.id) as any;
             console.log(res, 'here oo')
             if (res.type !== 'ERROR') {
-                console.log(res.data.data, 'here oodaasdsdsddsdsd')
-                propertyObj.value = res.data;
+                propertyList.value = res.data.result;
             } else {
                 error.value = 'Failed to fetch property data';
             }
@@ -45,7 +44,7 @@ export const useFetchProperty = () => {
         // Assign the route parameter value to queryId if available
         if (route.params.id) {
             queryId.value = route.params.id as string;
-            getProperty();
+            getSimilarProperties();
         } else {
             // Optionally, redirect or show an error if no ID is available
             error.value = 'No property ID available in the route';
@@ -54,5 +53,5 @@ export const useFetchProperty = () => {
         }
     });
 
-    return { propertyObj, loading, error, getProperty };
+    return { propertyList, loading, error, getSimilarProperties };
 };

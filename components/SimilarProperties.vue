@@ -2,10 +2,11 @@
     <div class="mb-6 p-6 lg:p-0">
         <h2 class="text- font-medium">Similar Properties</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          <div v-for="property in similarProperties" :key="property.id" class="bg-white rounded-lg overflow-hidden">
-            <img :src="dynamicImage(property.image)" alt="Property Image" class="w-full rounded-lg h-64 object-cover" />
+          <div v-for="property in properties" :key="property.id" @click="router.push(`/dashboard/listings/${property?.id}/preview`)" class="bg-white cursor-pointer rounded-lg overflow-hidden">
+            <img v-if="property?.images?.length"  :src="property.images[0]"  alt="Property Image" class="w-full rounded-lg h-64 object-cover" />
+            <img v-else class="rounded-lg" src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  alt="alt image"/>
             <div class="py-4 space-y-2">
-              <h3 class="text- font-medium text-[#1D2739]">{{ property.name }}</h3>
+              <h3 class="text- font-medium text-[#1D2739]">{{ property?.name }}</h3>
               <p class="text-[#79797F] text-xs flex">
                 <svg
                   width="14"
@@ -26,7 +27,7 @@
                   />
                 </svg>
 
-                {{ property.address }}
+                {{ property?.address }}
               </p>
               <p class="text-[#1D2739] font-medium text-xs">{{ property.price }}</p>
             </div>
@@ -37,35 +38,12 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+const router = useRouter()
 import { dynamicImage } from "@/utils/assets";
-const similarProperties = ref([
-  {
-    id: 1,
-    image: "property1.png",
-    name: "Jason Co-living Space",
-    address: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    price: "5 bedrooms | 6 baths | 5254 sqft",
-  },
-  {
-    id: 2,
-    image: "property2.png",
-    name: "Jason Co-living Space",
-    address: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    price: "5 bedrooms | 6 baths | 5254 sqft",
-  },
-  {
-    id: 3,
-    image: "property1.png",
-    name: "Jason Co-living Space",
-    address: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    price: "5 bedrooms | 6 baths | 5254 sqft",
-  },
-  {
-    id: 4,
-    image: "property2.png",
-    name: "Jason Co-living Space",
-    address: "Iconic Tower, off Ajose Adegun VI, Lagos.",
-    price: "5 bedrooms | 6 baths | 5254 sqft",
-  },
-]);
+const props = defineProps({
+  properties: {
+    type: Array,
+    default: () => []
+  }
+})
 </script>

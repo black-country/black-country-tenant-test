@@ -34,6 +34,7 @@ export const use_auth_register = () => {
       loading.value = false;
 
       if (res.type !== "ERROR") {
+        console.log(res, 'here')
         sessionStorage.setItem('auth-payload', JSON.stringify(sessionPayload))
         router.push(`/verify-email?email=${credential.email.value}&referrer=signup`);
       } else {
@@ -64,12 +65,24 @@ const populateObj = (data: any) => {
 }
 
 // Disable the button if fields are empty, passwords do not match, or agreement is not checked
+// const isFormDisabled = computed(() => {
+//   return (
+//     loading.value ||
+//     !credential.agreement.value ||
+//     !credential.fullName.value ||
+//     !credential.password.value ||
+//     !credential.confirmPassword.value ||
+//     passwordMismatch.value
+//   );
+// });
+
 const isFormDisabled = computed(() => {
   return (
     loading.value ||
     !credential.agreement.value ||
     !credential.fullName.value ||
     !credential.password.value ||
+    credential.password.value.length <= 6 ||  // Password length must be greater than 6 characters
     !credential.confirmPassword.value ||
     passwordMismatch.value
   );

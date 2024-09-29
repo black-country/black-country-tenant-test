@@ -97,7 +97,7 @@
     </template>
   </TopNavBar>
   <section>
-    <div class="flex justify-between max-w-6xl mx-auto items-center pt-3 px-6">
+    <div class="flex justify-between max-w-7xl mx-auto items-center pt-3 px-6">
       <!-- Breadcrumb -->
       <div class="flex items-center space-x-2">
         <a href="#" class="text-gray-500 hover:text-gray-700 text-sm">Listings</a>
@@ -130,26 +130,8 @@
       </div>
     </div>
   </section>
-    <div class="max-w-6xl mx-auto pt-4 pb-8">
-      <!-- Property Images Section -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 p-6 lg:p-0">
-        <div>
-          <img :src="dynamicImage(mainImage)" alt="Main Image" class="rounded-lg w-full" />
-        </div>
-        <div class="grid grid-cols-2 gap-4">
-          <img :src="dynamicImage(secondaryImage1)" alt="Image 2" class="rounded-lg w-full" />
-          <img :src="dynamicImage(secondaryImage2)" alt="Image 3" class="rounded-lg w-full" />
-          <img :src="dynamicImage(secondaryImage3)" alt="Image 4" class="rounded-lg w-full" />
-          <div  @click="router.push('/dashboard/listings/gallery')" class="relative cursor-pointer">
-            <img :src="dynamicImage(secondaryImage4)" alt="Image 5" class="rounded-lg w-full cursor-pointer" />
-            <div
-              class="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-lg font-bold rounded-lg"
-            >
-              View all +12
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="max-w-7xl mx-auto pt-4 pb-8">
+      <PropertyImageGallery :images="propertyObj.images" />
 
       <PropertyDetails />
     <SimilarProperties />
@@ -287,10 +269,12 @@
   </template>
   
   <script setup lang="ts">
+  import { useFetchProperty } from '@/composables/modules/property/fetchProperty'
 import { ref } from "vue";
 import { dynamicImage } from "@/utils/assets";
+const { propertyObj, loading, } = useFetchProperty()
 const router = useRouter()
-
+ 
 // Property Images
 const mainImage = ref("property1.png");
 const secondaryImage1 = ref("property1.png");

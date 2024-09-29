@@ -12,8 +12,12 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
   return GATEWAY_ENDPOINT.get(url)
 },
 
-  $_fetch_single_property: (id: string | number) => {
-    const url = `/houses/:id`;
+  $_fetch_single_property: (id: any) => {
+    const url = `/houses/${id}`;
+    return GATEWAY_ENDPOINT.get(url);
+  },
+  $_fetch_similar_properties: (id: any) => {
+    const url = `/houses/${id}/similar`;
     return GATEWAY_ENDPOINT.get(url);
   }
 };

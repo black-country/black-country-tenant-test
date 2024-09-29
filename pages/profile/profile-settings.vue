@@ -22,7 +22,7 @@
           <!-- Add photo button is always visible -->
           <div class="flex justify-center items-center flex-col w-full">
             <div class="flex justify-center items-center">
-              <button @click="triggerFileUpload" class="bg-[#5B8469] text-white py-2 px-4 rounded-xl flex items-center">
+              <button @click="triggerFileUpload" class="bg-[#5B8469] text-white py-2 px-4 rounded-md flex items-center">
                 <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M6 2V10" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                   <path d="M2 6H10" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
@@ -156,24 +156,24 @@ const onFileSelected = async (event: Event) => {
   // Account settings for the menu
   const accountSettings = ref([
     {
-      label: "Profile settings",
+      label: "Personal information",
       icon: "profile",
       path: "/profile/personal-information",
     },
     {
-      label: "Payment Information",
+      label: "Rental History",
       icon: "payment",
-      path: "/profile/payment-information",
+      path: "/profile/rental-history",
     },
     {
-      label: "Notification Preference",
+      label: "Employment Information",
       icon: "notification",
-      path: "/profile/notification-preferences",
+      path: "/profile/employment-information",
     },
     {
-      label: "Login and Security",
+      label: "Next of Kin",
       icon: "login",
-      path: "/profile/login-security",
+      path: "/profile/next-of-kin",
     },
   ]);
   </script>

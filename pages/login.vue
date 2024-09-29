@@ -7,8 +7,7 @@
 
     <!-- Right Section (Carousel) -->
     <div
-      class="hidden lg:w-1/2 lg:flex justify-center items-center bg-black bg-cover bg-no-repeat bg-opacity-70 text-white relative"
-      :style="{ backgroundImage: `url('@/assets/img/authBg.png')` }"
+      class="hidden lg:block w-1/2 bg-[url('@/assets/img/authBg.png')] bg-black/90 bg-cover bg-center"
     >
       <div class="w-full h-full flex justify-center items-center">
         <div class="relative w-full max-w-4xl h-[700px] flex justify-center items-center rounded-lg">
@@ -18,3 +17,4 @@
     </div>
   </div>
 </template>
+

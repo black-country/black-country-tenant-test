@@ -1,59 +1,291 @@
 <template>
-    <div class="flex flex-col lg:flex-row gap-6 p-6">
-      <!-- Left Section -->
-      <div class="lg:w-1/2 space-y-6">
-        <!-- Property Title and Overview -->
-        <div>
-          <h1 class="text-2xl font-medium">Jason Gardens</h1>
-          <p class="text-sm gap-x-2 text-gray-500 flex items-center">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M9.07847 14.2443C8.7894 14.515 8.40293 14.6663 8.00073 14.6663C7.59853 14.6663 7.21213 14.515 6.923 14.2443C4.27535 11.7503 0.727174 8.96427 2.45751 4.91945C3.39309 2.73245 5.63889 1.33301 8.00073 1.33301C10.3626 1.33301 12.6084 2.73245 13.544 4.91945C15.2721 8.95921 11.7327 11.7589 9.07847 14.2443Z" fill="#5B8469" stroke="#5B8469"/>
-                <path d="M10.3337 7.33333C10.3337 8.622 9.28899 9.66667 8.00033 9.66667C6.71166 9.66667 5.66699 8.622 5.66699 7.33333C5.66699 6.04467 6.71166 5 8.00033 5C9.28899 5 10.3337 6.04467 10.3337 7.33333Z" fill="white" stroke="#5B8469"/>
-                </svg>
-            Iconic Tower, off Ajose Adegun VI, Lagos.
-          </p>
-
-          <div class="mt-4 flex space-x-2 overflow-x-auto hide-scrollbar">
+    <div class="flex flex-col lg:flex-row gap-6">
+  
+      <section class="lg:w-7/12 space-y-6">
+        <div class="max-w-3xl mx-auto bg-white">
+          <!-- Dynamic Tabs -->
+          <div class="mt-4 flex space-x-2 overflow-x-auto hide-scrollbar scrollbar-hide">
             <button
-              @click="activeTab = 'property-overview'"
-              class="text-[#292929] text-sm py-2 px-4 bg-[#EBE5E0] rounded-md flex-shrink-0 whitespace-nowrap w-auto"
+              :class="[activeTab === 'property-overview' ? 'bg-[#EBE5E0]' : 'bg-[#F0F2F5]']"
+              @click="handleSelectedTab('property-overview')"
+              class="text-[#292929] text-sm py-2 px-4  rounded-md flex-shrink-0 whitespace-nowrap w-auto"
             >
               Property Overview
             </button>
             <button
-              @click="activeTab = 'common-areas'"
-              class="text-[#292929] text-sm py-2 px-4 bg-[#F0F2F5] rounded-md flex-shrink-0 whitespace-nowrap w-auto"
+              :class="[activeTab === 'common-areas' ? 'bg-[#EBE5E0]' : 'bg-[#F0F2F5]']"
+              @click="handleSelectedTab('common-areas')"
+              class="text-[#292929] text-sm py-2 px-4 rounded-md flex-shrink-0 whitespace-nowrap w-auto"
             >
-              Common areas
+              Common Areas
             </button>
             <button
-              @click="activeTab = 'room-1'"
-              class="text-[#292929] text-sm py-2 px-4 bg-[#F0F2F5] rounded-md flex-shrink-0 whitespace-nowrap w-auto"
+              v-for="room in tabs"
+              :key="room.id"
+              :class="[activeTab === room.name ? 'bg-[#EBE5E0]' : 'bg-[#F0F2F5]']"
+              @click="handleSelectedTab(room, 'dynamic')"
+              class="text-[#292929] text-sm py-2 px-4 rounded-md flex-shrink-0 whitespace-nowrap w-auto"
             >
-              Room 1
-            </button>
-            <button
-              @click="activeTab = 'room-2'"
-              class="text-[#292929] text-sm py-2 px-4 bg-[#F0F2F5] rounded-md flex-shrink-0 whitespace-nowrap w-auto"
-            >
-              Room 2
+              {{ room.name }}
             </button>
           </div>
+
+          <div v-if="activeTab === 'property-overview'" class="">
+            
+            <!-- <p class="text-sm text-gray-600">{{ property.description.value ?? 'No description available' }}</p> -->
+            <h2  class="text-sm text-[#1D2739] font-medium bg-white border-[0.5px] py-3 px-3 rounded-sm border-gray-50">Property Description</h2>
+            <div class="pt-4 bg-white rounded-lg border-gray-50 p-3 border-[0.5px] text-sm">
+              <p class="text-[#1D2739] mt-2  leading-snug text-sm">
+                {{property.description ?? 'Nil'}}
+                <a v-if="property?.description?.length > 50" href="#" class="text-blue-500">View more</a>
+              </p>
+            </div>
+      
+            <!-- Property Highlights -->
+            <h3 class="text-base text-[#1D2739] font-medium bg-white border-[0.5px] py-3 px-3 rounded-sm border-gray-50">Property Highlights</h3>
+            <div class="">
+              <div class="gap-4 space-y-6 bg-white rounded-lg border-gray-50 p-3 border-[0.5px] text-sm">
+            <div class="flex justify-between items-center">
+                <div class="text-[#667185]">Property size <span class="font-medium text-[#1D2739]">{{property?.size ?? 'Nil'}} {{property?.sizeUnit ?? 'Nil'}}</span></div>
+                <div class="text-[#667185]">Flooring type <span class="font-medium text-[#1D2739]">{{property?.flooringType?.name ?? 'Nil'}}</span></div>
+            </div>
+          <div class="flex justify-between items-center">
+            <div class="text-[#667185]">Number of bedrooms <span class="font-medium text-[#1D2739]">{{property?.bedroomCount ?? 'Nil'}}</span></div>
+            <div class="text-[#667185]">Number of bathrooms <span class="font-medium text-[#1D2739]d">{{property?.bathroomCount ?? 'Nil'}}</span></div>
+          </div>
+                <div class="text-[#667185]">Floor number <span class="font-medium text-[#1D2739]">{{property?.floorNumber ?? 'Nil'}}</span></div>
+          <div class="flex justify-between items-center">
+            <div class="text-[#667185]">Architecture <span class="font-medium text-[#1D2739]">Apartment</span></div>
+            <div class="text-[#667185]">{{property?.availableRoomsCount ?? 'Nil'}} rooms available <span class="text-[#326543]">Now</span></div>
+          </div>
+              </div>
+      
+              <!-- Co-living with -->
+              <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-3 px-3 rounded-lg border-gray-50">Co-living with <span class="text-[#1D2739]">{{property?.bedroomCount - 1}} Persons</span></h2>
+              <div>
+                <table class="w-full mt-2 table-fixed text-sm">
+                  <thead>
+                    <tr class="bg-[#F9FAFB] rounded-lg">
+                      <th class="text-left text-sm py-3 pl-6 font-medium text-[#1D2739]">Occupants</th>
+                      <th class="text-left text-sm py-3 font-medium text-[#1D2739]">Room occupied</th>
+                      <th class="text-left text-sm py-3 font-medium text-[#1D2739]">Available from</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(room, index) in formattedRoomData" :key="index">
+                      <td class="text-[#1D2739] py-3 pl-6">{{ room.occupant }}</td>
+                      <td class="text-[#1D2739] py-3">{{ room.roomOccupied }}</td>
+                      <td class="text-[#1D2739] py-3">{{ room.availableFrom }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+      
+            <!-- Property Visitation -->
+         <section v-if="property?.visitations">
+          <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-3 px-3 rounded-lg border-gray-50">Property visitation</h2>
+          <div class="rounded-md border-[0.5px] border-gray-50 bg-white">
+            <table class="w-full mt-2 table-fixed text-sm">
+              <thead>
+                <tr class="bg-[#F9FAFB] rounded-lg">
+                  <th class="text-left py-3 text-[#667185] pl-4">Day</th>
+                  <th class="text-left py-3 text-[#667185]">Time</th>
+                </tr>
+              </thead>
+              <tbody class="space-y-6">
+                <tr class="">
+                  <td class="text-[#1D2739] py-3  pl-4">Monday</td>
+                  <td class="text-[#1D2739] py-3 ">10:00 AM</td>
+                </tr>
+                <tr class="">
+                  <td class="text-[#1D2739] py-3  pl-4">Tuesday</td>
+                  <td class="text-[#1D2739] py-3 ">10:00 AM</td>
+                </tr>
+                <tr class="">
+                  <td class="text-[#1D2739] py-3  pl-4">Wednesday</td>
+                  <td class="text-[#1D2739] py-3 ">10:00 AM</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+         </section>
+      
+            <!-- House Rules -->
+            <h2 class="text-sm font-medium text-[#1D2739] mt-6 border-[0.5px] py-3 px-3 rounded-lg border-gray-50">House Rules</h2>
+            <div class="">
+              <ul v-if="property?.rules?.length" class="space-y-1">
+                <p class="border-[0.5px] rounded-lg border-gray-50 py-3 text-sm pl-4">{{property?.rules[0]?.rule }}</p>
+                <p class="border-[0.5px] rounded-lg border-gray-50 py-3 text-sm pl-4">{{property?.rules[1]?.rule }}</p>
+                <div class="border-[0.5px] rounded-lg border-gray-50 py-3">
+                    <p class="py-3 text-sm pl-4">Other rules</p>
+                  <div class="pl-5">
+                    <ul class="list-disc ml-5 space-y-4 text-sm">
+                    <li v-for="(item, idx) in otherRules" :key="idx" class="text-[#1D2739] leading-snug">{{item.rule}}</li>
+                     </ul>
+                  </div>
+                </div>
+              </ul>
+            </div>
+          </div>
+    
+          <div v-if="activeTab === 'common-areas'" class="mb-6 mt-4">
+            <h3 class="font-semibold text-lg">Common Areas</h3>
+            <p class="text-sm text-gray-600">This section provides details about the shared common areas of the property.</p>
+            <div class="space-y-6">
+              <!-- Gallery Section -->
+              <div @click="previewCommonAreaImages" class="flex cursor-pointer items-center border-[0.5px] border-gray-50 space-x-4 bg-white p-4 rounded-lg">
+                <img :src="dynamicImage('placeholder.png')" alt="Gallery" class="w-12 h-12 rounded-full">
+                <div class="flex-1">
+                  <h3 class="text-lg font-medium">Gallery</h3>
+                  <p class="text-gray-500 text-sm">Click to view photos of all common areas</p>
+                </div>
+                <button class="text-gray-500">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+              </div>
+          
+              <!-- Interior Features Section -->
+              <h2 class="text- pl-4 font-medium bg-white border-[0.5px] py-4 border-gray-50">Interior Features</h2>
+              <div class="bg-white p-6 rounded-lg border-[0.5px] space-y-4 border-gray-50">  
+                <div class="space-y-2">
+                  <p class="font-medium text-sm text-[#667185]">
+                    Furnished: <span class="font-medium text-gray-900">{{property?.isFurnishedCommonArea ? 'Yes' : 'No'}}</span>
+                  </p>
+          
+                  <div class="space-y-2">
+                    <p class="text-sm font- text-[#667185]">Amenities</p>
+          
+                    <!-- Amenities -->
+                    <div class="grid grid-cols-3 gap-3">
+                      <div v-for="item in interiorCommonAreas" :key="item.id" class="flex items-center space-x-2 p-2 bg-white border-[0.5px] border-gray-100 rounded-md">
+                        <img :src="dynamicImage('roomBg.png')" alt="Living room" class="w-7 h-7">
+                        <p class="text-[#1D2739] text-sm">{{item.name}}</p>
+                      </div>
+                    </div>
+                    <button class="mt-2 font-medium text-[#1D2739]">View less</button>
+                  </div>
+                </div>
+              </div>
+          
+              <!-- Exterior Features Section -->
+              <h2 class="text- pl-4 font-medium bg-white border-[0.5px] py-4 border-gray-50">Exterior Feature</h2>
+              <div class="bg-white p-6 rounded-lg space-y-4">
+                <div class="space-y-2">
+                  <p class="text-sm font- text-[#667185]">Amenities</p>
+          
+                  <!-- Exterior Amenities -->
+                  <div class="grid grid-cols-3 gap-3">
+                    <div  v-for="item in exteriorCommonAreas" :key="item.id" class="flex items-center space-x-2 p-2 bg-white border-[0.5px] border-gray-100 rounded-md">
+                      <img :src="dynamicImage('roomBg.png')" alt="Parking space" class="w-7 h-7">
+                      <p class="text-[#1D2739] text-sm">{{item.name}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div v-if="activeTab !== 'property-overview' && activeTab !== 'common-areas'" class="">
+            <div @click="previewRoomImages(activeTab)" class="flex cursor-pointer mb-3 items-center border-[0.5px] border-gray-50 space-x-4 bg-white p-4 rounded-lg">
+              <img :src="dynamicImage('placeholder.png')" alt="Gallery" class="w-12 h-12 rounded-full">
+              <div class="flex-1">
+                <h3 class="text-lg font-medium">Gallery</h3>
+                <p class="text-gray-500 text-sm">Click to view photos of {{selectedRoomObj.name}}</p>
+              </div>
+              <button class="text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+
+            <div class="flex flex-col space-y-1 mb-6 bg-white rounded-lg border-gray-50 p-3 border-[0.5px] text-sm">
+              <p class="text-[#1D2739] text-sm font-medium">Available <span class="text-[#326543]">{{selectedRoomObj?.availability === 'available_now' ? 'Now' : selectedRoomObj?.availability === 'unavailable' ? 'Unavailable' : selectedRoomObj?.availability === 'available_from_date' ? 'Not Available For Now' : ''}}</span></p>
+              <p class="text-gray-900 font-medium text-lg">{{ formatCurrency(selectedRoomObj?.rentAmount)}} <span class="text-[#667185] text-sm font-normal">{{selectedRoomObj?.rentFrequency}}</span></p>
+            </div>
+        
+
+            <div class="mb-6 space-y-3">
+              <h3 class="text- pl-4 font-medium text-[#1D2739] bg-white border-[0.5px] py-4 rounded-md border-gray-50">Interior Features</h3>
+              
+       <section class="font-medium bg-white border-[0.5px] py-4 border-gray-50 rounded-md">
+
+               <p class="text-gray-700 mb-2 pl-4"><span class="font-medium">Furnished:</span> {{selectedRoomObj?.isFurnished ? 'Yes' : 'No'}}</p>
+        
+               <!-- Amenities -->
+               <h4 class="text-gray-500 mb-3 text- pl-4">Amenities</h4>
+               <div class="grid grid-cols-3 gap-3 text- p-3">
+                 <div v-for="(amenity, index) in selectedRoomObj?.features" :key="index" class="flex items-center p-2 border-[0.5px] rounded-lg space-x-2 bg-white hover:shadow transition-shadow duration-150">
+                   <div class="w-8 h-8 flex items-center justify-center rounded-md">
+                     <!-- Replace this with actual icon/image if available -->
+                     <img src="@/assets/img/roomBg.png" alt="icon" class="w-6 h-6 object-cover" />
+                   </div>
+                   <p class="text-[#1D2739] text-sm font-medium">{{ amenity.name }}</p>
+                 </div>
+               </div>
+       </section>
+              
+              <!-- View More Link -->
+              <div v-if="selectedRoomObj?.features?.length > 10" class="mt-4">
+                <button @click="viewMore" class="text-blue-500 text-sm font-medium hover:underline">View more</button>
+              </div>
+            </div>
+          </div>
+    
+          <!-- <div v-if="activeTab !== 'property-overview' && activeTab !== 'common-areas'" class="mt-4">
+            <div class="flex cursor-pointer items-center border-[0.5px] border-gray-50 space-x-4 bg-white p-4 rounded-lg">
+              <img :src="dynamicImage('placeholder.png')" alt="Gallery" class="w-12 h-12 rounded-full">
+              <div class="flex-1">
+                <h3 class="text-lg font-medium">Gallery</h3>
+                <p class="text-gray-500 text-sm">Click to view photos of all common areas</p>
+              </div>
+              <button class="text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </div>
+            <div class="space-y-3">
+              <div 
+                v-for="(value, key) in selectedRoomObj" 
+                :key="key" 
+                class="flex justify-between border-[0.5px] p-3 rounded-md items-center gap-x-2 bg-white"
+              >
+                <p>{{ key }}</p>
+                <div v-if="key === 'features'" class="features-container space-y-4">
+                  <div v-for="feature in value" :key="feature.name" class="feature-item">
+                    <h3 v-if="feature.name" class="feature-name text-sm">{{ feature.name }}</h3>
+                    <div v-if="feature.images.length > 0 && feature.name" class="images-container space-y-4">
+                      <div
+                        v-for="(image, index) in feature.images"
+                        :key="index"
+                        class="image-wrapper"
+                      >
+                        <img :src="image" :alt="`${feature.name} Image ${index + 1}`" class="feature-image h-20 w-full" />
+                        <span class="image-tag text-xs px-3 py-1 border rounded-lg ">{{ feature.name }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p v-else>{{ value ?? 'Nil' }}</p>
+              </div>
+            </div>
+          </div> -->
+          
         </div>
-  
-            <PropertyOverview v-if="activeTab === 'property-overview'" />
-            <InteriorExteriorFeatures v-if="activeTab === 'common-areas'" />
-      </div>
-  
+      </section>
       <!-- Right Section -->
-      <div class="lg:w-1/2 space-y-6">
+      <div class="lg:w-1/2 space-y-6 max-w-3xl mx-auto">
         <!-- Property Manager -->
         <div class="bg-[#F0F2F5] p-6 rounded-md">
             <div class="flex items-center justify-between space-x-4">
           <div class="flex items-center space-x-4">
             <img  :src="dynamicImage(propertyManagerImage)" alt="Property Manager" class="w-10 h-10 rounded-full">
             <div>
-              <h3 class="font-bold text-[#1D2739]">Joy Adetunji</h3>
+              <h3 class="font-bold text-[#1D2739]">{{property?.agent?.firstName}} {{property?.agent?.lastName}}</h3>
               <p class="text-xs text-[#1D2739]">Property Manager</p>
             </div>
           </div>
@@ -84,15 +316,102 @@
   
         <!-- Neighborhood Amenities -->
         <h3 class="text-base text-[#1D2739] font-medium bg-white border-[0.5px] py-3 px-3 rounded-s border-gray-50">Neighborhood Amenities</h3>
-        <div class="bg-white p-3 border-[0.5px] border-gray-50 rounded-md">
+        <div class="px-3">
+          <!-- Render buttons for each type -->
+          <div class="overflow-x-auto scrollbar-hidden">
+            <div class="mb-4 flex space-x-2 w-max">
+              <button
+                v-for="type in amenityTypes"
+                :key="type"
+                @click="toggleVisibility(type)"
+                :class="[
+                  'px-4 py-2 rounded text-sm',
+                  visibleType === type
+                    ? 'bg-[#EBE5E0] text-[#344054]'
+                    : 'bg-[#F0F2F5]',
+                ]"
+              >
+                {{ type }}
+              </button>
+            </div>
+          </div>
+  
+          <!-- Render amenities based on selected type -->
+          <div
+            v-for="type in amenityTypes"
+            :key="type"
+            v-show="visibleType === type"
+          >
+            <div
+              v-for="amenity in groupedAmenities[type]"
+              :key="amenity.id"
+              class="px-4 py-2 mb-2 border-[0.5px] rounded-lg flex items-center gap-x-2"
+            >
+              <div class="flex items-center">
+                <svg
+                  width="50"
+                  height="49"
+                  viewBox="0 0 50 49"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    x="1"
+                    y="0.5"
+                    width="48"
+                    height="48"
+                    rx="24"
+                    fill="white"
+                  />
+                  <rect
+                    x="1"
+                    y="0.5"
+                    width="48"
+                    height="48"
+                    rx="24"
+                    stroke="#F9FAFB"
+                  />
+                  <rect
+                    x="3"
+                    y="2.5"
+                    width="44"
+                    height="44"
+                    rx="22"
+                    fill="#F4F4F4"
+                  />
+                  <path
+                    d="M22.917 27C22.1549 27.1715 21.667 27.4351 21.667 27.7307C21.667 28.2476 23.1594 28.6667 25.0003 28.6667C26.8413 28.6667 28.3337 28.2476 28.3337 27.7307C28.3337 27.4351 27.8457 27.1715 27.0837 27"
+                    stroke="#1D2739"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M26.0413 23.2497C26.0413 23.825 25.575 24.2913 24.9997 24.2913C24.4244 24.2913 23.958 23.825 23.958 23.2497C23.958 22.6744 24.4244 22.208 24.9997 22.208C25.575 22.208 26.0413 22.6744 26.0413 23.2497Z"
+                    fill="white"
+                    stroke="#1D2739"
+                  />
+                  <path
+                    d="M25.5236 26.7887C25.383 26.924 25.1952 26.9997 24.9998 26.9997C24.8043 26.9997 24.6164 26.924 24.4759 26.7887C23.189 25.5417 21.4643 24.1486 22.3054 22.1262C22.7601 21.0327 23.8517 20.333 24.9998 20.333C26.1478 20.333 27.2393 21.0327 27.6941 22.1262C28.5341 24.1461 26.8137 25.546 25.5236 26.7887Z"
+                    stroke="#1D2739"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-sm text-[#1D2739]">
+                  {{ amenity.description }}
+                </h3>
+                <p class="text-sm text-[#667185]">{{ amenity.address }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="bg-white p-3 border-[0.5px] border-gray-50 rounded-md">
           <div class="mt-2 flex space-x-2">
             <button class="py-2 text-xs px-4 bg-[#EBE5E0] text-[#292929] font-medium rounded-md">Hospital</button>
             <button class="py-2 text-xs px-4 bg-white text-[#344054] border border-gray-300 rounded-md">Schools</button>
             <button class="py-2 text-xs px-4 bg-white text-[#344054] border border-gray-300 rounded-md">Market/Shopping Plaza</button>
             <button class="py-2 text-xs px-4 bg-white text-[#344054] border border-gray-300 rounded-md">Police Station</button>
           </div>
-  
-          <!-- Amenity Details -->
+
           <div class="mt-6 space-y-2">
             <div v-for="itm in 2" :key="itm" class="flex bg-white justify-between border-b-[0.5px] pb-3 last:border-b-0">
    <div class="flex items-center gap-x-3">
@@ -116,15 +435,176 @@
               <p class="text-sm text-[#171717]">20 min drive</p>
             </div>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </template>
   
   <script setup lang="ts">
 const propertyManagerImage = ref("shape.png");
+import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
+const { formatCurrency } = useCurrencyFormatter('en-NG', 'NGN');
 const activeTab = ref('property-overview')
-// No additional logic needed
+const router = useRouter()
+
+const props = defineProps({
+  property: {
+    type: Object,
+    default: () => {}
+  }
+})
+
+const selectedRoomObj = ref({})
+
+const groupedAmenities = computed(() => {
+  if (props?.property) {
+    return props?.property?.neighbouringLandmarks?.reduce((acc, amenity) => {
+      const { type } = amenity;
+      if (!acc[type]) {
+        acc[type] = [];
+      }
+      acc[type].push(amenity);
+      return acc;
+    }, {});
+  }
+});
+
+const phoneNumber = "+1234567890"; // Replace with a dynamic number if needed
+
+const makeCall = () => {
+  window.location.href = `tel:${phoneNumber}`;
+};
+
+const sendSms = () => {
+  window.location.href = `sms:${phoneNumber}`;
+};
+
+// Computed property to group amenities by type
+// const groupedAmenities = computed(() => {
+//   if (props?.propertyObj) {
+//     return props?.propertyObj?.neighbouringLandmarks?.reduce((acc, amenity) => {
+//       const { type } = amenity;
+//       if (!acc[type]) {
+//         acc[type] = [];
+//       }
+//       acc[type].push(amenity);
+//       return acc;
+//     }, {});
+//   }
+// });
+
+// Get all unique amenity types
+const amenityTypes = computed(() => {
+  if (groupedAmenities.value) {
+    return Object.keys(groupedAmenities?.value);
+  }
+});
+
+const tabs = props.property?.rooms?.map((room: any, index: number) => ({
+    id: index + 1,
+    name: `Room ${index + 1}`,
+    details: room,
+  }));
+
+// State to keep track of the currently visible type
+const visibleType = ref(null) as any;
+
+// Set the first type as the default visible type
+onMounted(() => {
+  if (amenityTypes?.value?.length > 0) {
+    visibleType.value = amenityTypes.value[0];
+  }
+});
+// Method to toggle visibility of amenity lists
+const toggleVisibility = (type: any) => {
+  visibleType.value = visibleType.value === type ? null : type;
+};
+
+const handleSelectedTab = (item: any, itemType: string | null = null) => {
+    if (itemType === 'dynamic') {
+      console.log(selectedRoomObj.value, 'room obk jee', item)
+      activeTab.value = item.name;
+      selectedRoomObj.value = item.details;
+    } else {
+      activeTab.value = item;
+    }
+  };
+
+  const exteriorCommonAreas = computed(() => {
+     return props?.property.commonAreas?.filter((item: any) => item.type === 'exterior')
+  })
+
+  const interiorCommonAreas = computed(() => {
+    return props?.property?.commonAreas?.filter((item: any) => item.type === 'interior')
+  })
+
+  const formattedRoomData = computed(() => {
+if(props.property.rooms){
+  return props.property.rooms.map(room => {
+    return {
+      occupant: room.occupantName || "No occupant",
+      roomOccupied: room.name,
+      availableFrom: room.availability === "available_now"
+        ? "Available now"
+        : room.availableFrom
+          ? new Date(room.availableFrom).toLocaleDateString()
+          : "Not available"
+    };
+  });
+}
+});
+
+// Function to extract images from a room object
+const extractRoomImages = (room: any): string[] => {
+  const allImages: string[] = [];
+
+  // Check if the room itself has images
+  if (room?.images && Array.isArray(room.images)) {
+    allImages.push(...room.images);
+  }
+
+  // Extract images from features array
+  if (room?.features && Array.isArray(room.features)) {
+    room.features.forEach((feature: any) => {
+      if (feature?.images && Array.isArray(feature.images)) {
+        allImages.push(...feature.images);
+      }
+    });
+  }
+
+  return allImages;
+};
+
+const previewRoomImages = (itemTab: any) => {
+  const selectedRoom = props.property.rooms.find((room: any) => room?.name === itemTab)
+    const allImages = extractRoomImages(selectedRoom);
+     console.log(allImages); // This will print all the images in the room and its features.
+    // const selectedImages = images.value[tabName];
+
+    localStorage.setItem('selectedImages', JSON.stringify(allImages));
+    router.push(`/dashboard/listings/${props.property.id}/room-interior-images`);
+}
+
+
+    // Function to extract all images from an array of objects that contain 'images' arrays
+    const extractCommonAreaImages = (commonAreas: any[]): string[] => {
+    const allImages: string[] = [];
+
+    commonAreas.forEach((area) => {
+      if (area?.images && Array.isArray(area.images)) {
+        allImages.push(...area.images);
+      }
+    });
+
+    return allImages;
+  };
+
+  const previewCommonAreaImages = () => {
+    const allCommonAreaImages = extractCommonAreaImages(props.property.commonAreas);
+    localStorage.setItem('selectedImages', JSON.stringify(allCommonAreaImages));
+    router.push(`/dashboard/listings/${props.property.id}/room-interior-images`);
+    window.location.href=`/dashboard/listings/${props.property.id}/room-interior-images`
+  }
 </script>
   
 <!-- Custom CSS to hide scrollbar -->
@@ -136,5 +616,14 @@ const activeTab = ref('property-overview')
 
   .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Safari and Chrome */
+  }
+
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none; /* Hides the scrollbar for WebKit browsers */
+  }
+  
+  .scrollbar-hidden {
+    -ms-overflow-style: none; /* Hides the scrollbar for IE and Edge */
+    scrollbar-width: none; /* Hides the scrollbar for Firefox */
   }
 </style>

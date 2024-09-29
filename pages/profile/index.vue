@@ -33,8 +33,8 @@
              <div class="flex justify-center items-center">
               <span class="text-white rounded-full text-xs px-2 py-1 font-semibold bg-[#5B8469] absolute top-[81px]">{{ percentage }}%</span> 
              </div>
-            <p class="text-xl font-bold text-[#1D2739]">Ada Dennis</p>
-            <p class="text-sm text-[#667185]">ad@gmail.com</p>
+            <p class="text-xl font-bold text-[#1D2739]">{{user.firstName ?? 'Nil'}} {{user.lastName ?? 'Nil'}}</p>
+            <p class="text-sm text-[#667185]">{{user.email ?? 'Nil'}}</p>
           </div>
       
           <!-- Action Button -->
@@ -295,7 +295,9 @@
 </template>
 
 <script setup lang="ts">
+import { useUser } from '@/composables/auth/user'
 import { dynamicIcons } from "@/utils/assets";
+const { user } = useUser()
 const showBLogoutModal = ref(false);
 const router = useRouter()
 const loading = ref(false)
