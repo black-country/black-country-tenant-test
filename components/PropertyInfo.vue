@@ -349,9 +349,9 @@
             </div>
             <div>
               <h3 class="font-xs text-[#1D2739] font-medium">
-                {{ amenity.description }}
+                {{ amenity?.name }}
               </h3>
-              <p class="text-sm text-[#667185]">{{ amenity.address }}</p>
+              <p class="text-sm text-[#667185]">{{ amenity?.description }}</p>
             </div>
           </div>
         </div>

@@ -106,7 +106,7 @@
         class="lg:flex items-center space-y-6 lg:space-y-0 lg:space-x-4 p-4 bg-white container mx-auto"
       >
         <!-- Location Filter Buttons -->
-        <div class="flex space-x-2 justify-between lg:justify-start">
+        <div class="lg:flex space-y-4 lg:space-y-0 lg:space-x-2 justify-between lg:justify-start">
           <button
           @click="locationTab = 'all'"
             :class="[locationTab === 'all' ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#1A1A1A]']"
@@ -130,12 +130,12 @@
           </button>
 
           <!-- Dropdown Button -->
-          <div class="relative z-10">
-            <div class="relative inline-block z-50">
+          <div class="relative z-10 w-full">
+            <div class="relative inline-block z-50 w-full">
               <!-- Dropdown Button -->
               <button
                 @click="toggleDropdown"
-                class="px-4 py-2.5 bg-[#F0F2F5] text-gray-800 rounded-md flex items-center justify-between w-64"
+                class="px-4 py-2.5 bg-[#F0F2F5] text-gray-800 rounded-md flex items-center justify-between w-full lg:w-64"
               >
                 <span class="text-sm">{{
                   selectedOption ? selectedOption.label : "Newest Listing"
@@ -489,7 +489,7 @@
       @close="isSearchModalVisible = false"
     >
       <div
-        class="bg-white p-6 m-6 lg:m-0 rounded-lg w-full lg:w-1/2 relative space-y-5"
+        class="bg-white p-4 m-6 lg:m-0 rounded-lg w-full lg:w-1/2 relative space-y-5"
         @click.stop
       >
         <div class="relative">
@@ -548,7 +548,7 @@
   
             <button class="text-sm"  @click="clearSearch">Clear</button>
           </div>
-          <h3 class="text-lg font- text-[#1D2739] pl-3 py-3">Suggested</h3>
+          <h3 class="text font- text-[#1D2739] pl-3 py-3">Suggested</h3>
           <ul>
             <li
               v-for="(suggestion, index) in searchResults"
@@ -662,17 +662,10 @@
             <!-- <div class="rounded-md bg-slate-200 h-44 w-44"></div> -->
             <div class="flex-1 space-y-6 py-1">
               <div class="h-32 bg-slate-200 rounded"></div>
-              <div class="space-y-3">
-                <div class="grid grid-cols-3 gap-4">
-                  <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
-                  <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
-                </div>
-                <div class="h-32 w-full bg-slate-200 rounded"></div>
-              </div>
             </div>
           </div>
         </div>
-        <p v-else class="flex justify-center items-center py-10">No Search Query Available</p>
+        <p v-else class="flex justify-center text-sm items-center py-10">No Search Query Available</p>
       </div>
     </CoreModal>
 

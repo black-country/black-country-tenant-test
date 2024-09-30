@@ -28,7 +28,7 @@
                   <path d="M2 6H10" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <span v-if="loading">Uploading...</span>
-                <span v-else>Add photo</span>
+                <span v-else> {{user.profilePicture ? 'Change Photo' : 'Add Photo'}}</span>
               </button>
               <input
                 type="file"
