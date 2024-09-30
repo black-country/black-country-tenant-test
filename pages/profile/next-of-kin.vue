@@ -256,9 +256,9 @@ const handleSave = async () => {
 //   //   });
 // };
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 </script>
 
   

@@ -3,13 +3,15 @@ const { isLoggedIn } = useUser();
 const router = useRouter();
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  // If the user is not logged in and trying to access a route other than login, redirect to login
-  if (!isLoggedIn.value && to.path !== "/login") {
+  // If the user is not logged in and trying to access any route other than "/login" or the root "/", redirect to "/login"
+  if (!isLoggedIn.value && to.path !== "/login" && to.path !== "/") {
     return router.push("/login");
   }
 
-  // If the user is logged in and not already on the dashboard, redirect to dashboard
-  if (isLoggedIn.value && to.path !== "/dashboard") {
+  // If the user is logged in and trying to access the login page or the root "/", redirect them to "/dashboard"
+  if (isLoggedIn.value && (to.path === "/login" || to.path === "/")) {
     return router.push("/dashboard");
   }
+
+  // Allow access to all other routes for logged-in users
 });

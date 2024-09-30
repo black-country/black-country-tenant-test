@@ -4,7 +4,7 @@
     <div class="flex justify-center items-center min-h-screen">
       <div class="bg-white p-8  text-center max-w-md">
         <!-- Success Icon -->
-        <div class="flex justify-center mb-4">
+        <div class="flex justify-center">
           <div class="">
             <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="0.923828" width="63.1513" height="64" rx="31.5756" fill="#0F973D"/>
@@ -14,18 +14,20 @@
           </div>
         </div>
         
-        <!-- Success Message -->
-        <h2 class="text-xl font-semibold text-[#1D2739] mb-2">Password was changed successful!</h2>
-        <p class="text-[#667185] mb-6">
-            Welcome to  BlackCountry! Start exploring now.
-        </p>
+  <div class="mt-10">
+          <!-- Success Message -->
+          <h2 class="text-xl font-semibold text-[#1D2739] mb-2">Password changed Successful</h2>
+          <p class="text-[#667185] mb-6">
+              You have successfully changed a password to your account.
+          </p>
+  </div>
   
         <!-- Confirmation Button -->
-   <div class="pt-6">
+   <div class="">
     <button 
     class="bg-[#292929] text-white w-full text-sm py-4 rounded-lg font-semibold" 
     @click="handleSuccess">
-    Continue
+    Proceed to login
   </button>
    </div>
       </div>
@@ -37,11 +39,12 @@ const router = useRouter();
 
 const handleSuccess = () => {
   localStorage.clear()
+  router.push('/login')
 };
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 </script>
   
   <style scoped>

@@ -89,9 +89,9 @@ const { hopBack } = useHopBack();
 // Import user composable
 const { user } = useUser();
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 
 // API to update profile
 const { credential, updateProfile, loading: updating } = use_update_profile();

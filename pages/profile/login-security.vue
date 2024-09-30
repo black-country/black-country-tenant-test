@@ -106,9 +106,9 @@ const options = ref({
   biometricsLogin: true,
 });
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 </script>
 
 <style scoped>

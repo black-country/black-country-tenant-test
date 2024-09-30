@@ -88,9 +88,9 @@
   const router = useRouter();
   const { user } = useUser();
   
-  // definePageMeta({
-  //   middleware: 'auth'
-  // });
+  definePageMeta({
+    middleware: 'auth'
+  });
   
   const initials = ref('');
   

@@ -305,17 +305,15 @@ const onConfirm = () => {
   // Logic for logout
   loading.value = true
   localStorage.clear()
-  setTimeout(() => {
-    loading.value = false
-    showBLogoutModal.value = false
-    router.push('/login')
-  }), 3000
+  showBLogoutModal.value = false
+  router.push('/login')
+  window.location.href="/login"
   console.log("Logging out...");
 };
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 
 const onCancel = () => {
   showBLogoutModal.value = false

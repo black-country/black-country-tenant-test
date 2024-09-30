@@ -23,12 +23,12 @@ export const use_auth_login = () => {
       password: credential.password.value,
       app: 'tenant-app'
     })) as any;
-    console.log(res, "response gere");
     loading.value = false;
     if (res.type !== "ERROR") {
+      console.log(res, "response gere");
       useUser().createUser(res.data);
       router.push("/dashboard");
-      window.location.href = '/dashboard'
+      // window.location.href = '/dashboard'
     }
   };
   return { credential, login, loading, isFormDisabled };

@@ -50,9 +50,9 @@
   import { useRouter, useRoute } from 'vue-router';
   const { hopBack } = useHopBack();
 
-//   definePageMeta({
-//   middleware: "auth",
-// });
+  definePageMeta({
+  middleware: "auth",
+});
   
   // Import user composable
   const { user } = useUser();

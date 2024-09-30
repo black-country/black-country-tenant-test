@@ -177,9 +177,9 @@ const onFileSelected = async (event: Event) => {
     },
   ]);
 
-//   definePageMeta({
-//   middleware: "auth",
-// });
+  definePageMeta({
+  middleware: "auth",
+});
   </script>
   
   <style scoped></style>

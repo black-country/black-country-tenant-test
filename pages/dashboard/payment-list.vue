@@ -45,6 +45,7 @@
 <script setup lang="ts">
 definePageMeta({
   layout: "dashboard-zero",
+  middleware: "auth",
 });
 
 const expiringLeases = ref([
@@ -84,9 +85,5 @@ const expiringLeases = ref([
     expiry_date: '22/03/2024'
   }
 ])
-
-definePageMeta({
-  middleware: "auth",
-});
 
 </script>

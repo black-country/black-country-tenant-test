@@ -77,7 +77,7 @@ const toggleConfirmShowPassword = () => {
 };
 
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
   </script>

@@ -107,9 +107,9 @@ const options = ref({
   securityAlerts: false,
 });
 
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 </script>
 
 <style scoped>

@@ -185,9 +185,9 @@
   };
 
 
-//   definePageMeta({
-//   middleware: "auth",
-// });
+  definePageMeta({
+  middleware: "auth",
+});
   </script>
   
   <style scoped></style>

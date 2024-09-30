@@ -71,9 +71,10 @@ export const useUser = () => {
     localStorageData.token.value = token;
   };
   const createUser = (user: any) => {
+    console.log(user, 'from cpomposebe')
     runtimeData.user.value = user?.user;
     localStorageData.token.value = user?.accessToken;
-    runtimeData.token.value = user?.token?.token;
+    runtimeData.token.value = user?.accessToken;
   };
 
   // const updateUser = (user: any) => {

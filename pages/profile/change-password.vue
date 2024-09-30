@@ -252,7 +252,7 @@ const toggleCurrentPassword = () => {
     currentPassword.value = !currentPassword.value
   };
   
-  // definePageMeta({
-  //      middleware: 'auth'
-  // })
+  definePageMeta({
+       middleware: 'auth'
+  })
     </script>

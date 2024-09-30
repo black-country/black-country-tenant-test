@@ -34,10 +34,19 @@
             
             <!-- <p class="text-sm text-gray-600">{{ property.description.value ?? 'No description available' }}</p> -->
             <h2  class="text-sm text-[#1D2739] font-medium bg-white border-[0.5px] py-3 px-3 rounded-sm border-gray-50">Property Description</h2>
-            <div class="pt-4 bg-white rounded-lg border-gray-50 p-3 border-[0.5px] text-sm">
+            <!-- <div class="pt-4 bg-white rounded-lg border-gray-50 p-3 border-[0.5px] text-sm">
               <p class="text-[#1D2739] mt-2  leading-snug text-sm">
                 {{property.description ?? 'Nil'}}
                 <a v-if="property?.description?.length > 50" href="#" class="text-blue-500">View more</a>
+              </p>
+            </div> -->
+
+            <div class="pt-4 bg-white rounded-lg border-gray-50 p-3 border-[0.5px] text-sm">
+              <p class="text-[#1D2739] mt-2 leading-snug text-sm">
+                {{ isExpanded ? property.description : truncatedText }}
+                <a v-if="property?.description?.length > 50" href="#" @click.prevent="toggleView" class="text-blue-500">
+                  {{ isExpanded ? 'View less' : 'View more' }}
+                </a>
               </p>
             </div>
       
@@ -318,7 +327,7 @@
         <h3 class="text-base text-[#1D2739] font-medium bg-white border-[0.5px] py-3 px-3 rounded-s border-gray-50">Neighborhood Amenities</h3>
         <div class="px-3">
           <!-- Render buttons for each type -->
-          <div class="overflow-x-auto scrollbar-hidden">
+          <!-- <div class="overflow-x-auto scrollbar-hidden">
             <div class="mb-4 flex space-x-2 w-max">
               <button
                 v-for="type in amenityTypes"
@@ -334,6 +343,42 @@
                 {{ type }}
               </button>
             </div>
+          </div> -->
+
+          <div class="relative">
+            <!-- Left Arrow -->
+            <button
+              v-if="isScrollable && showLeftArrow"
+              @click="scrollLeft"
+              class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full z-10"
+            >
+              &#9664;
+            </button>
+        
+            <div class="overflow-x-auto scrollbar-hidden" ref="scrollContainer" @scroll="checkScrollPosition">
+              <div class="mb-4 flex space-x-2 w-max relative">
+                <button
+                  v-for="type in amenityTypes"
+                  :key="type"
+                  @click="toggleVisibility(type)"
+                  :class="[
+                    'px-4 py-2 rounded text-sm',
+                    visibleType === type ? 'bg-[#EBE5E0] text-[#344054]' : 'bg-[#F0F2F5]',
+                  ]"
+                >
+                  {{ type }}
+                </button>
+              </div>
+            </div>
+        
+            <!-- Right Arrow -->
+            <button
+              v-if="isScrollable && showRightArrow"
+              @click="scrollRight"
+              class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white shadow-lg p-2 rounded-full z-10"
+            >
+              &#9654;
+            </button>
           </div>
   
           <!-- Render amenities based on selected type -->
@@ -399,7 +444,7 @@
                 <h3 class="text-sm text-[#1D2739]">
                   {{ amenity.description }}
                 </h3>
-                <p class="text-sm text-[#667185]">{{ amenity.address }}</p>
+                <p class="text-sm text-[#667185]">{{ amenity.name }}</p>
               </div>
             </div>
           </div>
@@ -601,6 +646,66 @@ const previewRoomImages = (itemTab: any) => {
     localStorage.setItem('selectedImages', JSON.stringify(allCommonAreaImages));
     router.push(`/dashboard/listings/${props.property.id}/room-interior-images`);
   }
+
+  // Reactive state to track if the full text is expanded
+const isExpanded = ref(false);
+
+// Computed property to get the truncated text
+const truncatedText = computed(() => {
+  return props?.property?.description?.length > 50 
+    ? props?.property?.description.substring(0, 50) + '...' 
+    : props?.property?.description;
+});
+
+// Function to toggle the view between expanded and truncated text
+const toggleView = () => {
+  isExpanded.value = !isExpanded.value;
+};
+
+// const visibleType = ref<string>(''); // Visible type tracking
+const scrollContainer = ref<HTMLElement | null>(null);
+
+const isScrollable = ref(false); // To track if the content is scrollable
+const showLeftArrow = ref(false); // To track visibility of the left arrow
+const showRightArrow = ref(false); // To track visibility of the right arrow
+
+// const toggleVisibility = (type: string) => {
+//   visibleType.value = type;
+// };
+
+const scrollLeft = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollBy({ left: -100, behavior: 'smooth' });
+  }
+};
+
+const scrollRight = () => {
+  if (scrollContainer.value) {
+    scrollContainer.value.scrollBy({ left: 100, behavior: 'smooth' });
+  }
+};
+
+const checkScrollPosition = () => {
+  if (scrollContainer.value) {
+    const scrollLeft = scrollContainer.value.scrollLeft;
+    const scrollWidth = scrollContainer.value.scrollWidth;
+    const clientWidth = scrollContainer.value.clientWidth;
+
+    showLeftArrow.value = scrollLeft > 0;
+    showRightArrow.value = scrollLeft + clientWidth < scrollWidth;
+  }
+};
+
+onMounted(() => {
+  // Check if the scroll is necessary (if content overflows)
+  if (scrollContainer.value) {
+    const clientWidth = scrollContainer.value.clientWidth;
+    const scrollWidth = scrollContainer.value.scrollWidth;
+
+    isScrollable.value = scrollWidth > clientWidth;
+    checkScrollPosition();
+  }
+});
 </script>
   
 <!-- Custom CSS to hide scrollbar -->
@@ -622,4 +727,24 @@ const previewRoomImages = (itemTab: any) => {
     -ms-overflow-style: none; /* Hides the scrollbar for IE and Edge */
     scrollbar-width: none; /* Hides the scrollbar for Firefox */
   }
+
+  /* Custom scrollbar styling */
+.scrollbar-hidden::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.scrollbar-hidden::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 10px;
+}
+
+.scrollbar-hidden::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-hidden {
+  scrollbar-color: #ccc transparent;
+  scrollbar-width: thin;
+}
 </style>
