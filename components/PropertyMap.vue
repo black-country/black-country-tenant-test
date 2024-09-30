@@ -357,6 +357,26 @@ const placeMarkers = (map: google.maps.Map) => {
 };
 
 // Set the current user location
+// const setCurrentLocation = () => {
+//   if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(
+//       (position: GeolocationPosition) => {
+//         center.value = {
+//           lat: position.coords.latitude,
+//           lng: position.coords.longitude,
+//         };
+//         zoom.value = 15; // Adjust the zoom level if needed
+//       },
+//       (error: GeolocationPositionError) => {
+//         console.error("Error getting user location: ", error);
+//       }
+//     );
+//   } else {
+//     console.error("Geolocation is not supported by this browser.");
+//   }
+// };
+
+// Set the current user location with improved error handling and debugging
 const setCurrentLocation = () => {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
@@ -366,15 +386,36 @@ const setCurrentLocation = () => {
           lng: position.coords.longitude,
         };
         zoom.value = 15; // Adjust the zoom level if needed
+
+        // Debugging: Log the current location
+        console.log("Current location set to:", center.value);
+
+        // Reinitialize the map to center on the current location
+        const mapElement = document.getElementById("map");
+        if (mapElement) {
+          const map = new google.maps.Map(mapElement as HTMLElement, {
+            center: center.value,
+            zoom: zoom.value,
+          });
+          placeMarkers(map); // Place the markers on the map again
+        }
       },
       (error: GeolocationPositionError) => {
-        console.error("Error getting user location: ", error);
+        console.error("Error getting user location:", error.message);
+        alert("Unable to retrieve your location. Please check your browser settings and permissions.");
+      },
+      {
+        enableHighAccuracy: true, // Request high accuracy for better results
+        timeout: 10000, // 10 seconds timeout for getting location
+        maximumAge: 0 // Prevent caching of location data
       }
     );
   } else {
     console.error("Geolocation is not supported by this browser.");
+    alert("Geolocation is not supported by your browser.");
   }
 };
+
 
 // Initialize Google Map when the #map div is available
 const initializeMap = () => {
