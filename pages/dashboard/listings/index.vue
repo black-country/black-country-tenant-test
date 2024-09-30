@@ -110,27 +110,27 @@
           <button
           @click="locationTab = 'all'"
             :class="[locationTab === 'all' ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#1A1A1A]']"
-            class="text-sm px-6 py-2.5 rounded-md"
+            class="text-sm w-full px-6 py-2.5 rounded-md"
           >
             All
           </button>
           <button
           @click="locationTab = 'mainland'"
             :class="[locationTab === 'mainland' ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#1A1A1A]']"
-            class="text-sm px-4 py-2.5 rounded-md"
+            class="text-sm w-full px-4 py-2.5 rounded-md"
           >
             Mainland
           </button>
           <button
           @click="locationTab = 'ireland'"
             :class="[locationTab === 'ireland' ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#1A1A1A]']"
-            class="text-sm px-4 py-2.5 rounded-md"
+            class="text-sm w-full px-4 py-2.5 rounded-md"
           >
             Ireland
           </button>
 
           <!-- Dropdown Button -->
-          <div class="relative">
+          <div class="relative z-10">
             <div class="relative inline-block z-50">
               <!-- Dropdown Button -->
               <button
@@ -258,19 +258,19 @@
 
         <!-- Spacer (flex-grow to push the search and filter to the right) -->
         <div class="flex-grow"></div>
-
-        <!-- Search Bar and Filter Button -->
         <div class="flex space-x-2 justify-between lg:justify-start">
           <!-- Search Bar -->
           <div class="relative w-full">
             <input
               type="text"
               placeholder="Search"
-              v-model="propertySearch"
+              v-model="searchQuery"
               class="bg-[#EAEAEA] text-gray-600 text-sm w-full lg:w-auto px-4 py-3 pl-10 rounded-md outline-none"
+              @focus="isSearchModalVisible = true"
+              @click="isSearchModalVisible = true"
             />
             <svg
-              class="top-2 absolute left-3"
+              class="top-4 absolute left-3"
               width="17"
               height="16"
               viewBox="0 0 17 16"
@@ -295,7 +295,7 @@
 
           <!-- Filter Button -->
           <button
-            @click="openModal"
+            @click="isFilterModalVisible = true"
             type="button"
             class="bg-[#EAEAEA] text-[#1D2739] text-sm px-4 py-2 rounded-md hover:bg-gray-200 flex items-center"
           >
@@ -374,6 +374,7 @@
             Filter
           </button>
         </div>
+       <!-- <button @click="handleButtonClick">Hello</button> -->
       </div>
       <!-- <div
         class="flex overflow-x-auto hide-scroll-bar space-x-6 p-6 container mx-auto"
@@ -523,7 +524,8 @@
 
           <svg
             v-if="searchQuery"
-            class="absolute top-4 right-4"
+            @click="clearSearch"
+            class="absolute top-4 right-4 cursor-pointer"
             width="16"
             height="17"
             viewBox="0 0 16 17"
@@ -540,11 +542,16 @@
           </svg>
         </div>
 
-        <div v-if="suggestions.length" class="mt-4 bg-[#FDFCFC]">
+        <div class="mt-4 bg-[#FDFCFC]" v-if="searchQuery.length && !loadingSearch && searchResults.length">
+          <div class="flex justify-between items-center px-3">
+            <p class="text-[#1D2739] font-medium text-sm">{{searchResults.length}} result{{ searchResults.length > 1 ? 's' : '' }} </p>
+  
+            <button class="text-sm"  @click="clearSearch">Clear</button>
+          </div>
           <h3 class="text-lg font- text-[#1D2739] pl-3 py-3">Suggested</h3>
           <ul>
             <li
-              v-for="(suggestion, index) in suggestions"
+              v-for="(suggestion, index) in searchResults"
               :key="index"
               class="p-2 hover:bg-gray-200 text-[#171717] cursor-pointer"
               @click="selectSuggestion(suggestion)"
@@ -620,7 +627,7 @@
                   </defs>
                 </svg>
                 <div class="space-y-2">
-                  <p class="text-sm">{{ suggestion }}</p>
+                  <p class="text-sm">{{ suggestion.name ?? 'Nil' }}</p>
                   <p
                     class="text-xs font-light flex items-center text-[#667185]"
                   >
@@ -643,13 +650,29 @@
                       />
                     </svg>
 
-                    Iconic Tower, off Ajose Adegun VI, Lagos.
+                    {{ suggestion.address ?? 'Nil' }}
                   </p>
                 </div>
               </div>
             </li>
           </ul>
         </div>
+        <div  v-else-if="loadingSearch && searchQuery.length && !searchResults.length" class="rounded-md p-4 w-full mx-auto mt-10">
+          <div class="animate-pulse flex space-x-4">
+            <!-- <div class="rounded-md bg-slate-200 h-44 w-44"></div> -->
+            <div class="flex-1 space-y-6 py-1">
+              <div class="h-32 bg-slate-200 rounded"></div>
+              <div class="space-y-3">
+                <div class="grid grid-cols-3 gap-4">
+                  <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
+                  <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
+                </div>
+                <div class="h-32 w-full bg-slate-200 rounded"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p v-else class="flex justify-center items-center py-10">No Search Query Available</p>
       </div>
     </CoreModal>
 
@@ -657,6 +680,7 @@
       :isOpen="isFilterModalVisible"
       @close="isFilterModalVisible = false"
     >
+    <!-- <h1>Hello world</h1> -->
       <FilterSidebar />
     </CoreModal>
 
@@ -725,7 +749,7 @@
         <!-- </transition> -->
       </div>
     </CoreModal>
-    <section>
+    <!-- <section>
       <div
         v-if="searchQuery"
         class="absolute inset-0 flex justify-center items-center z-20"
@@ -776,7 +800,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
   </main>
 </template>
 
@@ -789,14 +813,17 @@ const router = useRouter();
 const route = useRoute();
 const isSearchModalVisible = ref(false);
 const successModal = ref(false);
-const searchQuery = ref("");
+// const searchQuery = ref("");
 const propertySearch = ref("");
+
 const { 
-  loadingProperties, 
   propertiesList, 
-  currentPage, 
-  totalPages, 
-  debouncedGetProperties 
+  loadingSearch,
+  searchResults,
+  searchQuery,
+  loadingProperties, 
+  sortBy,
+  clearSearch
 } = useGetProperties();
 
 const locationTab = ref('all');
@@ -834,18 +861,21 @@ onMounted(() => {
   }
 });
 
-watch(propertySearch, (val: any) => {
+watch(searchQuery, (val: any) => {
   if (val) {
     isSearchModalVisible.value = true;
   }
 });
+
+const showAdvancedFilter = ref(false)
 
 const isFilterModalVisible = ref(false);
 
 // Function to open the modal
 const openModal = () => {
   console.log('You clicked')
-  isFilterModalVisible.value = true
+  showAdvancedFilter.value = true
+  // isFilterModalVisible.value = true
 }
 
 // Function to close the modal
@@ -856,7 +886,7 @@ const closeModal = () => {
 const selectSuggestion = (suggestion: string) => {
   // Close modal after selection
   isSearchModalVisible.value = false;
-  router.push("/dashboard/listings/property-preview");
+  router.push(`/dashboard/listings/${suggestion.id}/preview`);
 };
 
 const toggleLike = (index: number) => {
@@ -867,6 +897,12 @@ const handleSearchInput = () => {
   // Logic for handling search
   console.log("Searching:", searchQuery.value);
 };
+
+const handleButtonClick = () => {
+   console.log('ok')
+  //  alert('Helo')
+   isFilterModalVisible.value = true
+}
 
 const suggestions = ref([
   "Jason Gardens ₦ 30M",
@@ -937,6 +973,27 @@ const closeDropdown = () => {
 
 const selectOption = (option: any) => {
   selectedOption.value = option;
+  console.log(option.value, 'selecetd option')
+
+  if(option.value === 'all'){
+    sortBy.value = 'all'
+  }
+
+  if(option.value === 'newest'){
+    sortBy.value = 'newest'
+  }
+
+  if(option.value === 'oldest'){
+    sortBy.value = 'oldest'
+  }
+
+  if(option.value === 'low-to-high'){
+    sortBy.value = 'lowToHigh'
+  }
+
+  if(option.value === 'high-to-low'){
+    sortBy.value = 'highToLow'
+  }
   closeDropdown();
 };
 </script>

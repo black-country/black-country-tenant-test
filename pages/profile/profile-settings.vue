@@ -176,6 +176,10 @@ const onFileSelected = async (event: Event) => {
       path: "/profile/next-of-kin",
     },
   ]);
+
+//   definePageMeta({
+//   middleware: "auth",
+// });
   </script>
   
   <style scoped></style>

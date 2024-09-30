@@ -462,6 +462,10 @@
   import { ref } from 'vue';
   
   const activeTab = ref('savedSearch');
+
+  definePageMeta({
+  middleware: "auth",
+});
   
   const savedSearch = [
     {

@@ -313,6 +313,10 @@ const onConfirm = () => {
   console.log("Logging out...");
 };
 
+// definePageMeta({
+//   middleware: "auth",
+// });
+
 const onCancel = () => {
   showBLogoutModal.value = false
   // Logic to close the modal

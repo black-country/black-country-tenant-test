@@ -85,4 +85,8 @@ const expiringLeases = ref([
   }
 ])
 
+definePageMeta({
+  middleware: "auth",
+});
+
 </script>

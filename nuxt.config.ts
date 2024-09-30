@@ -39,5 +39,7 @@ export default {
     optimizeDeps: {
       include: ['fast-deep-equal']
     }
-  }
+  },
+
+  compatibilityDate: "2024-09-30"
 };

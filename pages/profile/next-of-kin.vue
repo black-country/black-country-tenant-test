@@ -255,6 +255,10 @@ const handleSave = async () => {
 //   //     // No step increment if an error occurs
 //   //   });
 // };
+
+// definePageMeta({
+//   middleware: "auth",
+// });
 </script>
 
   

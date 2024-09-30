@@ -1,19 +1,33 @@
 import { auth_api } from '@/api_factory/modules/auth'
-export const use_fetch_profile = () => {
+import { useUser } from '@/composables/auth/user'
+export const use_tenant_profile = () => {
+  const profileObj = ref(null) as any
+  const loading = ref(false);
+  const { updateUser } = useUser()
 
-	const loading = ref(false)
-    const profileObj = ref({})
+  const fetch_profile = async () => {
+    loading.value = true;
+    try {
+      const res = await auth_api.$_fetch_profile();
 
-	const fetch_profile = async () => {
-		loading.value = true
-		const res = (await auth_api.$_fetch_profile()) as any
+      if(res.status == 200 || res.status == 201){
+         profileObj.value = res.data
+		 updateUser(profileObj.value)
+      }
 
-		loading.value = false
-		if (res.type !== 'ERROR') {
-            profileObj.value = res.data
-			return res.data
-		}
-	}
+    } catch (error) {
+        useNuxtApp().$toast.error('Error Fetching profile.', {
+            autoClose: 5000,
+            dangerouslyHTMLString: true,
+          });
+    } finally {
+      loading.value = false;
+    }
+  };
 
-	return { fetch_profile, loading, profileObj }
-}
+  onMounted(() => {
+    fetch_profile()
+  })
+
+  return { fetch_profile, loading, profileObj };
+};

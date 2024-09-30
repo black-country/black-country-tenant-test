@@ -1,10 +1,12 @@
 import { auth_api } from "@/api_factory/modules/auth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
+import { useUser } from '@/composables/auth/user'
 import { useNuxtApp } from "#app"; // Use this to show toast notifications
 
 export const use_update_profile = () => {
   const Router = useRouter();
+  const { updateUser } = useUser()
   
   const credential = ref({
     firstName: "",
@@ -54,6 +56,11 @@ export const use_update_profile = () => {
           autoClose: 5000,
           dangerouslyHTMLString: true,
         });
+        const data = {
+          profilePicture: res.data.profilePicture
+        }
+        updateUser(data)
+        console.log(res, 'res here ooooo again')
         return res;
       } else {
         // If API returns an error, set the error state

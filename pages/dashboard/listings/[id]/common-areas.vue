@@ -93,6 +93,10 @@ onUnmounted(() => {
 const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
+
+  definePageMeta({
+  middleware: "auth",
+});
   </script>
   
   <style scoped>

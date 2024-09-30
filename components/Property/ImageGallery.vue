@@ -6,7 +6,7 @@
       </div>
   
       <!-- Smaller Images on the right -->
-      <div class="grid grid-cols-2 gap-4 gap-y-0 gap-x-2">
+      <div class="grid grid-cols-2 space-y-2 gap-4 gap-y-0 gap-x-2">
         <!-- Display the first 4 images from the array -->
         <img
           v-for="(image, index) in rightImages"
@@ -39,7 +39,16 @@
   interface Props {
     images: string[];
   }
-  const props = defineProps<Props>();
+  // const props = defineProps<Props>();
+
+  const props = defineProps({
+    property: {
+      type: Object
+    },
+    images: {
+      type: Array
+    }
+  })
   
   const router = useRouter();
   
@@ -51,7 +60,7 @@
   
   // Function to handle "View all" navigation
   const navigateToAllImages = () => {
-    router.push('/all-images'); // Adjust the route as needed
+    router.push(`/dashboard/listings/${props?.property?.id}/property-gallery`); // Adjust the route as needed
   };
   </script>
   

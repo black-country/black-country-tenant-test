@@ -102,7 +102,11 @@
           class="flex justify-between max-w-7xl mx-auto items-center pt-3 px-6"
         >
           <!-- Breadcrumb -->
-          <div class="flex items-center space-x-2">
+          <div class="flex items-center space-x-4">
+            <svg @click="router.back()" class="cursor-pointer"  width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
+              <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
             <a href="#" class="text-gray-500 hover:text-gray-700 text-sm"
               >Listings</a
             >
@@ -170,7 +174,7 @@
       </section>
       <div class="max-w-7xl mx-auto pt-4 pb-8">
         <section v-if="!loading">
-        <PropertyImageGallery :images="propertyObj.images" />
+        <PropertyImageGallery :property="propertyObj" :images="propertyObj.images" />
 
         <PropertyDetails class="mt-10" :property="propertyObj" />
         </section>
@@ -497,7 +501,7 @@ import { dynamicImage } from "@/utils/assets";
 const { propertyObj, loading } = useFetchProperty();
 const { propertyList, loading: loadingSimilarProperties } = useFetchSimilarProperty()
 const router = useRouter();
-
+const route = useRoute()
 // Property Images
 const mainImage = ref("property1.png");
 const secondaryImage1 = ref("property1.png");
@@ -514,16 +518,26 @@ const showShareModal = ref(false);
 
 const handleFavorite = () => {};
 
-const shareLink = ref("https://www.abczxy.com/ert/yttreed");
+const shareLink = ref(`https://www.blackcountry.com/${route.fullPath}`);
 // Function to copy the link to the clipboard
 const copyLink = async () => {
   try {
     await navigator.clipboard.writeText(shareLink.value);
-    alert("Link copied!");
+    useNuxtApp().$toast.success("Link copied!", {
+      autoClose: 5000,
+      dangerouslyHTMLString: true,
+    });
   } catch (err) {
-    alert("Failed to copy link");
+    useNuxtApp().$toast.error("Failed to copy link", {
+      autoClose: 5000,
+      dangerouslyHTMLString: true,
+    });
   }
 };
+
+// definePageMeta({
+//   middleware: "auth",
+// });
 </script>
 
 <style scoped>

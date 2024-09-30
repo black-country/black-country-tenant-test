@@ -430,5 +430,9 @@ const toggleLike = (index: number) => {
   properties.value[index].liked = !properties.value[index].liked;
 };
 
+definePageMeta({
+  middleware: "auth",
+});
+
 const listView = ref(true);
 </script>

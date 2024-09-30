@@ -145,8 +145,8 @@
   import { dynamicIcons } from '@/utils/assets'
   const router = useRouter()
 
-  definePageMeta({
-  middleware: "auth",
+definePageMeta({
+  middleware: "auth"
 });
   const setupActions = ref([
     { title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.', path: '/profile' },

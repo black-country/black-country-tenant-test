@@ -15,9 +15,9 @@
         </div>
         
         <!-- Success Message -->
-        <h2 class="text-xl font-semibold text-[#1D2739] mb-2">Card added successfully</h2>
+        <h2 class="text-xl font-semibold text-[#1D2739] mb-2">Password was changed successful!</h2>
         <p class="text-[#667185] mb-6">
-            You’ve successfully linked your card.
+            Welcome to  BlackCountry! Start exploring now.
         </p>
   
         <!-- Confirmation Button -->
@@ -25,7 +25,7 @@
     <button 
     class="bg-[#292929] text-white w-full text-sm py-4 rounded-lg font-semibold" 
     @click="handleSuccess">
-    Okay
+    Continue
   </button>
    </div>
       </div>
@@ -36,9 +36,8 @@
 const router = useRouter();
 
 const handleSuccess = () => {
-  router.push("/profile/linked-cards");
+  localStorage.clear()
 };
-
 
 // definePageMeta({
 //   middleware: "auth",

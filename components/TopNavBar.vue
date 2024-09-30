@@ -74,11 +74,12 @@
               </svg>
           </button>
          </div>
+         <!-- {{user}} -->
           <div @click="router.push('/profile')" class="flex cursor-pointer items-center space-x-1">
             <svg width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M38.9271 39.7854C40.9459 37.8885 42.5541 35.5977 43.6524 33.0546C44.7507 30.5115 45.3157 27.7701 45.3125 25C45.3125 13.7812 36.2188 4.6875 25 4.6875C13.7813 4.6875 4.68751 13.7812 4.68751 25C4.68431 27.7701 5.24932 30.5115 6.34762 33.0546C7.44592 35.5977 9.05416 37.8885 11.0729 39.7854C14.8374 43.3414 19.8216 45.3195 25 45.3125C30.1785 45.3195 35.1626 43.3414 38.9271 39.7854ZM12.8021 37.1083C14.2648 35.2784 16.1209 33.8015 18.2326 32.7873C20.3443 31.7731 22.6574 31.2477 25 31.25C27.3427 31.2477 29.6557 31.7731 31.7674 32.7873C33.8792 33.8015 35.7353 35.2784 37.1979 37.1083C35.6021 38.7202 33.7022 39.9992 31.6083 40.8711C29.5144 41.743 27.2682 42.1904 25 42.1875C22.7318 42.1904 20.4856 41.743 18.3917 40.8711C16.2978 39.9992 14.3979 38.7202 12.8021 37.1083ZM32.8125 18.75C32.8125 20.822 31.9894 22.8091 30.5243 24.2743C29.0592 25.7394 27.072 26.5625 25 26.5625C22.928 26.5625 20.9409 25.7394 19.4757 24.2743C18.0106 22.8091 17.1875 20.822 17.1875 18.75C17.1875 16.678 18.0106 14.6909 19.4757 13.2257C20.9409 11.7606 22.928 10.9375 25 10.9375C27.072 10.9375 29.0592 11.7606 30.5243 13.2257C31.9894 14.6909 32.8125 16.678 32.8125 18.75Z" fill="#D6D0CC"/>
               </svg>
-            <span class="font-semibold">{{user?.firstName}} {{user?.firstName}}</span>
+            <span class="font-semibold">{{user?.firstName}} {{user?.lastName}}</span>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M15 7.50004C15 7.50004 11.3176 12.5 10 12.5C8.68233 12.5 5 7.5 5 7.5" stroke="#EBE5E0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg> 
@@ -183,19 +184,84 @@
                   </li>
                 </ul>
               </li>
-              <NuxtLink  @click.native="isOpen = false" to="/profile" class="-mx-6 mt-auto">
+              <!-- <NuxtLink  @click.native="isOpen = false" to="/profile" class="-mx-6 mt-auto">
                 <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800">
                   <img class="h-8 w-8 rounded-full bg-gray-800" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
                   <span class="sr-only">Your profile</span>
                   <span aria-hidden="true">{{user?.firstName}} {{user?.firstName}}</span>
                 </a>
-              </NuxtLink>
+              </NuxtLink> -->
+              <li class="mt-auto">
+                <a
+                  href="#"
+                  class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                >
+                  <img
+                    :src="dynamicIcons('settings')"
+                    alt="settings"
+                    class="h-6 w-6"
+                  />
+                  Settings
+                </a>
+                <a
+                  href="#"
+                  @click="showBLogoutModal = true"
+                  class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                >
+                  <img
+                    :src="dynamicIcons('logout')"
+                    alt="logout"
+                    class="h-6 w-6"
+                  />
+                  Logout
+                </a>
+              </li>
             </ul>
           </nav>
         </div>
       </div>
     </div>
   </div>
+
+  <CoreModalWithoutCloseBtn
+  :isOpen="showBLogoutModal"
+  @close="showBLogoutModal = false"
+  >
+  <div
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+  @click.self="onCancel"
+>
+  <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg">
+    <div class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4">
+      <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.921875" width="63.1513" height="64" rx="31.5756" fill="#F3A218"/>
+        <path d="M42.2031 32.375C42.2031 26.8521 37.7259 22.375 32.2031 22.375C26.6803 22.375 22.2031 26.8521 22.2031 32.375C22.2031 37.8978 26.6803 42.375 32.2031 42.375C37.7259 42.375 42.2031 37.8978 42.2031 32.375Z" stroke="white" stroke-width="1.5"/>
+        <path d="M32.4453 37.375V32.375C32.4453 31.9036 32.4453 31.6679 32.2988 31.5214C32.1524 31.375 31.9167 31.375 31.4453 31.375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M32.1953 28.377H32.2043" stroke="white" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        
+    </div>
+    <h2 class="text-lg font-semibold text-gray-700 mb-2">Logout</h2>
+    <p class="text-gray-500 mb-6">Are you sure you want to logout?</p>
+    <div class="space-y-3">
+      <button
+        type="button"
+        class="w-full disabled:cursor-not-allowed text-sm disabled:opacity-25 bg-[#292929] text-white py-3.5 rounded-md font-semibold"
+        @click="onConfirm"
+      >
+        Yes, log out
+      </button>
+      <button
+        type="button"
+        class="w-full bg-[#EBE5E0] text-gray-700 text-sm py-3.5 rounded-md font-semibold"
+        @click="onCancel"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+  </CoreModalWithoutCloseBtn>
  </main>
   </template>
   
@@ -205,6 +271,27 @@
   const isOpen = ref(false)
   const router = useRouter()
   const route = useRoute()
+
+  const showBLogoutModal = ref(false);2
+
+  const onCancel = () => {
+  showBLogoutModal.value = false
+  // Logic to close the modal
+  console.log("Cancelled");
+};
+
+const onConfirm = () => {
+  showBLogoutModal.value = true
+  // Logic for logout
+  localStorage.clear()
+  setTimeout(() => {
+    // loading.value = false
+    showBLogoutModal.value = false
+    router.push('/login')
+    window.location.href = "/login"
+  }), 3000
+  console.log("Logging out...");
+};
   </script>
   
   <style scoped>

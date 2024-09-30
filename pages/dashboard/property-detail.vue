@@ -223,6 +223,10 @@
     },
     // Add more properties as needed
   ]);
+
+  definePageMeta({
+  middleware: "auth",
+});
   </script>
   
   <style scoped>

@@ -274,6 +274,10 @@ import { ref } from "vue";
 import { dynamicImage } from "@/utils/assets";
 const { propertyObj, loading, } = useFetchProperty()
 const router = useRouter()
+
+definePageMeta({
+  middleware: "auth",
+});
  
 // Property Images
 const mainImage = ref("property1.png");

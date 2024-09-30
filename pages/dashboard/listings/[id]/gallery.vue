@@ -98,5 +98,9 @@
   const { getInitials } = useUserInitials(user.value);
   initials.value = getInitials.value;
   })
+
+  definePageMeta({
+  middleware: "auth",
+});
   </script>
   

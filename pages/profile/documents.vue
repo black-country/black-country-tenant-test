@@ -114,6 +114,11 @@
   const documentsList = ref([
     'Lease document', 'property document'
   ])
+
+
+//   definePageMeta({
+//   middleware: "auth",
+// });
   </script>
   
   <style scoped></style>

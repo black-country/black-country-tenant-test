@@ -43,6 +43,10 @@
     month: 'long',
     year: 'numeric',
   })}`;
+
+  definePageMeta({
+  middleware: "auth",
+});
   
   // Simulate closing the confirmation (you can handle navigation or state changes here)
   const closeConfirmation = () => {

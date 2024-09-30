@@ -75,4 +75,9 @@ const toggleShowPassword = () => {
 const toggleConfirmShowPassword = () => {
   showConfirmPassword.value = !showConfirmPassword.value;
 };
+
+
+// definePageMeta({
+//   middleware: "auth",
+// });
   </script>

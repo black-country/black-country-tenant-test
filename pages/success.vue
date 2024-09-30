@@ -38,6 +38,10 @@ const router = useRouter();
 const handleSuccess = () => {
   router.push("/dashboard");
 };
+
+definePageMeta({
+  middleware: "auth",
+});
 </script>
   
   <style scoped>

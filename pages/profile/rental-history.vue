@@ -49,6 +49,10 @@
   import { use_update_profile } from '@/composables/auth/updateProfile';
   import { useRouter, useRoute } from 'vue-router';
   const { hopBack } = useHopBack();
+
+//   definePageMeta({
+//   middleware: "auth",
+// });
   
   // Import user composable
   const { user } = useUser();

@@ -101,5 +101,9 @@
 </template>
 
 <script setup lang="ts">
+
+definePageMeta({
+  middleware: "auth",
+});
 const listView = ref(true);
 </script>

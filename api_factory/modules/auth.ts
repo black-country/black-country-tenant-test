@@ -47,6 +47,5 @@ export const auth_api = {
 $_change_password: (payload: any) => {
 	const url = '/tenants/password'
 	return GATEWAY_ENDPOINT.patch(url, payload);
-} 
-
+}
 }

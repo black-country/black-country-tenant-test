@@ -169,33 +169,25 @@
  </main>
   </template>
   
-  <script lang="ts">
-  import { ref } from 'vue';
+  <script setup lang="ts">
+  const openFAQ = ref<number | null>(null);
   
-  export default {
-    name: 'FAQs',
-    setup() {
-      const openFAQ = ref<number | null>(null);
-  
-      const toggleFAQ = (index: number) => {
-        if (openFAQ.value === index) {
-          openFAQ.value = null;
-        } else {
-          openFAQ.value = index;
-        }
-      };
-  
-      const isOpen = (index: number) => {
-        return openFAQ.value === index;
-      };
-  
-      return {
-        openFAQ,
-        toggleFAQ,
-        isOpen,
-      };
-    },
+  const toggleFAQ = (index: number) => {
+    if (openFAQ.value === index) {
+      openFAQ.value = null;
+    } else {
+      openFAQ.value = index;
+    }
   };
+
+  const isOpen = (index: number) => {
+    return openFAQ.value === index;
+  };
+
+
+//   definePageMeta({
+//   middleware: "auth",
+// });
   </script>
   
   <style scoped></style>

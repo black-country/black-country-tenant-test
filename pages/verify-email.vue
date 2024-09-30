@@ -89,4 +89,8 @@ const handleResendOtp = () => {
   })
 }
 
+definePageMeta({
+  middleware: "auth",
+});
+
 </script>

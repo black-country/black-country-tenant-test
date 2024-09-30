@@ -32,6 +32,10 @@
   
   <script setup lang="ts">
   import { ref } from 'vue'
+
+  definePageMeta({
+  middleware: "auth",
+});
   
   // Modal state
   const showModal = ref(false)

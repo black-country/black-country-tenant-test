@@ -22,6 +22,9 @@
   </template>
   
   <script setup lang="ts">
+  definePageMeta({
+  middleware: "auth",
+});
   // No script needed for static page
   </script>
   

@@ -243,9 +243,9 @@
 const showBLogoutModal = ref(false);
 import { dynamicIcons } from "@/utils/assets";
 const router = useRouter();
-// definePageMeta({
-//   middleware: "auth",
-// });
+definePageMeta({
+  middleware: "auth",
+});
 
 const onCancel = () => {
   showBLogoutModal.value = false
