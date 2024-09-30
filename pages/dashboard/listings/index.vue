@@ -470,7 +470,7 @@
               | {{ property.size }} {{ property.sizeUnit }}
             </p>
             <p class="text-[#1D2739] text-xs">{{ property.available }}</p>
-            <p class="text-[#1D2739] text-xs">{{ property.availableRoomsCount }} rooms avail. <span class="font-medium text-[#326543]">Now</span> | {{ property.unavailableRoomsCount }} room avail. on 21/06/2024</p>
+            <p class="text-[#1D2739] text-xs">{{ property.availableRoomsCount }} rooms avail. <span class="font-medium text-[#326543]">Now</span> | {{ property.unavailableRoomsCount }} room avail. on {{ moment(property.createdAt).format('MMMM Do YYYY') }}</p>
           </section>
         </div>
         <div v-if="loadingProperties" class="border-[0.5px] bg-gray-100 shadow rounded-md  w-full mx-auto">
@@ -805,6 +805,7 @@
 </template>
 
 <script setup lang="ts">
+import moment from 'moment';
 import { useGetProperties } from '@/composables/modules/property/fetchProperties'
 import { dynamicImage } from "@/utils/assets";
 import { useRouter, useRoute } from 'vue-router';
@@ -897,6 +898,10 @@ const handleSearchInput = () => {
   // Logic for handling search
   console.log("Searching:", searchQuery.value);
 };
+
+definePageMeta({
+  middleware: "auth",
+});
 
 const handleButtonClick = () => {
    console.log('ok')
