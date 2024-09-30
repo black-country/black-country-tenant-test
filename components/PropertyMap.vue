@@ -53,7 +53,7 @@ interface Property {
   description: string;
   images: string[];
   coordinates: {
-    coordinates: [number, number]; // Longitude, Latitude
+    coordinates: [number, number]; // Latitude, Longitue
   };
 }
 
@@ -72,7 +72,7 @@ const placeMarkers = (map: google.maps.Map) => {
   const bounds = new google.maps.LatLngBounds();
 
   props.properties.forEach((property: Property) => {
-    const coordinates = new google.maps.LatLng(property.coordinates.coordinates[1], property.coordinates.coordinates[0]);
+    const coordinates = new google.maps.LatLng(property.coordinates.coordinates[0], property.coordinates.coordinates[1]);
 
     // Create a new marker
     const marker = new google.maps.Marker({
