@@ -28,6 +28,7 @@ export const use_auth_login = () => {
     if (res.type !== "ERROR") {
       useUser().createUser(res.data);
       router.push("/dashboard");
+      window.location.href = '/dashboard'
     }
   };
   return { credential, login, loading, isFormDisabled };

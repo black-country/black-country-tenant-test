@@ -1,6 +1,7 @@
 export default {
   ssr: false,
   target: "static",
+
   app: {
     head: {
       title: "Black Country",
@@ -10,23 +11,33 @@ export default {
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "format-detection", content: "telephone=no" },
       ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.svg" }],
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.svg" }, { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css' }],
     },
   },
+
   modules: ["@nuxtjs/tailwindcss"],
   css: ["/assets/css/main.css"],
+
   tailwindcss: {
     cssPath: "@/assets/css/main.css",
   },
+
   axios: {
     // Axios options here
     timeout: 10000, // Example: set timeout to 10 seconds
   },
+
   plugins: [],
+
   // buildModules: [
   //   '@nuxtjs/moment'
   // ]
   // alias: {
   // 	'@': '/'
   // },
+  vite: {
+    optimizeDeps: {
+      include: ['fast-deep-equal']
+    }
+  }
 };

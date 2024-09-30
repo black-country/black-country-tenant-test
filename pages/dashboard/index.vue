@@ -9,7 +9,7 @@
 
       <!-- Setup Actions Section -->
       <div class="space-y-2 mb-8">
-        <div v-for="action in setupActions" :key="action.title" class="flex justify-between items-center bg-white p-4 py-6 rounded-lg">
+        <div v-for="action in setupActions" :key="action.title" @click="router.push(action.path)" class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
         <div class="flex items-center gap-x-3">
           <div>
             <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" />            
@@ -143,14 +143,15 @@
   const { user } = useUser()
   const { greeting } = useGreeting()
   import { dynamicIcons } from '@/utils/assets'
+  const router = useRouter()
 
   definePageMeta({
   middleware: "auth",
 });
   const setupActions = ref([
-    { title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.' },
-    { title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.' },
-    { title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.' }
+    { title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.', path: '/profile' },
+    { title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.', path: '/dashboard/listings' },
+    { title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '#' }
   ]);
   
   const paymentActions = ref([
