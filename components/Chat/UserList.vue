@@ -1,8 +1,8 @@
 <template>
-    <div class="w-1/4 border-r border-gray-200 p-4 bg-white">
-        <!-- {{users}} -->
+    <div class="sticky top-0  p-4 bg-white">
+
         <div class="flex items-center space-x-4 p-2 ">
-            <!-- Search Input -->
+     
             <div class="relative flex items-center bg-[#EAEAEA] rounded-lg px-3 py-2 w-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +23,7 @@
               />
             </div>
         
-            <!-- Add Button -->
+
             <button
               class="bg-[#EAEAEA] p-2 rounded-lg hover:bg-gray-300 transition-colors"
             >
@@ -34,8 +34,9 @@
                 
             </button>
         
-            <!-- Filter Button -->
+
             <button
+            @click="toggleDropdown"
               class="bg-[#EAEAEA] p-2 rounded-lg  transition-colors"
             >
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -51,6 +52,42 @@
                 </svg>
                 
             </button>
+
+            <div v-if="showDropdown" class="fixed inset-0 z-50" @click="toggleDropdown">
+              <!-- Dark overlay -->
+              <!-- <div class="absolute inset-0 bg-black opacity-50" @click="toggleDropdown"></div> -->
+        
+              <!-- Dropdown -->
+              <div class="absolute left-32 top-20 w-60 bg-white rounded-lg border p-4 z-20">
+                <!-- User List -->
+                <ul>
+                  <li
+                    v-for="user in users"
+                    :key="user.participant.id"
+                    class="flex items-center justify-between mb-2 border-b last:border-b-0 border-gray-100 cursor-pointer "
+                  >
+                    <div class="flex items-center">
+                      <img
+                        v-if="user.profilePicture"
+                        :src="user.profilePicture"
+                        class="w-10 h-10 rounded-full mr-3"
+                        alt=""
+                      />
+                      <img
+                        v-else
+                        src="@/assets/icons/user-avatar.svg"
+                        class="w-6 h-6 border shadow border-gray-500 rounded-full mr-3"
+                        alt=""
+                      />
+                      <div>
+                        <p class="font-semibold">{{ user.participant.firstName }} {{ user.participant.lastName }}</p>
+                        <p class="text-sm text-gray-500">{{ user.role }}</p>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
   
       <ul v-if="users.length && !loading">
@@ -60,16 +97,23 @@
           @click="selectUser(user)"
           class="flex items-center justify-between p-3 mb-2 border-b last:border-b-0 border-gray-100 cursor-pointer hover:bg-gray-100"
         >
-        <!-- {{user.participant}} -->
-          <div class="flex items-center">
+   
+          <div class="flex items-center w-full">
             <img v-if="user.profilePicture" :src="user.profilePicture" class="w-10 h-10 rounded-full mr-3" alt="" />
-            <img v-else src="@/assets/img/user-avatar.png" class="w-10 h-10 rounded-full mr-3" alt="" />
-            <div>
+            <img v-else src="@/assets/icons/user-avatar.svg" class="w-10 h-10 border shadow border-gray-500 rounded-full mr-3" alt="" />
+            <div class="w-full space-y-1">
+             <div class='flex justify-between items-center w-full'>
               <p class="font-">{{ user?.participant?.firstName }} {{ user?.participant?.lastName }}</p>
+              <p class="text-sm text-gray-400">{{ getDate(user?.lastMessage?.createdAt) }}</p>
+             </div>
+             <div class='flex justify-between items-center w-full'>
               <p class="text-sm text-[#667185]">{{ user?.lastMessage?.content }}</p>
+              <svg v-if="user?.lastMessage?.recievedAt === null || user?.lastMessage?.readAt === null" width="10" height="10" viewBox="0 0 10 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5" cy="5" r="4" fill="#099137"/>
+                </svg>
+             </div>
             </div>
           </div>
-          <div class="text-sm text-gray-400">{{ getDate(user.id) }}</div>
         </li>
       </ul>
       <section v-else-if="loading && !users.length">
@@ -110,6 +154,7 @@
   </template>
   
   <script setup lang="ts">
+  import moment from "moment";
   const props = defineProps({
     users: Array,
     loading: Boolean
@@ -120,14 +165,37 @@
   function selectUser(user) {
     emit('selectUser', user);
   }
+
+//   // Mock users
+// const users = [
+//   { participant: { id: 1, firstName: 'Jeffery', lastName: 'McKenzie' }, role: 'Super admin', profilePicture: null },
+//   { participant: { id: 2, firstName: 'Susie', lastName: 'Roob' }, role: 'Property manager', profilePicture: null },
+//   // Add other users here...
+// ];
   
-  function getDate(id) {
+  function getDate(date: any) {
     // Mock date for simplicity
-    return '08 Feb';
+    return moment(date).format('DD MMM');
   }
+
+  // State for dropdown visibility
+const showDropdown = ref(false);
+
+function toggleDropdown() {
+  showDropdown.value = !showDropdown.value;
+}
   </script>
   
   <style scoped>
   /* Add custom styles here */
   </style>
+  
+
+
+
+
+
+
+
+
   

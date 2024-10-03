@@ -1,7 +1,13 @@
 <template>
+<main class="flex">
+  <img v-if="!isMine"
+  src="@/assets/icons/user-avatar.svg"
+  alt="User profile"
+  class="w-6 h-6 border-gray-900 shadow-sm border-2 rounded-full"
+/>
     <div
       :class="isMine ? 'ml-auto bg-[#91D6A8]' : 'mr-auto bg-[#EBE5E0]'"
-      class="p-3 rounded-lg max-w-xs mb-2"
+      class="p-3 rounded-lg z-10 max-w-xs mb-2 w-full"
     >
       <p class="text-[#1D2739]">{{ message.content }}</p>
       <small class="block text-gray-500 text-right">
@@ -17,6 +23,7 @@
         </p>
       </small>
     </div>
+</main>
   </template>
 
   <script setup lang="ts">

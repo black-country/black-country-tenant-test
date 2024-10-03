@@ -1,20 +1,22 @@
 <template>
   <main>
     <div class="h-screen flex">
-      <!-- {{users}} -->
-      <!-- Left sidebar -->
-      <ChatUserList
-        :loading="loadingActiveChats"
-        :users="activeChatsList"
-        @selectUser="selectUser"
-      />
-      <!-- Right chat window -->
-      <div class="flex-1 flex flex-col">
-        <div class="flex flex-col h-screen">
-          <!-- Chat Header -->
-          <ChatHeader :selectedUser="selectedUser" />
+      <!-- Chat User List with custom scroll -->
+      <div class="w-1/4 h-full sticky top-0 border-r overflow-y-auto custom-scrollbar">
+        <ChatUserList
+          :loading="loadingActiveChats"
+          :users="activeChatsList"
+          @selectUser="selectUser"
+        />
+      </div>
 
-          <section
+      <div class="flex-1 flex flex-col">
+        <!-- Chat Header (Fixed) -->
+        <div class="sticky top-0 z-50 bg-white">
+          <ChatHeader :selectedUser="selectedUser" />
+        </div>
+
+        <section
           v-if="!selectedUser"
          class="flex flex-col justify-between mt-32 items-center space-y-2"
        >
@@ -87,39 +89,43 @@
          </svg>
          <h2 class="text-[#1D2739]">No conversations found</h2>
          <p class="text-[#667185]">You have not contacted anyone</p>
-       </section>
+          </section>
 
-          <!-- Chat Window -->
-          <ChatWindow
-            v-if="!loadingRoomChats"
-            :roomChats="roomChatsList"
-            :messages="messages"
-          />
-          <section v-else>
-            <div class="rounded-md p-4 w-full mx-auto mt-10">
-              <div class="animate-pulse flex space-x-4">
-                <div class="flex-1 space-y-6 py-1">
-                  <div class="h-32 bg-slate-200 rounded"></div>
-                  <div class="space-y-3">
-                    <div class="grid grid-cols-3 gap-4">
-                      <div
-                        class="h-32 w-full bg-slate-200 rounded col-span-2"
-                      ></div>
-                      <div
-                        class="h-32 w-full bg-slate-200 rounded col-span-1"
-                      ></div>
+        <!-- Chat Window and Message Input -->
+        <div class="flex flex-col h-full">
+          <!-- Chat Window with custom scroll -->
+          <div class="flex-1 z-10 overflow-y-auto px-4 custom-scrollbar">
+            <ChatWindow
+              class="z-1-0"
+              v-if="!loadingRoomChats"
+              :roomChats="roomChatsList"
+              :messages="messages"
+            />
+            <section v-else>
+              <div class="rounded-md p-4 w-full mx-auto mt-10">
+                <div class="animate-pulse flex space-x-4">
+                  <div class="flex-1 space-y-6 py-1">
+                    <div class="h-32 bg-slate-200 rounded"></div>
+                    <div class="space-y-3">
+                      <div class="grid grid-cols-3 gap-4">
+                        <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
+                        <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
+                      </div>
+                      <div class="h-32 w-full bg-slate-200 rounded"></div>
                     </div>
-                    <div class="h-32 w-full bg-slate-200 rounded"></div>
                   </div>
                 </div>
               </div>
-            </div>
-          </section>
+            </section>
+          </div>
 
-          <ChatMessageInput
-            v-model="newMessage"
-            @sendMessage="sendMessageToUser"
-          />
+          <!-- Chat Message Input (Fixed at the bottom) -->
+          <div class="bg-gray-100 border-t border-gray-300 sticky bottom-0 z-10">
+            <ChatMessageInput
+              v-model="newMessage"
+              @sendMessage="sendMessageToUser"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -152,28 +158,44 @@ const selectUser = (user: any) => {
 };
 
 const sendMessageToUser = (message: string) => {
-  console.log(message, 'message here')
-  console.log(selectUser)
-  // if (selectedUser.value) {
-    const socketPayload = {
-      content: message,
-      recipientId: '81c0810f-d63a-44d4-bb96-eded6aca4cb4',
-      recipientType: 'TENANT',
-      messageType: 'private',
-
-    }
+  const socketPayload = {
+    content: message,
+    recipientId: '81c0810f-d63a-44d4-bb96-eded6aca4cb4',
+    recipientType: 'TENANT',
+    messageType: 'private',
+  };
   sendMessage(socketPayload);
 };
 </script>
 
 <style scoped>
-.text-gray-500 {
-  color: #6b7280; /* Tailwind CSS color for 'sending' status */
+/* Custom Scrollbar for ChatWindow and ChatUserList */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px; /* Set width of the custom scrollbar */
 }
-.text-black {
-  color: #000; /* Tailwind CSS color for 'sent' status */
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #6b7280; /* Set custom thumb color */
+  border-radius: 10px; /* Round the scrollbar edges */
 }
-.text-red-500 {
-  color: #f87171; /* Tailwind CSS color for 'error' status */
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* Set custom track color */
+}
+
+/* Hide the default scrollbar for Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin; /* Thin scrollbar for Firefox */
+  scrollbar-color: #6b7280 #f1f1f1; /* Set scrollbar colors for Firefox */
+}
+
+/* Optional: Hide the scrollbar in hover state and show custom scrollbar */
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: #4b5563; /* Darker color on hover */
+}
+
+/* Sticky elements for header and footer */
+.sticky {
+  position: sticky;
 }
 </style>

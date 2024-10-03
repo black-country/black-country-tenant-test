@@ -2,10 +2,17 @@
     <div class="flex items-center p-4 border-b border-gray-200">
       <div class="flex items-center">
         <img
-          src="@/assets/img/user-avatar.png"
+          v-if="selectedUser?.participant?.profilePicture"
+          :src="selectedUser?.participant?.profilePicture"
           alt="User profile"
           class="w-10 h-10 rounded-full"
         />
+        <img
+        v-else
+        src="@/assets/icons/user-avatar.svg"
+        alt="User profile"
+        class="w-10 h-10 border-gray-700 shadow-sm border rounded-full"
+      />
         <h2 class="ml-3 font-semibold text-lg">{{selectedUser?.participant?.firstName}} {{selectedUser?.participant?.lastName}}</h2>
       </div>
       <div class="ml-auto flex items-center space-x-4">
@@ -19,7 +26,7 @@
             </svg>
             
         </button>
-        <button
+        <!-- <button
           class="bg-gray-100 p-2 rounded-full hover:bg-gray-200 transition-colors"
         >
           <svg
@@ -36,7 +43,7 @@
               d="M3 10h18M3 6h18m-9 8h9"
             />
           </svg>
-        </button>
+        </button> -->
       </div>
     </div>
   </template>

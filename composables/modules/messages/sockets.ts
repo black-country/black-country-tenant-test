@@ -1,18 +1,16 @@
-import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { io } from 'socket.io-client';
+import { ref, onMounted, onBeforeUnmount } from "vue";
+import { io } from "socket.io-client";
 import { useUser } from "@/composables/auth/user";
-
 
 export const useWebSocket = () => {
   const { token } = useUser();
-  const messages = ref([]) as any 
-  const newMessage = ref('');
-  const baseUrl = 'https://tracman-8jhi.onrender.com';
+  const messages = ref([]) as any;
+  const newMessage = ref("");
+  const baseUrl = "https://tracman-8jhi.onrender.com";
   const socketUrl = `${baseUrl}`;
   const isConnected = ref(false);
 
-  let socket: any; 
-
+  let socket: any;
 
   const connectWebSocket = () => {
     onMounted(() => {
@@ -20,38 +18,51 @@ export const useWebSocket = () => {
         query: {
           token: token.value,
         },
-        transports: ['websocket']
+        transports: ["websocket"],
       });
 
-      
-      socket.on('message.new', (message: any) => {
+      socket.on("message.new", (message: any) => {
         messages.value.push(message);
       });
 
-      socket.on('disconnect', () => {
+      // Listen for updated message list after sending a new message or receiving one
+      socket.on("messages.update", (updatedMessages: any) => {
+        messages.value = updatedMessages;
+      });
+
+      socket.on("disconnect", () => {
         isConnected.value = false;
-        console.log('Disconnected from server');
+        console.log("Disconnected from server");
       });
 
-      socket.on('error', (error: any) => {
-        console.log(error, 'error occured')
-        console.log('Something went wrong');
+      socket.on("error", (error: any) => {
+        console.log(error, "error occured");
+        console.log("Something went wrong");
       });
 
-
-      socket.on('connect', () => {
+      socket.on("connect", () => {
         isConnected.value = true;
-        console.log('Connected to WebSocket server');
+        console.log("Connected to WebSocket server");
+      });
+
+      // Fetch all messages on initial connection
+      socket.emit("messages.fetch", {}, (response: any) => {
+        if (response.status === "success") {
+          messages.value = response.data;
+        } else {
+          console.log("Failed to fetch messages:", response);
+        }
       });
     });
 
     onBeforeUnmount(() => {
       if (socket) {
-        socket.off('message.new'); 
-        socket.close(); 
+        socket.off("message.new");
+        socket.off("messages.update"); // Clean up the listener
+        socket.close();
       }
     });
-  }
+  };
 
   function sendMessage(payload: any) {
     const message = {
@@ -61,34 +72,39 @@ export const useWebSocket = () => {
       room: payload.room,
       messageType: payload.messageType,
     };
-  
-    console.log(message, 'message');
-  
+
+    console.log(message, "message");
+
     // Emit the message to the server
-    socket.emit('message.new', message, (response: any) => {
+    socket.emit("message.new", message, (response: any) => {
       // If the response from the WebSocket server indicates success, push the message to the messages array
-      if (response.status === 'success') {
+      if (response.status === "success") {
         messages.value.push({
           ...response.data,
-          status: 'sent',
+          status: "sent",
         });
-        console.log(messages.value, 'messages array here')
+
+        socket.emit("messages.fetch", {}, (fetchResponse: any) => {
+          if (fetchResponse.status === "success") {
+            messages.value = fetchResponse.data; // Update the messages list
+          } else {
+            console.log("Failed to update messages:", fetchResponse);
+          }
+        });
       } else {
-        console.log('Message failed to send:', response);
-  
+        console.log("Message failed to send:", response);
+
         // Handle failure case, if necessary (e.g., notify user, retry, etc.)
         messages.value.push({
           ...message,
-          status: 'error', // Set status as 'error' if message failed to send
+          status: "error", // Set status as 'error' if message failed to send
         });
       }
     });
-  
+
     // Clear the input after attempting to send the message
-    newMessage.value = '';
+    newMessage.value = "";
   }
-  
-  
 
   return {
     messages,
@@ -97,4 +113,4 @@ export const useWebSocket = () => {
     isConnected,
     sendMessage,
   };
-}
+};
