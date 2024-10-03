@@ -307,7 +307,7 @@
                 </svg>
                 
             </button>
-            <button class="p-2 rounded-full">
+            <button @click="sendSms" class="p-2 rounded-full">
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="44" height="44" rx="22" fill="#5B8469"/>
                 <path d="M22.417 14.5031C21.6711 14.492 20.9209 14.5107 20.1915 14.5592C16.7056 14.7909 13.929 17.607 13.7005 21.1422C13.6558 21.8341 13.6558 22.5506 13.7005 23.2424C13.7837 24.53 14.3532 25.7222 15.0236 26.7288C15.4128 27.4336 15.1559 28.3132 14.7505 29.0815C14.4582 29.6355 14.312 29.9125 14.4294 30.1126C14.5467 30.3127 14.8089 30.3191 15.3332 30.3318C16.37 30.3571 17.0692 30.0631 17.6242 29.6538C17.939 29.4217 18.0964 29.3057 18.2049 29.2923C18.3133 29.279 18.5268 29.3669 18.9537 29.5427C19.3373 29.7007 19.7828 29.7982 20.1915 29.8254C21.3783 29.9043 22.6199 29.9045 23.8092 29.8254C27.295 29.5937 30.0717 26.7777 30.3002 23.2424C30.3354 22.6967 30.3428 22.1356 30.3225 21.5833" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -567,7 +567,8 @@ const makeCall = () => {
 };
 
 const sendSms = () => {
-  window.location.href = `sms:${phoneNumber}`;
+  router.push({ path: '/dashboard/messages', query: { agentId: props?.property?.agent?.id }})
+  // window.location.href = `sms:${phoneNumber}`;
 };
 
 // Computed property to group amenities by type

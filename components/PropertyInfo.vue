@@ -453,7 +453,8 @@ const makeCall = () => {
 };
 
 const sendSms = () => {
-  window.location.href = `sms:${phoneNumber}`;
+  router.push({ path: '/dashboard/messages', query: { agentId: props?.propertyObj?.agent?.id }})
+  // window.location.href = `sms:${phoneNumber}`;
 };
 
 // Get all unique amenity types
