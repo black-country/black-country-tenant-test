@@ -47,13 +47,13 @@
                 
               <span class="text-sm">My home</span>
             </a>
-            <a href="#" class="flex items-center space-x-1 text-gray-300 hover:text-white">
+            <NuxtLink to="/dashboard/messages" class="flex items-center space-x-1 text-gray-300 hover:text-white">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.8089 17.4084C15.2947 17.1768 18.0714 14.3607 18.2999 10.8254C18.3445 10.1336 18.3445 9.41709 18.2999 8.72526C18.0714 5.18999 15.2947 2.37395 11.8089 2.14223C10.6196 2.06318 9.37802 2.06335 8.19118 2.14223C4.70534 2.37395 1.92869 5.18999 1.70022 8.72526C1.65551 9.41709 1.65551 10.1336 1.70022 10.8254C1.78343 12.113 2.35288 13.3052 3.02328 14.3118C3.41253 15.0166 3.15563 15.8962 2.75019 16.6645C2.45786 17.2185 2.31169 17.4955 2.42905 17.6956C2.54642 17.8957 2.80857 17.9021 3.33288 17.9148C4.36974 17.9401 5.06892 17.6461 5.62392 17.2368C5.93869 17.0048 6.09608 16.8887 6.20455 16.8753C6.31302 16.862 6.52649 16.9499 6.95336 17.1258C7.33702 17.2838 7.78248 17.3813 8.19118 17.4084C9.37802 17.4873 10.6196 17.4875 11.8089 17.4084Z" stroke="#D0D5DD" stroke-width="1.5" stroke-linejoin="round"/>
                 <path d="M9.99606 10H10.0035M13.3256 10H13.3331M6.66644 10H6.67392" stroke="#D0D5DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
               <span class="text-sm">Messages</span>
-            </a>
+            </NuxtLink>
           </div>
         </div>
 
@@ -174,7 +174,7 @@
                     </NuxtLink>
                   </li>
                   <li>
-                    <NuxtLink @click.native="isOpen = false" to="" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
+                    <NuxtLink @click.native="isOpen = false" to="/dashboard/messages" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M11.8089 17.4084C15.2947 17.1768 18.0714 14.3607 18.2999 10.8254C18.3445 10.1336 18.3445 9.41709 18.2999 8.72526C18.0714 5.18999 15.2947 2.37395 11.8089 2.14223C10.6196 2.06318 9.37802 2.06335 8.19118 2.14223C4.70534 2.37395 1.92869 5.18999 1.70022 8.72526C1.65551 9.41709 1.65551 10.1336 1.70022 10.8254C1.78343 12.113 2.35288 13.3052 3.02328 14.3118C3.41253 15.0166 3.15563 15.8962 2.75019 16.6645C2.45786 17.2185 2.31169 17.4955 2.42905 17.6956C2.54642 17.8957 2.80857 17.9021 3.33288 17.9148C4.36974 17.9401 5.06892 17.6461 5.62392 17.2368C5.93869 17.0048 6.09608 16.8887 6.20455 16.8753C6.31302 16.862 6.52649 16.9499 6.95336 17.1258C7.33702 17.2838 7.78248 17.3813 8.19118 17.4084C9.37802 17.4873 10.6196 17.4875 11.8089 17.4084Z" stroke="#D0D5DD" stroke-width="1.5" stroke-linejoin="round"/>
                         <path d="M9.99606 10H10.0035M13.3256 10H13.3331M6.66644 10H6.67392" stroke="#D0D5DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
