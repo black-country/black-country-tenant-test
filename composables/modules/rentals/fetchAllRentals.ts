@@ -1,4 +1,5 @@
 import { rental_api } from '@/api_factory/modules/rental'
+import { useUser } from '@/composables/auth/user';
 
 // Debounce function to limit the rate at which a function can be called
 function debounce(fn: Function, delay: number) {
@@ -25,6 +26,7 @@ export const useGetRentals = () => {
     const loadingRentals = ref(false);
     const rentalsList = ref([] as any);
     const searchQuery = ref<string>("");
+    const { user } = useUser()
     const route = useRoute() as any
     const metadata = ref({
         page: 1,
@@ -44,7 +46,7 @@ export const useGetRentals = () => {
     const getRentals = async () => {
         loadingRentals.value = true;
         try {
-            const res = await $_fetch_rentals(route.params.id, metadata.value, filters.value) as any;
+            const res = await $_fetch_rentals(user.value.id, metadata.value, filters.value) as any;
     
             if (res.type !== 'ERROR') {
                 // Sort properties by 'createdAt' in descending order
