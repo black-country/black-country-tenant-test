@@ -75,12 +75,29 @@ export const useWebSocket = () => {
       messageType: payload.messageType,
     };
 
-    console.log(message, "message");
+     // Optimistically add the message to the messages array with status 'sending'
+  const temporaryMessageId = Math.random().toString(36).substring(7); // Create a temporary ID for the message
+  const tempMessage = {
+    ...message,
+    id: temporaryMessageId,
+    status: "sending", // Status to show it’s being sent
+  };
+
+  messages.value.push(tempMessage); // Add the message optimistically
 
     // Emit the message to the server
     socket.emit("message.new", message, (response: any) => {
       // If the response from the WebSocket server indicates success, push the message to the messages array
       if (response.status === "success") {
+        const index = messages.value.findIndex((msg: any) => msg.id === temporaryMessageId);
+        if (index !== -1) {
+          // Replace the temporary message with the confirmed message data
+          messages.value[index] = {
+            ...response.data,
+            status: "sent", // Update the status to 'sent'
+          };
+        }
+
         messages.value.push({
           ...response.data,
           status: "sent",
@@ -102,6 +119,12 @@ export const useWebSocket = () => {
           }
         });
       } else {
+        console.log("Message failed to send:", response);
+
+        const index = messages.value.findIndex((msg: any) => msg.id === temporaryMessageId);
+        if (index !== -1) {
+          messages.value[index].status = "error"; // Update the status to 'error'
+        }
         console.log("Message failed to send:", response);
 
         // Handle failure case, if necessary (e.g., notify user, retry, etc.)

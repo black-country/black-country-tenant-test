@@ -93,7 +93,7 @@
             </div>
       
             <!-- Property Visitation -->
-         <section v-if="property?.visitations">
+         <section v-if="scheduled">
           <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-3 px-3 rounded-lg border-gray-50">Property visitation</h2>
           <div class="rounded-md border-[0.5px] border-gray-50 bg-white">
             <table class="w-full mt-2 table-fixed text-sm">
@@ -119,6 +119,9 @@
               </tbody>
             </table>
           </div>
+          <div class="mt-5">
+            <button @click="showBookingModal = true" class="mt-4 w-full bg-[#292929]  text-white py-4 rounded-md">Schedule a visit</button>
+         </div>
          </section>
       
             <!-- House Rules -->
@@ -569,6 +572,14 @@
       </button>
       </div>
     </CoreModal>
+
+
+    <CoreModal
+    :isOpen="showBookingModal"
+    @close="showBookingModal = false"
+    >
+      <BookingModal class="lg:w-4/12 m-6 lg:m-0" />
+    </CoreModal>
   </main>
   </template>
   
@@ -580,6 +591,8 @@ const { formatCurrency } = useCurrencyFormatter('en-NG', 'NGN');
 const activeTab = ref('property-overview')
 const router = useRouter()
 
+const showBookingModal = ref(false);
+
 const props = defineProps({
   property: {
     type: Object,
@@ -588,6 +601,10 @@ const props = defineProps({
   showApplicationBtn: {
     type: Boolean,
     default: true
+  },
+  scheduled: {
+    type: Boolean,
+    default: false
   }
 })
 

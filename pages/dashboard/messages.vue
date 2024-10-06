@@ -95,14 +95,14 @@
         <!-- Chat Window and Message Input -->
         <div class="flex flex-col h-full">
           <!-- Chat Window with custom scroll -->
-          <div class="flex-1 z-10 overflow-y-auto px-4 custom-scrollbar">
+          <div class="flex-1 z-10 overflow-y-auto px-4 custom-scrollbar border">
             <ChatWindow
               class="z-1-0"
-              v-if="!loadingRoomChats"
               :roomChats="roomChatsList"
               :messages="messages"
             />
-            <section v-else>
+            <!-- <p v-if="loadingRoomChats" class="flex justify-end items-end">Sending...</p> -->
+            <!-- <section v-else>
               <div class="rounded-md p-4 w-full mx-auto mt-10">
                 <div class="animate-pulse flex space-x-4">
                   <div class="flex-1 space-y-6 py-1">
@@ -117,7 +117,7 @@
                   </div>
                 </div>
               </div>
-            </section>
+            </section> -->
           </div>
 
           <!-- Chat Message Input (Fixed at the bottom) -->

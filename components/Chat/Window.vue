@@ -8,7 +8,16 @@
         :message="msg"
         :isMine="msg.senderId === user.id"
         :status="msg.status"
+        :messages="messages"
       />
+      <div v-for="message in messages" :key="message.id" class="chat-message flex justify-end items-end">
+        <!-- <p>{{ message.content }}</p> -->
+        <small>
+          <span v-if="message.status === 'sending'">Sending...</span>
+          <span v-else-if="message.status === 'sent'">Sent</span>
+        </small>
+      </div>
+      
     </div>
   </template>
   

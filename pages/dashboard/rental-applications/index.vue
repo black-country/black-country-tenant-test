@@ -158,8 +158,10 @@ interface Rental {
 
 const handleSelectedRental = (item) => {
    if(item.status === 'Scheduled visitation'){
-     router.push(`/dashboard/rental-applications/${item.id}`)
-   } 
+     router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details?type=scheduled`)
+   } else {
+    router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details`)
+   }
 }
 
 const formatCurrency = (amount: number | undefined) => {

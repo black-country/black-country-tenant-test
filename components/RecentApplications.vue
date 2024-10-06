@@ -3,9 +3,10 @@
   <div  v-if="!loadingRentals && rentalsList.length" class="max-w-full overflow-x-auto pb-4 mt-3">
     <div class="flex space-x-4">
       <div
+       @click="viewRentalApplication(property)"
         v-for="(property, index) in rentalsList"
         :key="index"
-        class="flex-shrink-0 w-64 bg-white rounded-lg overflow-hidden shadow-md"
+        class="flex-shrink-0 cursor-pointer w-64 bg-white rounded-lg overflow-hidden shadow-md"
       >
         <div class="relative">
           <img :src="property.house.images[0]" alt="Property Image" class="w-full h-40 object-cover" />
@@ -29,8 +30,8 @@
               </div>
           </div>
          </div>
-          <p class="text-gray-800 text-sx">{{ property?.house?.bedroomCount ?? 'Nil' }} bedrooms | {{ property?.house?.bathroomCount ?? 'Nil' }} baths | {{ property?.house?.size ?? 'Nil' }} {{ property?.house?.sizeUnit ?? 'Nil' }}</p>
-          <p class="text-[#1D2739] text-xs">Availability <span class="text-[#326543] font-medium text-xs">{{ getAvailability(property?.house?.availability) }}</span></p>
+          <p class="text-gray-800 text-xs">{{ property?.house?.bedroomCount ?? 'Nil' }} bedrooms | {{ property?.house?.bathroomCount ?? 'Nil' }} baths | {{ property?.house?.size ?? 'Nil' }} {{ property?.house?.sizeUnit ?? 'Nil' }}</p>
+          <p class="text-[#1D2739] text-xs">Availability <span class="text-[#326543] font-medium text-xs">{{ getAvailability(property?.room?.availability) }}</span></p>
         </div>
       </div>
     </div>
@@ -70,6 +71,11 @@ import { useGetRentals  } from '@/composables/modules/rentals/fetchAllRentals'
   return availabilityMap[item] || 'Unknown'; // Return 'Unknown' if the key doesn't exist
 }
 
+const router = useRouter()
+
+const viewRentalApplication = (item: any) => {
+   router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details`)
+}
 const properties = ref([
   {
     image: "property1.png",

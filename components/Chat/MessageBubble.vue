@@ -29,6 +29,7 @@
   <script setup lang="ts">
 const props = defineProps({
   message: Object,
+  messages: Array,
   isMine: Boolean,
 });
 

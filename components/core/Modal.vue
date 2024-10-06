@@ -8,7 +8,6 @@
 <script lang="ts" setup>
 import { dynamicIcons } from '@/utils/assets'; 
 import { ref } from 'vue';
-import { defineProps, defineEmits } from 'vue';
 
 // Props for controlling the modal's visibility
 const props = defineProps({

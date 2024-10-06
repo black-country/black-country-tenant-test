@@ -1,101 +1,6 @@
  <template>
     <main>
-      <TopNavBar>
-        <template #extra>
-          <button
-            @click="toggleView"
-            type="button"
-            class="flex cursor-pointer items-center space-x-1 bg-[#1D1D1D] px-3 py-3 rounded-md hover:bg-gray-700"
-          >
-            <svg
-              v-if="listView"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.66663 4.16699H16.6666"
-                stroke="#EBE5E0"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-              <path
-                d="M3.33337 4.16699H3.34086"
-                stroke="#FDFCFC"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M3.33337 10H3.34086"
-                stroke="#FDFCFC"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M3.33337 15.833H3.34086"
-                stroke="#FDFCFC"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M6.66663 10H16.6666"
-                stroke="#EBE5E0"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-              <path
-                d="M6.66663 15.833H16.6666"
-                stroke="#EBE5E0"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
-  
-            <svg
-              v-else
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M18.3333 10.0738V7.69615C18.3333 6.07615 18.3333 5.26615 17.8452 4.76287C17.357 4.2596 16.5713 4.2596 15 4.2596H13.2678C12.5033 4.2596 12.497 4.25811 11.8096 3.91332L9.03324 2.52084C7.87402 1.93945 7.29442 1.64875 6.67697 1.66895C6.05951 1.68915 5.49896 2.01715 4.37786 2.67316L3.35464 3.2719C2.53115 3.75375 2.1194 3.99469 1.89302 4.3955C1.66666 4.7963 1.66666 5.28441 1.66666 6.26061V13.1236C1.66666 14.4063 1.66666 15.0476 1.95187 15.4046C2.14166 15.642 2.40762 15.8018 2.70166 15.8547C3.14354 15.9342 3.68456 15.6177 4.76655 14.9844C5.50129 14.5546 6.20842 14.1081 7.08738 14.2292C7.8239 14.3306 8.50832 14.7963 9.16666 15.1265"
-                stroke="#EBE5E0"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M6.66666 1.66797V14.1963"
-                stroke="#FDFCFC"
-                stroke-width="1.5"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M12.5 4.17383V9.18517"
-                stroke="#FDFCFC"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M16.7558 16.8124L18.2934 18.3316M17.6409 14.698C17.6409 16.3369 16.3127 17.6655 14.6742 17.6655C13.0357 17.6655 11.7073 16.3369 11.7073 14.698C11.7073 13.0591 13.0357 11.7305 14.6742 11.7305C16.3127 11.7305 17.6409 13.0591 17.6409 14.698Z"
-                stroke="#FDFCFC"
-                stroke-width="1.5"
-                stroke-linecap="round"
-              />
-            </svg>
-  
-            <span>{{ listView ? "List view" : "Map View" }}</span>
-          </button>
-        </template>
-      </TopNavBar>
+      <TopNavBar />
       <section v-if="!loading">
         <section>
           <div
@@ -215,7 +120,7 @@
                 </button>
                 <p class="text-gray-500 mt-2 text-xs">Reschedule Tour</p>
               </div>
-              <div class="flex flex-col items-center">
+              <div v-if="route.query.type !== 'scheduled'" class="flex flex-col items-center">
                 <button class="p-4 rounded-lg  transition" @click="cancelApplication">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="40" height="40" rx="8" fill="#FBEAE9"/>
@@ -225,8 +130,18 @@
                 </button>
                 <p class="text-red-600 mt-2 text-xs">Cancel application</p>
               </div>
+              <div v-else class="flex flex-col items-center">
+                <button class="p-4 rounded-lg  transition" @click="cancelApplication">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="#292929"/>
+                    <path d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z" stroke="white" stroke-width="1.5"/>
+                    <path d="M19.666 20.3333L21.9993 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>  
+                </button>
+                <p class="text-[#1D2739] mt-2 text-xs">Apply</p>
+              </div>
               <div class="flex flex-col items-center">
-                <button class="p-4 rounded-lg  transition cursor-not-allowed">
+                <button @click="router.push(`/dashboard/listings/${route.params.id}/rental-applications/lease-agreement`)" class="p-4 rounded-lg  transition">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="40" height="40" rx="8" fill="#292929"/>
                       <path d="M22.8081 15.3221L23.7426 14.3876C24.2587 13.8715 25.0955 13.8715 25.6116 14.3876C26.1277 14.9037 26.1277 15.7405 25.6116 16.2566L24.6771 17.1911M22.8081 15.3221L19.3188 18.8114C18.622 19.5082 18.2735 19.8566 18.0363 20.2812C17.799 20.7058 17.5603 21.7084 17.332 22.6672C18.2908 22.4389 19.2934 22.2002 19.718 21.9629C20.1426 21.7256 20.491 21.3772 21.1878 20.6804L24.6771 17.1911M22.8081 15.3221L24.6771 17.1911" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -250,8 +165,7 @@
               </div>
             </div>
           </div>
-  
-          <PropertyDetails :showApplicationBtn="false" class="mt-10" :property="propertyObj" />
+          <PropertyDetails :scheduled="route.query.type === 'scheduled'" :showApplicationBtn="false" class="mt-10" :property="propertyObj" />
           </section>
           <section v-else>
             <div class="rounded-md p-4 w-full mx-auto mt-10">

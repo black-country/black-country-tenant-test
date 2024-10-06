@@ -128,7 +128,7 @@ const handleSubmit = () => {
 const goBack = () => {
   console.log(route.query, 'my route')
   if(route.query.step === '1'){
-    router.push(`/dashboard/listings/${route?.params?.id}`); 
+    router.push(`/dashboard/listings/${route?.params?.id}/preview`); 
   } else {
     router.push({ query: { step: "1" } });
   }

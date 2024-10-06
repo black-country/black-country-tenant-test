@@ -1,5 +1,11 @@
 import { rental_api } from "@/api_factory/modules/rental";
 import { useCustomToast } from '@/composables/core/useCustomToast'
+import { useClearLocalStorage } from '@/composables/core/useClearLocalStorage';
+
+const { clearLocalStorageExceptUserAndToken } = useClearLocalStorage();
+
+// Call the function when you need to clear localStorage
+
 import { useRouter } from 'vue-router'; // Import useRouter
 
 const rentalApplicationPayload = ref({
@@ -37,7 +43,9 @@ export function useCreateRentalApplication() {
           toastType: "success",
           duration: 3000
         });
+        clearLocalStorageExceptUserAndToken();
         router.push(`/dashboard/listings/${route.params.id}/preview`)
+  
       } else {
         showToast({
           title: "Error",

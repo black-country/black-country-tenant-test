@@ -142,6 +142,8 @@
 import { useRouter } from 'vue-router';
 import { useUploadFile } from '@/composables/core/upload';
 import { useFormPersistence } from '@/composables/core/useFormPersistence';
+import { useCustomToast } from "@/composables/core/useCustomToast";
+const { showToast } = useCustomToast();
 
 // State variables for form
 const idType = ref('');
@@ -219,8 +221,16 @@ const submitForm = () => {
       fileUrls: [...documentData.value.fileUrls]
     };
     saveData('uploaded-document', formData);
-    alert('Form submitted successfully with Front and Back ID!');
-    router.push('/success');
+    showToast({
+    title: "Success",
+    message: "Data was saved successfully",
+    toastType: "success",
+    duration: 3000,
+  });
+  router.push({
+    path: route.path, // Keep the same path
+    query: { ...route.query, step: "2" }, // Update the query with the new step
+  });
   }
 };
 
