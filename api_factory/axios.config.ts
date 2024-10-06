@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
 import { useUser } from "@/composables/auth/user";
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
 
 const { token, logOut } = useUser();
 
@@ -84,9 +86,11 @@ instanceArray.forEach((instance) => {
       if (err.response.status === 401) {
         console.log(err.response.data.error)
         logOut();
-        useNuxtApp().$toast.error(err.response.data.error, {
-          autoClose: 5000,
-          dangerouslyHTMLString: true,
+        showToast({
+          title: "Error",
+          message: err?.response?.data?.message || err?.response?.data?.error || "An error occured",
+          toastType: "error",
+          duration: 3000
         });
         return {
           type: "ERROR",
@@ -94,9 +98,11 @@ instanceArray.forEach((instance) => {
         };
       } else if (statusCodeStartsWith(err.response.status, 4)) {
         if (err.response.data.message) {
-          useNuxtApp().$toast.error(err.response.data.error, {
-            autoClose: 5000,
-            dangerouslyHTMLString: true,
+          showToast({
+            title: "Error",
+            message: err?.response?.data?.message || err?.response?.data?.error || "An error occured",
+            toastType: "error",
+            duration: 3000
           });
         }
         return {
@@ -104,29 +110,23 @@ instanceArray.forEach((instance) => {
           ...err.response,
         };
       } else if (err.response.status === 500) {
-        useNuxtApp().$toast.error(
-          err?.response?.data?.message ||
-            err?.response?.data?.error ||
-            "An error occured",
-          {
-            autoClose: 5000,
-            dangerouslyHTMLString: true,
-          }
-        );
+        showToast({
+          title: "Error",
+          message: err?.response?.data?.message || err?.response?.data?.error || "An error occured",
+          toastType: "error",
+          duration: 3000
+        });
         return {
           type: "ERROR",
           ...err.response,
         };
       } else if (err.response.status === 409) {
-        useNuxtApp().$toast.error(
-          err?.response?.data?.message ||
-            err?.response?.data?.error ||
-            "An error occured",
-          {
-            autoClose: 5000,
-            dangerouslyHTMLString: true,
-          }
-        );
+        showToast({
+          title: "Error",
+          message: err?.response?.data?.message || err?.response?.data?.error || "An error occured",
+          toastType: "error",
+          duration: 3000
+        });
       }
     }
   );

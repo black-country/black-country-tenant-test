@@ -50,7 +50,7 @@ export const useFetchProperty = () => {
             // Optionally, redirect or show an error if no ID is available
             error.value = 'No property ID available in the route';
             console.warn('No property ID found in route parameters.');
-            router.push('/error'); // Redirect to an error page if necessary
+            // router.push('/error'); // Redirect to an error page if necessary
         }
     });
 

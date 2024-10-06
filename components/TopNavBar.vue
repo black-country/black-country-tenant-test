@@ -1,6 +1,6 @@
 <template>
- <main>
-  <nav class="bg-[#292929] text-white py-3">
+ <main class="z-30">
+  <nav class="bg-[#292929] text-white py-3 z-10">
     <div class="container mx-auto flex justify-between items-center px-4">
       <NuxtLink to="/dashboard" class="flex cursor-pointer items-center gap-x-3">
         <!-- Logo -->
@@ -89,7 +89,7 @@
     </div>
   </nav>
 
-  <div v-if="isOpen" class="relative z-50 xl:hidden" role="dialog" aria-modal="true">
+  <div v-if="isOpen" class="relative z-30 xl:hidden" role="dialog" aria-modal="true">
     <!--
       Off-canvas menu backdrop, show/hide based on off-canvas menu state.
 

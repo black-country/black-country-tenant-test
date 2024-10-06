@@ -250,7 +250,7 @@
             <!-- Close Button -->
             <div>
               <button class="" @click="showShareModal = false">
-                <svg
+                <svga
                   width="36"
                   height="36"
                   viewBox="0 0 36 36"
@@ -265,7 +265,7 @@
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   />
-                </svg>
+                </svga>
               </button>
             </div>
 

@@ -1,4 +1,5 @@
 <template>
+  <main>
     <div class="flex flex-col lg:flex-row gap-6">
   
       <section class="lg:w-7/12 space-y-6">
@@ -318,8 +319,8 @@
             </button>
           </div>
           </div>
-         <div class="mt-6">
-            <button class="mt-4 w-full bg-[#292929] text-white py-3 text-sm rounded-md">Send application</button>
+         <div v-if="showApplicationBtn" class="mt-6">
+            <button @click="openRentalApplicationModal = true" class="mt-4 w-full bg-[#292929] text-white py-3 text-sm rounded-md">Send application</button>
          </div>
         </div>
   
@@ -529,10 +530,51 @@
         </div> -->
       </div>
     </div>
+
+    <CoreModal :isOpen="openRentalApplicationModal">
+      <div class="p-6 max-w-xl mx-auto bg-white rounded-md">
+       <div class="flex justify-between items-center pb-5">
+        <h2 class="text-sm font-medium">Select the room you're interested in</h2>
+        <button @click="openRentalApplicationModal = false" class="text-[#1D2739] font-semibold text-sm">Cancel</button>
+       </div>
+        <div class="grid grid-cols-3 gap-4 mb-6">
+          <button
+            v-for="(room, index) in rooms"
+            :key="room.id"
+            :disabled="!room.available"
+            :class="[
+              'p-4 rounded-lg transition cursor-pointer space-y-1',
+              selectedRoom === room.id ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#326543]',
+              !room.available && 'opacity-50 pointer-events-none'
+            ]"
+            @click="selectRoom(room.id)"
+          >
+            <h3 :class="['text-sm font-medium text-center', 
+                selectedRoom === room.id ? 'text-white' : 'text-[#344054]',
+                !room.available && 'opacity-50 pointer-events-none']">{{ room.name }}</h3>
+
+            <p :class="['text-center text-xs', selectedRoom === room.id ? 'text-white' : 'text-[#326543]',
+            !room.available && 'opacity-50 pointer-events-none']">
+              {{ room.price }}
+            </p>
+          </button>
+        </div>
+        <button
+        @click="handleSelectedRoom"
+        class="w-full p-3.5 text-sm rounded-lg"
+        :class="selectedRoom ? 'bg-[#292929] text-white' : 'bg-gray-300 text-gray-500'"
+        :disabled="!selectedRoom"
+      >
+        Continue
+      </button>
+      </div>
+    </CoreModal>
+  </main>
   </template>
   
   <script setup lang="ts">
 const propertyManagerImage = ref("shape.png");
+import { useRooms } from '@/composables/modules/rentals/useFormatRoomsByAvailability';
 import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
 const { formatCurrency } = useCurrencyFormatter('en-NG', 'NGN');
 const activeTab = ref('property-overview')
@@ -542,10 +584,27 @@ const props = defineProps({
   property: {
     type: Object,
     default: () => {}
+  },
+  showApplicationBtn: {
+    type: Boolean,
+    default: true
   }
 })
 
+// Ensure roomData is provided, fallback to an empty array
+const roomData = props?.property?.rooms ?? [];
+
+const { rooms } = useRooms(roomData);
+// Track the selected room
+const selectedRoom = ref<number | null>(null);
+
+// Function to select a room
+const selectRoom = (roomId: number) => {
+  selectedRoom.value = roomId;
+}
+
 const selectedRoomObj = ref({})
+const openRentalApplicationModal = ref(false)
 
 const groupedAmenities = computed(() => {
   if (props?.property) {
@@ -570,6 +629,12 @@ const sendSms = () => {
   router.push({ path: '/dashboard/messages', query: { agentId: props?.property?.agent?.id }})
   // window.location.href = `sms:${phoneNumber}`;
 };
+
+const handleSelectedRoom = () => {
+  localStorage.setItem('roomId', selectedRoom.value)
+  router.push(`/dashboard/listings/${props?.property?.id}/rental-applications/rules`)
+  openRentalApplicationModal.value = false
+}
 
 // Computed property to group amenities by type
 // const groupedAmenities = computed(() => {
@@ -812,5 +877,10 @@ onMounted(() => {
   .custom-scrollbar {
     scrollbar-width: thin; /* For Firefox */
     scrollbar-color: #ccc transparent; /* For Firefox */
+  }
+
+  .disabled-room {
+    opacity: 0.5;
+    pointer-events: none;
   }
 </style>

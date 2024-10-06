@@ -1,7 +1,7 @@
 <template>
    <main>
     <TopNavBar />
-    <div v-if="!loadingRentals && rentals .length" class="p-8 max-w-5xl mx-auto">
+    <div v-if="!loadingRentals && rentalsList.length" class="p-8 max-w-5xl mx-auto">
       <div class="flex items-center justify-between py-4  bg-white">
         <div class="flex items-center space-x-2">
           <a href="#" class="text-gray-500">Dashboard</a>
@@ -61,41 +61,47 @@
          @click="handleSelectedRental(rental)"
         :key="rental.id" class="max-w-sm cursor-pointer rounded-lg overflow-hidden h-96 shadow-lg relative">
             <!-- Image Section -->
-            <img :src="rental.image" alt="Living Room" class="w-full h-96 object-cover rounded-t-lg" />
+            <img :src="rental?.house?.images[0]" alt="Living Room" class="w-full h-96 object-cover rounded-t-lg" />
           
             <!-- Text Overlay with Transparent Background -->
             <div class="absolute bottom-0 left-0 right-0 p-4 bg-black/50 m-2 rounded-b-lg">
               <!-- Property Title -->
-              <div class="flex justify-between items-center">
-                <h3 class="text-white font-semibold text-lg">Jason Gardens</h3>
-                <span class="text-white font-semibold text-base">₦ 30M</span>
+              <div class="flex justify-between items-center pb-2">
+                <h3 class="text-white font-semibold">{{rental?.house?.name}}</h3>
+                <span class="text-white font-medium text-base">{{formatCurrency(rental?.room?.rentAmount)}}</span>
              </div>
           
               <!-- Address with Location Icon -->
-              <p class="text-[#E4E7EC] text-sm flex items-center space-x-1">
+              <p class="text-[#E4E7EC] text-xs flex items-center space-x-1">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" viewBox="0 0 24 24" fill="currentColor">
                   <path fill-rule="evenodd" d="M12 2C8.13 2 5 5.13 5 9c0 4.41 4.15 10.04 6.17 12.32a.999.999 0 0 0 1.66 0C14.85 19.04 19 13.41 19 9c0-3.87-3.13-7-7-7zm0 2c2.76 0 5 2.24 5 5 0 3.06-2.94 7.19-5 9.88C9.94 16.19 7 12.06 7 9c0-2.76 2.24-5 5-5zm0 2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" clip-rule="evenodd"/>
                 </svg>
-                <span>Iconic Tower, off Ajose....</span>
+                <span>{{rental?.house?.address.slice(0, 30)}}...</span>
               </p>
           
               <!-- Price and Status -->
               <div class="flex justify-between items-center mt-2">          
                 <!-- Status Badge with Light Background -->
-                <span v-if="rental.status === 'Approved'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                <span v-if="rental.status === 'PENDING'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="4" cy="4" r="3" fill="#099137"/>
+                      </svg>                        
+                Application sent
+              </span>
+                <span v-if="rental.status === 'APPROVED'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="4" cy="4" r="3" fill="#099137"/>
                         </svg>                        
                   Approved application
                 </span>
-                <span v-if="rental.status === 'Cancelled'" class="bg-[#F9FAFB] text-[#1D2739] text-xs px-2 py-2 rounded-full flex items-center">
+                <span v-if="rental.status === 'CANCELLED'" class="bg-[#F9FAFB] text-[#1D2739] text-xs px-2 py-2 rounded-full flex items-center">
                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="4" cy="4" r="3" fill="#1D2739"/>
                         </svg>
                                                
                   Cancelled
                 </span>
-                <span v-if="rental.status === 'Rejected'" class="bg-[#FBEAE9] text-[#BA110B] text-xs px-2 py-2 rounded-full flex items-center">
+                <span v-if="rental.status === 'REJECTED'" class="bg-[#FBEAE9] text-[#BA110B] text-xs px-2 py-2 rounded-full flex items-center">
                     <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <circle cx="4" cy="4" r="3" fill="#BA110B"/>
                         </svg>
@@ -156,48 +162,18 @@ const handleSelectedRental = (item) => {
    } 
 }
 
-const rentals = ref<Rental[]>([
-  {
-    id: 2,
-    title: 'Jason Gardens',
-    address: 'Iconic Tower, off Ajose Adeogun St',
-    price: 30000000,
-    image: rentalHome,
-    status: 'Approved',
-  },
-  {
-    id: 3,
-    title: 'Jason Gardens',
-    address: 'Iconic Tower, off Ajose Adeogun St',
-    price: 30000000,
-    image: rentalHome,
-    status: 'Cancelled',
-  },
-  {
-    id: 4,
-    title: 'Jason Gardens',
-    address: 'Iconic Tower, off Ajose Adeogun St',
-    price: 30000000,
-    image: rentalHome,
-    status: 'Rejected',
-  },
-  {
-    id: 5,
-    title: 'Jason Gardens',
-    address: 'Iconic Tower, off Ajose Adeogun St',
-    price: 30000000,
-    image: rentalHome,
-    status: 'Scheduled visitation',
-  },
-]);
+const formatCurrency = (amount: number | undefined) => {
+  if (!amount) return '₦0'; // Return ₦0 if the amount is undefined or falsy
+  return new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN' }).format(amount);
+};
 
 const filters = ref([
   { label: 'All', value: 'all' },
   { label: 'Scheduled visitation', value: 'Scheduled visitation' },
-  { label: 'Sent application', value: 'Sent application' },
-  { label: 'Accepted', value: 'Approved' },
-  { label: 'Rejected', value: 'Rejected' },
-  { label: 'Cancelled', value: 'Cancelled' },
+  { label: 'Sent application', value: 'PENDING' },
+  { label: 'Accepted', value: 'APPROVED' },
+  { label: 'Rejected', value: 'REJECTED' },
+  { label: 'Cancelled', value: 'CANCELLED' },
 ]);
 
 const activeFilter = ref('all');
@@ -208,9 +184,9 @@ const setActiveFilter = (filter: string) => {
 
 const filteredRentals = computed(() => {
   if (activeFilter.value === 'all') {
-    return rentals.value;
+    return rentalsList.value;
   }
-  return rentals.value.filter((rental) => rental.status === activeFilter.value);
+  return rentalsList.value.filter((rental) => rental.status === activeFilter.value);
 });
 </script>
 
