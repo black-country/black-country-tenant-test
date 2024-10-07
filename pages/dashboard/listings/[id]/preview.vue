@@ -495,9 +495,11 @@
 
 <script setup lang="ts">
 import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
+import { useCustomToast } from '@/composables/core/useCustomToast'
 import { useFetchSimilarProperty } from "@/composables/modules/property/fetchSimilarProperties";
 import { ref } from "vue";
 import { dynamicImage } from "@/utils/assets";
+const { showToast } = useCustomToast();
 const { propertyObj, loading } = useFetchProperty();
 const { propertyList, loading: loadingSimilarProperties } = useFetchSimilarProperty()
 const router = useRouter();
@@ -523,15 +525,27 @@ const shareLink = ref(`https://www.blackcountry.com/${route.fullPath}`);
 const copyLink = async () => {
   try {
     await navigator.clipboard.writeText(shareLink.value);
-    useNuxtApp().$toast.success("Link copied!", {
-      autoClose: 5000,
-      dangerouslyHTMLString: true,
-    });
+    // useNuxtApp().$toast.success("Link copied!", {
+    //   autoClose: 5000,
+    //   dangerouslyHTMLString: true,
+    // });
+    showToast({
+					title: "Success",
+					message: 'Link copied!',
+					toastType: "success",
+					duration: 3000
+				  });
   } catch (err) {
-    useNuxtApp().$toast.error("Failed to copy link", {
-      autoClose: 5000,
-      dangerouslyHTMLString: true,
-    });
+    // useNuxtApp().$toast.error("Failed to copy link", {
+    //   autoClose: 5000,
+    //   dangerouslyHTMLString: true,
+    // });
+    showToast({
+					title: "Error",
+					message: 'Failed to copy link',
+					toastType: "error",
+					duration: 3000
+				  });
   }
 };
 

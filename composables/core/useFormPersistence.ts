@@ -12,7 +12,7 @@ export function useFormPersistence() {
         toastType: "success",
         duration: 3000
       });
-      router.push(`/dashboard/listings/${route.params.id}/rental-applications/create?step=2`)
+      // router.push(`/dashboard/listings/${route.params.id}/rental-applications/create?step=2`)
     } catch (error) {
       console.error("Error saving data:", error);
     }

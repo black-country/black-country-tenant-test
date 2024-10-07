@@ -1,4 +1,6 @@
 <template>
+<main>
+  <TopNavBar />
   <div class="max-w-2xl mx-auto p-6">
     <svg @click="router.back()" class="cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
@@ -65,19 +67,36 @@
         </div>
       </div>
   
-      <div class="flex justify-between mt-8">
+      <!-- <div class="flex justify-between mt-8">
         <button @click="goBack" class="px-6 py-3 text-sm rounded-md bg-gray-100 text-[#292929]">Cancel</button>
         <button :disabled="!isFormValid" type="submit" class="px-6 py-3 text-sm rounded-md bg-[#292929] text-white" :class="{ 'bg-gray-300': !isFormValid, 'bg-[#292929]': isFormValid }">Save</button>
-      </div>
+      </div> -->
+      <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center  border-[0.5px]">
+        <div class="max-w-2xl w-full flex justify-between">
+          <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
+          <button  :disabled="!isFormValid || loading" type="submit" class="px-6 py-3 text-sm rounded-md disabled:cursor-not-allowed disabled:opacity-25  bg-[#292929] text-white"  :class="{ 'bg-gray-300': !isFormValid, 'bg-[#292929]': isFormValid }" >{{loading ? 'processing...' : 'Save'}}</button>
+        </div>
+    </div>
     </form>
   </div>
+</main>
 </template>
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { use_update_profile } from '@/composables/auth/updateProfile'
+const { updateProfile, loading } = use_update_profile()
 import { useRoute, useRouter } from 'vue-router';
 import { useFormPersistence } from '@/composables/core/useFormPersistence';
+import { useDataMapping } from '@/composables/modules/rentals/useDataMapping';
+const { credential, mapDataToCredential } = useDataMapping();
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
+import { useRemoveNullValues } from '@/composables/modules/rentals/useRemoveNullValues';
+const { removeNullValues } = useRemoveNullValues()
+
+const cleanedObject = ref({});
+
 
 const route = useRoute();
 const router = useRouter();
@@ -89,7 +108,7 @@ const sectionFields = {
   'personal-information': [
     { label: 'Name', value: '', type: 'text', isCompulsory: true },
     { label: 'Email address', value: '', type: 'email', isCompulsory: true },
-    { label: 'Phone number', value: '', type: 'text', isCompulsory: true },
+    { label: 'Phone number', value: '', type: 'number', isCompulsory: true },
     { label: 'Date of Birth', value: '', type: 'date', isCompulsory: true },
     { label: 'Marital status', value: '', type: 'select', options: ['Single', 'Married'] },
     { label: 'Gender', value: '', type: 'select', options: ['Male', 'Female', 'I’ll rather not say'] },
@@ -146,15 +165,28 @@ const isFormValid = computed(() => {
 });
 
 // Save form data and move to the next step
-const saveSection = () => {
+const saveSection = async () => {
   try {
-    // Save data using the section's title as the key
-    saveData(section.value, fields.value); // Section title as the key, field values as the value
+    mapDataToCredential(fields.value);
+    cleanedObject.value = removeNullValues(credential.value);
+    updateProfile(cleanedObject.value).then(() => {
+      showToast({
+          title: "Success",
+          message: `${section.value} was updated successfully`,
+          toastType: "success",
+          duration: 3000
+        });
+        saveData(section.value, fields.value);
+        router.push({ query: { step: '2' } });
+    })
 
-    // Debugging: log the saved data
-    console.log('Saved Data:', section.value, fields.value);
+    // // Save data using the section's title as the key
+    // saveData(section.value, fields.value); // Section title as the key, field values as the value
+
+    // // Debugging: log the saved data
+    // console.log('Saved Data:', section.value, fields.value);
     
-    router.push({ query: { step: '2' } });
+    // router.push({ query: { step: '2' } });
   } catch (error) {
     console.error('Error saving form data:', error);
   }

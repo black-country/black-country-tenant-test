@@ -115,12 +115,18 @@
         <button class="px-6 py-3 text-sm rounded-md bg-[#292929] text-white" @click="goNext">Continue</button>
       </div>
     </div> -->
-    <div class="bg-white  px-6 py-4 flex justify-center border-[0.5px]">
+    <!-- <div class="bg-white  px-6 py-4 flex justify-center border-[0.5px] rounded-md w-full mt-10">
       <div class="max-w-2xl w-full flex justify-between">
         <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
         <button :disabled="processing" class="px-6 py-3 disabled:cursor-not-allowed disabled:opacity-25 text-sm rounded-md bg-[#292929] text-white" @click="goNext">{{processing ? 'processing..' : 'Continue'}}</button>
       </div>
-    </div>
+    </div> -->
+    <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center  border-[0.5px]">
+      <div class="max-w-2xl w-full flex justify-between">
+        <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
+        <button  :disabled="processing" class="px-6 py-3 text-sm rounded-md disabled:cursor-not-allowed disabled:opacity-25  bg-[#292929] text-white" @click="goNext">{{processing ? 'processing..' : 'Continue'}}</button>
+      </div>
+  </div>
   </div>
 </template>
 

@@ -254,6 +254,7 @@
   </template>
   
   <script setup lang="ts">
+  import { useCustomToast } from '@/composables/core/useCustomToast'
 //   import { useUserInitials } from '@/composables/core/useUserInitials'
 //   import Layout from '@/layouts/dashboard.vue';
   import { useUser } from '@/composables/auth/user'
@@ -261,6 +262,7 @@
   import { dynamicImage } from "@/utils/assets";
   const { user } = useUser()
   const router = useRouter();
+  const { showToast } = useCustomToast();
   const { propertyObj, loading } = useFetchProperty();
   
   // Property Images
@@ -326,10 +328,20 @@
   const copyLink = () => {
     navigator.clipboard.writeText(shareLink.value).then(
       () => {
-        alert("Link copied to clipboard!");
+        showToast({
+				title: "Success",
+				message: 'Link copied to clipboard!',
+				toastType: "success",
+				duration: 3000
+			  });
       },
       (err) => {
-        console.error("Could not copy text: ", err);
+        showToast({
+				title: "Error",
+				message: 'Could not copy text',
+				toastType: "error",
+				duration: 3000
+			  });
       }
     );
   };

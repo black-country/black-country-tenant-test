@@ -121,13 +121,13 @@
     <div class="fixed bottom-0 left-0 right-0 bg-white py-4 px-6 border-t border-gray-200">
       <div class="flex justify-between max-w-lg mx-auto">
         <button
-          class="px-6 py-2 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none"
+          class="px-6 py-3 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none"
           @click="goBack"
         >
           Back
         </button>
         <button
-          class="px-6 py-2 text-sm text-white bg-black rounded-md hover:bg-gray-800 focus:outline-none"
+          class="px-6 py-3 text-sm text-white bg-black rounded-md hover:bg-gray-800 focus:outline-none"
           :disabled="!canProceed"
           @click="submitForm"
         >

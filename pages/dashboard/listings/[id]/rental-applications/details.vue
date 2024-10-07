@@ -152,7 +152,7 @@
                 <p class="text-gray-500 mt-2 text-xs">Sign agreement</p>
               </div>
               <div class="flex flex-col items-center">
-                <button class="p-4 rounded-lg  transition cursor-not-allowed">
+                <button @click="showPaymentModal = true" class="p-4 rounded-lg  transition cursor-not-allowed">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <rect width="40" height="40" rx="8" fill="#292929"/>
                       <path d="M21.6693 20.0002C21.6693 20.9206 20.9231 21.6668 20.0026 21.6668C19.0821 21.6668 18.3359 20.9206 18.3359 20.0002C18.3359 19.0797 19.0821 18.3335 20.0026 18.3335C20.9231 18.3335 21.6693 19.0797 21.6693 20.0002Z" stroke="white" stroke-width="1.5"/>
@@ -479,24 +479,85 @@
           </div>
         </div>
       </CoreModal>
+
+
+      <CoreModal :isOpen="showPaymentModal" @close="showPaymentModal = false">
+          <div class="bg-white rounded-lg shadow-md max-w-lg w-full lg:w-1/2 mx-auto text-center">
+            <h2 class="text-xl font-medium text-[#1D2739] text-start px-6 pt-6 mb-4">Select Payment method</h2>
+            <div class="space-y-4">
+              <div
+                v-for="(option, index) in paymentOptions"
+                :key="index"
+                class="flex px-6 justify-between border-b last:border-b-0 items-center  p-3 cursor-pointer"
+                @click="selectPaymentOption(option.value)"
+              >
+                <span class="text- text-[#1D2739]">{{ option.label }}</span>
+                <input
+                  type="radio"
+                  :value="option.value"
+                  v-model="selectedOption"
+                  class="text-green-600 h-6 w-6"
+                />
+              </div>
+            </div>
+            <div class="flex justify-between mt-10 px-6 pb-6">
+              <button
+                @click="cancel"
+                class="w-full mr-2 py-3.5 border border-gray-300 rounded-md text-[#292929] font-semibold text-sm hover:bg-gray-100"
+              >
+                Cancel
+              </button>
+              <button
+                @click="proceed"
+                :disabled="!selectedOption"
+                class="w-full ml-2 py-3.5 bg-[#292929] text-white rounded-md text-sm hover:bg-gray-800"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+      </CoreModal>
     </main>
   </template>
   
   <script setup lang="ts">
   import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
   import { useFetchSimilarProperty } from "@/composables/modules/property/fetchSimilarProperties";
-  import { ref } from "vue";
+  import { useCustomToast } from '@/composables/core/useCustomToast'
   import { dynamicImage } from "@/utils/assets";
   const { propertyObj, loading } = useFetchProperty();
   const { propertyList, loading: loadingSimilarProperties } = useFetchSimilarProperty()
   const router = useRouter();
   const route = useRoute()
+  const { showToast } = useCustomToast();
   // Property Images
   const mainImage = ref("property1.png");
   const secondaryImage1 = ref("property1.png");
   const secondaryImage2 = ref("property1.png");
   const secondaryImage3 = ref("property1.png");
   const secondaryImage4 = ref("property1.png");
+
+  const selectedOption = ref<string | null>(null);
+        
+        const paymentOptions = [
+          { label: 'Pay with Transfer', value: 'transfer' },
+          { label: 'Pay with Card', value: 'card' },
+          { label: 'Pay with Linked Bank', value: 'bank' },
+        ];
+        
+        const selectPaymentOption = (value: string) => {
+          selectedOption.value = value;
+        };
+        
+        const proceed = () => {
+          if (selectedOption.value) {
+            router.push(`/dashboard/listings/${route.params.id}/rental-applications/payment?method=${selectedOption.value}`);
+          }
+        };
+        
+        const cancel = () => {
+          selectedOption.value = null;
+        };
   
   const showShareModal = ref(false);
   // const showBookingModal = ref(true);
@@ -512,21 +573,27 @@
   const copyLink = async () => {
     try {
       await navigator.clipboard.writeText(shareLink.value);
-      useNuxtApp().$toast.success("Link copied!", {
-        autoClose: 5000,
-        dangerouslyHTMLString: true,
-      });
+      showToast({
+					title: "Success",
+					message: 'Link copied!',
+					toastType: "success",
+					duration: 3000
+				  });
     } catch (err) {
-      useNuxtApp().$toast.error("Failed to copy link", {
-        autoClose: 5000,
-        dangerouslyHTMLString: true,
-      });
+      showToast({
+					title: "Error",
+					message: 'Failed to copy link',
+					toastType: "error",
+					duration: 3000
+				  });
     }
   };
   
   definePageMeta({
     middleware: "auth",
   });
+
+  const showPaymentModal = ref(false)
 
   const steps = ref([
     { label: 'Tour Schedule', status: 'completed' },

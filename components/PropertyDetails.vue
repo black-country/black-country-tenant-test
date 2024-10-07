@@ -537,7 +537,7 @@
     <CoreModal :isOpen="openRentalApplicationModal">
       <div class="p-6 max-w-xl mx-auto bg-white rounded-md">
        <div class="flex justify-between items-center pb-5">
-        <h2 class="text-sm font-medium">Select the room you're interested in</h2>
+        <h2 class="text-base font-medium">Select the room you're interested in</h2>
         <button @click="openRentalApplicationModal = false" class="text-[#1D2739] font-semibold text-sm">Cancel</button>
        </div>
         <div class="grid grid-cols-3 gap-4 mb-6">
@@ -562,14 +562,16 @@
             </p>
           </button>
         </div>
-        <button
-        @click="handleSelectedRoom"
-        class="w-full p-3.5 text-sm rounded-lg"
-        :class="selectedRoom ? 'bg-[#292929] text-white' : 'bg-gray-300 text-gray-500'"
-        :disabled="!selectedRoom"
-      >
-        Continue
-      </button>
+    <div class="pt-10">
+      <button
+      @click="handleSelectedRoom"
+      class="w-full p-3.5 text-sm rounded-lg"
+      :class="selectedRoom ? 'bg-[#292929] text-white' : 'bg-gray-300 text-gray-500'"
+      :disabled="!selectedRoom"
+    >
+      Continue
+    </button>
+    </div>
       </div>
     </CoreModal>
 

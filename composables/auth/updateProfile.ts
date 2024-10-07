@@ -2,6 +2,8 @@ import { auth_api } from "@/api_factory/modules/auth";
 import { useRouter } from "vue-router";
 import { ref } from "vue";
 import { useUser } from '@/composables/auth/user'
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
 import { useNuxtApp } from "#app"; // Use this to show toast notifications
 
 export const use_update_profile = () => {
@@ -63,11 +65,19 @@ export const use_update_profile = () => {
         console.log(res, 'res here ooooo again')
         return res;
       } else {
+        console.log(res, 'res here')
+        showToast({
+          title: "Error",
+          message: res.data.error,
+          toastType: "error",
+          duration: 3000
+        });
         // If API returns an error, set the error state
         error.value = res.message || "An error occurred while updating the profile.";
         return Promise.reject(error.value);
       }
     } catch (err) {
+      console.log(err, 'res here')
       loading.value = false;
       error.value = err.message || "An unexpected error occurred while updating the profile.";
       useNuxtApp().$toast.error(error.value, {
