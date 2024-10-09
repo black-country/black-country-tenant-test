@@ -39,13 +39,20 @@
           >Email address</label
         >
         <input
+        type="email"
+        id="email"
+        v-model.trim="payload.email.value"
+        placeholder="Enter your email address"
+        class="mt-1 block w-full bg-[#E4E7EC] text-sm px-4 py-4 border-[0.5px] border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+      />
+        <!-- <input
           type="email"
           id="email"
           v-model.trim="payload.email.value"
           :disabled="processing || emailExists"
           placeholder="Enter your email address"
           class="mt-1 block w-full bg-[#E4E7EC] text-sm px-4 py-4 border-[0.5px] border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-        />
+        /> -->
         <!-- Loading Spinner -->
         <div
           v-if="processing"
