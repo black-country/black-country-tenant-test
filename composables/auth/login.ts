@@ -1,5 +1,7 @@
 import { useUser } from "@/composables/auth/user";
 import { auth_api } from "@/api_factory/modules/auth";
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
 
 const credential = {
   email: ref(""),
@@ -27,8 +29,22 @@ export const use_auth_login = () => {
     if (res.type !== "ERROR") {
       console.log(res, "response gere");
       useUser().createUser(res.data);
+      showToast({
+        title: "Success",
+        message: 'Login was successfully',
+        toastType: "success",
+        duration: 3000
+      });
       router.push("/dashboard");
       // window.location.href = '/dashboard'
+    } else {
+      console.log(res, 'tes here')
+      showToast({
+        title: "Error",
+        message: res?.data?.error  || "Something went wrong",
+        toastType: "error",
+        duration: 3000
+      });
     }
   };
   return { credential, login, loading, isFormDisabled };
