@@ -64,18 +64,6 @@ const populateObj = (data: any) => {
    credential.agreement.value = data.agreement
 }
 
-// Disable the button if fields are empty, passwords do not match, or agreement is not checked
-// const isFormDisabled = computed(() => {
-//   return (
-//     loading.value ||
-//     !credential.agreement.value ||
-//     !credential.fullName.value ||
-//     !credential.password.value ||
-//     !credential.confirmPassword.value ||
-//     passwordMismatch.value
-//   );
-// });
-
 const isFormDisabled = computed(() => {
   return (
     loading.value ||

@@ -39,9 +39,9 @@ const handleSuccess = () => {
   router.push("/dashboard");
 };
 
-definePageMeta({
-  middleware: "auth",
-});
+// definePageMeta({
+//   middleware: "auth",
+// });
 </script>
   
   <style scoped>
