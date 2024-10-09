@@ -5,11 +5,6 @@
 </template>
 
 <script setup lang="ts">
-import RegisterForm from '@/components/RegisterForm.vue';
-
-definePageMeta({
-  middleware: "auth",
-});
 </script>
 
 <style scoped>

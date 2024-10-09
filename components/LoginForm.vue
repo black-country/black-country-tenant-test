@@ -154,6 +154,12 @@ import { useAuth } from '@/composables/auth/useAuth'
 const { credential, login, loading, isFormDisabled } = use_auth_login()
 const { signInWithGoogle, signInWithApple } = useAuth()
 
+const router = useRouter()
+
+const handleSignup = () => {
+  window.location.href = "/signup"
+}
+
   const toggleShowPassword = () => {
   showPassword.value = !showPassword.value;
 };
