@@ -43,7 +43,6 @@
          </div>
     
           <div class="mt-6 space-y-6">
-            <!-- Full Lease Agreement Content -->
             <section>
               <h3 class="font-medium text-[#1D2739]">1. Parties</h3>
               <p class="text-[#2e3a50] text-sm">This Lease Agreement is entered into on 08/04/2024 between:</p>
