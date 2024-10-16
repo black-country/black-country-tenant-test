@@ -90,6 +90,12 @@
                 alt="Rental Background"
                 class="w-full h-[500px] rounded-lg object-cover"
               />
+              <img 
+              v-else
+              src="@/assets/img/rental-details.png" 
+              alt="Rental Background"
+              class="w-full h-[500px] rounded-lg object-cover"
+            />
               
       
               <!-- <div class="absolute inset-x-0 bottom-5 mx-auto w-full max-w-xl flex justify-between bg-black bg-opacity-50 py-2 px-4 rounded-lg text-white">

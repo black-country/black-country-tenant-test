@@ -6,17 +6,13 @@
       <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
       <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    
     <h2 class="text-xl font-medium mb-4 text-[#1D2739] my-4">{{ sectionTitle }} Information</h2>
-    
     <form @submit.prevent="saveSection">
       <div v-for="(field, index) in fields" :key="index" class="mb-4">
         <label class="block text-sm font-medium text-[#1D2739]">
           {{ field.label }} 
           <span v-if="field.isCompulsory" class="text-red-600">*</span>
         </label>
-        
-        <!-- Dynamic Input Types -->
         <div v-if="field.type === 'text'">
           <input
             v-model="field.value"
@@ -24,7 +20,7 @@
             class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md"
           />
         </div>
-        <div v-if="field.type === 'select'">
+        <div v-if="field.type === 'select' && field.label !== 'State of Origin' && field.label !== 'Local Government (LGA)'">
           <select
             v-model="field.value"
             class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md"
@@ -65,12 +61,32 @@
           />
           <p v-if="field.preview">{{ field.preview }}</p> <!-- Preview the uploaded file -->
         </div>
+      <section>
+        <section v-if="loadingStates && field.label === 'State of Origin'" class="">
+          <div class="h-14 w-full animate-pulse rounded bg-slate-200"></div>
+        </section>
+       <div v-else>
+        <div v-if="field.label === 'State of Origin' && field.code === 'state_of_origin'">
+          <select v-model="selectedState" class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md">
+            <option v-for="option in field.options" :key="option" :value="option">{{ option.name }}</option>
+          </select>
+        </div>
+       </div>
+      </section>
+      <section>
+        <section v-if="loadingCities && field.label === 'Local Government (LGA)'" class="">
+          <div class="h-14 w-full animate-pulse rounded bg-slate-200"></div>
+        </section>
+      <div v-else>
+        <div v-if="field.label === 'Local Government (LGA)' && field.code === 'lga'">
+          <select v-model="selectedLga" class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md">
+            <option v-for="option in field.options" :key="option" :value="option">{{ option }}</option>
+          </select>
+        </div>
       </div>
-  
-      <!-- <div class="flex justify-between mt-8">
-        <button @click="goBack" class="px-6 py-3 text-sm rounded-md bg-gray-100 text-[#292929]">Cancel</button>
-        <button :disabled="!isFormValid" type="submit" class="px-6 py-3 text-sm rounded-md bg-[#292929] text-white" :class="{ 'bg-gray-300': !isFormValid, 'bg-[#292929]': isFormValid }">Save</button>
-      </div> -->
+      </section>
+   
+      </div>
       <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center  border-[0.5px]">
         <div class="max-w-2xl w-full flex justify-between">
           <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
@@ -93,9 +109,13 @@ const { credential, mapDataToCredential } = useDataMapping();
 import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
 import { useRemoveNullValues } from '@/composables/modules/rentals/useRemoveNullValues';
+import { useGetLocation } from '@/composables/core/useGetLocation'
 const { removeNullValues } = useRemoveNullValues()
+const { states, cities, loadingStates, loadingCities,  getStates, getCities } = useGetLocation()
 
 const cleanedObject = ref({});
+const selectedState = ref(''); // Define selectedState to track selected state
+const selectedLga = ref(''); // Define selectedLga to track selected LGA (city)
 
 
 const route = useRoute();
@@ -112,8 +132,8 @@ const sectionFields = {
     { label: 'Date of Birth', value: '', type: 'date', isCompulsory: true },
     { label: 'Marital status', value: '', type: 'select', options: ['Single', 'Married'] },
     { label: 'Gender', value: '', type: 'select', options: ['Male', 'Female', 'I’ll rather not say'] },
-    { label: 'State of Origin', isCompulsory: true, value: '', type: 'text' },
-    { label: 'Local Government (LGA)', value: '', type: 'text' }
+    { label: 'State of Origin', value: '', type: 'select', code: 'state_of_origin', options: [], isCompulsory: false }, // State as select
+    { label: 'Local Government (LGA)', value: '', type: 'select', code: 'lga', options: [], isCompulsory: false }, // LGA as select
   ],
   'rental-history': [
     { label: 'Current Landlord', value: '', type: 'text' },
@@ -146,8 +166,7 @@ fields.value = sectionFields[section.value] || [];
 // Persist form data
 const { saveData, loadData } = useFormPersistence();
 
-// Prefill form fields if data exists in local storage
-onMounted(() => {
+onMounted(async () => {
   const savedData = loadData(section.value);
   if (savedData) {
     // Iterate over the saved data and assign it to the corresponding fields
@@ -157,11 +176,65 @@ onMounted(() => {
       }
     });
   }
+
+  // Fetch states from the API and wait for the result
+  await getStates(); // Ensure this is awaited
+
+  // Populate the State of Origin options with the fetched states
+  const stateField = fields.value.find((field) => field.label === 'State of Origin');
+  
+  if (stateField && states.value.length) {
+    stateField.options = states.value.map((state) => ({
+      name: state.name,
+      stateCode: state.stateCode, // Assuming stateCode exists in the state data
+    }));
+  } else {
+    console.log('State options not populated, no states available or stateField not found.');
+  }
 });
 
+watch(selectedState, async (newState) => {
+  console.log(newState, 'watching from outsie')
+  const stateField = fields.value.find((field) => field.label === 'State of Origin');
+  stateField.value = newState.name
+    if (newState) {
+      await getCities(newState.stateCode);
+      const lgaField = fields.value.find((field) => field.label === 'Local Government (LGA)');
+      if (lgaField && cities.value.length) {
+          lgaField.options = cities.value.map((city) => city.name);
+        }
+    }
+  });
+
+  watch(selectedLga, async (newLga) => {
+  console.log(newLga, 'watching from outsie')
+  const lgaField = fields.value.find((field) => field.label === 'Local Government (LGA)');
+  lgaField.value = newLga.name
+  });
+  
 // Computed property to check if all compulsory fields are filled
+// const isFormValid = computed(() => {
+//   return fields.value.every(field => !field.isCompulsory || (field.isCompulsory && field.value));
+// });
+
 const isFormValid = computed(() => {
-  return fields.value.every(field => !field.isCompulsory || (field.isCompulsory && field.value));
+  return fields.value.every(field => {
+    if (!field.isCompulsory) return true;
+
+    // Check for different field types
+    if (field.type === 'select') {
+      // Ensure a valid option is selected (not empty or undefined)
+      return field.value !== '' && field.value !== null && field.value !== undefined;
+    }
+
+    if (field.type === 'number') {
+      // Ensure a number field is valid (not empty, undefined, or NaN)
+      return field.value !== '' && field.value !== null && !isNaN(field.value);
+    }
+
+    // For other field types (e.g., text, email, date), ensure they are not empty
+    return field.value !== '' && field.value !== null && field.value !== undefined;
+  });
 });
 
 // Save form data and move to the next step
@@ -169,6 +242,7 @@ const saveSection = async () => {
   try {
     mapDataToCredential(fields.value);
     cleanedObject.value = removeNullValues(credential.value);
+    console.log(cleanedObject.value, 'cleaned')
     updateProfile(cleanedObject.value).then(() => {
       showToast({
           title: "Success",

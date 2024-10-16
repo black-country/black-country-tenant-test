@@ -1,34 +1,54 @@
 <template>
-    <div v-if="images" class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 p-6 lg:p-0">
-      <!-- Main Image -->
-      <div>
-        <img :src="images[0]" alt="Main Image" class="rounded-lg w-full" />
+  <main>
+    <section v-if="loading">
+      <div class="rounded-md p-4 w-full mx-auto">
+        <div class="animate-pulse flex space-x-4">
+          <div class="h-44 w-full bg-slate-200 rounded col-span-1"></div>
+        </div>
       </div>
-  
-      <!-- Smaller Images on the right -->
-      <div class="grid grid-cols-2 space-y-2 gap-4 gap-y-0 gap-x-2">
-        <!-- Display the first 4 images from the array -->
-        <img
+    </section>
+      <div v-else-if="images && !loading" class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 p-6 lg:p-0">
+        <!-- Main Image -->
+        <div>
+          <!-- <CoreImageZoom
+          :class="'cursor-pointer border-4 w-full object-cover'"
+          :src="images[0]"
+          :style="{ height: '700px' }"
+        /> -->
+        <CoreImageZoom
+        :class="'cursor-pointer border-4 w-full object-cover'"
+        :src="images[0]"
+        :style="{ height: '700px' }"
+      />
+        </div>
+    
+        <!-- Smaller Images on the right -->
+        <div class="grid grid-cols-2 space-y-2 gap-4 gap-y-0 gap-x-2">
+          <!-- Display the first 4 images from the array -->
+          <CoreImageZoom
           v-for="(image, index) in rightImages"
           :key="index"
           :src="image"
           :alt="'Image ' + (index + 2)"
-          class="rounded-lg w-full"
+          :style="{ height: '340px' }"
+          class="rounded-lg w-full h-[200px] object-cover"
         />
-  
-        <!-- 'View all' overlay for the last image if there are more than 5 images -->
-        <div v-if="remainingImagesCount > 0" class="relative cursor-pointer" @click="navigateToAllImages">
-          <img
-            :src="images[4]"
-            alt="Image 5"
-            class="rounded-lg w-full"
-          />
-          <div class="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-lg font-bold rounded-lg">
-            View all +{{ remainingImagesCount }}
+    
+          <!-- 'View all' overlay for the last image if there are more than 5 images -->
+          <div v-if="remainingImagesCount > 0" class="relative cursor-pointer" @click="navigateToAllImages">
+                <CoreImageZoom
+                :src="images[4]"
+                alt="Image 5"
+                :style="{ height: '340px' }"
+                class="rounded-lg w-full h-[200px] object-cover"
+              />
+            <div class="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center text-white text-lg font-bold rounded-lg">
+              View all +{{ remainingImagesCount }}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+  </main>
   </template>
   
   <script setup lang="ts">
@@ -47,6 +67,9 @@
     },
     images: {
       type: Array
+    },
+    loading: {
+      type: Boolean
     }
   })
   

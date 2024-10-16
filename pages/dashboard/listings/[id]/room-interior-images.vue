@@ -106,7 +106,11 @@
     <section class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 container mx-auto  px-6">
       <section v-for="(image, index) in previewImages" :key="index" :src="image">
         <div>
-          <img :src="image" class="rounded-md" />
+          <CoreImageZoom
+          :class="'cursor-pointer border-4 w-full object-cover'"
+          :src="image"
+          :style="{ height: '340px' }"
+         />
         </div>
       </section>
     </section>

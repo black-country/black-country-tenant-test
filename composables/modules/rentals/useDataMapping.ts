@@ -9,6 +9,8 @@ interface Credential {
   phoneNumber: string;
   dateOfBirth: string;
   gender: string;
+  stateOfOrigin: string;
+  lga: string;
   maritalStatus: string;
   profilePicture: string | null;
   currentLandlord: string | null;
@@ -79,6 +81,8 @@ export function useDataMapping() {
     dateOfBirth: '',
     gender: '',
     maritalStatus: '',
+    stateOfOrigin: '',
+    lga: '',
     profilePicture: null,
     currentLandlord: null,
     rentalAddress: null,
@@ -117,6 +121,10 @@ export function useDataMapping() {
         credential.value.gender = item.value;
       } else if (item.label === personalMapping.maritalStatus) {
         credential.value.maritalStatus = item.value;
+      } else if (item.label === personalMapping.stateOfOrigin) {
+        credential.value.stateOfOrigin = item.value;
+      }else if (item.label === personalMapping.lga) {
+        credential.value.lga = item.value;
       }
 
       // Rental Data Mapping

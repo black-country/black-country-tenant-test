@@ -3,12 +3,15 @@
   <TopNavBar />
   <div class="p-8 bg-gray-25 min-h-screen flex flex-col justify-between">
     <div class="max-w-2xl mx-auto w-full">
+      <svg @click="router.back()" class="cursor-pointer mb-3" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
+        <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       <!-- Form Header -->
       <h2 class="text font-medium text-gray-700">
         <span class="text-[#667185]">Profile </span>|
         <span class="text-[#1D2739]"> Payment Information</span>
       </h2>
-
       <section class="bg-white rounded-lg py-5 mt-6">
         <!-- Linked Card -->
         <div @click="router.push('/profile/linked-cards')" class="mt-6 bg-white p-4 cursor-pointer">

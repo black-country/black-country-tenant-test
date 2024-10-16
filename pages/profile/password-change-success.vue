@@ -42,9 +42,9 @@ const handleSuccess = () => {
   router.push('/login')
 };
 
-definePageMeta({
-  middleware: "auth",
-});
+// definePageMeta({
+//   middleware: "auth",
+// });
 </script>
   
   <style scoped>
