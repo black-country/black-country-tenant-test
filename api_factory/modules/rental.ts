@@ -29,8 +29,6 @@ export const rental_api = {
   
     return GATEWAY_ENDPOINT.get(url);
   },
-  
-
   $_fetch_single_rental: (id: string | number) => {
     const url = `/rental-applications/${id}`;
     return GATEWAY_ENDPOINT.get(url);

@@ -1,7 +1,7 @@
 import { auth_api } from '@/api_factory/modules/auth'
 import { useUser } from '@/composables/auth/user'
 export const use_tenant_profile = () => {
-  const profileObj = ref(null) as any
+  const profileObj = ref({}) as any
   const loading = ref(false);
   const { updateUser } = useUser()
 

@@ -100,6 +100,7 @@
 
 
 <script setup lang="ts">
+import { use_tenant_profile } from '@/composables/auth/fetchProfile'
 import { use_update_profile } from '@/composables/auth/updateProfile'
 const { updateProfile, loading } = use_update_profile()
 import { useRoute, useRouter } from 'vue-router';
@@ -110,6 +111,7 @@ import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
 import { useRemoveNullValues } from '@/composables/modules/rentals/useRemoveNullValues';
 import { useGetLocation } from '@/composables/core/useGetLocation'
+const { loading: loadingProfile, profileObj } = use_tenant_profile()
 const { removeNullValues } = useRemoveNullValues()
 const { states, cities, loadingStates, loadingCities,  getStates, getCities } = useGetLocation()
 
@@ -279,4 +281,5 @@ const handleFileUpload = (event: Event, field: any) => {
     field.preview = file.name; // Display the file name as a preview
   }
 };
+
 </script>

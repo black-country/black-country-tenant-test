@@ -19,5 +19,9 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
   $_fetch_similar_properties: (id: any) => {
     const url = `/houses/${id}/similar`;
     return GATEWAY_ENDPOINT.get(url);
+  },
+  $_bookmark_listing: (payload: any) => {
+    const url = '/bookmarked-houses';
+    return GATEWAY_ENDPOINT.post(url, payload);
   }
 };

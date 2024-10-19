@@ -1,6 +1,8 @@
 <template>
-  <div class="h-screen flex flex-col justify-between">
+<main>
+  <div v-if="!loadingProfile" class="h-screen flex flex-col justify-between">
     <h2 class="text-xl font-medium text-[#1D2739] mb-4">Review your profile details</h2>
+    {{profileObj}}
     <p class="mb-6 text-[#667185]">
       Please review your profile details and make any necessary edits before proceeding.
       Fields marked with a <span class="text-red-600">*</span> are required to complete your application.
@@ -108,19 +110,6 @@
       </div>
     </div>
     </div>
-
-    <!-- <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center border-[0.5px]">
-      <div class="max-w-2xl w-full flex justify-between">
-        <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
-        <button class="px-6 py-3 text-sm rounded-md bg-[#292929] text-white" @click="goNext">Continue</button>
-      </div>
-    </div> -->
-    <!-- <div class="bg-white  px-6 py-4 flex justify-center border-[0.5px] rounded-md w-full mt-10">
-      <div class="max-w-2xl w-full flex justify-between">
-        <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
-        <button :disabled="processing" class="px-6 py-3 disabled:cursor-not-allowed disabled:opacity-25 text-sm rounded-md bg-[#292929] text-white" @click="goNext">{{processing ? 'processing..' : 'Continue'}}</button>
-      </div>
-    </div> -->
     <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center  border-[0.5px]">
       <div class="max-w-2xl w-full flex justify-between">
         <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
@@ -128,15 +117,34 @@
       </div>
   </div>
   </div>
+  <section  class="p-8 max-w-7xl mx-auto" v-else>
+    <div class="rounded-md p-4 w-full mx-auto">
+      <div class="animate-pulse flex space-x-4">
+        <div class="flex-1 space-y-6 py-1">
+          <div class="h-32 bg-slate-200 rounded"></div>
+          <div class="space-y-3">
+            <div class="grid grid-cols-3 gap-4">
+              <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
+              <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
+            </div>
+            <div class="h-32 w-full bg-slate-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 </template>
 
 <script setup lang="ts">
+import { use_tenant_profile } from '@/composables/auth/fetchProfile'
 import { useRouter, useRoute } from 'vue-router';
 import { useFormPersistence } from '@/composables/core/useFormPersistence';
 import { useUser } from "@/composables/auth/user";
 import { useCreateRentalApplication } from '@/composables/modules/rentals/createRetals'
 const { createRentalApplication, loading, setPayload } = useCreateRentalApplication()
 const { user } = useUser();
+const { loading: loadingProfile, profileObj } = use_tenant_profile()
 
 const processing = ref(false)
 
@@ -184,6 +192,25 @@ const profile = ref({
     {id: '', question: '', answer: '' }
   ]
 });
+
+onMounted(() => {
+  // Ensure profileObj has data before attempting to prefill
+  // if (profileObj.value && !loadingProfile) {
+  //   profile.value.personal = 'marquis'
+  //   // Prefill personal information
+  //   // profile.value.personal = {
+  //   //   name: 'marquis',
+  //   //   email: profileObj.value.email,
+  //   //   phone: profileObj.value.phoneNumber,
+  //   //   dob: profileObj.value.dateOfBirth ? new Date(profileObj.value.dateOfBirth).toISOString().split('T')[0] : '',
+  //   //   gender: profileObj.value.gender,
+  //   //   maritalStatus: profileObj.value.maritalStatus,
+  //   //   stateOfOrigin: profileObj.value.stateOfOrigin || '', // Assuming `stateOfOrigin` is available
+  //   //   lga: profileObj.value.lga || '' // Assuming `lga` is available
+  //   // }
+  // }
+});
+
 
 // Load and save profile data using the persistence composable
 const { saveData, loadData } = useFormPersistence();
@@ -277,47 +304,11 @@ onMounted(() => {
   }
 });
 
-// onMounted(() => {
-//   const personal = loadData('personal-information');
-//   const rental = loadData('rental-history');
-//   const employment = loadData('employment-information');
-//   const nextOfKin = loadData('next-of-kin');
-//   const document = loadData('uploaded-document');
-//   const screeningQuestions = loadData('prescreening'); // Load pre-screening questions
-
-//   if (personal && Object.keys(personal).length) {
-//     profile.value.personal = personal;
-//   }
-//   if (rental && Object.keys(rental).length) {
-//     profile.value.rental = rental;
-//   }
-//   if (employment && Object.keys(employment).length) {
-//     profile.value.employment = employment;
-//   }
-//   if (nextOfKin && Object.keys(nextOfKin).length) {
-//     profile.value.nextOfKin = nextOfKin;
-//   }
-//   if (document && Object.keys(document).length) {
-//     profile.value.document = document;
-//   }
-//   if (Array.isArray(screeningQuestions)) {
-//     profile.value.screeningQuestions = screeningQuestions;
-//   }
-// });
-
-
 // Navigation and actions
 const router = useRouter();
 const route = useRoute();
 
-// Save each section of profile data separately
-// const saveProfile = () => {
-//   saveData('personal-information', profile.value.personal);
-//   saveData('rental-history', profile.value.rental);
-//   saveData('employment-information', profile.value.employment);
-//   saveData('next-of-kin', profile.value.nextOfKin);
-//   saveData('uploaded-document', profile.value.document);
-// };
+
 const saveProfile = () => {
   saveData('personal-information', profile.value.personal);
   saveData('rental-history', profile.value.rental);

@@ -15,7 +15,7 @@
         <!-- Success Message -->
         <h2 class="text-xl font-semibold text-[#1D2739] mb-2">Visit Scheduled successfully</h2>
         <p class="text-[#667185] mb-6">
-          Your visit is scheduled for {{ formattedDate }}.
+          Your visit is scheduled successfully
         </p>
   
         <!-- Confirmation Button -->
@@ -44,10 +44,7 @@
     year: 'numeric',
   })}`;
 
-  definePageMeta({
-  middleware: "auth",
-});
-  
+
   // Simulate closing the confirmation (you can handle navigation or state changes here)
   const closeConfirmation = () => {
     router.push('/dashboard/listings')

@@ -93,7 +93,7 @@
             </div>
       
             <!-- Property Visitation -->
-         <section v-if="scheduled">
+         <section v-if="property?.rentalApplication">
           <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-3 px-3 rounded-lg border-gray-50">Property visitation</h2>
           <div class="rounded-md border-[0.5px] border-gray-50 bg-white">
             <table class="w-full mt-2 table-fixed text-sm">
@@ -580,7 +580,7 @@
     :isOpen="showBookingModal"
     @close="showBookingModal = false"
     >
-      <BookingModal class="lg:w-4/12 m-6 lg:m-0" />
+      <BookingModal :property="property" class="lg:w-4/12 m-6 lg:m-0" />
     </CoreModal>
   </main>
   </template>

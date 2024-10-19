@@ -387,11 +387,10 @@
            v-if="!loadingProperties && propertiesList.length" 
           v-for="(property, index) in propertiesList"
           :key="index"
-          @click="router.push(`/dashboard/listings/${property.id}/preview`)"
           class="relative cursor-pointer min-w-[300px] w-full lg:max-w-[350px] bg-white"
         >
           <button
-            @click="toggleLike(index)"
+            @click="toggleLike(index, property)"
             class="absolute top-6 right-6 text-white hover:text-red-500 focus:outline-none"
           >
             <svg
@@ -435,9 +434,9 @@
               />
             </svg>
           </button>
-          <img v-if="property?.images?.length"  :src="property?.images[0]" class="rounded-lg object-cover h-56 w-full"  alt="alt"/>
-           <img v-else class="rounded-lg" src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  alt="alt"/>
-          <section class="space-y-2">
+          <img  @click="router.push(`/dashboard/listings/${property.id}/preview`)" v-if="property?.images?.length"  :src="property?.images[0]" class="rounded-lg cursor-pointer object-cover h-56 w-full"  alt="alt"/>
+           <img  @click="router.push(`/dashboard/listings/${property.id}/preview`)" v-else class="rounded-lg cursor-pointer" src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="alt"/>
+          <section  @click="router.push(`/dashboard/listings/${property.id}/preview`)" class="space-y-2 cursor-pointer">
             <div>
               <h3 class="text- font-medium text-[#1D2739] mt-4">
                 {{ property?.name }}
@@ -800,6 +799,8 @@
 <script setup lang="ts">
 import moment from 'moment';
 import { useGetProperties } from '@/composables/modules/property/fetchProperties'
+import { useBookmarkProperty } from '@/composables/modules/property/bookmark'
+const { bookmarkProperty, loading } = useBookmarkProperty()
 import { dynamicImage } from "@/utils/assets";
 import { useRouter, useRoute } from 'vue-router';
 
@@ -883,8 +884,9 @@ const selectSuggestion = (suggestion: string) => {
   router.push(`/dashboard/listings/${suggestion.id}/preview`);
 };
 
-const toggleLike = (index: number) => {
-  properties.value[index].liked = !properties.value[index].liked;
+const toggleLike = (index: number, property: any) => {
+  propertiesList.value[index].liked = !propertiesList.value[index].liked;
+  bookmarkProperty(property.id)
 };
 
 const handleSearchInput = () => {
