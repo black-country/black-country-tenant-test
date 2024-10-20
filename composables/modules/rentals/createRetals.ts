@@ -39,12 +39,12 @@ export function useCreateRentalApplication() {
       if (res.type !== 'ERROR') {
         showToast({
           title: "Success",
-          message: 'Rental Application was mad successfully!',
+          message: 'Rental Application was made successfully!',
           toastType: "success",
           duration: 3000
         });
         clearLocalStorageExceptUserAndToken();
-        router.push(`/dashboard/listings/${route.params.id}/preview`)
+        router.push(`/dashboard/listings/${route.params.id}/rental-applications/details`)
   
       } else {
         showToast({

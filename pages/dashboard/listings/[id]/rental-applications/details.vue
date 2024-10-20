@@ -82,7 +82,7 @@
           <section v-if="!loading">
           <!-- <PropertyImageGallery :property="propertyObj" :images="propertyObj.images" /> -->
 
-          <div class="max-w-7xl mx-auto py-8">
+          <div class="max-w-7xl mx-auto py-8 p-4 lg:p-0 mt-6">
             <div class="relative">
               <img 
                 v-if="propertyObj?.images?.length"

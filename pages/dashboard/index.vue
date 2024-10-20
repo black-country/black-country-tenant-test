@@ -134,6 +134,13 @@
    </section>
     </div>
   </div>
+
+  <CoreModal
+  :isOpen="showWelcomeModal"
+  @close="showWelcomeModal = false"
+  >
+    <CoreWelcome @close="showWelcomeModal = false" @start="router.push('/dashboard/listings?view=grid')" class="" />
+  </CoreModal>
 </main>
   </template>
   
@@ -144,6 +151,12 @@
   const { greeting } = useGreeting()
   import { dynamicIcons } from '@/utils/assets'
   const router = useRouter()
+
+  const showWelcomeModal = ref(false)
+
+  onMounted(() => {
+    showWelcomeModal.value = true
+  })
 
 definePageMeta({
   middleware: "auth"

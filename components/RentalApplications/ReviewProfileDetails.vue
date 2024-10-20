@@ -2,13 +2,12 @@
 <main>
   <div v-if="!loadingProfile" class="h-screen flex flex-col justify-between">
     <h2 class="text-xl font-medium text-[#1D2739] mb-4">Review your profile details</h2>
-    {{profileObj}}
     <p class="mb-6 text-[#667185]">
       Please review your profile details and make any necessary edits before proceeding.
       Fields marked with a <span class="text-red-600">*</span> are required to complete your application.
     </p>
 
-    <div class="space-y-4">
+    <div class="space-y-4 pb-20">
       <!-- Personal Information -->
 
      <!-- Pre-Screening Questions -->
@@ -112,7 +111,7 @@
     </div>
     <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center  border-[0.5px]">
       <div class="max-w-2xl w-full flex justify-between">
-        <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Cancel</button>
+        <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Go Back</button>
         <button  :disabled="processing" class="px-6 py-3 text-sm rounded-md disabled:cursor-not-allowed disabled:opacity-25  bg-[#292929] text-white" @click="goNext">{{processing ? 'processing..' : 'Continue'}}</button>
       </div>
   </div>
@@ -193,23 +192,58 @@ const profile = ref({
   ]
 });
 
-onMounted(() => {
-  // Ensure profileObj has data before attempting to prefill
-  // if (profileObj.value && !loadingProfile) {
-  //   profile.value.personal = 'marquis'
-  //   // Prefill personal information
-  //   // profile.value.personal = {
-  //   //   name: 'marquis',
-  //   //   email: profileObj.value.email,
-  //   //   phone: profileObj.value.phoneNumber,
-  //   //   dob: profileObj.value.dateOfBirth ? new Date(profileObj.value.dateOfBirth).toISOString().split('T')[0] : '',
-  //   //   gender: profileObj.value.gender,
-  //   //   maritalStatus: profileObj.value.maritalStatus,
-  //   //   stateOfOrigin: profileObj.value.stateOfOrigin || '', // Assuming `stateOfOrigin` is available
-  //   //   lga: profileObj.value.lga || '' // Assuming `lga` is available
-  //   // }
-  // }
+// Watch for changes in loadingProfile and profileObj
+watch(() => loadingProfile.value, (newLoadingStatus) => {
+  if (!newLoadingStatus && profileObj.value) {
+    console.log('Yeepeee loaded', profileObj.value)
+    populateProfile();
+  }
 });
+
+const documents = JSON.parse(localStorage.getItem('uploaded-document'))
+
+// Function to populate the profile data
+const populateProfile = () => {
+  profile.value.personal.name = `${profileObj.value.firstName} ${profileObj.value.lastName}`;
+  profile.value.personal.email = profileObj.value.email || '';
+  profile.value.personal.phone = profileObj.value.phoneNumber || '';
+  profile.value.personal.dob = profileObj.value.dateOfBirth || '';
+  profile.value.personal.gender = profileObj.value.gender || '';
+  profile.value.personal.maritalStatus = profileObj.value.maritalStatus || '';
+  profile.value.personal.stateOfOrigin = profileObj.value.cityId || ''; // Adjust according to your data
+  profile.value.personal.lga = profileObj.value.city || ''; // Adjust according to your data
+
+  profile.value.rental.currentLandlord = profileObj.value.currentLandlord || '';
+  profile.value.rental.address = profileObj.value.rentalAddress || '';
+  profile.value.rental.lengthOfTenancy = profileObj.value.lengthOfTenancy || '';
+  profile.value.rental.reasonForMovingOut = profileObj.value.reasonForMovingOut || '';
+
+  profile.value.employment.status = profileObj.value.employmentStatus || '';
+  profile.value.employment.employerName = profileObj.value.employerName || '';
+  profile.value.employment.occupation = profileObj.value.occupation || '';
+  profile.value.employment.organizationAddress = profileObj.value.employerAddress || '';
+  profile.value.employment.salary = profileObj.value.monthlyNetSalary || '';
+
+  profile.value.nextOfKin.fullName = profileObj.value.nextOfKinName || '';
+  profile.value.nextOfKin.relationship = profileObj.value.nextOfKinRelationship || '';
+  profile.value.nextOfKin.email = profileObj.value.nextOfKinEmail || '';
+  profile.value.nextOfKin.address = profileObj.value.nextOfKinAddress || '';
+  profile.value.nextOfKin.phone = profileObj.value.nextOfKinPhone || '';
+  profile.value.nextOfKin.occupation = profileObj.value.nextOfKinOccupation || '';
+  profile.value.nextOfKin.organizationName = profileObj.value.nextOfKinEmployer || '';
+  profile.value.nextOfKin.officeAddress = profileObj.value.nextOfKinEmployerAddress || '';
+
+  profile.value.document.type = documents.type || ''; // Handle this based on how documents are retrieved
+  profile.value.document.fileUrls = documents.fileUrls || []; // Handle this if document URLs are provided
+};
+
+onMounted(() => {
+  // Initial population if loading is already false
+  if (!loadingProfile.value && profileObj.value) {
+    populateProfile();
+  }
+});
+
 
 
 // Load and save profile data using the persistence composable

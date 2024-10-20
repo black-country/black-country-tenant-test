@@ -23,7 +23,7 @@
         <div class="flex items-center space-x-6">
           <!-- Links -->
           <div class="flex space-x-6">
-            <NuxtLink  :class="[route.path === '/dashboard' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard" class="flex items-center space-x-1 text-gray-300 px-3 rounded-md hover:text-white ">
+            <NuxtLink ref="dashboardRef"  :class="[route.path === '/dashboard' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard" class="flex items-center space-x-1 text-gray-300 px-3 rounded-md hover:text-white ">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.08331 9.99967C2.08331 6.26772 2.08331 4.40175 3.24268 3.24237C4.40205 2.08301 6.26803 2.08301 9.99998 2.08301C13.7319 2.08301 15.5979 2.08301 16.7573 3.24237C17.9166 4.40175 17.9166 6.26772 17.9166 9.99967C17.9166 13.7316 17.9166 15.5976 16.7573 16.757C15.5979 17.9163 13.7319 17.9163 9.99998 17.9163C6.26803 17.9163 4.40205 17.9163 3.24268 16.757C2.08331 15.5976 2.08331 13.7316 2.08331 9.99967Z" stroke="#D0D5DD" stroke-width="1.5" stroke-linejoin="round"/>
                 <path d="M5 7.50033H7.91667M14.1667 7.50033H15M10 6.66699V8.33366M12.0833 6.66699V8.33366" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -31,7 +31,7 @@
               </svg>
               <span class="text-sm">Dashboard</span>
             </NuxtLink>
-            <NuxtLink :class="[route.path === '/dashboard/listings' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard/listings" class="flex items-center space-x-1 text-white px-3 py-3 rounded-md">
+            <NuxtLink ref="listingsRef" :class="[route.path === '/dashboard/listings' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard/listings" class="flex items-center space-x-1 text-white px-3 py-3 rounded-md">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.66669 15.0003C1.66669 13.7167 1.66669 13.0747 1.95563 12.6032C2.1173 12.3394 2.33913 12.1176 2.60296 11.9559C3.07447 11.667 3.71632 11.667 5.00002 11.667C6.28372 11.667 6.92557 11.667 7.39708 11.9559C7.66091 12.1176 7.88274 12.3394 8.04441 12.6032C8.33335 13.0747 8.33335 13.7167 8.33335 15.0003C8.33335 16.284 8.33335 16.9259 8.04441 17.3974C7.88274 17.6612 7.66091 17.8831 7.39708 18.0447C6.92557 18.3337 6.28372 18.3337 5.00002 18.3337C3.71632 18.3337 3.07447 18.3337 2.60296 18.0447C2.33913 17.8831 2.1173 17.6612 1.95563 17.3974C1.66669 16.9259 1.66669 16.284 1.66669 15.0003Z" fill="#EBE5E0" stroke="#EBE5E0" stroke-width="1.5"/>
                 <path d="M11.6667 15.0003C11.6667 13.7167 11.6667 13.0747 11.9556 12.6032C12.1173 12.3394 12.3391 12.1176 12.6029 11.9559C13.0744 11.667 13.7164 11.667 15 11.667C16.2837 11.667 16.9256 11.667 17.3971 11.9559C17.6609 12.1176 17.8828 12.3394 18.0444 12.6032C18.3334 13.0747 18.3334 13.7167 18.3334 15.0003C18.3334 16.284 18.3334 16.9259 18.0444 17.3974C17.8828 17.6612 17.6609 17.8831 17.3971 18.0447C16.9256 18.3337 16.2837 18.3337 15 18.3337C13.7164 18.3337 13.0744 18.3337 12.6029 18.0447C12.3391 17.8831 12.1173 17.6612 11.9556 17.3974C11.6667 16.9259 11.6667 16.284 11.6667 15.0003Z" fill="#EBE5E0" stroke="#EBE5E0" stroke-width="1.5"/>
@@ -266,13 +266,68 @@
   </template>
   
   <script setup lang="ts">
+  import { useShepherd } from "vue-shepherd";
+import "shepherd.js/dist/css/shepherd.css";
   import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
   const isOpen = ref(false)
   const router = useRouter()
   const route = useRoute()
 
-  const showBLogoutModal = ref(false);2
+//   // Shepherd tour setup
+// const tour = useShepherd({
+//   useModalOverlay: true,
+// });
+
+// const dashboardRef = ref(null);
+// const listingsRef = ref(null);
+// const myHomeRef = ref(null);
+// const messagesRef = ref(null);
+// const mapViewRef = ref(null);
+// const favoritesRef = ref(null);
+// const notificationsRef = ref(null);
+// const profileRef = ref(null);
+
+// onMounted(() => {
+//   // Add tour steps
+//   tour.addSteps([
+//     {
+//       attachTo: { element: dashboardRef.value, on: "right" },
+//       text: "This is the greeting. It displays your name based on the user data.",
+//     },
+//     {
+//       attachTo: { element: listingsRef.value, on: "left" },
+//       text: "These are the setup actions. You can complete these to enhance your experience.",
+//     },
+//     {
+//       attachTo: { element: myHomeRef.value, on: "top" },
+//       text: "Here you can manage your payment actions such as paying rent or utility bills.",
+//     },
+//     {
+//       attachTo: { element: mapViewRef.value, on: "top" },
+//       text: "This section shows your recent applications.",
+//     },
+//     {
+//       attachTo: { element: favoritesRef.value, on: "top" },
+//       text: "Manage your rental applications from here.",
+//     },
+//     {
+//       attachTo: { element: notificationsRef.value, on: "top" },
+//       text: "Manage your upcoming activities from here.",
+//     },
+//     {
+//       attachTo: { element: profileRef.value, on: "top" },
+//       text: "Manage your recent transactions from here.",
+//     },
+//   ]);
+
+//   // Start the tour
+//   tour.start();
+// });
+
+
+
+  const showBLogoutModal = ref(false);
 
   const onCancel = () => {
   showBLogoutModal.value = false

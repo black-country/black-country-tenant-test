@@ -127,7 +127,7 @@
           Back
         </button>
         <button
-          class="px-6 py-3 text-sm text-white bg-black rounded-md hover:bg-gray-800 focus:outline-none"
+          class="px-6 py-3 text-sm text-white disabled:cursor-not-allowed disabled:opacity-25 bg-black rounded-md hover:bg-gray-800 focus:outline-none"
           :disabled="!canProceed"
           @click="submitForm"
         >

@@ -1,4 +1,6 @@
 import { useCustomToast } from '@/composables/core/useCustomToast'
+import { use_tenant_profile } from '@/composables/auth/fetchProfile'
+const { loading: loadingProfile, profileObj } = use_tenant_profile()
 const { showToast } = useCustomToast();
 const route = useRoute()
 const router = useRouter()
@@ -19,6 +21,9 @@ export function useFormPersistence() {
   };
 
   const loadData = (key: string) => {
+    if(!loadingProfile){
+      console.log(profileObj, 'loaded here')
+    }
     try {
       const savedData = localStorage.getItem(key);
       console.log("Loaded data:", savedData ? JSON.parse(savedData) : null); // Better logging for clarity

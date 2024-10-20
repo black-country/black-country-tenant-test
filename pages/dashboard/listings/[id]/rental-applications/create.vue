@@ -53,33 +53,6 @@
         <div v-if="currentStepInt === 3">
           <RentalApplicationsUploadDocuments @submit="handleSubmit" @back="handleBack" />
         </div>
-        <!-- <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center  border-[0.5px]">
-          <div class="max-w-2xl w-full flex justify-between">
-            <button
-            v-if="currentStepInt > 1"
-            @click="handleBack"
-            class="bg-gray-200 text-gray-700 px-4 py-2 rounded"
-          >
-            Previous
-          </button>
-  
-          <button
-            v-if="currentStepInt < steps.length"
-            @click="handleNext"
-            class="bg-green-600 text-white px-4 py-2 rounded ml-auto"
-          >
-            Next
-          </button>
-  
-          <button
-            v-if="currentStepInt === steps.length"
-            @click="handleSubmit"
-            class="bg-green-600 text-white px-4 py-2 rounded ml-auto"
-          >
-            Submit
-          </button>
-          </div>
-        </div> -->
   
       </div>
     </main>

@@ -1,13 +1,3 @@
-<!-- 
-<template>
-<main>
-  <CoreToast />
-  <NuxtLayout>
-    <NuxtPage />
-  </NuxtLayout>
-</main>
-</template> -->
-
 <template>
   <main>
     <!-- Position the toast fixed to ensure it's always on top and aligned to the right -->
