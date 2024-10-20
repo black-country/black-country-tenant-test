@@ -58,6 +58,7 @@ export const use_update_profile = () => {
           autoClose: 5000,
           dangerouslyHTMLString: true,
         });
+        Router.push('/profile/profile-update-success')
         const data = {
           profilePicture: res.data.profilePicture
         }

@@ -1,7 +1,7 @@
 <template>
     <main>
       <TopNavBar />
-      <div class="max-w-2xl mx-auto bg-white p-6 w-full">
+      <div  v-if="!loading" class="max-w-2xl mx-auto bg-white p-6 w-full">
         <div class="text-gray-500 flex-col">
           <svg @click="router.back()" class="cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
@@ -46,6 +46,13 @@
         <button :disabled="!isFormValid || updating" @click="handleSave" class="text-white disabled:opacity-25 disabled: cursor-not-allowed font-medium rounded-md px-6 py-3 bg-[#292929]">{{updating ? 'Processing..' : 'Save'}}</button>
       </div>
     </div>
+    <div v-else class="rounded-md p-4 max-w-4xl mx-auto mt-10">
+      <div class="animate-pulse flex space-x-4">
+        <div class="flex-1 space-y-6 py-1">
+          <div class="h-96 bg-slate-200 rounded"></div>
+        </div>
+      </div>
+    </div>
     </main>
     </template>
     
@@ -69,19 +76,18 @@ const { loading, profileObj } = use_tenant_profile()
     // Step management
     const router = useRouter();
     const route = useRoute();
-    
-    // When the page mounts, populate credential with user data
-    onMounted(() => {
-      if (user.value) {
-        credential.value = {
-          employmentStatus: user.value.employmentStatus || '',
-          employerName: user.value.employerName || '',
-          employerAddress: user.value.employerAddress || '',
-          occupation: user.value.occupation || '',
-          monthlyNetSalary: user.value.monthlyNetSalary || ''
-        };
-      }
-    });
+// Watch for changes in profileObj and prefill form fields
+watch(profileObj, (newProfile) => {
+  if (newProfile) {
+    credential.value = {
+      employmentStatus: newProfile.employmentStatus || '',
+      employerName: newProfile.employerName || '',
+      employerAddress: newProfile.employerAddress || '',
+      occupation: newProfile.occupation || '',
+      monthlyNetSalary: newProfile.monthlyNetSalary || '',
+    }
+  }
+}, { immediate: true });
     
     // Computed property to check if all required fields are filled
     const isFormValid = computed(() => {

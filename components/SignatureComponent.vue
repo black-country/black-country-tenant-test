@@ -22,7 +22,9 @@
       <input
         type="date"
         v-model="payload.date"
-        class="w-full bg-[#E4E7EC] border pl-4 border-none outline-none p-2 py-4 text-sm rounded-md mt-1"
+        :min="new Date().toISOString().split('T')[0]" 
+        placeholder="select start date" 
+        class="w-full px-4 py-3.5 border-[0.5px] text-sm bg-[#F0F2F5] rounded-lg outline-none" 
       />
     </div>
 
