@@ -4,7 +4,7 @@
     class="absolute top-3 right-3 text-white hover:text-red-500 focus:outline-none"
   >
     <svg
-      v-if="property?.liked"
+      v-if="property?.bookmarked"
       width="40"
       height="40"
       viewBox="0 0 40 40"

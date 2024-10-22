@@ -56,20 +56,20 @@
                 Landlord/Property Manager:
               </h3>
               <label class="block text-sm text-gray-500 mb-1">Signature</label>
-              <div class="border-b-2 border-dotted h-12 flex items-center mb-4">
+              <div class="border-b-2 border-dotted h-20 flex mb-4">
                 <img
-                  src="@/assets/icons/signature.svg"
+                  :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.houseOwnerSignatureUrl"
                   alt="Signature"
                   class="h-full object-contain"
                 />
               </div>
               <label class="block text-sm text-gray-500 mb-1">Full Name</label>
               <div class="border-b-2 border-dotted text-gray-800 py-2 mb-4">
-                Nwachukwu Jacob
+                {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.houseOwnerSigneeName}}
               </div>
               <label class="block text-sm text-gray-500 mb-1">Date</label>
               <div class="border-b-2 border-dotted text-gray-800 py-2 mb-8">
-                05/04/2024
+                {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.signedAt ?? 'Nil'}}
               </div>
             </div>
 

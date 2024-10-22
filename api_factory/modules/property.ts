@@ -2,7 +2,7 @@ import { GATEWAY_ENDPOINT, GATEWAY_ENDPOINT_V2 } from "../axios.config";
 
 export const property_api = {
 $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
-  let url = `/houses?page=${page}&perPage=${perPage}&isPublished=true`
+  let url = `/houses?page=${page}&perPage=${perPage}&status=published`
   
   // Add search query to the URL if provided
   if (searchQuery) {
@@ -23,5 +23,9 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
   $_bookmark_listing: (payload: any) => {
     const url = '/bookmarked-houses';
     return GATEWAY_ENDPOINT.post(url, payload);
+  },
+  $_fetch_bookmarked_listings: () => {
+    const url = '/bookmarked-houses';
+    return GATEWAY_ENDPOINT.get(url);
   }
 };

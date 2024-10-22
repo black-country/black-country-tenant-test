@@ -1,5 +1,5 @@
 <template>
- <main>
+ <main class="p-6 lg:p-0">
     <div v-if="!loading && visitations?.length" class="rounded-md border-[0.5px] border-gray-50 bg-white">
         <table
           class="w-full mt-2 table-fixed text-sm"

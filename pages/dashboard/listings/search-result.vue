@@ -308,7 +308,7 @@
           class="absolute top-6 right-6 text-white hover:text-red-500 focus:outline-none"
         >
           <svg
-            v-if="property.liked"
+            v-if="property.bookmarked"
             width="40"
             height="40"
             viewBox="0 0 40 40"
@@ -411,7 +411,7 @@ const properties = ref([
     bathrooms: 6,
     size: "5254 sqft",
     available: "2 rooms available now",
-    liked: false, // liked state
+    bookmarked: false, // bookmarked state
   },
   {
     image: "listing2.png",
@@ -422,12 +422,12 @@ const properties = ref([
     bathrooms: 6,
     size: "5254 sqft",
     available: "1 room available on 21/06/2024",
-    liked: false, // liked state
+    bookmarked: false, // bookmarked state
   }
 ]);
 
 const toggleLike = (index: number) => {
-  properties.value[index].liked = !properties.value[index].liked;
+  properties.value[index].bookmarked = !properties.value[index].bookmarked;
 };
 
 definePageMeta({

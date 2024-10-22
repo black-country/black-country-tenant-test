@@ -2,6 +2,8 @@ import { lease_api } from "@/api_factory/modules/lease";
 import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
 const loading = ref(false)
+const route = useRoute()
+const router = useRouter()
 
 export const useSignLease = () => {
 	const signLeaseAgreement = async (id: string | number, payload: any) => {
@@ -16,6 +18,7 @@ export const useSignLease = () => {
 					toastType: "success",
 					duration: 3000
 				});
+				router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-signed-success`)
 				return res;  // Fix: The return statement was incomplete.
 			} else {
 				showToast({

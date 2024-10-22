@@ -193,12 +193,12 @@ watch(
       const savedQuestions = loadData('prescreening') || [];
 
       // Map preScreeningQuestions from propertyObj to match desired structure
-      questions.value = newVal.preScreeningQuestions.map((q: any) => {
+      questions.value = newVal?.preScreeningQuestions.map((q: any) => {
         const savedAnswer = savedQuestions.find((sq: any) => sq.id === q.id);
         return {
           id: q.id,
           question: q.question,
-          answer: savedAnswer ? savedAnswer.answer : q.answer || '', // Use saved answer if available, else fallback to default
+          answer: savedAnswer ? savedAnswer?.answer : q?.answer || '', // Use saved answer if available, else fallback to default
         };
       });
     }

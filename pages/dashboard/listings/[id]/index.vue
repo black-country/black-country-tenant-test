@@ -1,7 +1,7 @@
 <template>
     <main>
     <!-- <PropertyDetailsHeader v-if="!loading" :propertyObj="propertyObj" /> -->
-    <PropertyImageGallery :images="propertyObj?.images" class="mt-6" />
+    <!-- <PropertyImageGallery :images="allImages" class="mt-6" /> -->
    <section v-if="!loading">
     <div class="pt-4 pb-8">
       <PropertyInfo :propertyObj="propertyObj" :loading="loading" />
@@ -260,10 +260,14 @@
   import { useUser } from '@/composables/auth/user'
   import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
   import { dynamicImage } from "@/utils/assets";
+  import { useImageExtractor } from "@/composables/core/useExtractImages";
   const { user } = useUser()
   const router = useRouter();
   const { showToast } = useCustomToast();
   const { propertyObj, loading } = useFetchProperty();
+
+  const { extractImages } = useImageExtractor();
+   const allImages = computed(() => extractImages(propertyObj.value)); 
   
   // Property Images
   const mainImage = ref("property1.png");

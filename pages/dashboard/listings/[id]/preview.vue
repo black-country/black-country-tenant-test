@@ -172,10 +172,10 @@
             </button> -->
             <button
             @click="toggleLike"
-            class="absolute top-3 right-3 text-white hover:text-red-500 focus:outline-none"
+            class=" "
           >
             <svg
-              v-if="propertyObj?.liked"
+              v-if="!propertyObj?.bookmarked"
               width="40"
               height="40"
               viewBox="0 0 40 40"
@@ -193,7 +193,7 @@
             </svg>
         
             <svg
-              v-else
+              v-if="propertyObj?.bookmarked"
               width="40"
               height="40"
               viewBox="0 0 40 40"
@@ -220,7 +220,7 @@
       </section>
       <div class="max-w-7xl mx-auto pt-4 pb-8">
         <section v-if="!loading">
-        <PropertyImageGallery :loading="loading" :property="propertyObj" :images="propertyObj.images" />
+        <PropertyImageGallery :loading="loading" :property="propertyObj" :images="allImages" />
 
         <PropertyDetails class="mt-10" :property="propertyObj" />
         </section>
@@ -544,14 +544,17 @@ import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 import { useCustomToast } from '@/composables/core/useCustomToast'
 import { useFetchSimilarProperty } from "@/composables/modules/property/fetchSimilarProperties";
 import { useBookmarkProperty } from "@/composables/modules/property/bookmark";
+import { useImageExtractor } from "@/composables/core/useExtractImages";
 const { bookmarkProperty, loading: favoriting } = useBookmarkProperty();
-import { ref } from "vue";
 import { dynamicImage } from "@/utils/assets";
 const { showToast } = useCustomToast();
 const { propertyObj, loading } = useFetchProperty();
 const { propertyList, loading: loadingSimilarProperties } = useFetchSimilarProperty()
 const router = useRouter();
 const route = useRoute()
+
+const { extractImages } = useImageExtractor();
+   const allImages = computed(() => extractImages(propertyObj.value)); 
 // Property Images
 const mainImage = ref("property1.png");
 const secondaryImage1 = ref("property1.png");

@@ -17,7 +17,7 @@
         </p>
     
         <!-- View Lease Agreement Link -->
-        <a v-if="route.query.type !== 'cancelled'" href="#" class="text-[#326543] font-semibold underline  text-sm mb-6 inline-block">View lease agreement</a>
+        <NuxtLink :to="`/dashboard/listings/${route?.params?.id}/rental-applications/preview-signed-lease-agreement`" v-if="route.query.type !== 'cancelled'" class="text-[#326543] font-semibold underline  text-sm mb-6 inline-block">View lease agreement</NuxtLink>
     
         <!-- Notification Box -->
         <div class="bg-gray-50  text-gray-800 p-4 rounded-md flex items-start mb-6">

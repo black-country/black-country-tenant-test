@@ -62,7 +62,7 @@
               <!-- <CoreBookmark :property="propertyObj" /> -->
               <button @click="toggleLike" class="">
                 <svg
-                v-if="propertyObj?.liked"
+                v-if="propertyObj?.bookmarked"
                 width="40"
                 height="40"
                 viewBox="0 0 40 40"
@@ -342,7 +342,7 @@
                 <p class="text-gray-500 mt-2 text-xs">Reschedule Tour</p>
               </div>
               
-              <div v-if="currentProgress === 'application-sent'" class="flex flex-col items-center">
+              <div  class="flex flex-col items-center">
                 <button 
                   class="rounded-lg transition bg-red-500 text-white"
                   :disabled="steps.findIndex(s => s.progressKey === 'application-sent') < steps.findIndex(s => s.progressKey === currentProgress)"

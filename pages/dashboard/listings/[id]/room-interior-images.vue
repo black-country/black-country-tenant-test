@@ -107,7 +107,7 @@
       <section v-for="(image, index) in previewImages" :key="index" :src="image">
         <div>
           <CoreImageZoom
-          :class="'cursor-pointer border-4 w-full object-cover'"
+          :class="'cursor-pointer w-full object-cover'"
           :src="image"
           :style="{ height: '340px' }"
          />

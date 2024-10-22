@@ -33,7 +33,7 @@
             v-for="color in colors"
             :key="color"
             :style="{ backgroundColor: color }"
-            class="w-6 h-6 rounded-full cursor-pointer border-4"
+            class="w-6 h-6 rounded-full cursor-pointer"
             :class="{
               'border-gray-300': selectedColor !== color,
               'border-black': selectedColor === color

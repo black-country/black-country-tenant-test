@@ -96,7 +96,7 @@
           </button>
         </template>
       </TopNavBar>
-      <main class="mt-6">
+      <main class="mt-6 container mx-auto">
         <section v-if="loading">
           <div class="rounded-md p-4 w-full mx-auto mt-10">
             <div class="animate-pulse flex space-x-4">
@@ -116,7 +116,7 @@
         <section v-else class="grid grid-cols-3 gap-6 max-w-10xl mx-auto">
           <section v-for="image in allImages" :key="image">
             <div>
-              <img :src="image" class="rounded-md" />
+              <img :src="image" class="rounded-md border-2" />
             </div>
           </section>
         </section>

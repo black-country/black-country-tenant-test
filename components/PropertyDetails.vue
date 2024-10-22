@@ -120,7 +120,7 @@
             </table>
           </div> -->
           <PropertyVisitationTable :property="property" />
-          <div class="mt-5">
+          <div class="mt-5 px-6 lg:p-0">
             <button @click="showBookingModal = true" class="mt-4 w-full bg-[#292929]  text-white py-4 rounded-md">Schedule a visit</button>
          </div>
          </section>

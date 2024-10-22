@@ -46,7 +46,7 @@
                 <NuxtLink
                 :class="[route.path === '/dashboard' ? 'bg-[#1D1D1D]' : '']"
                 to="/dashboard"
-                class="flex items-center space-x-1 text-gray-300 px-3 rounded-md hover:text-white"
+                class="flex items-center space-x-1 text-gray-300 px-3  py-2 rounded-md hover:text-white"
               >
                 <svg
                   width="20"
@@ -125,7 +125,7 @@
                <div ref="myHomeRef">
                 <NuxtLink
                 to="#"
-                class="flex items-center space-x-1 text-gray-300 hover:text-white"
+                class="flex items-center py-2.5 space-x-1 text-gray-300 hover:text-white"
               >
                 <svg
                   width="20"
@@ -148,7 +148,7 @@
                <div ref="messagesRef">
                 <NuxtLink
                 to="/dashboard/messages"
-                class="flex items-center space-x-1 text-gray-300 hover:text-white"
+                class="flex items-center space-x-1 py-2.5 text-gray-300 hover:text-white"
               >
                 <svg
                   width="20"
@@ -279,7 +279,7 @@
                 </button>
               </div>
               <div class="space-x-1 px-2 flex">
-                <button ref="favoritesRef" class="">
+                <NuxtLink to="/dashboard/listings/bookmarked" ref="favoritesRef" class="">
                   <svg
                     width="40"
                     height="40"
@@ -295,7 +295,7 @@
                       stroke-linecap="round"
                     />
                   </svg>
-                </button>
+                </NuxtLink>
                 <NuxtLink
                   ref="notificationsRef"
                   to="/dashboard/notifications"
@@ -320,44 +320,16 @@
                 </NuxtLink>
               </div>
               <!-- {{user}} -->
-              <NuxtLink
-                ref="profileRef"
-                to="/profile"
-                class="flex cursor-pointer items-center space-x-1"
-              >
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 50 50"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M38.9271 39.7854C40.9459 37.8885 42.5541 35.5977 43.6524 33.0546C44.7507 30.5115 45.3157 27.7701 45.3125 25C45.3125 13.7812 36.2188 4.6875 25 4.6875C13.7813 4.6875 4.68751 13.7812 4.68751 25C4.68431 27.7701 5.24932 30.5115 6.34762 33.0546C7.44592 35.5977 9.05416 37.8885 11.0729 39.7854C14.8374 43.3414 19.8216 45.3195 25 45.3125C30.1785 45.3195 35.1626 43.3414 38.9271 39.7854ZM12.8021 37.1083C14.2648 35.2784 16.1209 33.8015 18.2326 32.7873C20.3443 31.7731 22.6574 31.2477 25 31.25C27.3427 31.2477 29.6557 31.7731 31.7674 32.7873C33.8792 33.8015 35.7353 35.2784 37.1979 37.1083C35.6021 38.7202 33.7022 39.9992 31.6083 40.8711C29.5144 41.743 27.2682 42.1904 25 42.1875C22.7318 42.1904 20.4856 41.743 18.3917 40.8711C16.2978 39.9992 14.3979 38.7202 12.8021 37.1083ZM32.8125 18.75C32.8125 20.822 31.9894 22.8091 30.5243 24.2743C29.0592 25.7394 27.072 26.5625 25 26.5625C22.928 26.5625 20.9409 25.7394 19.4757 24.2743C18.0106 22.8091 17.1875 20.822 17.1875 18.75C17.1875 16.678 18.0106 14.6909 19.4757 13.2257C20.9409 11.7606 22.928 10.9375 25 10.9375C27.072 10.9375 29.0592 11.7606 30.5243 13.2257C31.9894 14.6909 32.8125 16.678 32.8125 18.75Z"
-                    fill="#D6D0CC"
-                  />
-                </svg>
-                <span class="font-semibold"
-                  >{{ user?.firstName }} {{ user?.lastName }}</span
-                >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M15 7.50004C15 7.50004 11.3176 12.5 10 12.5C8.68233 12.5 5 7.5 5 7.5"
-                    stroke="#EBE5E0"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-                </svg>
-              </NuxtLink>
+              <NuxtLink to="/profile" class="flex cursor-pointer items-center space-x-1">
+                <img v-if="profileObj?.profilePicture" :src="profileObj?.profilePicture" class="h-10 w-10 rounded-full" />
+                <svg v-else width="40" height="40" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" clip-rule="evenodd" d="M38.9271 39.7854C40.9459 37.8885 42.5541 35.5977 43.6524 33.0546C44.7507 30.5115 45.3157 27.7701 45.3125 25C45.3125 13.7812 36.2188 4.6875 25 4.6875C13.7813 4.6875 4.68751 13.7812 4.68751 25C4.68431 27.7701 5.24932 30.5115 6.34762 33.0546C7.44592 35.5977 9.05416 37.8885 11.0729 39.7854C14.8374 43.3414 19.8216 45.3195 25 45.3125C30.1785 45.3195 35.1626 43.3414 38.9271 39.7854ZM12.8021 37.1083C14.2648 35.2784 16.1209 33.8015 18.2326 32.7873C20.3443 31.7731 22.6574 31.2477 25 31.25C27.3427 31.2477 29.6557 31.7731 31.7674 32.7873C33.8792 33.8015 35.7353 35.2784 37.1979 37.1083C35.6021 38.7202 33.7022 39.9992 31.6083 40.8711C29.5144 41.743 27.2682 42.1904 25 42.1875C22.7318 42.1904 20.4856 41.743 18.3917 40.8711C16.2978 39.9992 14.3979 38.7202 12.8021 37.1083ZM32.8125 18.75C32.8125 20.822 31.9894 22.8091 30.5243 24.2743C29.0592 25.7394 27.072 26.5625 25 26.5625C22.928 26.5625 20.9409 25.7394 19.4757 24.2743C18.0106 22.8091 17.1875 20.822 17.1875 18.75C17.1875 16.678 18.0106 14.6909 19.4757 13.2257C20.9409 11.7606 22.928 10.9375 25 10.9375C27.072 10.9375 29.0592 11.7606 30.5243 13.2257C31.9894 14.6909 32.8125 16.678 32.8125 18.75Z" fill="#D6D0CC"/>
+                  </svg>
+              <span class="font-semibold">{{user?.firstName}} {{user?.lastName}}</span>
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M15 7.50004C15 7.50004 11.3176 12.5 10 12.5C8.68233 12.5 5 7.5 5 7.5" stroke="#EBE5E0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg> 
+            </NuxtLink>
             </div>
           </div>
         </div>
@@ -659,7 +631,7 @@
             class="absolute top-6 right-6 text-white hover:text-red-500 focus:outline-none"
           >
             <svg
-              v-if="property.liked"
+              v-if="property.bookmarked"
               width="40"
               height="40"
               viewBox="0 0 40 40"
@@ -1046,9 +1018,12 @@ import { useGetProperties } from "@/composables/modules/property/fetchProperties
 import { useBookmarkProperty } from "@/composables/modules/property/bookmark";
 const { bookmarkProperty, loading } = useBookmarkProperty();
 import { dynamicImage } from "@/utils/assets";
+import { useUser } from '@/composables/auth/user'
+  const { user } = useUser()
 import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
+const isOpen = ref(false)
 const route = useRoute();
 const isSearchModalVisible = ref(false);
 const successModal = ref(false);
@@ -1071,53 +1046,112 @@ const profileRef = ref(null);
 const propertyCardsRef = ref(null)
 
 onMounted(() => {
-  // Add tour steps
-  tour.addSteps([
-    {
-      attachTo: { element: dashboardRef.value, on: "bottom" },
-      text:
-        "This is the greeting. It displays your name based on the user data.",
-    },
-    {
-      attachTo: { element: listingsRef.value, on: "bottom" },
-      text:
-        "Explore available properties, filter by preferences, and find your perfect home.",
-    },
-    {
-      attachTo: { element: myHomeRef.value, on: "bottom" },
-      text:
-        "Manage your rented space, pay rent, request maintenance, and more—all from one place.",
-    },
-    {
-      attachTo: { element: messagesRef.value, on: "bottom" },
-      text:
-        "Here you can manage your payment actions such as paying rent or utility bills.",
-    },
-    {
-      attachTo: { element: propertyViewRef.value, on: "bottom" },
-      text: "When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!",
-    },
-    {
-      attachTo: { element: favoritesRef.value, on: "top" },
-      text: "Manage your rental applications from here.",
-    },
-    {
-      attachTo: { element: notificationsRef.value, on: "bottom" },
-      text: "Manage your upcoming activities from here.",
-    },
-    {
-      attachTo: { element: profileRef.value, on: "bottom" },
-      text: "Manage your recent transactions from here.",
-    },
-    {
-      attachTo: { element: propertyCardsRef.value, on: "bottom" },
-      text: "Manage your recent transactions from here.",
-    },
-  ]);
+  // Check if the tour has already run
+  const tourStatus = localStorage.getItem('tourShown');
 
-  // Start the tour
-  tour.start();
+  // If tour has not been shown, run the tour
+  if (!tourStatus) {
+    // Add tour steps
+    tour.addSteps([
+      {
+        attachTo: { element: dashboardRef.value, on: "bottom" },
+        text:
+          "This is the greeting. It displays your name based on the user data.",
+      },
+      {
+        attachTo: { element: listingsRef.value, on: "bottom" },
+        text:
+          "Explore available properties, filter by preferences, and find your perfect home.",
+      },
+      {
+        attachTo: { element: myHomeRef.value, on: "bottom" },
+        text:
+          "Manage your rented space, pay rent, request maintenance, and more—all from one place.",
+      },
+      {
+        attachTo: { element: messagesRef.value, on: "bottom" },
+        text:
+          "Here you can manage your payment actions such as paying rent or utility bills.",
+      },
+      {
+        attachTo: { element: propertyViewRef.value, on: "bottom" },
+        text: "When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!",
+      },
+      {
+        attachTo: { element: favoritesRef.value, on: "top" },
+        text: "Manage your rental applications from here.",
+      },
+      {
+        attachTo: { element: notificationsRef.value, on: "bottom" },
+        text: "Manage your upcoming activities from here.",
+      },
+      {
+        attachTo: { element: profileRef.value, on: "bottom" },
+        text: "Manage your recent transactions from here.",
+      },
+      {
+        attachTo: { element: propertyCardsRef.value, on: "bottom" },
+        text: "Manage your recent transactions from here.",
+      },
+    ]);
+
+    // Start the tour
+    tour.start();
+
+    // Save status in local storage to indicate the tour has run
+    localStorage.setItem('tourShown', 'true');
+  }
 });
+
+
+// onMounted(() => {
+//   // Add tour steps
+//   tour.addSteps([
+//     {
+//       attachTo: { element: dashboardRef.value, on: "bottom" },
+//       text:
+//         "This is the greeting. It displays your name based on the user data.",
+//     },
+//     {
+//       attachTo: { element: listingsRef.value, on: "bottom" },
+//       text:
+//         "Explore available properties, filter by preferences, and find your perfect home.",
+//     },
+//     {
+//       attachTo: { element: myHomeRef.value, on: "bottom" },
+//       text:
+//         "Manage your rented space, pay rent, request maintenance, and more—all from one place.",
+//     },
+//     {
+//       attachTo: { element: messagesRef.value, on: "bottom" },
+//       text:
+//         "Here you can manage your payment actions such as paying rent or utility bills.",
+//     },
+//     {
+//       attachTo: { element: propertyViewRef.value, on: "bottom" },
+//       text: "When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!",
+//     },
+//     {
+//       attachTo: { element: favoritesRef.value, on: "top" },
+//       text: "Manage your rental applications from here.",
+//     },
+//     {
+//       attachTo: { element: notificationsRef.value, on: "bottom" },
+//       text: "Manage your upcoming activities from here.",
+//     },
+//     {
+//       attachTo: { element: profileRef.value, on: "bottom" },
+//       text: "Manage your recent transactions from here.",
+//     },
+//     {
+//       attachTo: { element: propertyCardsRef.value, on: "bottom" },
+//       text: "Manage your recent transactions from here.",
+//     },
+//   ]);
+
+//   // Start the tour
+//   tour.start();
+// });
 
 const {
   propertiesList,
@@ -1197,7 +1231,7 @@ const selectSuggestion = (suggestion: string) => {
 };
 
 const toggleLike = (index: number, property: any) => {
-  propertiesList.value[index].liked = !propertiesList.value[index].liked;
+  propertiesList.value[index].bookmarked = !propertiesList.value[index].bookmarked;
   bookmarkProperty(property.id);
 };
 

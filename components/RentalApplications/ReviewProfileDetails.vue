@@ -204,37 +204,37 @@ const documents = JSON.parse(localStorage.getItem('uploaded-document'))
 
 // Function to populate the profile data
 const populateProfile = () => {
-  profile.value.personal.name = `${profileObj.value.firstName} ${profileObj.value.lastName}`;
-  profile.value.personal.email = profileObj.value.email || '';
-  profile.value.personal.phone = profileObj.value.phoneNumber || '';
-  profile.value.personal.dob = profileObj.value.dateOfBirth || '';
-  profile.value.personal.gender = profileObj.value.gender || '';
-  profile.value.personal.maritalStatus = profileObj.value.maritalStatus || '';
-  profile.value.personal.stateOfOrigin = profileObj.value.cityId || ''; // Adjust according to your data
-  profile.value.personal.lga = profileObj.value.city || ''; // Adjust according to your data
+  profile.value.personal.name = `${profileObj?.value?.firstName} ${profileObj?.value?.lastName}`;
+  profile.value.personal.email = profileObj?.value?.email || '';
+  profile.value.personal.phone = profileObj?.value?.phoneNumber || '';
+  profile.value.personal.dob = profileObj?.value?.dateOfBirth || '';
+  profile.value.personal.gender = profileObj?.value?.gender || '';
+  profile.value.personal.maritalStatus = profileObj?.value?.maritalStatus || '';
+  profile.value.personal.stateOfOrigin = profileObj?.value?.cityId || ''; // Adjust according to your data
+  profile.value.personal.lga = profileObj?.value?.city || ''; // Adjust according to your data
 
-  profile.value.rental.currentLandlord = profileObj.value.currentLandlord || '';
-  profile.value.rental.address = profileObj.value.rentalAddress || '';
-  profile.value.rental.lengthOfTenancy = profileObj.value.lengthOfTenancy || '';
-  profile.value.rental.reasonForMovingOut = profileObj.value.reasonForMovingOut || '';
+  profile.value.rental.currentLandlord = profileObj?.value?.currentLandlord || '';
+  profile.value.rental.address = profileObj?.value?.rentalAddress || '';
+  profile.value.rental.lengthOfTenancy = profileObj?.value?.lengthOfTenancy || '';
+  profile.value.rental.reasonForMovingOut = profileObj?.value?.reasonForMovingOut || '';
 
-  profile.value.employment.status = profileObj.value.employmentStatus || '';
-  profile.value.employment.employerName = profileObj.value.employerName || '';
-  profile.value.employment.occupation = profileObj.value.occupation || '';
-  profile.value.employment.organizationAddress = profileObj.value.employerAddress || '';
-  profile.value.employment.salary = profileObj.value.monthlyNetSalary || '';
+  profile.value.employment.status = profileObj?.value?.employmentStatus || '';
+  profile.value.employment.employerName = profileObj?.value?.employerName || '';
+  profile.value.employment.occupation = profileObj?.value?.occupation || '';
+  profile.value.employment.organizationAddress = profileObj?.value?.employerAddress || '';
+  profile.value.employment.salary = profileObj?.value?.monthlyNetSalary || '';
 
-  profile.value.nextOfKin.fullName = profileObj.value.nextOfKinName || '';
-  profile.value.nextOfKin.relationship = profileObj.value.nextOfKinRelationship || '';
-  profile.value.nextOfKin.email = profileObj.value.nextOfKinEmail || '';
-  profile.value.nextOfKin.address = profileObj.value.nextOfKinAddress || '';
-  profile.value.nextOfKin.phone = profileObj.value.nextOfKinPhone || '';
-  profile.value.nextOfKin.occupation = profileObj.value.nextOfKinOccupation || '';
-  profile.value.nextOfKin.organizationName = profileObj.value.nextOfKinEmployer || '';
-  profile.value.nextOfKin.officeAddress = profileObj.value.nextOfKinEmployerAddress || '';
+  profile.value.nextOfKin.fullName = profileObj?.value?.nextOfKinName || '';
+  profile.value.nextOfKin.relationship = profileObj?.value?.nextOfKinRelationship || '';
+  profile.value.nextOfKin.email = profileObj?.value?.nextOfKinEmail || '';
+  profile.value.nextOfKin.address = profileObj?.value?.nextOfKinAddress || '';
+  profile.value.nextOfKin.phone = profileObj?.value?.nextOfKinPhone || '';
+  profile.value.nextOfKin.occupation = profileObj?.value?.nextOfKinOccupation || '';
+  profile.value.nextOfKin.organizationName = profileObj?.value?.nextOfKinEmployer || '';
+  profile.value.nextOfKin.officeAddress = profileObj?.value?.nextOfKinEmployerAddress || '';
 
-  profile.value.document.type = documents.type || ''; // Handle this based on how documents are retrieved
-  profile.value.document.fileUrls = documents.fileUrls || []; // Handle this if document URLs are provided
+  profile.value.document.type = documents?.type || ''; // Handle this based on how documents are retrieved
+  profile.value.document.fileUrls = documents?.fileUrls || []; // Handle this if document URLs are provided
 };
 
 onMounted(() => {

@@ -155,8 +155,30 @@
   const showWelcomeModal = ref(false)
 
   onMounted(() => {
-    showWelcomeModal.value = true
-  })
+  // Check if the welcome modal has already been shown
+  const welcomeShown = localStorage.getItem('welcome-modal-shown');
+
+  // If the modal has not been shown, run the modal
+  if (!welcomeShown) {
+    showWelcomeModal.value = true;
+    localStorage.setItem('welcome-modal-shown', 'true'); // Corrected the key here
+  }
+});
+
+//   onMounted(() => {
+//   // Check if the tour has already run
+//   const welcomeShown = localStorage.getItem('welcome-modal-shown');
+
+//   // If tour has not been shown, run the tour
+//   if (!welcomeShown) {
+//     showWelcomeModal.value = true
+//     localStorage.setItem('welcome-modal-show', 'true');
+//   }
+// });
+
+  // onMounted(() => {
+  //   showWelcomeModal.value = true
+  // })
 
 definePageMeta({
   middleware: "auth"

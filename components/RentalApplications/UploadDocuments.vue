@@ -65,7 +65,7 @@
             <!-- Preview Section -->
             <div v-else-if="frontIdPreview" class="w-full h-full flex justify-center items-center">
               <!-- Image Preview -->
-              <img  :src="frontIdPreview"  alt="Front ID Preview" class="rounded-lg max-w-full max-h-full" />
+              <img  :src="frontIdPreview"  alt="Front ID Preview" class="rounded-lg max-w-full h-60 object-cover w-full max-h-full" />
               <!-- PDF Preview -->
               <embed v-if="isFrontPdf" :src="frontIdPreview" class="w-full h-full" type="application/pdf" />
             </div>
@@ -98,7 +98,7 @@
             <!-- Preview Section -->
             <div v-else-if="backIdPreview" class="w-full h-full flex justify-center items-center">
               <!-- Image Preview -->
-              <img :src="backIdPreview" alt="Back ID Preview" class="rounded-lg max-w-full max-h-full" />
+              <img :src="backIdPreview" alt="Back ID Preview" class="rounded-lg max-w-full h-60 object-cover w-full max-h-full" />
               <!-- PDF Preview -->
               <embed v-if="isBackPdf" :src="backIdPreview" class="w-full h-full" type="application/pdf" />
             </div>

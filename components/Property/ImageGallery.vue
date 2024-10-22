@@ -16,7 +16,7 @@
           :style="{ height: '700px' }"
         /> -->
         <CoreImageZoom
-        :class="'cursor-pointer border-4 w-full object-cover'"
+        :class="'cursor-pointer w-full object-cover'"
         :src="images[0]"
         :style="{ height: '350px' }"
       />
