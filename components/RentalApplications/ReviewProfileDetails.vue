@@ -28,13 +28,13 @@
       <div class="">
         <div class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
           <h3 class="text-base font-medium">Personal Information</h3>
-          <button class="text-[#1D2739] text-base font-medium cursor-pointer" @click="editSection('personal-information')">Edit</button>
+          <button class="text-[#1D2739] text-base font-medium cursor-pointer" @click="editSection('personal-information')">Edit</button> 
         </div>
         <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
           <li class="text-[#6617185] text-sm font-light flex justify-between items-center"><strong>Name: <span class="text-red-600">*</span></strong>{{ profile.personal.name || '---' }}</li>
           <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email address: <span class="text-red-600">*</span></strong>{{ profile.personal.email || '---' }}</li>
           <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone number: <span class="text-red-600">*</span></strong>{{ profile.personal.phone || '---' }}</li>
-          <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Date of Birth: <span class="text-red-600">*</span></strong>{{ profile.personal.dob || '---' }}</li>
+          <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Date of Birth: <span class="text-red-600">*</span></strong>{{ moment(profile.personal.dob).format("MMMM Do YYYY") || '---' }}</li>
           <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Gender: </strong>{{ profile.personal.gender || '---' }}</li>
           <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Marital status: </strong>{{ profile.personal.maritalStatus || '---' }}</li>
           <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>State of Origin: <span class="text-red-600">*</span></strong>{{ profile.personal.stateOfOrigin || '---' }}</li>
@@ -136,6 +136,7 @@
 </template>
 
 <script setup lang="ts">
+  import moment from "moment";
 import { use_tenant_profile } from '@/composables/auth/fetchProfile'
 import { useRouter, useRoute } from 'vue-router';
 import { useFormPersistence } from '@/composables/core/useFormPersistence';

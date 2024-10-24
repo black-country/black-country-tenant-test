@@ -1,9 +1,9 @@
 <template>
     <main>
       <TopNavBar />
-      <div class="flex items-center justify-between space-x-4 px-1 container py-5 mx-auto">
+      <div class="flex items-center justify-between space-x-4  container py-5 mx-auto px-5 lg:px-0">
         <!-- Buttons for Saved Search and Saved Listings -->
-        <div class="space-x-2">
+        <div class="lg:space-x-2 space-y-3 lg:space-y-0">
           <button
             class="bg-[#F0F2F5] text-[#1A1A1A] border border-[#F0F2F5] px-4 py-2 rounded-md hover:bg-[#F0F2F5]"
             :class="{

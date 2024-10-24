@@ -1045,63 +1045,63 @@ const notificationsRef = ref(null);
 const profileRef = ref(null);
 const propertyCardsRef = ref(null)
 
-onMounted(() => {
-  // Check if the tour has already run
-  const tourStatus = localStorage.getItem('tourShown');
+// onMounted(() => {
+//   // Check if the tour has already run
+//   const tourStatus = localStorage.getItem('tourShown');
 
-  // If tour has not been shown, run the tour
-  if (!tourStatus) {
-    // Add tour steps
-    tour.addSteps([
-      {
-        attachTo: { element: dashboardRef.value, on: "bottom" },
-        text:
-          "This is the greeting. It displays your name based on the user data.",
-      },
-      {
-        attachTo: { element: listingsRef.value, on: "bottom" },
-        text:
-          "Explore available properties, filter by preferences, and find your perfect home.",
-      },
-      {
-        attachTo: { element: myHomeRef.value, on: "bottom" },
-        text:
-          "Manage your rented space, pay rent, request maintenance, and more—all from one place.",
-      },
-      {
-        attachTo: { element: messagesRef.value, on: "bottom" },
-        text:
-          "Here you can manage your payment actions such as paying rent or utility bills.",
-      },
-      {
-        attachTo: { element: propertyViewRef.value, on: "bottom" },
-        text: "When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!",
-      },
-      {
-        attachTo: { element: favoritesRef.value, on: "top" },
-        text: "Manage your rental applications from here.",
-      },
-      {
-        attachTo: { element: notificationsRef.value, on: "bottom" },
-        text: "Manage your upcoming activities from here.",
-      },
-      {
-        attachTo: { element: profileRef.value, on: "bottom" },
-        text: "Manage your recent transactions from here.",
-      },
-      {
-        attachTo: { element: propertyCardsRef.value, on: "bottom" },
-        text: "Manage your recent transactions from here.",
-      },
-    ]);
+//   // If tour has not been shown, run the tour
+//   if (!tourStatus) {
+//     // Add tour steps
+//     tour.addSteps([
+//       {
+//         attachTo: { element: dashboardRef.value, on: "bottom" },
+//         text:
+//           "This is the greeting. It displays your name based on the user data.",
+//       },
+//       {
+//         attachTo: { element: listingsRef.value, on: "bottom" },
+//         text:
+//           "Explore available properties, filter by preferences, and find your perfect home.",
+//       },
+//       {
+//         attachTo: { element: myHomeRef.value, on: "bottom" },
+//         text:
+//           "Manage your rented space, pay rent, request maintenance, and more—all from one place.",
+//       },
+//       {
+//         attachTo: { element: messagesRef.value, on: "bottom" },
+//         text:
+//           "Here you can manage your payment actions such as paying rent or utility bills.",
+//       },
+//       {
+//         attachTo: { element: propertyViewRef.value, on: "bottom" },
+//         text: "When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!",
+//       },
+//       {
+//         attachTo: { element: favoritesRef.value, on: "top" },
+//         text: "Manage your rental applications from here.",
+//       },
+//       {
+//         attachTo: { element: notificationsRef.value, on: "bottom" },
+//         text: "Manage your upcoming activities from here.",
+//       },
+//       {
+//         attachTo: { element: profileRef.value, on: "bottom" },
+//         text: "Manage your recent transactions from here.",
+//       },
+//       {
+//         attachTo: { element: propertyCardsRef.value, on: "bottom" },
+//         text: "Manage your recent transactions from here.",
+//       },
+//     ]);
 
-    // Start the tour
-    tour.start();
+//     // Start the tour
+//     tour.start();
 
-    // Save status in local storage to indicate the tour has run
-    localStorage.setItem('tourShown', 'true');
-  }
-});
+//     // Save status in local storage to indicate the tour has run
+//     localStorage.setItem('tourShown', 'true');
+//   }
+// });
 
 
 // onMounted(() => {

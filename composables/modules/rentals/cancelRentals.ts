@@ -1,4 +1,7 @@
 import { rental_api } from "@/api_factory/modules/rental";
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
+
 const loading = ref(false)
 
 export const useCancelRental = () => {
@@ -7,8 +10,20 @@ export const useCancelRental = () => {
 		const res = await rental_api.$_cancel_rental(id) as any
 
         if (res.type !== 'ERROR') {
-			useRouter().push('/dashboard/')
-        }
+			showToast({
+				title: "Success",
+				message: "Rental application was cancelled successfully!",
+				toastType: "success",
+				duration: 3000
+			  });
+        } else {
+			showToast({
+				title: "Error",
+				message: "Something went wrong while cancelling rental application.",
+				toastType: "error",
+				duration: 3000
+			  });
+		}
         loading.value = false
 	}
 

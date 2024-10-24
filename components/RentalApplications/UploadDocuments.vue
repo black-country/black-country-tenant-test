@@ -146,9 +146,23 @@ import { useCustomToast } from "@/composables/core/useCustomToast";
 const { showToast } = useCustomToast();
 
 // State variables for form
-const idType = ref('');
+// const localData = JSON.parse(localStorage.getItem('uploaded-document'));
+// const idType = ref(localData?.type || '');
+// const idCardChecked = ref(false);
+// const authorizationChecked = ref(false);
+const localData = JSON.parse(localStorage.getItem('uploaded-document'));
+const idType = ref(localData?.type || '');
+
+// Initialize the checkboxes as unchecked
 const idCardChecked = ref(false);
 const authorizationChecked = ref(false);
+
+// If localData.type exists, set checkboxes to true
+if (localData?.type) {
+  idCardChecked.value = true;
+  authorizationChecked.value = true;
+}
+
 const uploadStep = ref(false);
 
 // State variables for front and back ID previews
@@ -158,6 +172,7 @@ const isFrontImage = ref(false);
 const isFrontPdf = ref(false);
 const isBackImage = ref(false);
 const isBackPdf = ref(false);
+const route = useRoute()
 
 // Loader state
 const loadingFrontId = ref(false);

@@ -345,8 +345,16 @@
               <div  class="flex flex-col items-center">
                 <button 
                   class="rounded-lg transition bg-red-500 text-white"
-                  :disabled="steps.findIndex(s => s.progressKey === 'application-sent') < steps.findIndex(s => s.progressKey === currentProgress)"
-                  @click="cancelApplication">
+                  :class="{
+                    'cursor-not-allowed opacity-50': 
+                      steps.findIndex(s => s.progressKey === 'application-sent') <= steps.findIndex(s => s.progressKey === currentProgress) || 
+                      !propertyObj?.rentalApplication,
+                    'bg-[#5B8469]': currentProgress === 'application-sent' && propertyObj?.rentalApplication,
+                    'bg-gray-500': currentProgress !== 'application-sent' || !propertyObj?.rentalApplication
+                  }"
+                  :disabled="steps.findIndex(s => s.progressKey === 'application-sent') <= steps.findIndex(s => s.progressKey === currentProgress) || 
+                    !propertyObj?.rentalApplication"
+                  @click="showCancelModal = true">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="40" height="40" rx="8" fill="#FBEAE9"/>
                     <path d="M24.6654 15.3335L15.332 24.6668M15.332 15.3335L24.6654 24.6668" stroke="#BA110B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -357,6 +365,24 @@
               
               <div class="flex flex-col items-center">
                 <button 
+                  class="rounded-lg transition"
+                  :class="{
+                    'cursor-not-allowed opacity-50': 
+                      steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress) || 
+                      !propertyObj?.rentalApplication?.leaseAgreement,
+                    'bg-[#5B8469]': currentProgress === 'agreement-signed' && propertyObj?.rentalApplication?.leaseAgreement,
+                    'bg-gray-500': currentProgress !== 'agreement-signed' || !propertyObj?.rentalApplication?.leaseAgreement
+                  }"
+                  :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress) || 
+                    !propertyObj?.rentalApplication?.leaseAgreement"
+                  @click="router.push(`/dashboard/listings/${route.params.id}/rental-applications/lease-agreement`)">
+                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="40" height="40" rx="8" fill="#292929"/>
+                    <path d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z" stroke="white" stroke-width="1.5"/>
+                    <path d="M19.666 20.3333L21.9993 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>  
+                </button>
+                <!-- <button 
                   class="rounded-lg transition"
                   :class="{
                     'cursor-not-allowed opacity-50': steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress),
@@ -370,7 +396,7 @@
                     <path d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z" stroke="white" stroke-width="1.5"/>
                     <path d="M19.666 20.3333L21.9993 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>  
-                </button>
+                </button> -->
                 <p class="text-gray-500 mt-2 text-xs">Sign Agreement</p>
               </div>
               
@@ -378,11 +404,14 @@
                 <button 
                   class="rounded-lg transition"
                   :class="{
-                    'cursor-not-allowed opacity-50': steps.findIndex(s => s.progressKey === 'payment-made') <= steps.findIndex(s => s.progressKey === currentProgress),
-                    'bg-[#5B8469]': currentProgress === 'payment-made',
-                    'bg-gray-500': currentProgress !== 'payment-made'
+                    'cursor-not-allowed opacity-50': 
+                      steps.findIndex(s => s.progressKey === 'payment-made') <= steps.findIndex(s => s.progressKey === currentProgress) || 
+                      !propertyObj?.rentalApplication?.leaseAgreement,
+                    'bg-[#5B8469]': currentProgress === 'payment-made' && propertyObj?.rentalApplication?.leaseAgreement,
+                    'bg-gray-500': currentProgress !== 'payment-made' || !propertyObj?.rentalApplication?.leaseAgreement
                   }"
-                  :disabled="steps.findIndex(s => s.progressKey === 'payment-made') <= steps.findIndex(s => s.progressKey === currentProgress)"
+                  :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress) || 
+                    !propertyObj?.rentalApplication?.leaseAgreement"
                   @click="showPaymentModal = true">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="40" height="40" rx="8" fill="#292929"/>
@@ -397,7 +426,7 @@
             
             
           </div>
-          <PropertyDetails :scheduled="route.query.type === 'scheduled'" :showApplicationBtn="false" class="mt-10" :property="propertyObj" />
+          <PropertyDetails :scheduled="route.query.type === 'scheduled'" :showApplicationBtn="false" class="mt-10 px-6 lg:px-0" :property="propertyObj" />
           </section>
           <section v-else>
             <div class="rounded-md p-4 w-full mx-auto mt-10">
@@ -749,10 +778,52 @@
             </div>
           </div>
       </CoreModal>
+
+      <CoreModalWithoutCloseBtn
+      :isOpen="showCancelModal"
+      @close="showCancelModal = false"
+      >
+      <div
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+      @click.self="onCancel"
+    >
+      <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg">
+        <div class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4">
+          <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="0.921875" width="63.1513" height="64" rx="31.5756" fill="#F3A218"/>
+            <path d="M42.2031 32.375C42.2031 26.8521 37.7259 22.375 32.2031 22.375C26.6803 22.375 22.2031 26.8521 22.2031 32.375C22.2031 37.8978 26.6803 42.375 32.2031 42.375C37.7259 42.375 42.2031 37.8978 42.2031 32.375Z" stroke="white" stroke-width="1.5"/>
+            <path d="M32.4453 37.375V32.375C32.4453 31.9036 32.4453 31.6679 32.2988 31.5214C32.1524 31.375 31.9167 31.375 31.4453 31.375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M32.1953 28.377H32.2043" stroke="white" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            
+        </div>
+        <h2 class="text-lg font-semibold text-gray-700 mb-2">Cancel Rental Application</h2>
+        <p class="text-gray-500 mb-6">Are you sure you want to cancel rental application process?</p>
+        <div class="space-y-3">
+          <button
+            type="button"
+            :disabled="cancelling"
+            class="w-full disabled:cursor-not-allowed text-sm disabled:opacity-25 bg-[#292929] text-white py-3.5 rounded-md font-semibold"
+            @click="onConfirm"
+          >
+             {{ cancelling ? 'processing..' : 'Yes, Proceed' }}
+          </button>
+          <button
+            type="button"
+            class="w-full bg-[#EBE5E0] text-gray-700 text-sm py-3.5 rounded-md font-semibold"
+            @click="onCancel"
+          >
+            No, Continue
+          </button>
+        </div>
+      </div>
+    </div>
+      </CoreModalWithoutCloseBtn>
     </main>
   </template>
   
   <script setup lang="ts">
+  import { useCancelRental } from '@/composables/modules/rentals/cancelRentals'
   import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
   import { useFetchSimilarProperty } from "@/composables/modules/property/fetchSimilarProperties";
   import { useCustomToast } from '@/composables/core/useCustomToast'
@@ -760,9 +831,21 @@
   import { useBookmarkProperty } from "@/composables/modules/property/bookmark";
 const { bookmarkProperty, loading: favoriting } = useBookmarkProperty();
   const { propertyList, loading: loadingSimilarProperties } = useFetchSimilarProperty()
+  const { cancelRental, loading: cancelling } = useCancelRental()
   // const router = useRouter();
   const route = useRoute()
   const { showToast } = useCustomToast();
+
+  const showCancelModal = ref(false)
+
+  const onCancel = () => {
+    showCancelModal.value = false
+  }
+
+  const onConfirm = async () => {
+    await cancelRental(propertyObj.value.rentalApplication.id)
+    showCancelModal.value = false
+  }
   // Property Images
 
   const selectedOption = ref<string | null>(null);
@@ -846,13 +929,14 @@ const isSignAgreementEnabled = computed(() => currentProgress.value === 'agreeme
 const isMakePaymentEnabled = computed(() => currentProgress.value === 'payment-made');
 
   
-  const cancelApplication = () => {
-    console.log('Cancel application clicked');
-    // Your cancel logic here...
-  };
+  // const cancelApplication = () => {
+  //   console.log('Cancel application clicked');
+  //   await cancelRental(proper)
+  //   // Your cancel logic here...
+  // };
 
-  const toggleLike = () => {
-  bookmarkProperty(propertyObj.value.id);
+  const toggleLike = async () => {
+  await bookmarkProperty(propertyObj.value.id);
 };
   </script>
   

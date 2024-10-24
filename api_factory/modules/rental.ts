@@ -35,7 +35,7 @@ export const rental_api = {
   },
   $_cancel_rental: (id: string | number) => {
     const url = `/rental-applications/${id}/cancelled`;
-    return GATEWAY_ENDPOINT.delete(url);
+    return GATEWAY_ENDPOINT.patch(url);
   },
   $_sign_lease_agreement: (id: string | number, payload: any) => {
     const url = `/rental-applications/${id}/lease-agreements`;

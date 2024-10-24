@@ -78,7 +78,7 @@
       </div>
     </div>
   </div>
-  <section  class="p-8 max-w-7xl mx-auto" v-else>
+  <section  class="p-8 max-w-7xl mx-auto" v-else-if="loadingRentals && !rentalsList.length">
     <div class="rounded-md p-4 w-full mx-auto">
       <div class="animate-pulse flex space-x-4">
         <div class="flex-1 space-y-6 py-1">
@@ -94,6 +94,11 @@
       </div>
     </div>
   </section>
+  <div v-else
+  class="bg-white px-4 py-5 sm:p-6 h-80 rounded-lg flex flex-col mt-3 gap-y-4 justify-center border items-center border-gray-50">
+  <img :src="dynamicIcons('leases-empty-state')" alt="leases empty state" class="" />
+  <p class="text-[#1D2739]">No rental applications a available </p>
+</div>
 </main>
   </template>
   

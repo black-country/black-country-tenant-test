@@ -35,7 +35,8 @@
         />
     
           <!-- 'View all' overlay for the last image if there are more than 5 images -->
-          <div v-if="remainingImagesCount > 0" class="relative cursor-pointer" @click="navigateToAllImages">
+          <!-- @click="navigateToAllImages" -->
+          <div v-if="remainingImagesCount > 0" class="relative cursor-pointer"  @click="openCarousel">
                 <CoreImageZoom
                 :src="images[4]"
                 alt="Image 5"
@@ -48,6 +49,8 @@
           </div>
         </div>
       </div>
+
+      <CoreCarouselModal v-if="isCarouselOpen" :property="property" />
   </main>
   </template>
   
@@ -59,6 +62,7 @@
   interface Props {
     images: string[];
   }
+  const isCarouselOpen = ref(false);
   // const props = defineProps<Props>();
 
   const props = defineProps({
@@ -72,6 +76,12 @@
       type: Boolean
     }
   })
+
+  // Function to open the carousel modal
+const openCarousel = () => {
+  isCarouselOpen.value = true;
+};
+
   
   const router = useRouter();
   

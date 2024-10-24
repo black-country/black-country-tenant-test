@@ -14,7 +14,41 @@
           <button @click="saveData" class="text-green-600 font-medium cursor-pointer">Save</button>
         </div>
   
-
+        <div class="relative w-full mb-6">
+          <!-- Divider that spans across all stages -->
+          <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300"></div>
+        
+          <div class="flex justify-between items-center w-full">
+            <div class="flex items-center justify-between w-full overflow-x-auto">
+              <div
+                v-for="(step, index) in steps"
+                :key="index"
+                class="relative flex items-center"
+              >
+                <div
+                  class="flex items-center justify-center w-8 h-8 rounded-full z-10"
+                  :class="{
+                    'bg-[#5B8469] text-white': index + 1 <= currentStepInt,
+                    'bg-gray-200 text-gray-500': index + 1 > currentStepInt
+                  }"
+                >
+                  {{ index + 1 }}
+                </div>
+                <!-- Divider between steps (only for non-final steps) -->
+                <div
+                  v-if="index < steps.length - 1"
+                  class="h-px border-[0.5px] border-dotted flex-grow mx-2 sm:mx-4"
+                  :class="{
+                    'bg-[#5B8469]': index + 1 < currentStepInt,
+                    'bg-gray-300': index + 1 >= currentStepInt
+                  }"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+<!-- 
         <div class="flex justify-between items-center mb-6 w-full">
           <div class="flex items-center justify-between w-full">
             <div
@@ -41,7 +75,7 @@
               ></div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div v-if="currentStepInt === 1">
           <RentalApplicationsPreScreeningQuestions @next="handleNext" />
         </div>

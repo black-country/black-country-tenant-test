@@ -125,6 +125,13 @@ const router = useRouter();
 const section = ref(route.params.section);
 const sectionTitle = ref(section.value.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase()));
 
+// Maximum allowable date for users over 20 years old
+const maxAllowableDate = computed(() => {
+  const today = new Date();
+  today.setFullYear(today.getFullYear() - 20);
+  return today.toISOString().split('T')[0]; // Format as 'YYYY-MM-DD'
+});
+
 // Watch for loadingProfile to pre-fill fields when profileObj is loaded
 watch(() => loadingProfile.value, (newLoadingStatus) => {
   if (!newLoadingStatus && profileObj.value) {
@@ -134,6 +141,71 @@ watch(() => loadingProfile.value, (newLoadingStatus) => {
 });
 
 // Function to prefill profile data from profileObj
+// const prefillProfileData = () => {
+//   fields.value.forEach(field => {
+//     if (field.label === 'Name') {
+//       field.value = `${profileObj.value.firstName} ${profileObj.value.lastName}`;
+//     } else if (field.label === 'Email address') {
+//       field.value = profileObj.value.email || '';
+//     } else if (field.label === 'Phone number') {
+//       field.value = profileObj.value.phoneNumber || '';
+//     } else if (field.label === 'Date of Birth') {
+//       field.value = profileObj.value.dateOfBirth || '';
+//     } else if (field.label === 'Gender') {
+//       field.value = profileObj.value.gender || '';
+//     } else if (field.label === 'Marital status') {
+//       field.value = profileObj.value.maritalStatus || '';
+//     } else if (field.label === 'State of Origin') {
+//       selectedState.value = profileObj.value.stateOfOrigin || '';
+//     } else if (field.label === 'Local Government (LGA)') {
+//       selectedLga.value = profileObj.value.lga || '';
+//     }
+
+//        // Rental history pre-fill
+//     else if (field.label === 'Current Landlord') {
+//       field.value = profileObj.value.currentLandlord || '';
+//     } else if (field.label === 'Rental Address') {
+//       field.value = profileObj.value.rentalAddress || '';
+//     } else if (field.label === 'Length of Tenancy') {
+//       field.value = profileObj.value.lengthOfTenancy || '';
+//     } else if (field.label === 'Reason for moving out') {
+//       field.value = profileObj.value.reasonForMovingOut || '';
+//     }
+
+//     // Employment information pre-fill
+//     else if (field.label === 'Current employment status') {
+//       field.value = profileObj.value.employmentStatus || '';
+//     } else if (field.label === 'Employer\'s full name') {
+//       field.value = profileObj.value.employerName || '';
+//     } else if (field.label === 'Organization address') {
+//       field.value = profileObj.value.employerAddress || '';
+//     } else if (field.label === 'Occupation') {
+//       field.value = profileObj.value.occupation || '';
+//     } else if (field.label === 'Monthly Net Salary') {
+//       field.value = profileObj.value.monthlyNetSalary || '';
+//     }
+
+//     // Next of kin pre-fill
+//     else if (field.label === 'Full Name') {
+//       field.value = profileObj.value.nextOfKinName || '';
+//     } else if (field.label === 'Relationship') {
+//       field.value = profileObj.value.nextOfKinRelationship || '';
+//     } else if (field.label === 'Email address') {
+//       field.value = profileObj.value.nextOfKinEmail || '';
+//     } else if (field.label === 'Residential address') {
+//       field.value = profileObj.value.nextOfKinAddress || '';
+//     } else if (field.label === 'Phone Number') {
+//       field.value = profileObj.value.nextOfKinPhone || '';
+//     } else if (field.label === 'Occupation') {
+//       field.value = profileObj.value.nextOfKinOccupation || '';
+//     } else if (field.label === 'Organization name') {
+//       field.value = profileObj.value.nextOfKinEmployer || '';
+//     } else if (field.label === 'Office address') {
+//       field.value = profileObj.value.nextOfKinEmployerAddress || '';
+//     }
+//   });
+// };
+
 const prefillProfileData = () => {
   fields.value.forEach(field => {
     if (field.label === 'Name') {
@@ -143,7 +215,15 @@ const prefillProfileData = () => {
     } else if (field.label === 'Phone number') {
       field.value = profileObj.value.phoneNumber || '';
     } else if (field.label === 'Date of Birth') {
-      field.value = profileObj.value.dateOfBirth || '';
+      // Convert date string from backend (ISO format) to 'YYYY-MM-DD' format for HTML input
+      if (profileObj.value.dateOfBirth) {
+        const dateObj = new Date(profileObj.value.dateOfBirth);
+        const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD format
+        field.value = formattedDate;
+      } else {
+        field.value = '';
+      }
+      field.max = maxAllowableDate.value; // Set the max attribute to the computed max allowable date
     } else if (field.label === 'Gender') {
       field.value = profileObj.value.gender || '';
     } else if (field.label === 'Marital status') {
@@ -154,7 +234,7 @@ const prefillProfileData = () => {
       selectedLga.value = profileObj.value.lga || '';
     }
 
-       // Rental history pre-fill
+    // Rental history pre-fill
     else if (field.label === 'Current Landlord') {
       field.value = profileObj.value.currentLandlord || '';
     } else if (field.label === 'Rental Address') {
@@ -199,6 +279,7 @@ const prefillProfileData = () => {
   });
 };
 
+
 const fields = ref([]);
 const sectionFields = {
   'personal-information': [
@@ -206,7 +287,7 @@ const sectionFields = {
     { label: 'Email address', value: '', type: 'email', isCompulsory: true },
     { label: 'Phone number', value: '', type: 'number', isCompulsory: true },
     { label: 'Date of Birth', value: '', type: 'date', isCompulsory: true },
-    { label: 'Marital status', value: '', type: 'select', options: ['Single', 'Married'] },
+    { label: 'Marital status', value: '', type: 'select', options: ['single', 'married'] },
     { label: 'Gender', value: '', type: 'select', options: ['male', 'female', 'I’ll rather not say'] },
     { label: 'State of Origin', value: '', type: 'select', code: 'state_of_origin', options: [], isCompulsory: false }, // State as select
     { label: 'Local Government (LGA)', value: '', type: 'select', code: 'lga', options: [], isCompulsory: false }, // LGA as select
