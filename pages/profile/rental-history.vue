@@ -34,7 +34,7 @@
     
         <div class="flex justify-between p-4 bg-white mt-6 max-w-2xl mx-auto w-full">
           <button @click="router.back()" class="text-[#292929] border rounded-md px-4 py-3 hover:bg-gray-100">Cancel</button>
-          <button :disabled="!isFormValid || updating" @click="handleSave" class="text-white disabled:opacity-25 disabled: cursor-not-allowed font-medium rounded-md px-6 py-3 bg-[#292929]">{{ updating ? 'Processing..' : 'Save' }}</button>
+          <button :disabled="updating" @click="handleSave" class="text-white disabled:opacity-25 disabled: cursor-not-allowed font-medium rounded-md px-6 py-3 bg-[#292929]">{{ updating ? 'Processing..' : 'Save' }}</button>
         </div>
       </div>
       <div v-else class="rounded-md p-4 max-w-4xl mx-auto mt-10">

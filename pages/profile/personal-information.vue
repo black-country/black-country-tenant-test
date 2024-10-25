@@ -76,7 +76,7 @@
       </div>
       <div class="flex justify-between p-4 bg-white mt-6 max-w-2xl mx-auto w-full">
         <button @click="router.back()" class="text-[#292929] border rounded-md px-4 py-3 hover:bg-gray-100">Cancel</button>
-        <button :disabled="!isFormValid || updating" @click="handleSave" class="text-white disabled:opacity-25 disabled:cursor-not-allowed font-medium rounded-md px-6 py-3 bg-[#292929]">{{updating ? 'Processing..' : 'Save'}}</button>
+        <button :disabled="updating" @click="handleSave" class="text-white disabled:opacity-25 disabled:cursor-not-allowed font-medium rounded-md px-6 py-3 bg-[#292929]">{{updating ? 'Processing..' : 'Save'}}</button>
       </div>
     </div>
     <div v-else class="rounded-md p-4 max-w-4xl mx-auto mt-10">
@@ -181,4 +181,31 @@ const handleSave = async () => {
   router.back()
   // router.push("/profile/profile-update-success");
 };
+
+// Helper function to format date
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Watch for changes in profileObj and prefill form fields
+watch(profileObj, (newProfile) => {
+  if (newProfile) {
+    credential.value = {
+      email: newProfile.email || '',
+      phoneNumber: newProfile.phoneNumber || '',
+      dateOfBirth: newProfile.dateOfBirth ? formatDate(newProfile.dateOfBirth) : '',  // Use formatted date
+      gender: newProfile.gender || '',
+      maritalStatus: newProfile.maritalStatus || '',
+    };
+
+    // Update full name and address fields in addressObj
+    addressObj.value.fullName = `${newProfile.firstName || ''} ${newProfile.lastName || ''}`.trim();
+    addressObj.value.state = newProfile.state || '';
+    addressObj.value.lga = newProfile.lga || '';
+  }
+}, { immediate: true });
 </script>
