@@ -14,7 +14,7 @@ export const useBookmarkProperty = () => {
         if (res.type !== 'ERROR') {
             showToast({
                 title: "Success",
-                message: "Property has been bookmarked successfully",
+                message: "Success",
                 toastType: "success",
                 duration: 3000
               });

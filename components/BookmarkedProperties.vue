@@ -8,6 +8,7 @@
       class="relative cursor-pointer min-w-[300px] w-full lg:max-w-[350px] bg-white"
     >
       <button
+        @click="toggleLike(index, property)"
         class="absolute top-6 right-6 text-white hover:text-red-500 focus:outline-none"
       >
         <svg
@@ -110,6 +111,11 @@
 </template>
 
 <script setup lang="ts">
+import { useBookmarkProperty } from "@/composables/modules/property/bookmark";
+import { useGetBookmarkedHouses } from '@/composables/modules/property/fetchBookMarkedHouses'
+  
+  const { bookmarkedList, getBookmarkedProperties } = useGetBookmarkedHouses()
+const { bookmarkProperty, loading } = useBookmarkProperty();
   import moment from "moment";
 const router = useRouter()
 const props = defineProps({
@@ -122,4 +128,15 @@ const props = defineProps({
         default: false
     }
 })
+
+const toggleLike = async (index: number, property: any) => {
+  console.log(property, 'here');
+  // Uncomment this line if you want to toggle locally before sending the request
+  // propertiesList.value[index].bookmarked = !propertiesList.value[index].bookmarked;
+  
+  await bookmarkProperty(property.house.id); // Call the bookmark function
+  await getBookmarkedProperties(); // Update the list of bookmarked properties
+  
+  window.location.reload(); // Refresh the page after successful toggle
+};
 </script>
