@@ -103,14 +103,13 @@
   </template>
   
   <script setup lang="ts">
-import { ref } from "vue";
 import { dynamicImage, dynamicIcons } from "@/utils/assets";
 import { useGetRentals  } from '@/composables/modules/rentals/fetchAllRentals'
 import { useBookmarkProperty } from "@/composables/modules/property/bookmark";
 const { bookmarkProperty, loading } = useBookmarkProperty();
   const { loadingRentals, rentalsList } = useGetRentals()
 
-  const getAvailability = (item) => {
+  const getAvailability = (item: any) => {
   const availabilityMap = {
     'unavailable': 'Un Available',
     'available_now': 'Now',
@@ -129,45 +128,6 @@ const toggleLike = (property: any) => {
 const viewRentalApplication = (item: any) => {
    router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details`)
 }
-const properties = ref([
-  {
-    image: "property1.png",
-    name: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI...",
-    details: "5 bedrooms | 6 baths | 5254 sqft",
-    availability: "2 rooms available",
-    urgency: 'Now',
-    like: "gray-love",
-  },
-  {
-    image: "property2.png",
-    name: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI...",
-    details: "5 bedrooms | 6 baths | 5254 sqft",
-    availability: "2 rooms available",
-    urgency: 'Now',
-    urgency: 'Now',
-    like: "gray-love",
-  },
-  {
-    image: "property1.png",
-    name: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI...",
-    details: "5 bedrooms | 6 baths | 5254 sqft",
-    availability: "2 rooms available",
-    urgency: 'Now',
-    like: "red-love",
-  },
-  {
-    image: "property2.png",
-    name: "Jason Co-living Space",
-    location: "Iconic Tower, off Ajose Adegun VI...",
-    details: "5 bedrooms | 6 baths | 5254 sqft",
-    availability: "2 rooms available",
-    urgency: 'Now',
-    like: "gray-love",
-  },
-]);
 </script>
   
   <style scoped>

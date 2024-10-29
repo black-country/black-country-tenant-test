@@ -3,7 +3,7 @@
     <div class="flex flex-col items-center p-6 bg-white rounded-lg shadow-lg text-center">
       <div class="mb-4">
         <div class="bg-gray-200 p-4 rounded-full">
-          <icon-home class="text-gray-500" />
+          <!-- <icon-home class="text-gray-500" /> -->
         </div>
       </div>
       <h2 class="text-xl font-semibold text-gray-800 mb-2">You're yet to move into an apartment</h2>
