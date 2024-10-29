@@ -65,7 +65,7 @@
           </div>
                 <div class="text-[#667185]">Floor number <span class="font-medium text-[#1D2739]">{{property?.floorNumber ?? 'Nil'}}</span></div>
           <div class="flex justify-between items-center">
-            <div class="text-[#667185]">Architecture <span class="font-medium text-[#1D2739]">Apartment</span></div>
+            <div class="text-[#667185]">Architecture <span class="font-medium text-[#1D2739]">{{property?.houseType?.name ?? 'Nil'}}</span></div>
             <div class="text-[#667185]">{{property?.availableRoomsCount ?? 'Nil'}} rooms available <span class="text-[#326543]">Now</span></div>
           </div>
               </div>
@@ -609,6 +609,8 @@ const props = defineProps({
     type: Boolean,
     default: false
   }
+
+  
 })
 
 // Ensure roomData is provided, fallback to an empty array
@@ -622,6 +624,13 @@ const selectedRoom = ref<number | null>(null);
 const selectRoom = (roomId: number) => {
   selectedRoom.value = roomId;
 }
+
+const otherRules = computed(() => {
+    if(props.property.rules.length > 2){
+      return props.property.rules.slice(2)
+    }
+  })
+
 
 const selectedRoomObj = ref({})
 const openRentalApplicationModal = ref(false)

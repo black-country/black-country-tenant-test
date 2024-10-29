@@ -2,7 +2,7 @@
     <div class="mb-6 p-6 lg:p-0">
         <h2 class="text- font-medium">Similar Properties</h2>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-          <div v-for="property in properties" :key="property.id" @click="router.push(`/dashboard/listings/${property?.id}/preview`)" class="bg-white cursor-pointer rounded-lg overflow-hidden">
+          <div v-for="property in properties.slice(0, 4)" :key="property.id" @click="router.push(`/dashboard/listings/${property?.id}/preview`)" class="bg-white cursor-pointer rounded-lg overflow-hidden">
             <img v-if="property?.images?.length"  :src="property.images[0]"  alt="Property Image" class="w-full rounded-lg h-64 object-cover" />
             <img v-else class="rounded-lg" src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  alt="alt image"/>
             <div class="py-4 space-y-2">

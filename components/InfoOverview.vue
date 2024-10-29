@@ -23,7 +23,7 @@
             </div>
                   <div class="text-[#667185]">Floor number <span class="font-medium text-[#1D2739]">{{property?.floorNumber ?? 'Nil'}}</span></div>
             <div class="flex justify-between items-center">
-              <div class="text-[#667185]">Architecture <span class="font-medium text-[#1D2739]">Apartment</span></div>
+              <div class="text-[#667185]">Architecture <span class="font-medium text-[#1D2739]">{{property?.houseType?.name ?? 'Nil'}}</span></div>
               <div class="text-[#667185]">{{property?.availableRoomsCount ?? 'Nil'}} rooms available <span class="text-[#326543]">Now</span></div>
             </div>
                 </div>

@@ -77,7 +77,7 @@
               </div>
               <div>
                 <p class="text-gray-500">Architecture</p>
-                <p>Apartment</p>
+                <p>{{property?.houseType?.name ?? 'Nil'}}</p>
               </div>
               <div>
                 <p class="text-gray-500">Co-living with:</p>
