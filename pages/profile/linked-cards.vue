@@ -16,8 +16,9 @@
       <h2 class="text-xl font-semibold text-[#1D2939] mb-6">Linked Card</h2>
 
    <div>
+    {{ bankAccounts }}
        <!-- First Linked Card (MasterCard) -->
-       <div class="flex justify-between items-center py-5 p-4 bg-white rounded-lg border-[0.5px] border-gray-50 mb-2">
+       <div v-for="(item, idx) in bankAccounts" :key="idx" class="flex justify-between items-center py-5 p-4 bg-white rounded-lg border-[0.5px] border-gray-50 mb-2">
         <div class="flex items-center space-x-4">
           <svg width="46" height="32" viewBox="0 0 46 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.5" y="0.5" width="45" height="31" rx="5.5" fill="white"/>
@@ -28,16 +29,16 @@
             </svg>
             
           <div>
-            <p class="text-[#1D2939] font-medium">**** **** **** 1234</p>
+            <p class="text-[#1D2939] font-medium">{{ item?.accountNumber ?? 'Nil' }}</p>
             <p class="text-gray-500 text-sm">05/24</p>
-            <span class="bg-[#F0F2F5] text-[#1D2739] text-xs px-2 py-1 rounded-full">Default</span>
+            <span class="bg-[#F0F2F5] text-[#1D2739] text-xs px-2 py-1 rounded-full">{{ item?.bankName ?? 'Nil'  }}</span>
           </div>
         </div>
         <button class="text-[#1D2739]">Delete</button>
       </div>
 
       <!-- Second Linked Card (Visa) -->
-      <div class="flex justify-between items-center px-4 py-5 bg-white rounded-lg border-[0.5px] border-gray-50 mb-2">
+      <!-- <div class="flex justify-between items-center px-4 py-5 bg-white rounded-lg border-[0.5px] border-gray-50 mb-2">
         <div class="flex items-center space-x-4">
           <svg width="46" height="32" viewBox="0 0 46 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.5" y="0.5" width="45" height="31" rx="5.5" fill="white"/>
@@ -52,7 +53,7 @@
           </div>
         </div>
         <button class="text-gray-430 cursor-not-allowed text-gray-100" disabled>Delete</button>
-      </div>
+      </div> -->
 
       <!-- Link New Card -->
       <div @click="router.push('/profile/new-card')" class="flex justify-between items-center p-4 bg-white rounded-lg border-[0.5px] border-gray-50 cursor-pointer hover:bg-gray-50">
@@ -65,7 +66,7 @@
    </div>
     </div>
   </div>
-  <div v-if="!cards.length" class="p-8 bg-gray-25 min-h-screen">
+  <div v-if="!bankAccounts.length" class="p-8 bg-gray-25 min-h-screen">
     <div class="max-w-lg mx-auto">
       <!-- Breadcrumbs -->
       <div class="text-sm text-gray-500 mb-4">
@@ -121,6 +122,8 @@
 </template>
 
 <script setup lang="ts">
+import { useFetchBankAccounts } from '@/composables/modules/banks/useFetchBankAccounts'
+const { loading, bankAccounts } = useFetchBankAccounts()
 const router = useRouter()
 const cards = ref(['credit', 'debit'])
 
