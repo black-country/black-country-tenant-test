@@ -115,7 +115,7 @@
                 <tr class="">
                   <td class="text-[#1D2739] py-3  pl-4">Wednesday</td>
                   <td class="text-[#1D2739] py-3 ">10:00 AM</td>
-                </tr>
+                </tr>       
               </tbody>
             </table>
           </div> -->
