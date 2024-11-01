@@ -2,7 +2,7 @@
     <main>
       <TopNavBar class="sticky top-0 z-50" />
       <div class="max-w-2xl mx-auto p-6">
-  
+
         <div class="flex justify-between items-center pb-5">
           <button @click="goBack" class="text-xl p-2 cursor-pointer">
             <svg class="cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,11 +96,14 @@
 
   <script setup lang="ts">
 import { computed } from "vue";
+import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 import { useRouter, useRoute } from "vue-router";
 import { useFormPersistence } from "@/composables/core/useFormPersistence";
 import { useCustomToast } from "@/composables/core/useCustomToast";
 const { showToast } = useCustomToast();
 const { loadData } = useFormPersistence();
+// Fetch property data
+const { propertyObj, loading } = useFetchProperty();
 
 // Access query parameter
 const route = useRoute();

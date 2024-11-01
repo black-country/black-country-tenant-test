@@ -18,10 +18,20 @@
         </div>
 
         <!-- ID Card Checkbox -->
+        <!-- <div class="flex items-center mb-4 block w-full p-3 py-4 text-sm border-gray-25 rounded-lg bg-[#F0F2F5] outline-none border-[0.5px] text-gray-700">
+          <input type="checkbox" v-model="!!idType" class="form-checkbox h-5 w-5 text-orange-500 rounded focus:ring-orange-400" />
+          <label class="ml-3 text-[#1D2739] text-sm font-medium">{{ getMappedId(idType) }}</label>
+        </div> -->
+
         <div class="flex items-center mb-4 block w-full p-3 py-4 text-sm border-gray-25 rounded-lg bg-[#F0F2F5] outline-none border-[0.5px] text-gray-700">
-          <input type="checkbox" v-model="idCardChecked" class="form-checkbox h-5 w-5 text-orange-500 rounded focus:ring-orange-400" />
-          <label class="ml-3 text-[#1D2739] text-sm font-medium">ID Card</label>
-        </div>
+  <input 
+    type="checkbox" 
+    :checked="isItemSelected" 
+    class="form-checkbox h-5 w-5 text-orange-500 rounded focus:ring-orange-400" 
+    disabled
+  />
+  <label class="ml-3 text-[#1D2739] text-sm font-medium">{{ getMappedId(idType) }}</label>
+</div>
 
         <!-- Authorization Checkbox -->
         <div class="flex items-center mb-6">
@@ -153,6 +163,10 @@ const { showToast } = useCustomToast();
 const localData = JSON.parse(localStorage.getItem('uploaded-document'));
 const idType = ref(localData?.type || '');
 
+// Computed property to check if an item is selected
+const isItemSelected = computed(() => !!idType.value);
+
+
 // Initialize the checkboxes as unchecked
 const idCardChecked = ref(false);
 const authorizationChecked = ref(false);
@@ -213,8 +227,24 @@ const idOptions = ref([
   { label: 'Voters Card', value: 'voters_card' },
 ]);
 
+const getMappedId = (item) => {
+  if (typeof item !== 'string') {
+    return '';
+  }
+  
+  const idType = {
+    'nimc': 'National Identity Card (NIMC)',
+    'drivers_license': 'Drivers License',
+    'passport': 'International Passport',
+    'voters_card': 'Voters Card'
+  };
+  
+  return idType[item] || '';
+};
+
+
 // Check if the user can proceed to the next step
-const canProceed = computed(() => idType.value && idCardChecked.value && authorizationChecked.value);
+const canProceed = computed(() => idType.value && isItemSelected.value && authorizationChecked.value);
 
 // Handle navigation for Back button
 const goBack = () => {
