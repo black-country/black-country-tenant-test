@@ -8,9 +8,9 @@ export const useFetchBankAccounts = () => {
 	const fetchBankAccounts = async () => {
 		loading.value = true
 		const res = await  banks_api.$_fetch_banks_accounts(user.value.id) as any
-		console.log(res, 'res')
+		console.log(res, 'bank accounts here')
         if (res.type !== 'ERROR') {
-			bankAccounts.value = res?.data?.result
+			bankAccounts.value = res?.data
         }
         loading.value = false
 	}

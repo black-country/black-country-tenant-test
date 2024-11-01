@@ -1,7 +1,8 @@
 <template>
 <main>
   <TopNavBar />
-  <div v-if="cards.length" class="p-8 bg-gray-25 min-h-screen">
+  {{ bankAccounts }}
+  <div v-if="bankAccounts?.length" class="p-8 bg-gray-25 min-h-screen">
     <div class="max-w-xl mx-auto ">
       <!-- Breadcrumbs -->
       <div class="text-sm text-gray-500 mb-4">
@@ -16,7 +17,6 @@
       <h2 class="text-xl font-semibold text-[#1D2939] mb-6">Linked Card</h2>
 
    <div>
-    {{ bankAccounts }}
        <!-- First Linked Card (MasterCard) -->
        <div v-for="(item, idx) in bankAccounts" :key="idx" class="flex justify-between items-center py-5 p-4 bg-white rounded-lg border-[0.5px] border-gray-50 mb-2">
         <div class="flex items-center space-x-4">
@@ -66,7 +66,7 @@
    </div>
     </div>
   </div>
-  <div v-if="!bankAccounts.length" class="p-8 bg-gray-25 min-h-screen">
+  <div v-if="!bankAccounts?.length" class="p-8 bg-gray-25 min-h-screen">
     <div class="max-w-lg mx-auto">
       <!-- Breadcrumbs -->
       <div class="text-sm text-gray-500 mb-4">
