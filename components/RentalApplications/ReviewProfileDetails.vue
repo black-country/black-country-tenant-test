@@ -14,7 +14,7 @@
 <div class="">
   <div class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
     <h3 class="text-base font-medium">Pre-Screening Questions</h3>
-    <button class="text-[#1D2739] text-base font-medium cursor-pointer" @click="editSection('screening-questions')">Edit</button>
+    <button class="text-[#1D2739] disabled:cursor-not-allowed disabled:opacity-25 text-base font-medium cursor-pointer" @click="editSection('screening-questions')">Edit</button>
   </div>
   <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
     <li v-for="(question, idx) in profile.screeningQuestions" :key="idx" class="text-sm font-light flex flex-col justify-between">
@@ -378,9 +378,11 @@ const goNext = async () => {
 
   // Check if the questions array is empty, then save and go to next step
   if (isQuestionsArrayEmpty.value) {
+    console.log(isQuestionsArrayEmpty.value, 'here ooooooo')
     saveProfile();
     router.push({ query: { step: '3' } });
-  } else {
+  } 
+  else {
     processing.value = true;
     setPayload(payload);
     
@@ -393,7 +395,6 @@ const goNext = async () => {
     }
   }
 
-  console.log(profile.value.screeningQuestions, 'here');
 };
 
 

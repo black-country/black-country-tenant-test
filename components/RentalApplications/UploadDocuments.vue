@@ -36,7 +36,7 @@
         <!-- Authorization Checkbox -->
         <div class="flex items-center mb-6">
           <input type="checkbox" v-model="authorizationChecked" class="form-checkbox h-5 w-5 text-orange-500 rounded focus:ring-orange-400" />
-          <label class="ml-3 text-[#1D2739] font-medium text-xs">I authorize Homeowners/Property Managers to conduct background checks.</label>
+          <label class="ml-3 text-[#1D2739] font-medium text-sm">I authorize Homeowners/Property Managers to conduct background checks.</label>
         </div>
 
         <!-- Info Box -->

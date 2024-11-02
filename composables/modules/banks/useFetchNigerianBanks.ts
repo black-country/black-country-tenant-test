@@ -15,7 +15,7 @@ export const useFetchNigerianBanks = () => {
         loading.value = false
 	}
 
-	onMounted(() => {
+	onMounted(() => {                        
 		getNigerianBanks()
 	})
 

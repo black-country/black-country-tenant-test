@@ -1,8 +1,9 @@
+
 <template>
-  <main>
+  <MessagingView title="Messages">
     <div class="h-screen flex">
       <!-- Chat User List with custom scroll -->
-      <div class="w-1/4 h-full sticky top-0 border-r overflow-y-auto custom-scrollbar">
+      <div class="w-full lg:w-1/4 h-full sticky top-0 border-r-[0.5px] border-gray-50 overflow-y-auto custom-scrollbar">
         <ChatUserList
           :loading="loadingActiveChats"
           :users="activeChatsList"
@@ -10,12 +11,10 @@
         />
       </div>
 
-      <div class="flex-1 flex flex-col">
-        <!-- Chat Header (Fixed) -->
-        <div class="sticky top-0 z-50 bg-white">
+      <div class="lg:flex-1 flex flex-col hidden lg:block sticky top-0">
+        <div class="sticky top-0 bg-white">
           <ChatHeader :selectedUser="selectedUser || roomChatsList" />
         </div>
-        <!-- {{roomChatsList}} -->
 
         <section
           v-if="!roomChatsList.length && !loadingActiveChats"
@@ -89,13 +88,13 @@
            </defs>
          </svg>
          <h2 class="text-[#1D2739]">No conversations found</h2>
-         <p class="text-[#667185]">You have not contacted anyone</p>
+         <!-- <p class="text-[#667185] text-sm">You have not contacted anyone</p> -->
           </section>
 
         <!-- Chat Window and Message Input -->
         <div class="flex flex-col h-full">
           <!-- Chat Window with custom scroll -->
-          <div class="flex-1 z-10 overflow-y-auto px-4 custom-scrollbar border">
+          <div  class="flex-1 z-10 overflow-y-auto px-4 custom-scrollbar border-[0.5px] border-gray-25">
             <ChatWindow
               class="z-1-0"
               :roomChats="roomChatsList"
@@ -121,7 +120,7 @@
           </div>
 
           <!-- Chat Message Input (Fixed at the bottom) -->
-          <div class="bg-gray-100 border-t border-gray-300 sticky bottom-0 z-10">
+          <div class="border-t-[0.5px] border-gray-50 sticky bottom-0 z-10">
             <ChatMessageInput
               v-model="newMessage"
               @sendMessage="sendMessageToUser"
@@ -130,10 +129,11 @@
         </div>
       </div>
     </div>
-  </main>
+  </MessagingView>
 </template>
 
 <script setup lang="ts">
+import MessagingView from "@/layouts/MessagingView.vue";
 import { useGetActiveChats } from "@/composables/modules/messages/fetchActiveChats";
 import { useGetRoomChats } from "@/composables/modules/messages/fetchRoomMessages";
 import { useWebSocket } from "@/composables/modules/messages/sockets";
@@ -141,6 +141,8 @@ import { useWebSocket } from "@/composables/modules/messages/sockets";
 const { loadingActiveChats, activeChatsList } = useGetActiveChats();
 const { getRoomChats, loadingRoomChats, roomChatsList } = useGetRoomChats();
 const { messages, newMessage, connectWebSocket, sendMessage } = useWebSocket();
+
+const router = useRouter()
 
 // Connect to WebSocket when the component is mounted
 connectWebSocket();

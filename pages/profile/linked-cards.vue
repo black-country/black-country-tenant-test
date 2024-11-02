@@ -1,23 +1,26 @@
 <template>
 <main>
   <TopNavBar />
-  {{ bankAccounts }}
   <div v-if="bankAccounts?.length" class="p-8 bg-gray-25 min-h-screen">
     <div class="max-w-xl mx-auto ">
       <!-- Breadcrumbs -->
+     <div class="flex items-center gap-x-3">
+      <svg @click="router.back()" class="cursor-pointer mb-3" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
+        <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
       <div class="text-sm text-gray-500 mb-4">
         <span>Profile</span>
         <span class="mx-2">|</span>
         <span>Payment Information</span>
         <span class="mx-2">|</span>
-        <span class="font-semibold text-[#1D2939]">Linked Card</span>
+        <span class="font-semibold text-[#1D2939]">Linked Cards</span>
       </div>
 
-      <!-- Header -->
-      <h2 class="text-xl font-semibold text-[#1D2939] mb-6">Linked Card</h2>
+     </div>
 
    <div>
-       <!-- First Linked Card (MasterCard) -->
+  
        <div v-for="(item, idx) in bankAccounts" :key="idx" class="flex justify-between items-center py-5 p-4 bg-white rounded-lg border-[0.5px] border-gray-50 mb-2">
         <div class="flex items-center space-x-4">
           <svg width="46" height="32" viewBox="0 0 46 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -28,10 +31,9 @@
             <path fill-rule="evenodd" clip-rule="evenodd" d="M22.905 22.4403C24.8489 20.8018 26.0815 18.3636 26.0815 15.641C26.0815 12.9185 24.8489 10.4803 22.905 8.8418C20.9611 10.4803 19.7285 12.9185 19.7285 15.641C19.7285 18.3636 20.9611 20.8018 22.905 22.4403Z" fill="#FF5E00"/>
             </svg>
             
-          <div>
-            <p class="text-[#1D2939] font-medium">{{ item?.accountNumber ?? 'Nil' }}</p>
-            <p class="text-gray-500 text-sm">05/24</p>
-            <span class="bg-[#F0F2F5] text-[#1D2739] text-xs px-2 py-1 rounded-full">{{ item?.bankName ?? 'Nil'  }}</span>
+          <div class="space-y-4">
+            <p class="text-[#1D2939] font-medium">{{ padAccountNumber(item?.accountNumber) ?? 'Nil' }}</p>
+            <span class="text-[#1D2739] text-xs px-2 py-1">{{ item?.bankName ?? 'Nil'  }}</span>
           </div>
         </div>
         <button class="text-[#1D2739]">Delete</button>
@@ -126,6 +128,12 @@ import { useFetchBankAccounts } from '@/composables/modules/banks/useFetchBankAc
 const { loading, bankAccounts } = useFetchBankAccounts()
 const router = useRouter()
 const cards = ref(['credit', 'debit'])
+
+const padAccountNumber = (accountNumber: string) => {;
+const last4Digits = accountNumber.slice(-4);
+const maskedNumber = last4Digits.padStart(accountNumber.length, '*');
+ return maskedNumber
+}
 
 definePageMeta({
   middleware: "auth",

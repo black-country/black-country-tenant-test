@@ -63,7 +63,7 @@
                 <ul>
                   <li
                     v-for="user in users"
-                    :key="user.participant.id"
+                    :key="user?.participant?.id"
                     class="flex items-center justify-between mb-2 border-b last:border-b-0 border-gray-100 cursor-pointer "
                   >
                     <div class="flex items-center">
@@ -93,7 +93,7 @@
       <ul v-if="users.length && !loading">
         <li
           v-for="user in users"
-          :key="user.participant.id"
+          :key="user?.participant?.id"
           @click="selectUser(user)"
           class="flex items-center justify-between p-3 mb-2 border-b last:border-b-0 border-gray-100 cursor-pointer hover:bg-gray-100"
         >
