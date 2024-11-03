@@ -1,7 +1,7 @@
 <template>
  <main class="z-30">
   <nav class="bg-[#292929] text-white py-3 z-10">
-    <div class="container mx-auto flex justify-between items-center px-4">
+    <div class="mx-auto flex justify-between items-center px-4">
       <NuxtLink to="/dashboard" class="flex cursor-pointer items-center gap-x-3">
         <!-- Logo -->
         <div class="flex items-center space-x-2">

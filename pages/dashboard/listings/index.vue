@@ -724,9 +724,11 @@
             <p class="text-[#1D2739] text-xs">{{ property.available }}</p>
             <p class="text-[#1D2739] text-xs">
               {{ property.availableRoomsCount }} rooms avail.
-              <span class="font-medium text-[#326543]">Now</span> |
-              {{ property.unavailableRoomsCount }} room avail. on
-              {{ moment(property.createdAt).format("MMMM Do YYYY") }}
+              <span class="font-medium text-[#326543]">Now</span>
+              <span :class="[property.futureAvailableRoomsCount === 0 ? 'hidden' : '']">
+               | {{ property.futureAvailableRoomsCount }} room avail. on
+                {{ moment(property.leastAvailableDate).format("MMMM Do YYYY") }}
+              </span>
             </p>
           </section>
         </div>

@@ -2,9 +2,15 @@
 <template>
   <MessagingView title="Messages">
     <div class="h-screen flex">
-      <!-- Chat User List with custom scroll -->
       <div class="w-full lg:w-1/4 h-full sticky top-0 border-r-[0.5px] border-gray-50 overflow-y-auto custom-scrollbar">
         <ChatUserList
+          v-if="route.query.agentId"
+          :loading="loadingActiveChats"
+          :users="roomObj.activeChats"
+          @selectUser="selectUser"
+        />
+        <ChatUserList
+           v-else
           :loading="loadingActiveChats"
           :users="activeChatsList"
           @selectUser="selectUser"
@@ -13,7 +19,9 @@
 
       <div class="lg:flex-1 flex flex-col hidden lg:block sticky top-0">
         <div class="sticky top-0 bg-white">
-          <ChatHeader :selectedUser="selectedUser || roomChatsList" />
+          <ChatHeader 
+          :isConnected="isConnected" 
+          :selectedUser="selectedUser || roomChatsList" />
         </div>
 
         <section
@@ -88,38 +96,18 @@
            </defs>
          </svg>
          <h2 class="text-[#1D2739]">No conversations found</h2>
-         <!-- <p class="text-[#667185] text-sm">You have not contacted anyone</p> -->
           </section>
 
-        <!-- Chat Window and Message Input -->
         <div class="flex flex-col h-full">
-          <!-- Chat Window with custom scroll -->
           <div  class="flex-1 z-10 overflow-y-auto px-4 custom-scrollbar border-[0.5px] border-gray-25">
             <ChatWindow
               class="z-1-0"
               :roomChats="roomChatsList"
               :messages="messages"
             />
-            <!-- <p v-if="loadingRoomChats" class="flex justify-end items-end">Sending...</p> -->
-            <!-- <section v-else>
-              <div class="rounded-md p-4 w-full mx-auto mt-10">
-                <div class="animate-pulse flex space-x-4">
-                  <div class="flex-1 space-y-6 py-1">
-                    <div class="h-32 bg-slate-200 rounded"></div>
-                    <div class="space-y-3">
-                      <div class="grid grid-cols-3 gap-4">
-                        <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
-                        <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
-                      </div>
-                      <div class="h-32 w-full bg-slate-200 rounded"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </section> -->
+  
           </div>
 
-          <!-- Chat Message Input (Fixed at the bottom) -->
           <div class="border-t-[0.5px] border-gray-50 sticky bottom-0 z-10">
             <ChatMessageInput
               v-model="newMessage"
@@ -133,6 +121,7 @@
 </template>
 
 <script setup lang="ts">
+import { useCreateRoom } from '@/composables/modules/messages/createRoom'
 import MessagingView from "@/layouts/MessagingView.vue";
 import { useGetActiveChats } from "@/composables/modules/messages/fetchActiveChats";
 import { useGetRoomChats } from "@/composables/modules/messages/fetchRoomMessages";
@@ -140,21 +129,63 @@ import { useWebSocket } from "@/composables/modules/messages/sockets";
 
 const { loadingActiveChats, activeChatsList } = useGetActiveChats();
 const { getRoomChats, loadingRoomChats, roomChatsList } = useGetRoomChats();
-const { messages, newMessage, connectWebSocket, sendMessage } = useWebSocket();
+const {   messages, 
+  newMessage, 
+  isConnected, 
+  sendMessage  } = useWebSocket();
+const { createRoom, loading: creatingRoom, roomObj,} = useCreateRoom()
 
 const router = useRouter()
+const route = useRoute()
 
-// Connect to WebSocket when the component is mounted
-connectWebSocket();
-const route = useRoute();
 
 const selectedUser = ref(null);
+const messageStatus = ref('idle');
 
-watch(selectedUser, (newVal: any) => {
-  if (newVal) {
-    getRoomChats(newVal.id);
+
+// Watch for selected user changes
+watch(selectedUser, async (newVal: any) => {
+  if (newVal?.id) {
+    try {
+      await getRoomChats(newVal.id);
+    } catch (error) {
+      console.error('Failed to fetch room chats:', error);
+    }
   }
 });
+
+// Watch for new messages to scroll to bottom
+watch(messages, (newMessages) => {
+  if (newMessages.length > 0) {
+    scrollToBottom();
+  }
+}, { deep: true });
+
+onMounted(() => {
+  if(route.query.agentId){
+    const payload = {
+    participantId: route.query.agentId,
+    participantType: 'AGENT'
+  };
+  createRoom(payload)
+  }
+
+    // Set up event listeners
+    $emitter.on('customEvent', async (payload: any) => {
+    if (payload.data) {
+      await getRoomChats(payload.data);
+      scrollToBottom();
+    }
+  });
+})
+
+// Scroll handling
+const scrollToBottom = () => {
+  const chatWindow = document.querySelector('.custom-scrollbar');
+  if (chatWindow) {
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }
+};
 
 const { $emitter } = useNuxtApp();
 
@@ -169,17 +200,49 @@ const selectUser = (user: any) => {
   selectedUser.value = user;
 };
 
+// const sendMessageToUser = (message: string) => {
+//   console.log(message,'messge')
+//   const socketPayload = {
+//     content: message,
+//     recipientId: selectedUser?.value?.participant?.id,
+//     recipientType: selectedUser?.value?.participant?.role,
+//     messageType: 'private',
+//   };
+//   sendMessage(socketPayload);
+// };
 
+const sendMessageToUser = async (content: string) => {
+  if (!selectedUser.value?.participant?.id || !isConnected.value) {
+    console.error('Cannot send message: No recipient selected or not connected');
+    return;
+  }
 
-const sendMessageToUser = (message: string) => {
-  const socketPayload = {
-    content: message,
-    recipientId: '81c0810f-d63a-44d4-bb96-eded6aca4cb4',
-    recipientType: 'TENANT',
-    messageType: 'private',
-  };
-  sendMessage(socketPayload);
+  messageStatus.value = 'sending';
+
+  try {
+    const socketPayload = {
+      content,
+      recipientId: selectedUser.value.participant.id,
+      recipientType: selectedUser.value.participant.role,
+      messageType: 'private',
+      room: selectedUser.value.id // Include room ID if needed
+    };
+
+    await sendMessage(socketPayload);
+    messageStatus.value = 'sent';
+    newMessage.value = ''; // Clear input after successful send
+  } catch (error) {
+    console.error('Failed to send message:', error);
+    messageStatus.value = 'error';
+    // Optionally show error notification to user
+  }
 };
+
+onUnmounted(() => {
+  // Clean up event listeners
+  $emitter.off('customEvent');
+});
+
 </script>
 
 <style scoped>

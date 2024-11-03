@@ -295,7 +295,7 @@
       <!-- Right Section -->
       <div class="lg:w-1/2 space-y-6 p-4 lg:p-0">
         <!-- Property Manager -->
-        <div v-if="!!!property?.rentalApplication" class="bg-[#F0F2F5] p-6 rounded-md">
+        <div class="bg-[#F0F2F5] p-6 rounded-md">
             <div class="flex items-center justify-between space-x-4">
           <div class="flex items-center space-x-4">
             <img  :src="dynamicImage(propertyManagerImage)" alt="Property Manager" class="w-10 h-10 rounded-full">

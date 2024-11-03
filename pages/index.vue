@@ -141,7 +141,7 @@ definePageMeta({
 <script setup lang="ts">
 import { useAuth } from '@/composables/auth/useAuth'
 import Carousel from '@/components/Carousel.vue';
-const { signInWithGoogle, signInWithApple, loading, error } = useAuth()
+// const { signInWithGoogle, signInWithApple, loading, error } = useAuth()
 
 // definePageMeta({
 //   middleware: "auth"

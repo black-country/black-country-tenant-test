@@ -90,12 +90,13 @@
             </div>
           </div>
   
-      <ul v-if="users.length && !loading">
+      <ul v-if="users?.length && !loading">
         <li
           v-for="user in users"
+          :class="[!selectedUserChat?.id ? (user?.participant.id === route?.query?.agentId ? 'bg-gray-200' : '') : (user.id === selectedUserChat.id ? 'bg-gray-200' : '') ]"
           :key="user?.participant?.id"
           @click="selectUser(user)"
-          class="flex items-center justify-between p-3 mb-2 border-b last:border-b-0 border-gray-100 cursor-pointer hover:bg-gray-100"
+          class="flex items-center rounded justify-between p-3 border-b hover:bg-gray-100 last:border-b-0 border-gray-100 cursor-pointer"
         >
    
           <div class="flex items-center w-full">
@@ -116,7 +117,7 @@
           </div>
         </li>
       </ul>
-      <section v-else-if="loading && !users.length">
+      <section v-else-if="loading && !users?.length">
         <div class="rounded-md p-4 w-full mx-auto">
           <div class="animate-pulse flex space-x-4">
             <div class="flex-1 space-y-6 py-1">
@@ -159,10 +160,15 @@
     users: Array,
     loading: Boolean
   });
+
+  const route = useRoute()
   
   const emit = defineEmits(['selectUser']);
-  
-  function selectUser(user) {
+
+  const selectedUserChat = ref({})
+
+  function selectUser(user: any) {
+    selectedUserChat.value = user
     emit('selectUser', user);
   }
 
