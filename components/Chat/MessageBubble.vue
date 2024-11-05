@@ -1,10 +1,10 @@
 <template>
 <main class="flex">
-  <img v-if="!isMine"
+  <!-- <img v-if="!isMine"
   src="@/assets/icons/user-avatar.svg"
   alt="User profile"
   class="w-6 h-6 border-gray-900 shadow-sm border-2 rounded-full"
-/>
+/> -->
     <div
       :class="isMine ? 'ml-auto bg-[#91D6A8]' : 'mr-auto bg-[#EBE5E0]'"
       class="p-3 rounded-lg z-10 max-w-xs mb-2 w-full"

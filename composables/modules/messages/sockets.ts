@@ -204,7 +204,6 @@ export const useWebSocket = () => {
     //   }
     // });
     socket.value.on("message.new", (message: any) => {
-      console.log("New message receivedssssssss:", message.message);
       if (message && !messages.value.some(msg => msg.id === message?.message?.id)) {
         const newMessage = {
           ...message.message, // Use only the message object

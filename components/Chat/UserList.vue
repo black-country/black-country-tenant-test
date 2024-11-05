@@ -1,96 +1,7 @@
 <template>
     <div class="sticky top-0  p-4 bg-white">
-
-        <div class="flex items-center space-x-4 p-2 ">
-     
-            <div class="relative flex items-center bg-[#EAEAEA] rounded-lg px-3 py-2 w-full">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-5 w-5 text-gray-500"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.386a1 1 0 11-1.414 1.415l-4.387-4.387zM8 14a6 6 0 100-12 6 6 0 000 12z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-              <input
-                type="text"
-                class="bg-[#EAEAEA] text-gray-600 text-sm ml-2 py-1.5 focus:outline-none w-full"
-                placeholder="Search"
-              />
-            </div>
-        
-
-            <button
-              class="bg-[#EAEAEA] p-2 rounded-lg hover:bg-gray-300 transition-colors"
-            >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10 3.33398V16.6673" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M3.33325 10H16.6666" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                
-            </button>
-        
-
-            <button
-            @click="toggleDropdown"
-              class="bg-[#EAEAEA] p-2 rounded-lg  transition-colors"
-            >
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M10.8333 3.33398H2.5" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M9.16667 15.834H2.5" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M17.5001 15.834H14.1667" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M17.5001 9.58398H9.16675" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M17.4999 3.33398H15.8333" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M4.16667 9.58398H2.5" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M12.0833 1.66602C12.4715 1.66602 12.6657 1.66602 12.8188 1.72945C13.023 1.81402 13.1853 1.97626 13.2698 2.18045C13.3333 2.33359 13.3333 2.52773 13.3333 2.91602V3.74935C13.3333 4.13763 13.3333 4.33177 13.2698 4.48492C13.1853 4.68911 13.023 4.85134 12.8188 4.93592C12.6657 4.99935 12.4715 4.99935 12.0833 4.99935C11.695 4.99935 11.5008 4.99935 11.3477 4.93592C11.1435 4.85134 10.9813 4.68911 10.8967 4.48492C10.8333 4.33177 10.8333 4.13763 10.8333 3.74935V2.91602C10.8333 2.52773 10.8333 2.33359 10.8967 2.18045C10.9813 1.97626 11.1435 1.81402 11.3477 1.72945C11.5008 1.66602 11.695 1.66602 12.0833 1.66602Z" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M10.4167 14.166C10.805 14.166 10.9992 14.166 11.1523 14.2294C11.3565 14.314 11.5187 14.4763 11.6033 14.6804C11.6667 14.8336 11.6667 15.0278 11.6667 15.416V16.2493C11.6667 16.6376 11.6667 16.8318 11.6033 16.9849C11.5187 17.1891 11.3565 17.3513 11.1523 17.4359C10.9992 17.4993 10.805 17.4993 10.4167 17.4993C10.0285 17.4993 9.83433 17.4993 9.68116 17.4359C9.477 17.3513 9.31475 17.1891 9.23017 16.9849C9.16675 16.8318 9.16675 16.6376 9.16675 16.2493V15.416C9.16675 15.0278 9.16675 14.8336 9.23017 14.6804C9.31475 14.4763 9.477 14.314 9.68116 14.2294C9.83433 14.166 10.0285 14.166 10.4167 14.166Z" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M7.91675 7.91602C8.30503 7.91602 8.49917 7.91602 8.65233 7.97945C8.8565 8.06402 9.01875 8.22626 9.10333 8.43043C9.16675 8.5836 9.16675 8.77777 9.16675 9.16602V9.99935C9.16675 10.3876 9.16675 10.5818 9.10333 10.7349C9.01875 10.9391 8.8565 11.1013 8.65233 11.1859C8.49917 11.2493 8.30503 11.2493 7.91675 11.2493C7.52846 11.2493 7.33432 11.2493 7.18118 11.1859C6.97699 11.1013 6.81476 10.9391 6.73018 10.7349C6.66675 10.5818 6.66675 10.3876 6.66675 9.99935V9.16602C6.66675 8.77777 6.66675 8.5836 6.73018 8.43043C6.81476 8.22626 6.97699 8.06402 7.18118 7.97945C7.33432 7.91602 7.52846 7.91602 7.91675 7.91602Z" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                
-            </button>
-
-            <div v-if="showDropdown" class="fixed inset-0 z-50" @click="toggleDropdown">
-              <!-- Dark overlay -->
-              <!-- <div class="absolute inset-0 bg-black opacity-50" @click="toggleDropdown"></div> -->
-        
-              <!-- Dropdown -->
-              <div class="absolute left-32 top-20 w-60 bg-white rounded-lg border p-4 z-20">
-                <!-- User List -->
-                <ul>
-                  <li
-                    v-for="user in users"
-                    :key="user?.participant?.id"
-                    class="flex items-center justify-between mb-2 border-b last:border-b-0 border-gray-100 cursor-pointer "
-                  >
-                    <div class="flex items-center">
-                      <img
-                        v-if="user.profilePicture"
-                        :src="user.profilePicture"
-                        class="w-10 h-10 rounded-full mr-3"
-                        alt=""
-                      />
-                      <img
-                        v-else
-                        src="@/assets/icons/user-avatar.svg"
-                        class="w-6 h-6 border shadow border-gray-500 rounded-full mr-3"
-                        alt=""
-                      />
-                      <div>
-                        <p class="font-semibold">{{ user.participant.firstName }} {{ user.participant.lastName }}</p>
-                        <p class="text-sm text-gray-500">{{ user.role }}</p>
-                      </div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
   
-      <ul v-if="users?.length && !loading">
+      <ul class="w-full" v-if="users?.length && !loading">
         <li
           v-for="user in users"
           :class="[!selectedUserChat?.id ? (user?.participant.id === route?.query?.agentId ? 'bg-gray-200' : '') : (user.id === selectedUserChat.id ? 'bg-gray-200' : '') ]"
@@ -100,8 +11,12 @@
         >
    
           <div class="flex items-center w-full">
-            <img v-if="user.profilePicture" :src="user.profilePicture" class="w-10 h-10 rounded-full mr-3" alt="" />
-            <img v-else src="@/assets/icons/user-avatar.svg" class="w-10 h-10 border shadow border-gray-500 rounded-full mr-3" alt="" />
+            <img v-if="user.participant.profilePicture" :src="user.participant.profilePicture" class="w-10 h-10 rounded-full mr-3" alt="" />
+            <!-- <img v-else src="@/assets/icons/user-avatar.svg" class="w-10 h-10 border shadow border-gray-500 rounded-full mr-3" alt="" /> -->
+            <svg v-else class="h-14 w-14" viewBox="0 0 111 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path fill-rule="evenodd" clip-rule="evenodd" d="M86.162 83.0406C90.5989 78.8716 94.1335 73.8369 96.5473 68.2476C98.9612 62.6584 100.203 56.6334 100.196 50.5452C100.196 25.8886 80.2096 5.90234 55.553 5.90234C30.8964 5.90234 10.9102 25.8886 10.9102 50.5452C10.9031 56.6334 12.1449 62.6584 14.5588 68.2476C16.9726 73.8369 20.5072 78.8716 24.9441 83.0406C33.2176 90.8561 44.1718 95.2034 55.553 95.1881C66.9343 95.2034 77.8885 90.8561 86.162 83.0406ZM28.7444 77.1569C31.9591 73.1351 36.0384 69.8892 40.6796 67.6602C45.3207 65.4312 50.4044 64.2763 55.553 64.2815C60.7017 64.2763 65.7854 65.4312 70.4265 67.6602C75.0676 69.8892 79.147 73.1351 82.3616 77.1569C78.8544 80.6995 74.6787 83.5104 70.0767 85.4267C65.4747 87.343 60.5381 88.3264 55.553 88.3199C50.568 88.3264 45.6313 87.343 41.0294 85.4267C36.4274 83.5104 32.2516 80.6995 28.7444 77.1569ZM72.7234 36.8089C72.7234 41.3628 70.9144 45.7301 67.6943 48.9502C64.4742 52.1703 60.1069 53.9793 55.553 53.9793C50.9992 53.9793 46.6318 52.1703 43.4118 48.9502C40.1917 45.7301 38.3827 41.3628 38.3827 36.8089C38.3827 32.2551 40.1917 27.8877 43.4118 24.6677C46.6318 21.4476 50.9992 19.6386 55.553 19.6386C60.1069 19.6386 64.4742 21.4476 67.6943 24.6677C70.9144 27.8877 72.7234 32.2551 72.7234 36.8089Z" fill="#D6D0CC"/>
+</svg>
+
             <div class="w-full space-y-1">
              <div class='flex justify-between items-center w-full'>
               <p class="font-">{{ user?.participant?.firstName }} {{ user?.participant?.lastName }}</p>
