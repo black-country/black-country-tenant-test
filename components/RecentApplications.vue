@@ -7,8 +7,8 @@
         :key="index"
         class="flex-shrink-0 cursor-pointer w-64 bg-white rounded-lg overflow-hidden shadow-md"
       >
-        <div class="relative">
-          <img :src="property.house.images[0]" alt="Property Image" class="w-full h-40 object-cover" />
+        <div v-if="property?.house?.images" class="relative">
+          <img :src="property?.house?.images[0]" alt="Property Image" class="w-full h-40 object-cover" />
           <CoreBookmark :property="property" />
           <!-- <button
           @click="toggleLike(property)"
@@ -78,18 +78,11 @@
       </div>
     </div>
   </div>
-  <section  class="p-8 max-w-7xl mx-auto" v-else-if="loadingRentals && !rentalsList.length">
-    <div class="rounded-md p-4 w-full mx-auto">
+  <section  class="max-w-7xl mx-auto mb-10" v-else-if="loadingRentals && !rentalsList?.length">
+    <div class="rounded-md w-full mx-auto">
       <div class="animate-pulse flex space-x-4">
         <div class="flex-1 space-y-6 py-1">
           <div class="h-32 bg-slate-200 rounded"></div>
-          <div class="space-y-3">
-            <div class="grid grid-cols-3 gap-4">
-              <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
-              <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
-            </div>
-            <div class="h-32 w-full bg-slate-200 rounded"></div>
-          </div>
         </div>
       </div>
     </div>

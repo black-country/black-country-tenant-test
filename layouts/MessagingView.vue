@@ -2,7 +2,7 @@
     <main>
       <div class="flex h-screen">
         <aside
-          class="w-16 hidden bg-[#292929] shadow-md flex flex-col items-center"
+          class="w-16  bg-[#292929] shadow-md flex flex-col items-center"
         >
           <nav class="space-y-6 mt-10">
             <div class="pl-2 flex justify-center items-center mx-3">
@@ -270,8 +270,8 @@
           </div>
         </aside>
         <div class="flex-1 lg:flex flex-col sticky top-0 z-50">
-          <TopNavBar />
-          <!-- <header
+          <!-- <TopNavBar />
+      <header
             class="bg-white bg-white border-[0.5px] sticky top-0 z-50 border-gray-100 flex justify-between items-center py-3 px-4"
           >
             <div class="text-lg font-semibold text-gray-800 flex items-cemnter gap-x-2">
@@ -323,7 +323,7 @@
                 </div>
               </div>
             </div>
-          </header> -->
+          </header>  -->
            <slot></slot>
         </div>
       </div>

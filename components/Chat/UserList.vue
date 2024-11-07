@@ -1,13 +1,12 @@
 <template>
     <div class="sticky top-0  p-4 bg-white">
-  
       <ul class="w-full" v-if="users?.length && !loading">
         <li
           v-for="user in users"
           :class="[!selectedUserChat?.id ? (user?.participant.id === route?.query?.agentId ? 'bg-gray-200' : '') : (user.id === selectedUserChat.id ? 'bg-gray-200' : '') ]"
           :key="user?.participant?.id"
           @click="selectUser(user)"
-          class="flex items-center rounded justify-between p-3 border-b hover:bg-gray-100 last:border-b-0 border-gray-100 cursor-pointer"
+          class="flex items-center cursor-pointer rounded justify-between p-3 border-b hover:bg-gray-100 last:border-b-0 border-gray-100 cursor-pointer"
         >
    
           <div class="flex items-center w-full">

@@ -1,7 +1,6 @@
 <template>
 <main>
-  <TopNavBar />
-  
+  <TopNavBar class="" /> 
   <div class="bg-gray-25 min-h-screen p-6">
     <div class="max-w-4xl mx-auto">
       <!-- Greeting Section -->
@@ -12,7 +11,7 @@
         <div v-for="action in setupActions" :key="action.title" @click="router.push(action.path)" class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
         <div class="flex items-center gap-x-3">
           <div>
-            <input type="checkbox" class="form-checkbox h-5 w-5 text-blue-600" />            
+            <input disabled type="checkbox" :checked="action.checked" class="form-checkbox h-5 w-5 text-blue-600" />            
           </div>
           <div>
             <h2 class="text-base font-medium text-[#1D2739]">{{ action.title }}</h2>
@@ -145,14 +144,24 @@
   </template>
   
   <script setup lang="ts">
+  import { useFetchBankAccounts } from '@/composables/modules/banks/useFetchBankAccounts'
+  import { useObjectCompletionCheck } from '@/composables/core/useObjectCompletionCheck';
+  const { isObjectComplete, checkObjectCompletion } = useObjectCompletionCheck();
   import { useGreeting } from '@/composables/core/useGreeting'
   import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
   const { greeting } = useGreeting()
+  const { bankAccounts } = useFetchBankAccounts()
   import { dynamicIcons } from '@/utils/assets'
   const router = useRouter()
 
+  const isAccountSetupComplete = computed(() => {
+    return bankAccounts.value.length ? true : false
+  })
+
   const showWelcomeModal = ref(false)
+
+  const isComplete = checkObjectCompletion(user.value);
 
   onMounted(() => {
   // Check if the welcome modal has already been shown
@@ -184,10 +193,12 @@ definePageMeta({
   middleware: "auth"
 });
   const setupActions = ref([
-    { title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.', path: '/profile' },
-    { title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.', path: '/dashboard/listings' },
-    { title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '#' }
+    { checked: isComplete, title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.', path: '/profile' },
+    { checked: false, title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.', path: '/dashboard/listings' },
+    { checked: isAccountSetupComplete.value, title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '/profile/payment-information' }
   ]);
+
+
   
   const paymentActions = ref([
     { title: 'Pay Rent', icon: 'pay-rent' },
