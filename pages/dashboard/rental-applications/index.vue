@@ -28,19 +28,6 @@
           </button>
         </div>
       </div>
-      <!-- <div class="flex space-x-4 mb-6">
-        <button
-          v-for="filter in filters"
-          :key="filter.value"
-          @click="setActiveFilter(filter.value)"
-          :class="[
-            'px-4 py-2.5 rounded-lg text-sm',
-            activeFilter === filter.value ? 'bg-[#5B8469] text-white' : 'text-[#1D2739] bg-[#F0F2F5]'
-          ]"
-        >
-          {{ filter.label }}
-        </button>
-      </div> -->
       <div class="overflow-x-auto scrollbar-hidden mb-6">
         <div class="flex space-x-4 whitespace-nowrap">
           <button
@@ -61,7 +48,7 @@
          @click="handleSelectedRental(rental)"
         :key="rental.id" class="max-w-sm cursor-pointer rounded-lg overflow-hidden h-96 shadow-lg relative">
             <!-- Image Section -->
-            <img :src="rental?.house?.images[0]" alt="Living Room" class="w-full h-96 object-cover rounded-t-lg" />
+            <img v-if="rental?.house?.images" :src="rental?.house?.images[0]" alt="Living Room" class="w-full h-96 object-cover rounded-t-lg" />
           
             <!-- Text Overlay with Transparent Background -->
             <div class="absolute bottom-0 left-0 right-0 p-4 bg-black/50 m-2 rounded-b-lg">
