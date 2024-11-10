@@ -1,7 +1,7 @@
 <!-- components/ActionButtons.vue -->
 <template>
   <div class="grid grid-cols-2 gap-4 mt-4">
-    <button
+    <NuxtLink to="/dashboard/home/maintance-requests"
       class="text-[#1D2739] bg-[#F9FAFB] p-4 rounded-lg flex  items-center justify-between"
     >
       <p class="-mb-14"> Maintenance Request</p>
@@ -27,8 +27,9 @@
           />
         </svg>
       </div>
-    </button>
+    </NuxtLink>
     <button
+      @click="openModal"
       class="bg-[#FEF6E7] text-[#1D2739] p-4 rounded-lg flex items-center justify-between"
     >
      <p class="-mb-14"> Pay Utility Bills</p>
@@ -131,8 +132,29 @@
       </div>
     </button>
   </div>
+
+  <ModalsSelectUtilityBill :isOpen="isModalOpen" @close="closeModal" @submit="handleSubmit" />
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref } from 'vue'
 
-<style scoped></style>
+// Modal visibility state
+const isModalOpen = ref(false)
+
+// Open modal
+const openModal = () => {
+  isModalOpen.value = true
+}
+
+// Close modal
+const closeModal = () => {
+  isModalOpen.value = false
+}
+
+// Handle submit event
+const handleSubmit = (selectedOption: string) => {
+  console.log('Selected option:', selectedOption)
+  // Further logic to handle the selected option (e.g., API call)
+}
+</script>

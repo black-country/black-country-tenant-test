@@ -31,7 +31,7 @@
               <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_6053_206127" result="shape"/>
               </filter>
               </defs>
-              </svg>`
+              </svg>
 
         </div>
       </div>

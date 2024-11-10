@@ -1,6 +1,6 @@
 <template>
  <main class="z-30">
-  <nav class="bg-[#292929] text-white py-3 z-10">
+  <nav class="bg-[#292929] text-white py-3 z-10 sticky top-0">
     <div class="mx-auto container flex justify-between items-center px-4">
       <NuxtLink to="/dashboard" class="flex cursor-pointer items-center gap-x-3">
         <!-- Logo -->
