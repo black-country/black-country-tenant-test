@@ -145,9 +145,9 @@ interface Rental {
 
 const handleSelectedRental = (item) => {
    if(item.status === 'Scheduled visitation'){
-     router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details?type=scheduled`)
+     router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details?type=scheduled?rentalId=${item?.id}`)
    } else {
-    router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details`)
+    router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details?rentalId=${item?.id}`)
    }
 }
 

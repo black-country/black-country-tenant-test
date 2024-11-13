@@ -11,7 +11,17 @@ export default {
         { name: "viewport", content: "width=device-width, initial-scale=1" },
         { name: "format-detection", content: "telephone=no" },
       ],
-      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.svg" }, { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css' }],
+      link: [
+        { rel: "icon", type: "image/x-icon", href: "/favicon.svg" },
+        { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css' }
+      ],
+      script: [
+        // { src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js", defer: true }
+        {
+          src: "https://qa.interswitchng.com/collections/public/javascripts/inline-checkout.js",
+          async: true,
+        },
+      ]
     },
   },
 
@@ -29,12 +39,6 @@ export default {
 
   plugins: [],
 
-  // buildModules: [
-  //   '@nuxtjs/moment'
-  // ]
-  // alias: {
-  // 	'@': '/'
-  // },
   vite: {
     optimizeDeps: {
       include: ['fast-deep-equal']

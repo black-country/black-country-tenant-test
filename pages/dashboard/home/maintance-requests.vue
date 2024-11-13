@@ -101,10 +101,16 @@
                 </div>
                 <span
                   :class="statusClasses(request.status)"
-                  class="px-2 py-1 text-xs font-semibold rounded-full text-xs px-3"
+                  class="px-2 py-1 text-xs font-semibold rounded-full"
                 >
                   {{ request.status }}
                 </span>
+                <!-- <span
+                  :class="statusClasses(request.status)"
+                  class="px-2 py-1 text-xs font-semibold rounded-full text-xs px-3"
+                >
+                  {{ request.status }}
+                </span> -->
               </div>
             </div>
           </div>
@@ -171,22 +177,25 @@ const formatDate = (date: string) =>
   })
 
 // Class styles based on request status
+// Class styles based on request status
 const statusClasses = (status: string) => {
-  switch (status) {
-    case 'Upcoming':
+  // Convert status to lowercase to handle inconsistent casing
+  switch (status.toLowerCase()) {
+    case 'upcoming':
       return 'bg-[#FEF6E7] text-[#DD900D]'
-    case 'Pending':
+    case 'pending':
       return 'bg-[#E8EDFB] text-[#1D4ED8]'
-    case 'Cancelled':
+    case 'cancelled':
       return 'bg-[#F9FAFB] text-[#1D2739]'
-    case 'Completed':
+    case 'completed':
       return 'bg-[#E7F6EC] text-[#099137]'
-    case 'Declined':
+    case 'declined':
       return 'bg-[#FBEAE9] text-[#BA110B]'
     default:
       return ''
   }
 }
+
 
 // Handle status filter selection
 const handleSelected = (status: string) => {

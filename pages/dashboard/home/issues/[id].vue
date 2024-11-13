@@ -28,7 +28,7 @@
               <span class="ml-2  text-[#667185]"
                 >Maintenance requests | </span
               ><span class="text-[#1D2739] font-medium"
-                >Plumbing Issue</span
+                >{{ maintenanceRequest?.type ?? 'Nil' }}</span
               ></span
             >
           </div>

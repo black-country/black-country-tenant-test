@@ -19,5 +19,5 @@ export const banks_api = {
     $_create_card: (userId: string) => {
 		const url = `/users/${userId}/banks`
 		return GATEWAY_ENDPOINT.get(url)
-	},
+	}
 }
