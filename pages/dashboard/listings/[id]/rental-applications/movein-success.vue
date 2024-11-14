@@ -11,13 +11,13 @@
          </div>
      
          <!-- Message Heading -->
-         <h2 class="text-xl font-semibold text-gray-800 mb-2">Payment Successful</h2>
+         <h2 class="text-xl font-semibold text-gray-800 mb-2">Move-In Date Scheduled Successfully!</h2>
          <p class="text-sm text-[#667185] mb-4">
-            Congratulations! You've successfully made your first payment. Welcome to your new home!
+            Your move-in date for [property name] has been successfully scheduled. 
          </p>
      
          <!-- View Lease Agreement Link -->
-         <a v-if="route.query.type !== 'cancelled'" href="#" class="text-[#326543] font-semibold underline  text-sm mb-6 inline-block">View lease agreement</a>
+
     
 
          <div class="bg-gray-50 text-gray-800 p-4 rounded-md flex items-start mb-6">
@@ -28,22 +28,17 @@
   </div>
   
         <div class="ml-3">
-          <h2 class="font-medium text-[#1D2939] text-lg text-start">Move-In Procedures</h2>
-          <ol class="text-gray-700 mt-2 space-y-4 text-start">
-            <li class="text-[#667185] font-light"><strong class="text-[#1D2739]">Move-in date:</strong> Schedule a move-in date.</li>
-            <li class="text-[#667185] font-light"><strong class="text-[#1D2739]">Key Collection:</strong> Head to <span class="text-blue-600">[Location]</span> or <a href="#" class="text-[#326543] font-semibold underline">contact property manager</a> to collect your keys on the scheduled move-in date.</li>
-            <li class="text-[#667185] font-light"><strong class="text-[#1D2739]">Property Access:</strong> Make sure you have the necessary access codes or instructions for entering your new home.</li>
-            <li class="text-[#667185] font-light"><strong class="text-[#1D2739]">Inspection:</strong> Take a moment to inspect the property and report any discrepancies using our move-in checklist feature.</li>
-            <li class="text-[#667185] font-light"><strong class="text-[#1D2739]">Utilities Setup:</strong> Arrange for utilities such as electricity, water, and internet before your move-in date to ensure a smooth transition.</li>
-          </ol>
+          <h2 class="font-medium text-[#1D2939] text-lg text-start">App Move-in</h2>
+          <p class="text-[#667185] font-light">Take full control of your new home with just a few taps! Whether you're getting ready to move in or already settled, manage everything from paying bills to scheduling maintenance requests right from your phone.</p>
+    
         </div>
       </div>
 
      
          <!-- Action Buttons -->
          <div class="space-y-4">
-           <button @click="handleNavigation" class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
-            Proceed to schedule move-in date
+           <button @click="router.push('/dashboard/home')" class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
+            Proceed to App Move-in
            </button>
            <button @click="router.push('/dashboard')" class="w-full bg-[#EBE5E0] text-[#292929] font-medium text-sm py-4 rounded-md">
             I’ll do it later
@@ -61,9 +56,6 @@
    const router = useRouter()
    // No specific script is needed for this static layout.
 
-   const handleNavigation = () => {
-     router.push(`/dashboard/listings/${route.params.id}/rental-applications/schedule-movein`)
-   }
    </script>
    
    <style scoped>

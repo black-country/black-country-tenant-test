@@ -559,21 +559,7 @@
                 </button> -->
                 <button
                   class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50':
-                      steps.findIndex(
-                        (s) => s.progressKey === 'payment-made'
-                      ) <=
-                        steps.findIndex(
-                          (s) => s.progressKey === currentProgress
-                        ) || !propertyObj?.rentalApplication?.leaseAgreement,
-                    'bg-[#5B8469]':
-                      currentProgress === 'payment-made' &&
-                      propertyObj?.rentalApplication?.leaseAgreement,
-                    'bg-gray-500':
-                      currentProgress !== 'payment-made' ||
-                      !propertyObj?.rentalApplication?.leaseAgreement,
-                  }"
+                  :class="[rentalObj.status !== 'APPROVED' ? 'disabled:cursor-not-allowed disabled:opacity-25' : '' ]"
                   @click="handleCheckout"
                 >
                   <svg
@@ -1074,44 +1060,72 @@ const { propertyList, loading: loadingSimilarProperties } =
   useFetchSimilarProperty();
   const { propertyObj, loading } = useFetchProperty();
 const { cancelRental, loading: cancelling } = useCancelRental();
-const { loadingRental, rentalObj, getRental } = useGetRental();
+const { loadingRental, rentalObj } = useGetRental();
 const {
   initializeRentPayment,
   loading: initializing,
   payload,
   setPayloadObj 
 } = useInitializeRentPayment();
-const cust_id = ref(rentalObj.value?.tenant?.email);
-const amount = ref(String(rentalObj.value?.room?.rentAmount));
-const currency = ref("566");
+const router = useRouter()
 
+const cust_id = ref(rentalObj.value?.tenant?.email || '');
+const amount = ref(rentalObj.value?.room?.rentAmount || 0);
+const currency = ref('566');
 
 const { checkout, paymentResponse } = useCheckout({
-  amount,
-  cust_id,
-  currency,
+  amount: computed(() => amount.value),
+  cust_id: computed(() => cust_id.value),
+  currency: computed(() => currency.value),
 });
-function handleCheckout() {
-  checkout();
+
+// Update cust_id and amount when rentalObj changes, but don't call checkout automatically
+watch(
+  () => rentalObj.value,
+  (newValue) => {
+    if (newValue) {
+      cust_id.value = newValue.tenant?.email || '';
+      amount.value = newValue.room?.rentAmount || 0;
+    }
+  },
+  { immediate: true, deep: true }
+);
+
+// Define a function to handle checkout on button click
+const handleCheckout = () => {
+  if (cust_id.value && amount.value) {
+    checkout();
+  } else {
+    console.warn("Required data is missing for checkout.");
+  }
 }
-// const router = useRouter();
+
+
 const route = useRoute();
 const { showToast } = useCustomToast();
 
 const showCancelModal = ref(false);
 
-watch(paymentResponse, (data) => {
+watch(paymentResponse, async (data) => {
   if (data && data.amount) {
     const payloadObj = {
       rentalApplicationId: rentalObj.value?.id,
       rentAmount: rentalObj.value?.room?.rentAmount,
     };
-    setPayloadObj(payloadObj)
-    initializeRentPayment();
+    
+    setPayloadObj(payloadObj);
+
+    try {
+      await initializeRentPayment();
+      router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
+    } catch (error) {
+      console.error("Error during rent payment initialization:", error);
+    }
   } else {
     console.error("Payment response is missing or amount is undefined");
   }
 });
+
 
 const onCancel = () => {
   showCancelModal.value = false;
@@ -1189,7 +1203,7 @@ const showPaymentModal = ref(false);
 //   { label: 'Agreement signed', status: 'pending', progress: propertyObj?.value?.rentalApplication?.progress },
 //   { label: 'Payment made', status: 'pending', progress: propertyObj?.value?.rentalApplication?.progress }
 // ]);
-const router = useRouter();
+
 const steps = ref([
   {
     label: "Tour Schedule",

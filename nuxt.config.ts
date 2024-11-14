@@ -18,8 +18,8 @@ export default {
       script: [
         // { src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js", defer: true }
         {
-          src: "https://qa.interswitchng.com/collections/public/javascripts/inline-checkout.js",
-          async: true,
+          src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js",
+          defer: true,
         },
       ]
     },

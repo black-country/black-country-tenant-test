@@ -16,7 +16,17 @@ import { visible, toastData, useCustomToast } from '@/composables/core/useCustom
 // Provide the toast state globally
 provide('toastVisible', visible);
 provide('toastData', toastData);
+
+  // Add Interswitch checkout script dynamically
+  if (process.client) {
+    const script = document.createElement("script");
+    script.src = "https://newwebpay.qa.interswitchng.com/inline-checkout.js";
+    document.head.appendChild(script);
+  }
 </script>
+
+
+
 
 
 <style>
