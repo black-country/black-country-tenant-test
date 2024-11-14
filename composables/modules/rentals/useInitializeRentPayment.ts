@@ -1,11 +1,15 @@
 import { rental_api } from "@/api_factory/modules/rental";
 import { useCustomToast } from '@/composables/core/useCustomToast'
+import { useGetRental } from "@/composables/modules/rentals/useFetchRental";
+const { loadingRental, rentalObj } = useGetRental();
 const { showToast } = useCustomToast();
 const loading = ref(false);
 const payload = ref({
   rentalApplicationId: "",
   rentAmount: '',
 });
+
+const router = useRouter()
 
 export const useInitializeRentPayment = () => {
   const initializeRentPayment = async () => {
@@ -19,6 +23,14 @@ export const useInitializeRentPayment = () => {
 			toastType: "success",
 			duration: 3000
 		  });
+      router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
+    } else {
+      showToast({
+        title: "Error",
+        message: res.data.error,
+        toastType: "error",
+        duration: 3000
+        });
     }
     loading.value = false;
   };

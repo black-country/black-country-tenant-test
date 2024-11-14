@@ -10,13 +10,13 @@
                </svg> 
          </div>
      
-         <!-- Message Heading -->
+ 
          <h2 class="text-xl font-semibold text-gray-800 mb-2">Payment Successful</h2>
          <p class="text-sm text-[#667185] mb-4">
             Congratulations! You've successfully made your first payment. Welcome to your new home!
          </p>
      
-         <!-- View Lease Agreement Link -->
+
          <a v-if="route.query.type !== 'cancelled'" href="#" class="text-[#326543] font-semibold underline  text-sm mb-6 inline-block">View lease agreement</a>
     
 

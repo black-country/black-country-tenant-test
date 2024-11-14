@@ -1,23 +1,37 @@
-<!-- <template>
-    <main class="max-w-4xl mx-auto">
-        <BookingModal :property="property" class="m-6 lg:m-0" />
-    </main>
-</template> -->
-
 <template>
-    <div class="container mx-auto p-6 max-w-2xl">
-  <!-- Breadcrumbs -->
-  <div class="text-sm text-gray-500 mb-4">
-    <span>Dashboard</span> &gt; <span>Jason Gardens</span> &gt; <span class="text-black font-semibold">Schedule move-in</span>
-  </div>
-
-  <BookingModal :property="property" class="m-6 lg:m-0" />
-
-  <!-- Footer Buttons -->
-  <div class="flex justify-between mt-8">
-    <button class="border border-gray-400 text-gray-700 px-4 py-2 rounded-md">Cancel</button>
-    <button class="bg-black text-white px-4 py-2 rounded-md">Schedule move-in</button>
-  </div>
-</div>
-
-</template>
+  <main>
+    <TopNavBar />
+      <div class="p-6  min-h-screen max-w-2xl mx-auto">
+          <nav class="flex items-center space-x-2 text-gray-600 text-sm mb-4">
+            <span class="cursor-pointer hover:text-gray-800">Dashboard</span>
+            <span class="text-gray-400">|</span>
+            <span class="cursor-pointer hover:text-gray-800">Jason Gardens</span>
+            <span class="text-gray-400">|</span>
+            <span class="text-gray-800 font-medium">Schedule move-in</span>
+          </nav>
+     
+          <BookingModal :property="propertyObj" class="m-6 lg:m-0" />
+        </div>
+        <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center  border-[0.5px]">
+            <div class="max-w-2xl w-full flex justify-between">
+              <button @click="router.back()" class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]">Cancel</button>
+              <button @click="router.push('/dashboard/listings/${route.params.id}/rental-applications/movein-success')" class="px-6 py-3 text-sm rounded-md bg-[#292929] text-white">Schedule move-in</button>
+            </div>
+        </div>
+  </main>
+    </template>
+    
+    <script setup lang="ts">
+    import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
+     const { propertyObj, loading } = useFetchProperty();
+     const router = useRouter()
+    </script>
+    
+    <style scoped>
+    .form-radio {
+      border-radius: 50%;
+      height: 1.25rem;
+      width: 1.25rem;
+      border: 2px solid #cbd5e1; /* Tailwind color: border-gray-300 */
+    }
+    </style>

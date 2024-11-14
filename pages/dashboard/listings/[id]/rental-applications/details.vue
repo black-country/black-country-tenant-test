@@ -556,11 +556,12 @@
                     <path d="M24.6654 19.4281C24.4486 19.3967 24.226 19.3729 23.9987 19.3569M15.9987 20.644C15.7713 20.6281 15.5488 20.6042 15.332 20.5728" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M19.9987 25.0002C19.1104 25.4151 17.9434 25.6668 16.6654 25.6668C15.9548 25.6668 15.2785 25.589 14.6654 25.4486C13.6651 25.2194 13.332 24.6178 13.332 23.5908V16.4095C13.332 15.7529 14.0254 15.302 14.6654 15.4486C15.2785 15.589 15.9548 15.6668 16.6654 15.6668C17.9434 15.6668 19.1104 15.4151 19.9987 15.0002C20.887 14.5853 22.054 14.3335 23.332 14.3335C24.0426 14.3335 24.7189 14.4113 25.332 14.5518C26.3865 14.7933 26.6654 15.4137 26.6654 16.4095V23.5908C26.6654 24.2474 25.972 24.6984 25.332 24.5518C24.7189 24.4113 24.0426 24.3335 23.332 24.3335C22.054 24.3335 20.887 24.5852 19.9987 25.0002Z" stroke="white" stroke-width="1.5"/>
                     </svg>
+                    @click="handleCheckout"
                 </button> -->
                 <button
                   class="rounded-lg transition"
                   :class="[rentalObj.status !== 'APPROVED' ? 'disabled:cursor-not-allowed disabled:opacity-25' : '' ]"
-                  @click="handleCheckout"
+                  @click="showPaymentModal = true"
                 >
                   <svg
                     width="40"
@@ -1043,6 +1044,8 @@
         </div>
       </div>
     </CoreModalWithoutCloseBtn>
+
+    <CoreLoadingScreen :loading="initializing" />
   </main>
 </template>
 
@@ -1117,7 +1120,7 @@ watch(paymentResponse, async (data) => {
 
     try {
       await initializeRentPayment();
-      router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
+      // router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
     } catch (error) {
       console.error("Error during rent payment initialization:", error);
     }
@@ -1149,12 +1152,26 @@ const selectPaymentOption = (value: string) => {
   selectedOption.value = value;
 };
 
-const proceed = () => {
-  if (selectedOption.value) {
+const proceed = async () => {
+
+  if(selectedOption.value === 'transfer'){
+    handleCheckout()
+    await initializeRentPayment();
+  }
+
+  // if(selectedOption.value === 'bank'){
+  //   router.push('/profile/linked-account')
+  //   handleCheckout()
+  //   await initializeRentPayment();
+  // }
+
+  if (selectedOption.value === 'card' || selectedOption.value === 'bank') {
     router.push(
       `/dashboard/listings/${route.params.id}/rental-applications/payment?method=${selectedOption.value}`
     );
   }
+
+  showPaymentModal.value = false
 };
 
 const cancel = () => {

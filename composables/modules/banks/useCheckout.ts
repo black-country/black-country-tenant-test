@@ -33,7 +33,7 @@ export function useCheckout({ amount, cust_id, currency }) {
     // console.log(response, 'response here')
     if (response) {
       paymentResponse.value = response
-      alert(response.desc)
+      // alert(response.desc)
       resolve({ transactionReference: transRef, response })
     } else {
       reject('Payment failed or no response received')
