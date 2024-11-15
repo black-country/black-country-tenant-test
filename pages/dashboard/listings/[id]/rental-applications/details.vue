@@ -1068,6 +1068,7 @@ const {
   initializeRentPayment,
   loading: initializing,
   payload,
+  responseObj,
   setPayloadObj 
 } = useInitializeRentPayment();
 const router = useRouter()
@@ -1112,8 +1113,8 @@ const showCancelModal = ref(false);
 watch(paymentResponse, async (data) => {
   if (data && data.amount) {
     const payloadObj = {
-      rentalApplicationId: rentalObj.value?.id,
-      rentAmount: rentalObj.value?.room?.rentAmount,
+      rentalApplicationId: propertyObj.value.rentalApplication?.id,
+      rentAmount: propertyObj.value.rentalApplication?.room?.rentalAmount,
     };
     
     setPayloadObj(payloadObj);
@@ -1155,8 +1156,17 @@ const selectPaymentOption = (value: string) => {
 const proceed = async () => {
 
   if(selectedOption.value === 'transfer'){
-    handleCheckout()
+    const payloadObj = {
+      rentalApplicationId: propertyObj.value.rentalApplication?.id,
+      rentAmount: propertyObj.value.rentalApplication?.room?.rentAmount
+    };
+    
+    setPayloadObj(payloadObj);
+    showPaymentModal.value = false
     await initializeRentPayment();
+    if(responseObj.value){
+      handleCheckout()
+    }
   }
 
   // if(selectedOption.value === 'bank'){

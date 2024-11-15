@@ -1,6 +1,6 @@
 // components/LoadingScreen.vue
 <template>
-  <div v-if="isLoading" class="fixed inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center z-50">
+  <div v-if="loading" class="fixed inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center z-50">
     <div class="flex flex-col items-center">
       <svg class="animate-spin h-8 w-8 text-white mb-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
         <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -20,7 +20,7 @@ import { ref, onMounted } from 'vue';
 // const isLoading = ref(true);
 
 const props = defineProps({
-    laoding: {
+    loading: {
         type: Boolean
     }
 })
