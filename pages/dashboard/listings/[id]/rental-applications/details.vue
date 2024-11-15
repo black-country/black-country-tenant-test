@@ -561,7 +561,7 @@
                 <button
                   class="rounded-lg transition"
                   :class="[rentalObj.status !== 'APPROVED' ? 'disabled:cursor-not-allowed disabled:opacity-25' : '' ]"
-                  @click="showPaymentModal = true"
+                  @click="proceed"
                 >
                   <svg
                     width="40"
@@ -1073,9 +1073,9 @@ const {
 } = useInitializeRentPayment();
 const router = useRouter()
 
-const cust_id = ref(rentalObj.value?.tenant?.email || '');
-const amount = ref(rentalObj.value?.room?.rentAmount || 0);
-const currency = ref('566');
+// const cust_id = ref(rentalObj.value?.tenant?.email || '');
+// const amount = ref(rentalObj.value?.room?.rentAmount || 0);
+// const currency = ref('566');
 
 // const { checkout, paymentResponse } = useCheckout({
 //   amount: computed(() => amount.value),
@@ -1084,16 +1084,16 @@ const currency = ref('566');
 // });
 
 // Update cust_id and amount when rentalObj changes, but don't call checkout automatically
-watch(
-  () => rentalObj.value,
-  (newValue) => {
-    if (newValue) {
-      cust_id.value = newValue.tenant?.email || '';
-      amount.value = newValue.room?.rentAmount || 0;
-    }
-  },
-  { immediate: true, deep: true }
-);
+// watch(
+//   () => rentalObj.value,
+//   (newValue) => {
+//     if (newValue) {
+//       cust_id.value = newValue.tenant?.email || '';
+//       amount.value = newValue.room?.rentAmount || 0;
+//     }
+//   },
+//   { immediate: true, deep: true }
+// );
 
 // Define a function to handle checkout on button click
 // const handleCheckout = () => {
@@ -1154,20 +1154,27 @@ const selectPaymentOption = (value: string) => {
 };
 
 const proceed = async () => {
-
-  if(selectedOption.value === 'transfer'){
-    const payloadObj = {
+  const payloadObj = {
       rentalApplicationId: propertyObj.value.rentalApplication?.id,
       rentAmount: propertyObj.value.rentalApplication?.room?.rentAmount
     };
     
     setPayloadObj(payloadObj);
-    showPaymentModal.value = false
     await initializeRentPayment();
-    // if(responseObj.value){
-    //   handleCheckout()
-    // }
-  }
+
+  // if(selectedOption.value === 'transfer'){
+  //   const payloadObj = {
+  //     rentalApplicationId: propertyObj.value.rentalApplication?.id,
+  //     rentAmount: propertyObj.value.rentalApplication?.room?.rentAmount
+  //   };
+    
+  //   setPayloadObj(payloadObj);
+  //   showPaymentModal.value = false
+  //   await initializeRentPayment();
+  //   // if(responseObj.value){
+  //   //   handleCheckout()
+  //   // }
+  // }
 
   // if(selectedOption.value === 'bank'){
   //   router.push('/profile/linked-account')
@@ -1175,13 +1182,13 @@ const proceed = async () => {
   //   await initializeRentPayment();
   // }
 
-  if (selectedOption.value === 'card' || selectedOption.value === 'bank') {
-    router.push(
-      `/dashboard/listings/${route.params.id}/rental-applications/payment?method=${selectedOption.value}`
-    );
-  }
+  // if (selectedOption.value === 'card' || selectedOption.value === 'bank') {
+  //   router.push(
+  //     `/dashboard/listings/${route.params.id}/rental-applications/payment?method=${selectedOption.value}`
+  //   );
+  // }
 
-  showPaymentModal.value = false
+  // showPaymentModal.value = false
 };
 
 const cancel = () => {

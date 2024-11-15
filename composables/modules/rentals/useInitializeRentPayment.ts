@@ -243,6 +243,8 @@ export const useInitializeRentPayment = () => {
   const { user } = useUser();
   const { showToast } = useCustomToast();
   const loading = ref(false);
+  const router = useRouter()
+  const route = useRoute()
   const payload = ref({
     rentalApplicationId: "",
     rentAmount: "",
@@ -251,7 +253,7 @@ export const useInitializeRentPayment = () => {
 
   // Reactive references for checkout parameters
   const cust_id = computed(() => user.value?.email || "");
-  const amount = computed(() => payload.value?.rentAmount || 0);
+  const amount =  ref("");
   const currency = computed(() => "566");
   const transRef = ref(""); // Transaction reference from the API response
 
@@ -271,7 +273,7 @@ export const useInitializeRentPayment = () => {
       const res = (await rental_api.$_initialize_rent_payment(payload.value)) as any;
 
       console.log(res, "API Response");
-
+      loading.value = false;
       if (
         res.type !== "ERROR" &&
         typeof res.data?.trxReference === "string" &&
@@ -279,6 +281,8 @@ export const useInitializeRentPayment = () => {
       ) {
         // Set the transaction reference
         transRef.value = res.data.trxReference;
+        amount.value = res.data.amountSubUnit;
+        loading.value = false;
 
         console.log(res?.data, "Transaction initialized successfully");
 
@@ -295,9 +299,9 @@ export const useInitializeRentPayment = () => {
 
         // Update the response object for further use
         responseObj.value = res.data;
+        router.push(`/dashboard/listings/${route.query.rentalId}/rental-applications/payment-success`);
 
         // Uncomment if redirection is required
-        // router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
       } else {
         const errorMessage = res.data?.error || "Transaction reference is invalid.";
         console.error("API Error:", errorMessage);
@@ -320,6 +324,7 @@ export const useInitializeRentPayment = () => {
         toastType: "error",
         duration: 3000,
       });
+      loading.value = false;
     } finally {
       // Reset the loading state
       loading.value = false;

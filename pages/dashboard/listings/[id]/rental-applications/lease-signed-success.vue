@@ -35,7 +35,7 @@
     
         <!-- Action Buttons -->
         <div class="space-y-4">
-          <button v-if="route.query.type !== 'cancelled'" class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
+          <button @click="proceed" v-if="route.query.type !== 'cancelled'" class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
             Proceed to make payment
           </button>
              <button @click="router.push('/dashboard/listings')" v-else class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
@@ -50,9 +50,40 @@
   </template>
   
   <script setup lang="ts">
+  import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
+  import { useInitializeRentPayment } from "@/composables/modules/rentals/useInitializeRentPayment";
   const route = useRoute()
   const router = useRouter()
+
+  const { propertyObj, loading, getProperty } = useFetchProperty();
+  const {
+  initializeRentPayment,
+  loading: initializing,
+  payload,
+  responseObj,
+  setPayloadObj 
+} = useInitializeRentPayment();
+
+onMounted(() => {
+  console.log(propertyObj.value, 'worth')
+})
+
+onMounted(() => {
+  getProperty();
+    });
   // No specific script is needed for this static layout.
+
+  const proceed = async () => {
+  const payloadObj = {
+      rentalApplicationId: propertyObj.value.rentalApplication?.id,
+      rentAmount: propertyObj.value.rentalApplication?.room?.rentAmount
+    };
+
+    console.log( payloadObj, 'here', propertyObj.value)
+    
+    // setPayloadObj(payloadObj);
+    // await initializeRentPayment();
+};
   </script>
   
   <style scoped>

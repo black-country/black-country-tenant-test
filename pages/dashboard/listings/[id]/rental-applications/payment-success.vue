@@ -17,7 +17,7 @@
          </p>
      
 
-         <a v-if="route.query.type !== 'cancelled'" href="#" class="text-[#326543] font-semibold underline  text-sm mb-6 inline-block">View lease agreement</a>
+         <!-- <a v-if="route.query.type !== 'cancelled'" href="#" class="text-[#326543] font-semibold underline  text-sm mb-6 inline-block">View lease agreement</a> -->
     
 
          <div class="bg-gray-50 text-gray-800 p-4 rounded-md flex items-start mb-6">
