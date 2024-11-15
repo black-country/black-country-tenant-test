@@ -1052,7 +1052,7 @@
 <script setup lang="ts">
 import { useInitializeRentPayment } from "@/composables/modules/rentals/useInitializeRentPayment";
 import { useGetRental } from "@/composables/modules/rentals/useFetchRental";
-import { useCheckout } from "@/composables/modules/banks/useCheckout";
+// import { useCheckout } from "@/composables/modules/banks/useCheckout";
 import { useCancelRental } from "@/composables/modules/rentals/cancelRentals";
 import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 import { useFetchSimilarProperty } from "@/composables/modules/property/fetchSimilarProperties";
@@ -1077,11 +1077,11 @@ const cust_id = ref(rentalObj.value?.tenant?.email || '');
 const amount = ref(rentalObj.value?.room?.rentAmount || 0);
 const currency = ref('566');
 
-const { checkout, paymentResponse } = useCheckout({
-  amount: computed(() => amount.value),
-  cust_id: computed(() => cust_id.value),
-  currency: computed(() => currency.value),
-});
+// const { checkout, paymentResponse } = useCheckout({
+//   amount: computed(() => amount.value),
+//   cust_id: computed(() => cust_id.value),
+//   currency: computed(() => currency.value),
+// });
 
 // Update cust_id and amount when rentalObj changes, but don't call checkout automatically
 watch(
@@ -1096,13 +1096,13 @@ watch(
 );
 
 // Define a function to handle checkout on button click
-const handleCheckout = () => {
-  if (cust_id.value && amount.value) {
-    checkout();
-  } else {
-    console.warn("Required data is missing for checkout.");
-  }
-}
+// const handleCheckout = () => {
+//   if (cust_id.value && amount.value) {
+//     checkout();
+//   } else {
+//     console.warn("Required data is missing for checkout.");
+//   }
+// }
 
 
 const route = useRoute();
@@ -1110,25 +1110,25 @@ const { showToast } = useCustomToast();
 
 const showCancelModal = ref(false);
 
-watch(paymentResponse, async (data) => {
-  if (data && data.amount) {
-    const payloadObj = {
-      rentalApplicationId: propertyObj.value.rentalApplication?.id,
-      rentAmount: propertyObj.value.rentalApplication?.room?.rentalAmount,
-    };
+// watch(paymentResponse, async (data) => {
+//   if (data && data.amount) {
+//     const payloadObj = {
+//       rentalApplicationId: propertyObj.value.rentalApplication?.id,
+//       rentAmount: propertyObj.value.rentalApplication?.room?.rentalAmount,
+//     };
     
-    setPayloadObj(payloadObj);
+//     setPayloadObj(payloadObj);
 
-    try {
-      await initializeRentPayment();
-      // router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
-    } catch (error) {
-      console.error("Error during rent payment initialization:", error);
-    }
-  } else {
-    console.error("Payment response is missing or amount is undefined");
-  }
-});
+//     try {
+//       await initializeRentPayment();
+//       // router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
+//     } catch (error) {
+//       console.error("Error during rent payment initialization:", error);
+//     }
+//   } else {
+//     console.error("Payment response is missing or amount is undefined");
+//   }
+// });
 
 
 const onCancel = () => {
@@ -1164,9 +1164,9 @@ const proceed = async () => {
     setPayloadObj(payloadObj);
     showPaymentModal.value = false
     await initializeRentPayment();
-    if(responseObj.value){
-      handleCheckout()
-    }
+    // if(responseObj.value){
+    //   handleCheckout()
+    // }
   }
 
   // if(selectedOption.value === 'bank'){
