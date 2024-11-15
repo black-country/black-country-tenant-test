@@ -28,10 +28,10 @@
 
       <!-- Payment Actions -->
       <div class="flex justify-between  mb-8 rounded-lg">
-        <div v-for="payment in paymentActions" :key="payment.title" class="w-1/3 cursor-pointer bg-white p-6 text-center">
+        <NuxtLink v-for="payment in paymentActions" :key="payment.title" :to="payment.link" class="w-1/3 block cursor-pointer bg-white p-6 text-center">
           <img :src="dynamicIcons(payment.icon)" alt="" class="h-10 w-10 mx-auto mb-2" />
           <h3 class="text-xs font-medium text-[#1D2739]">{{ payment.title }}</h3>
-        </div>
+        </NuxtLink>
       </div>
 
       <div class="">
@@ -201,9 +201,9 @@ definePageMeta({
 
   
   const paymentActions = ref([
-    { title: 'Pay Rent', icon: 'pay-rent' },
-    { title: 'Pay Utility Bills', icon: 'utility-bills' },
-    { title: 'Request maintenance', icon: 'request-maintance' }
+    { title: 'Pay Rent', icon: 'pay-rent', link: '#' },
+    { title: 'Pay Utility Bills', icon: 'utility-bills', link: '#' },
+    { title: 'Request maintenance', icon: 'request-maintance', link: '/dashboard/home/create' }
   ]);
   
   const upcomingActivities = ref([
