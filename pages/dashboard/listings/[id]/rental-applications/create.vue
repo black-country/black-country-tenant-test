@@ -47,34 +47,6 @@
           </div>
         </div>
         
-<!-- 
-        <div class="flex justify-between items-center mb-6 w-full">
-          <div class="flex items-center justify-between w-full">
-            <div
-              v-for="(step, index) in steps"
-              :key="index"
-              class="flex items-center"
-            >
-              <div
-                class="flex items-center justify-center w-8 h-8 rounded-full"
-                :class="{
-                  'bg-[#5B8469] text-white': index + 1 <= currentStepInt,
-                  'bg-gray-200 text-gray-500': index + 1 > currentStepInt
-                }"
-              >
-                {{ index + 1 }}
-              </div>
-              <div
-                v-if="index < steps.length - 1"
-                class="w-[260px] h-px border-[0.5px] border-dotted"
-                :class="{
-                  'bg-[#5B8469]': index + 1 < currentStepInt,
-                  'bg-gray-300': index + 1 >= currentStepInt
-                }"
-              ></div>
-            </div>
-          </div>
-        </div> -->
         <div v-if="currentStepInt === 1">
           <RentalApplicationsPreScreeningQuestions @next="handleNext" />
         </div>

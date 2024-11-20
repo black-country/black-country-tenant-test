@@ -325,7 +325,7 @@
           </div>
           </div>
          <div v-if="showApplicationBtn" class="mt-6">
-            <button @click="openRentalApplicationModal = true" class="mt-4 w-full bg-[#292929] text-white py-3 text-sm rounded-md">Send application</button>
+            <button :disabled="property?.rentalApplication?.progress === 'APPROVED'" @click="openRentalApplicationModal = true" class="mt-4 w-full disabled:cursor-not-allowed disabled:opacity-25 bg-[#292929] text-white py-3 text-sm rounded-md">Send application</button>
          </div>
         </div>
   

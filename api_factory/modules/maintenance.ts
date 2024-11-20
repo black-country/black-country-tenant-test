@@ -30,4 +30,12 @@ export const maintenance_api = {
 		const url = `maintenance-requests/${id}/confirmed`
 		return GATEWAY_ENDPOINT.patch(url, payload)
 	},
+    $_initiate_move_in: () => {
+		const url = '/move-in/initiate'
+		return GATEWAY_ENDPOINT.post(url)
+	},
+    $_move_in: (applicationId: any) => {
+		const url = `/rental-applications/${applicationId}/move-in`
+		return GATEWAY_ENDPOINT.post(url)
+	},
 }

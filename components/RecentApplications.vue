@@ -3,7 +3,7 @@
   <div  v-if="!loadingRentals && rentalsList.length" class="max-w-full overflow-x-auto pb-4 mt-3">
     <div class="flex space-x-4">
       <div
-        v-for="(property, index) in rentalsList"
+        v-for="(property, index) in filteredRentalApplications"
         :key="index"
         class="flex-shrink-0 cursor-pointer w-64 bg-white rounded-lg overflow-hidden shadow-md"
       >
@@ -121,6 +121,10 @@ const toggleLike = (property: any) => {
 const viewRentalApplication = (item: any) => {
    router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details`)
 }
+
+const filteredRentalApplications = computed(() => {
+  return rentalsList.value.filter((application: any) => application.status !== 'RENT_ACTIVE');
+});
 </script>
   
   <style scoped>

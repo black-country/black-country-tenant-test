@@ -159,11 +159,18 @@ const formatCurrency = (amount: number | undefined) => {
 const filters = ref([
   { label: 'All', value: 'all' },
   { label: 'Scheduled visitation', value: 'Scheduled visitation' },
-  { label: 'Sent application', value: 'PENDING' },
+  // { label: 'Sent application', value: 'PENDING' },
   { label: 'Accepted', value: 'APPROVED' },
   { label: 'Rejected', value: 'REJECTED' },
   { label: 'Cancelled', value: 'CANCELLED' },
 ]);
+
+import { computed } from 'vue';
+
+// const filteredRentalApplications = computed(() => {
+//   return rentalsList.value.filter((application: any) => application.status !== 'RENT_ACTIVE');
+// });
+
 
 const activeFilter = ref('all');
 
@@ -171,12 +178,24 @@ const setActiveFilter = (filter: string) => {
   activeFilter.value = filter;
 };
 
+// const filteredRentals = computed(() => {
+//   if (activeFilter.value === 'all') {
+//     return rentalsList.value;
+//   }
+//   return rentalsList.value.filter((rental) => rental.status === activeFilter.value);
+// });
+
 const filteredRentals = computed(() => {
   if (activeFilter.value === 'all') {
-    return rentalsList.value;
+    // Return all rentals excluding 'RENT_ACTIVE'
+    return rentalsList.value.filter((rental: any) => rental.status !== 'RENT_ACTIVE');
   }
-  return rentalsList.value.filter((rental) => rental.status === activeFilter.value);
+  // Apply the filter and also exclude 'RENT_ACTIVE'
+  return rentalsList.value.filter(
+    (rental: any) => rental.status === activeFilter.value && rental.status !== 'RENT_ACTIVE'
+  );
 });
+
 </script>
 
 

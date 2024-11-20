@@ -323,11 +323,13 @@
 </template>
 
 <script setup lang="ts">
+import { useRejectLease } from '@/composables/modules/lease/reject'
 import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 import { useCustomToast } from "@/composables/core/useCustomToast";
-const { propertyObj, loading } = useFetchProperty();
-const { showToast } = useCustomToast();
 import { useSignLeaseAgreement } from "@/composables/modules/rentals/signLeaseAgreement";
+const { propertyObj, loading } = useFetchProperty();
+const { rejectLeaseAgreement, loading: rejecting } = useRejectLease()
+const { showToast } = useCustomToast();
 const route = useRoute();
 const router = useRouter();
 const {
@@ -359,11 +361,12 @@ const closeModal = () => {
   isModalOpen.value = false;
 };
 
-const onContinue = () => {
+const onContinue = async () => {
+  await rejectLeaseAgreement(propertyObj.value.id)
   cancellationReasonModal.value = false;
-  router.push(
-    `/dashboard/listings/${route.params.id}/rental-applications/lease-signed-success?type=cancelled`
-  );
+  // router.push(
+  //   `/dashboard/listings/${route.params.id}/rental-applications/lease-signed-success?type=cancelled`
+  // );
 };
 
 const appendSignature = (signature: string) => {
