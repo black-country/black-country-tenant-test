@@ -1,6 +1,7 @@
 <!-- components/EmptyState.vue -->
 <template>
    <main>
+    {{ myHomeInfo.id }}
     <div class="flex items-center text-gray-600 mb-4">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
@@ -40,7 +41,7 @@
         To begin managing your rented room or home, click on "Move in" or "Go to listings" to search for a property.
       </p>
       <div class="flex gap-4 w-full pt-6">
-        <button :disabled="loading" @click="handleMoveIn" class="bg-[#292929] text-sm w-full disabled:cursor-not-allowed disabled:opacity-25 text-white px-4 py-3 rounded-md">{{ loading ? 'processing..': 'Move in' }}</button>
+        <button :disabled="loading" @click="handleMoveIn()" class="bg-[#292929] text-sm w-full disabled:cursor-not-allowed disabled:opacity-25 text-white px-4 py-3 rounded-md">{{ loading ? 'processing..': 'Move in' }}</button>
         <!-- <NuxtLink to="/dashboard/home/details" class="bg-[#292929] w-full text-white px-4 py-4 rounded-md">Move in</NuxtLink> -->
         <NuxtLink to="/dashboard/listings" class="bg-[#EBE5E0] text-sm w-full text-[#292929] text-gray-600 px-4 py-3 rounded-md">Go to Listings</NuxtLink>
       </div>
@@ -59,12 +60,9 @@
   const handleMoveIn = () => {
     if(!myHomeInfo.value?.movedIn){
           router.push({
-            path: route.path,
-            query: { ...route.query, applicationId: myHomeInfo.value?.movedIn?.id }
+            query: { ...route.query, applicationId:  myHomeInfo.value ? myHomeInfo?.value?.id : '' }
           })
           intiateMoveIn();
-        } else {
-          router.push('/dashboard/home/details')
         }
   }
 

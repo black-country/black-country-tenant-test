@@ -1,9 +1,9 @@
 <template>
   <main>
    <TopNavBar />
-  <section class="max-w-4xl mx-auto mt-10">
+  <section v-if="!fetching" class="max-w-4xl mx-auto mt-10 p-4 lg:p-0">
     <!-- Property Overview Section -->
-    <HomePropertyOverview />
+    <HomePropertyOverview :myHomeInfo="myHomeInfo" />
 
     <div class="space-y-2 mb-8 border-[0.5px] border-gray-50 rounded-md mt-4">
         <div class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
@@ -51,5 +51,15 @@
       <HomeNoTransactions />
     </section>
   </section>
+  <section class="m-6" v-else>
+        <div
+          class="rounded-md h-44 bg-gray-100 animate-pulse p-4 w-full mx-auto mt-10"
+        ></div>
+      </section>
   </main>
 </template>
+
+<script setup lang="ts">
+  import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
+  const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
+</script>

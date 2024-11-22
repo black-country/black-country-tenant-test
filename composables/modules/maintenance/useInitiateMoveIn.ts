@@ -21,8 +21,8 @@ export const useInitiateMoveIn = () => {
             duration: 3000
           });
           router.push({
-            path: `/dashboard/listings/${route.params.id}/rental-applications/verify-movein-otp`,
-            query: { ...route.query, otpId: res?.data?.data?.otpId }, // Update the query with the new step
+            path: '/dashboard/home/verify-movein-otp',
+            query: { ...route.query }, // Update the query with the new step
           })
           // router.push(`/dashboard/home/verify-movein-otp?otpId=${res?.data?.data?.otpId}`)
     } else {

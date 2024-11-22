@@ -1,6 +1,6 @@
 <!-- components/ActionButtons.vue -->
 <template>
-  <div class="grid grid-cols-2 gap-4 mt-4">
+  <div class="grid lg:grid-cols-2 gap-4 mt-4">
     <NuxtLink to="/dashboard/home/maintance-requests"
       class="text-[#1D2739] bg-[#F9FAFB] p-4 rounded-lg flex  items-center justify-between"
     >

@@ -19,17 +19,21 @@ export const useFetchMyHomeInfo = () => {
       if (res.type !== 'ERROR') {
         myHomeInfo.value = res?.data || {}
 
-        console.log(myHomeInfo.value)
-
-        if(!res?.data?.movedIn){
-          router.push({
-            path: route.path,
-            query: { ...route.query, applicationId: res?.data?.id }
-          })
-          intiateMoveIn();
-        } else {
+        if(res?.data?.movedIn){
           router.push('/dashboard/home/details')
-        }
+       }
+
+        // console.log(myHomeInfo.value)
+
+        // if(!res?.data?.movedIn){
+        //   router.push({
+        //     path: route.path,
+        //     query: { ...route.query, applicationId: res?.data?.id }
+        //   })
+        //   intiateMoveIn();
+        // } else {
+        //   router.push('/dashboard/home/details')
+        // }
     }
     loading.value = false
 
