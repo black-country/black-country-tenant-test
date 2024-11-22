@@ -11,6 +11,7 @@ export const useRooms = (roomData: any) => {
       id: room.id,
       name: room.name,
       price: `#${(room.rentAmount).toLocaleString()}/month`,
+      rentalApplication: room?.rentalApplication?.status === 'APPROVED' ? true : false,
       available: room.availability !== 'unavailable' ? true : false
     }))
   );
