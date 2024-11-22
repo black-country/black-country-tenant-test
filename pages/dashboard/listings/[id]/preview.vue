@@ -262,10 +262,9 @@
         </section>
       </div>
     </section>
-    <section v-else>
+    <!-- <section v-else>
       <div class="rounded-md p-4 max-w-7xl mx-auto w-full mx-auto mt-10">
         <div class="animate-pulse flex space-x-4">
-          <!-- <div class="rounded-md bg-slate-200 h-44 w-44"></div> -->
           <div class="flex-1 space-y-6 py-1">
             <div class="h-32 bg-slate-200 rounded"></div>
             <div class="space-y-3">
@@ -278,7 +277,7 @@
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
 
     <CoreModal :isOpen="showShareModal" @close="showShareModal = false">
@@ -536,6 +535,12 @@
         </div>
       </div>
     </CoreModal>
+
+    <CoreFullScreenLoader
+      :visible="loading"
+      text="Please wait while we fetch property information.."
+      logo="/path-to-your-logo.png"
+    />
   </main>
 </template>
 
@@ -556,11 +561,11 @@ const route = useRoute()
 const { extractImages } = useImageExtractor();
    const allImages = computed(() => extractImages(propertyObj.value)); 
 // Property Images
-const mainImage = ref("property1.png");
-const secondaryImage1 = ref("property1.png");
-const secondaryImage2 = ref("property1.png");
-const secondaryImage3 = ref("property1.png");
-const secondaryImage4 = ref("property1.png");
+// const mainImage = ref("property1.png");
+// const secondaryImage1 = ref("property1.png");
+// const secondaryImage2 = ref("property1.png");
+// const secondaryImage3 = ref("property1.png");
+// const secondaryImage4 = ref("property1.png");
 
 const showShareModal = ref(false);
 // const showBookingModal = ref(true);

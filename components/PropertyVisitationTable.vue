@@ -51,7 +51,7 @@ const props = defineProps({
   },
 });
 
-onMounted(() => {
-  getVisitations(user.value.id, props.property.id);
-});
+// onMounted(() => {
+//   getVisitations(user.value.id, props.property.id);
+// });
 </script>
