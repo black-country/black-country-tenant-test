@@ -1,6 +1,8 @@
 import { ref } from 'vue'
 import { maintenance_api } from '@/api_factory/modules/maintenance'
 import { useCustomToast } from '@/composables/core/useCustomToast'
+import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
+const { propertyObj } = useFetchProperty();
 const { showToast } = useCustomToast();
 
 const credential = ref({
@@ -13,6 +15,7 @@ export const useVerifyMoveInOTP = () => {
   const router = useRouter()
 
   const verifyMoveIn = async () => {
+    const applicationId = propertyObj.value.rentalApplication.id
     let otpCode;
     if(credential?.value?.otp){
       otpCode = String(credential?.value?.otp?.join(""));
@@ -21,8 +24,7 @@ export const useVerifyMoveInOTP = () => {
       otpCode
     }
     loading.value = true
-    const res = await maintenance_api.$_verify_move_in(route?.query?.otpId, payload) as any
-    console.log(res, 'error here')
+    const res = await maintenance_api.$_verify_move_in(applicationId, payload) as any
     if (res.type !== 'ERROR') {
         showToast({
             title: "Success",

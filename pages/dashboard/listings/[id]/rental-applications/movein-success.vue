@@ -37,8 +37,11 @@
      
          <!-- Action Buttons -->
          <div class="space-y-4">
-           <button @click="router.push('/dashboard/home')" class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
+           <!-- <button @click="router.push('/dashboard/home')" class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
             Proceed to App Move-in
+           </button> -->
+           <button :disabled="loading" @click="intiateMoveIn" class="w-full bg-[#292929] text-white text-sm py-4 rounded-md">
+             {{ loading ? 'processing..': 'Proceed to App Move-in' }}
            </button>
            <button @click="router.push('/dashboard')" class="w-full bg-[#EBE5E0] text-[#292929] font-medium text-sm py-4 rounded-md">
             I’ll do it later
@@ -52,6 +55,8 @@
    </template>
    
    <script setup lang="ts">
+    import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
+     const { intiateMoveIn, loading } = useInitiateMoveIn()
    const route = useRoute()
    const router = useRouter()
    // No specific script is needed for this static layout.

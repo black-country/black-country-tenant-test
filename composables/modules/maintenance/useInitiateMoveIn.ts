@@ -7,6 +7,7 @@ export const useInitiateMoveIn = () => {
   const loading = ref(false)
   const canceledRequest = ref(null)
   const router = useRouter()
+  const route = useRoute()
 
   const intiateMoveIn = async (id: string) => {
     loading.value = true
@@ -19,7 +20,11 @@ export const useInitiateMoveIn = () => {
             toastType: "success",
             duration: 3000
           });
-          router.push(`/dashboard/home/verify-otp?otpId=${res?.data?.data?.otpId}`)
+          router.push({
+            path: `/dashboard/listings/${route.params.id}/rental-applications/verify-movein-otp`,
+            query: { ...route.query, otpId: res?.data?.data?.otpId }, // Update the query with the new step
+          })
+          // router.push(`/dashboard/home/verify-movein-otp?otpId=${res?.data?.data?.otpId}`)
     } else {
         showToast({
             title: "Error",
