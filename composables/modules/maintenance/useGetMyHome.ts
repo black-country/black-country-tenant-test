@@ -22,7 +22,6 @@ export const useFetchMyHomeInfo = () => {
         console.log(myHomeInfo.value)
 
         if(!res?.data?.movedIn){
-          localStorage.setItem('application-id', res?.data?.id)
           router.push({
             path: route.path,
             query: { ...route.query, applicationId: res?.data?.id }

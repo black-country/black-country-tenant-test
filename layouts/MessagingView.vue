@@ -61,7 +61,7 @@
               </NuxtLink>
             </div>
             <div class="p-2 cursor-pointer flex justify-center items-center mx-3">
-              <NuxtLink to="/dashboard/property">
+              <NuxtLink to="/dashboard/listings">
                 <svg
                   width="20"
                   height="21"
@@ -93,7 +93,7 @@
               </NuxtLink>
             </div>
             <div class="p-2 cursor-pointer flex justify-center items-center mx-3">
-              <NuxtLink to="/dashboard/tenant-mgt">
+              <NuxtLink to="/dashboard/home">
                 <svg
                   width="20"
                   height="21"
@@ -162,7 +162,7 @@
                 </svg>
               </NuxtLink>
             </div>
-            <div class="p-2 cursor-pointer flex justify-center items-center mx-3">
+            <!-- <div class="p-2 cursor-pointer flex justify-center items-center mx-3">
               <NuxtLink to="/dashboard/finance-mgt">
                 <svg
                   width="20"
@@ -205,8 +205,8 @@
                   />
                 </svg>
               </NuxtLink>
-            </div>
-            <div class="p-2 cursor-pointer flex justify-center items-center mx-3">
+            </div> -->
+            <!-- <div class="p-2 cursor-pointer flex justify-center items-center mx-3">
               <NuxtLink to="/dashboard/members">
                 <svg
                   width="20"
@@ -241,7 +241,7 @@
                   />
                 </svg>
               </NuxtLink>
-            </div>
+            </div> -->
           </nav>
           <div class="mt-auto p-2 space-y-6 cursor-pointer mb-4 flex justify-center items-center mx-3">
             <svg
