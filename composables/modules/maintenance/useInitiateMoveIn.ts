@@ -6,11 +6,12 @@ const { showToast } = useCustomToast();
 export const useInitiateMoveIn = () => {
   const loading = ref(false)
   const canceledRequest = ref(null)
+  const router = useRouter()
 
-  const onotiateMoveIn = async (id: string) => {
+  const intiateMoveIn = async (id: string) => {
     loading.value = true
     const res = await maintenance_api.$_initiate_move_in() as any
-
+    console.log(res, 'here')
     if (res.type !== 'ERROR') {
         showToast({
             title: "Success",
@@ -18,6 +19,7 @@ export const useInitiateMoveIn = () => {
             toastType: "success",
             duration: 3000
           });
+          router.push(`/dashboard/home/verify-otp?otpId=${res?.data?.data?.otpId}`)
     } else {
         showToast({
             title: "Error",
@@ -30,7 +32,7 @@ export const useInitiateMoveIn = () => {
   }
 
   return {
-    onotiateMoveIn,
+    intiateMoveIn,
     loading,
     canceledRequest
   }

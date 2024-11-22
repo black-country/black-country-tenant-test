@@ -13,13 +13,14 @@
           <button @click="saveData" class="text-green-600 font-medium cursor-pointer">Save</button>
         </div>
   
-        <div class="relative w-full mb-6">
+        <div v-if="route.query.step !== 'preview'" class="relative w-full mb-6">
           <!-- Divider that spans across all stages -->
           <div class="absolute top-1/2 left-0 w-full h-px bg-gray-300"></div>
         
           <div class="flex justify-between items-center w-full">
             <div class="flex items-center justify-between w-full overflow-x-auto">
               <div
+               
                 v-for="(step, index) in steps"
                 :key="index"
                 class="relative flex items-center"
@@ -52,6 +53,10 @@
         </div>
   
         <div v-if="currentStepInt === 2">
+          <RentalApplicationsReviewProfileDetails @next="handleNext" @back="handleBack" />
+        </div>
+
+        <div v-if="route?.query?.step === 'preview'">
           <RentalApplicationsReviewProfileDetails @next="handleNext" @back="handleBack" />
         </div>
   
@@ -123,9 +128,9 @@ const saveData = () => {
     toastType: "success",
     duration: 3000,
   });
-  router.push({
-    path: route.path, // Keep the same path
-    query: { ...route.query, step: "2" }, // Update the query with the new step
-  });
+  // router.push({
+  //   path: route.path, // Keep the same path
+  //   query: { ...route.query, step: "2" }, // Update the query with the new step
+  // });
 };
 </script>

@@ -34,8 +34,12 @@ export const maintenance_api = {
 		const url = '/move-in/initiate'
 		return GATEWAY_ENDPOINT.post(url)
 	},
-    $_move_in: (applicationId: any) => {
+    $_verify_move_in: (applicationId: any, payload: any) => {
 		const url = `/rental-applications/${applicationId}/move-in`
-		return GATEWAY_ENDPOINT.post(url)
+		return GATEWAY_ENDPOINT.post(url, payload)
 	},
+  // $_move_in_status: (applicationId: any, payload: any) => {
+	// 	const url = `/rental-applications/${applicationId}/move-in`
+	// 	return GATEWAY_ENDPOINT.post(url, payload)
+	// },
 }

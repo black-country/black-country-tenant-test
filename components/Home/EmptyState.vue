@@ -40,11 +40,16 @@
         To begin managing your rented room or home, click on "Move in" or "Go to listings" to search for a property.
       </p>
       <div class="flex gap-4 w-full pt-6">
-        <NuxtLink to="/dashboard/home/details" class="bg-[#292929] w-full text-white px-4 py-4 rounded-md">Move in</NuxtLink>
-        <NuxtLink to="/dashboard/listings" class="bg-[#EBE5E0] w-full text-[#292929] text-gray-600 px-4 py-4 rounded-md">Go to Listings</NuxtLink>
+        <button :disabled="loading" @click="intiateMoveIn" class="bg-[#292929] text-sm w-full disabled:cursor-not-allowed disabled:opacity-25 text-white px-4 py-3 rounded-md">{{ loading ? 'processing..': 'Move in' }}</button>
+        <!-- <NuxtLink to="/dashboard/home/details" class="bg-[#292929] w-full text-white px-4 py-4 rounded-md">Move in</NuxtLink> -->
+        <NuxtLink to="/dashboard/listings" class="bg-[#EBE5E0] text-sm w-full text-[#292929] text-gray-600 px-4 py-3 rounded-md">Go to Listings</NuxtLink>
       </div>
     </div>
    </main>
   </template>
   
+  <script setup lang="ts">
+  import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
+  const { intiateMoveIn, loading } = useInitiateMoveIn()
+</script>
   

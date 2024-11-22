@@ -274,7 +274,7 @@ const submitForm = () => {
   });
   router.push({
     path: route.path, // Keep the same path
-    query: { ...route.query, step: "2" }, // Update the query with the new step
+    query: { ...route.query, step: "preview" }, // Update the query with the new step
   });
   }
 };

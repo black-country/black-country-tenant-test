@@ -124,7 +124,7 @@
               </div>
                <div ref="myHomeRef">
                 <NuxtLink
-                to="#"
+                to="/dashboard/home"
                 class="flex items-center py-2.5 space-x-1 text-gray-300 hover:text-white"
               >
                 <svg

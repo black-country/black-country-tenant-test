@@ -3,7 +3,7 @@
   <main>
     <TopNavBar />
     <div class="container mx-auto p-4">
-      <HomeEmptyState class="w-6/12 mx-auto" />
+    <HomeEmptyState class="lg:w-6/12 mx-auto" />
     </div>
   </main>
 </template>

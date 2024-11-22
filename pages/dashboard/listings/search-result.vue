@@ -104,8 +104,8 @@
   
                 <span class="text-sm">Listings</span>
               </a>
-              <a
-                href="#"
+              <NuxtLink
+                to="/dashboard/home"
                 class="flex items-center space-x-1 text-gray-300 hover:text-white"
               >
                 <svg
@@ -142,7 +142,7 @@
                 </svg>
   
                 <span class="text-sm">My home</span>
-              </a>
+              </NuxtLink>
               <a
                 href="#"
                 class="flex items-center space-x-1 text-gray-300 hover:text-white"

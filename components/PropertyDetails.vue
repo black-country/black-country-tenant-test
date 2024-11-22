@@ -543,6 +543,28 @@
         <button @click="openRentalApplicationModal = false" class="text-[#1D2739] font-semibold text-sm">Cancel</button>
        </div>
         <div class="grid grid-cols-3 gap-4 mb-6">
+          <!-- <button
+            v-for="(room, index) in rooms"
+            :key="room.id"
+            :disabled="!room.available"
+            :class="[
+              'p-4 rounded-lg transition cursor-pointer space-y-1',
+              selectedRoom === room.id ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#326543]',
+              !room.available && 'opacity-50 pointer-events-none'
+            ]"
+            @click="selectRoom(room.id)"
+          >
+            <h3 :class="['text-sm font-medium text-center', 
+                selectedRoom === room.id ? 'text-white' : 'text-[#344054]',
+                !room.available && 'opacity-50 pointer-events-none'
+                ]">{{ room.name }}</h3>
+
+            <p :class="['text-center text-xs', selectedRoom === room.id ? 'text-white' : 'text-[#326543]',
+            !room.available && 'opacity-50 pointer-events-none'
+            ]">
+              {{ room.price }}
+            </p>
+          </button> -->
           <button
             v-for="(room, index) in rooms"
             :key="room.id"
