@@ -287,12 +287,12 @@ export const useInitializeRentPayment = () => {
         console.log(res?.data, "Transaction initialized successfully");
 
         // Show success toast
-        showToast({
-          title: "Success",
-          message: "Rent payment was successfully initialized",
-          toastType: "success",
-          duration: 3000,
-        });
+        // showToast({
+        //   title: "Success",
+        //   message: "Rent payment was successfully initialized",
+        //   toastType: "success",
+        //   duration: 3000,
+        // });
 
         // Proceed to checkout
         await checkout();

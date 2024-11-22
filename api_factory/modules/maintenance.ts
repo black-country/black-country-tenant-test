@@ -38,8 +38,8 @@ export const maintenance_api = {
 		const url = `/rental-applications/${applicationId}/move-in`
 		return GATEWAY_ENDPOINT.post(url, payload)
 	},
-  // $_move_in_status: (applicationId: any, payload: any) => {
-	// 	const url = `/rental-applications/${applicationId}/move-in`
-	// 	return GATEWAY_ENDPOINT.post(url, payload)
-	// },
+	$_get_my_home: () => {
+        let url = '/my-home'
+        return GATEWAY_ENDPOINT.get(url);
+      }
 }

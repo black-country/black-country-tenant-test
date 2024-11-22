@@ -15,7 +15,7 @@ export const useVerifyMoveInOTP = () => {
   const router = useRouter()
 
   const verifyMoveIn = async () => {
-    const applicationId = propertyObj.value.rentalApplication.id
+    const applicationId = route?.query?.applicationId || propertyObj.value.rentalApplication.id
     let otpCode;
     if(credential?.value?.otp){
       otpCode = String(credential?.value?.otp?.join(""));

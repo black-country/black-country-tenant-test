@@ -10,7 +10,6 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-const isMovedIn = ref(false);
 </script>
 
 <style scoped>

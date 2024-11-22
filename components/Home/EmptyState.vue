@@ -49,7 +49,12 @@
   </template>
   
   <script setup lang="ts">
+  import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
   import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
   const { intiateMoveIn, loading } = useInitiateMoveIn()
+  const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
+  const route = useRoute()
+  const router = useRouter()
+
 </script>
   

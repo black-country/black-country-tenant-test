@@ -9,7 +9,7 @@ export const useInitiateMoveIn = () => {
   const router = useRouter()
   const route = useRoute()
 
-  const intiateMoveIn = async (id: string) => {
+  const intiateMoveIn = async () => {
     loading.value = true
     const res = await maintenance_api.$_initiate_move_in() as any
     console.log(res, 'here')
