@@ -366,15 +366,15 @@
             Mainland
           </button>
           <button
-            @click="locationTab = 'ireland'"
+            @click="locationTab = 'island'"
             :class="[
-              locationTab === 'ireland'
+              locationTab === 'island'
                 ? 'bg-[#5B8469] text-white'
                 : 'bg-[#F0F2F5] text-[#1A1A1A]',
             ]"
             class="text-sm w-full px-4 py-2.5 rounded-md"
           >
-            Ireland
+            Island
           </button>
 
           <div class="relative z-10 w-full">
