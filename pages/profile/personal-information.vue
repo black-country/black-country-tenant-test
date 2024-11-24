@@ -59,18 +59,26 @@
           <div class="grid grid-cols-2 gap-4">
             <div>
               <label class="text-[#1D2739] text-sm">State of Origin <span class="text-red-500">*</span></label>
-              <select v-model="addressObj.state" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
+              <select v-model="selectedState" @change="handleStateChange(selectedState)" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
                 <option value="">Select state</option>
-                <option v-for="item in states" :key="item" :value="item">{{ item }}</option>
+                <option v-for="item in states" :key="item.stateCode"  :value="item.stateCode">{{ item?.name ?? 'Nil' }}</option>
               </select>
             </div>
-            <div>
+
+            <!-- {{ selectedCity }} -->
+            <div v-if="!loadingCities">
               <label class="text-[#1D2739] text-sm">Local Government (LGA) <span class="text-red-500">*</span></label>
-              <select v-model="addressObj.lga" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
+              <!-- <select v-model="addressObj.lga" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
                 <option value="">Select LGA</option>
                 <option v-for="lga in lgasArray.lgas" :key="lga" :value="lga">{{ lga }}</option>
-              </select>
+              </select> -->
+
+              <select v-model="selectedCity" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
+                <option value="">Select LGA</option>
+                <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}</option>
+              </select> 
             </div>
+            <div v-if="loadingCities" class="h-16 mt-4 animate-pulse w-full bg-slate-200 rounded"></div>
           </div>
         </form>
       </div>
@@ -91,12 +99,22 @@
 
 <script setup lang="ts">
 import { ref, computed, watch } from 'vue';
+import { useGetLocation } from "@/composables/core/useGetLocation";
 import { useHopBack } from '@/composables/core/useHopBack';
-import NaijaStates from 'naija-state-local-government';
+// import NaijaStates from 'naija-state-local-government';
 import { useUser } from '@/composables/auth/user';
 import { use_tenant_profile } from '@/composables/auth/fetchProfile'
 import { use_update_profile } from '@/composables/auth/updateProfile';
 import { useRouter } from 'vue-router';
+const {
+      states,
+      cities,
+      loadingStates,
+      loadingCities,
+      selectedState,
+      selectedCity,
+      handleStateChange,
+    } = useGetLocation();
 
 // Hook for back navigation
 const { hopBack } = useHopBack();
@@ -115,21 +133,7 @@ const router = useRouter();
 
 // Address object and LGA array
 const addressObj = ref({
-  state: '',
-  lga: '',
   fullName: ''
-});
-const lgasArray = ref<string[]>([]);
-const states = ref(NaijaStates.states()) as any;
-
-// Watch for changes in addressObj.state
-watch(() => addressObj.value.state, (newVal: any) => {
-  if (newVal) {
-    const lgas = NaijaStates.lgas(newVal);
-    lgasArray.value = lgas || [];
-  } else {
-    lgasArray.value = [];
-  }
 });
 
 // Watch for changes in profileObj and prefill form fields
@@ -144,9 +148,7 @@ watch(profileObj, (newProfile) => {
     };
 
     // Update full name and address fields in addressObj
-    addressObj.value.fullName = `${newProfile.firstName || ''} ${newProfile.lastName || ''}`.trim();
-    addressObj.value.state = newProfile.state || '';
-    addressObj.value.lga = newProfile.lga || '';
+    addressObj.value.fullName = `${newProfile.firstName || ''} ${newProfile.lastName || ''}`.trim()
   }
 }, { immediate: true });
 
@@ -156,8 +158,7 @@ const isFormValid = computed(() => {
     credential.value.phoneNumber &&
     credential.value.dateOfBirth &&
     credential.value.maritalStatus &&
-    addressObj.value.state &&
-    addressObj.value.lga
+    selectedCity.value
   );
 });
 
@@ -175,8 +176,7 @@ const handleSave = async () => {
     dateOfBirth: credential.value.dateOfBirth,
     gender: credential.value.gender,
     maritalStatus: credential.value.maritalStatus,
-    state: addressObj.value.state,
-    lga: addressObj.value.lga
+    cityId: selectedCity.value,
   });
   router.back()
   // router.push("/profile/profile-update-success");
@@ -204,8 +204,6 @@ watch(profileObj, (newProfile) => {
 
     // Update full name and address fields in addressObj
     addressObj.value.fullName = `${newProfile.firstName || ''} ${newProfile.lastName || ''}`.trim();
-    addressObj.value.state = newProfile.state || '';
-    addressObj.value.lga = newProfile.lga || '';
   }
 }, { immediate: true });
 </script>
