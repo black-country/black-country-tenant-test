@@ -288,6 +288,11 @@
       >
     </p>
   </div>
+  <CoreFullScreenLoader
+      :visible="loading"
+      text="Authenticating"
+      logo=""
+  />
 </template>
 
 <script setup lang="ts">

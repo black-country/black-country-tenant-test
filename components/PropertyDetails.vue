@@ -95,7 +95,7 @@
             <!-- Property Visitation -->
          <!-- <section v-if="property?.rentalApplication"> -->
           <section class="mt-10">
-          <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-3 px-3 rounded-lg border-gray-50">Property visitation</h2>
+          <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-50">Property visitation</h2>
           <!-- <div class="rounded-md border-[0.5px] border-gray-50 bg-white">
             <table class="w-full mt-2 table-fixed text-sm">
               <thead>
@@ -121,7 +121,7 @@
             </table>
           </div> -->
           <PropertyVisitationTable :property="property" />
-          <div class="mt-5 px-6 lg:p-0">
+          <div class="mt-5">
             <button @click="showBookingModal = true" class="mt-4 w-full bg-[#292929]  text-white py-4 rounded-md">Schedule a visit</button>
          </div>
          </section>
@@ -293,7 +293,9 @@
         </div>
       </section>
       <!-- Right Section -->
-      <div class="lg:w-1/2 space-y-6 p-4 lg:p-0">
+      <div class="lg:w-1/2 space-y-2 py-4 lg:p-0">
+          <RentalApplicationsAmountCard :roomObj="property?.rentalApplication?.room" />
+
         <!-- Property Manager -->
         <div class="bg-[#F0F2F5] p-6 rounded-md">
             <div class="flex items-center justify-between space-x-4">

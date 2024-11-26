@@ -185,6 +185,7 @@
                     <span>{{ index + 1 }}</span>
                   </div>
                   <p
+                      class="text-center text-xs lg:text-base"
                     :class="{
                       'text-[#5B8469]':
                         steps.findIndex(
@@ -348,7 +349,7 @@
                 <p class="text-gray-500 mt-2 text-xs">Make Payment</p>
               </div>
             </div> -->
-            <div class="flex justify-around mt-8 px-20">
+            <div class="flex justify-around mt-8 gap-x-2 lg:px-20">
               <div class="flex flex-col items-center">
                 <button
                   class="rounded-lg transition"
@@ -414,7 +415,7 @@
                     />
                   </svg>
                 </button>
-                <p class="text-gray-500 mt-2 text-xs">Reschedule Tour</p>
+                <p class="text-gray-500 mt-2 text-xs text-center">Reschedule Tour</p>
               </div>
 
               <div class="flex flex-col items-center">
@@ -462,7 +463,7 @@
                     />
                   </svg>
                 </button>
-                <p class="text-red-600 mt-2 text-xs">Cancel application</p>
+                <p class="text-red-600 mt-2 text-xs text-center">Cancel application</p>
               </div>
 
               <div class="flex flex-col items-center">
@@ -534,7 +535,7 @@
                     <path d="M19.666 20.3333L21.9993 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>  
                 </button> -->
-                <p class="text-gray-500 mt-2 text-xs">Sign Agreement</p>
+                <p class="text-gray-500 mt-2 text-xs text-center">Sign Agreement</p>
               </div>
 
               <div class="flex flex-col items-center">
@@ -590,10 +591,8 @@
                     />
                   </svg>
                 </button>
-                <p class="text-gray-500 mt-2 text-xs">Make Payment</p>
+                <p class="text-gray-500 mt-2 text-xs text-center">Make Payment</p>
               </div>
-
-              <!-- <button @click="handleCheckout">Make payment</button> -->
             </div>
           </div>
           <PropertyDetails
@@ -1046,6 +1045,7 @@
     </CoreModalWithoutCloseBtn>
 
     <CoreLoadingScreen :loading="initializing" />
+    <CoreFullScreenLoader :visible="loading" text="Fetching rental details..." />
   </main>
 </template>
 

@@ -146,6 +146,11 @@
         <NuxtLink to="/signup" class="text-[#326543] font-semibold">Sign Up</NuxtLink>
       </p>
     </div>
+  <CoreFullScreenLoader
+      :visible="loading"
+      text="Authenticating"
+      logo=""
+  />
   </template>
   
 <script setup lang="ts">
