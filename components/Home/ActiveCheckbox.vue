@@ -1,4 +1,4 @@
-<template>
+ <template>
     <div
       @click="toggleActive"
       :class="[
@@ -37,5 +37,3 @@
     emits('update', isActive.value);
   };
   </script>
-  
-  

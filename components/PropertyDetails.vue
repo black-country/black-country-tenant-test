@@ -2,7 +2,7 @@
   <main>
     <div class="flex flex-col lg:flex-row gap-6">
   
-      <section class="lg:w-7/12 space-y-6">
+      <section class="lg:w-7/12 space-y-6 p-4">
         <div class="max-w-3xl mx-auto bg-white">
           <!-- Dynamic Tabs -->
           <div class="mt-4 flex space-x-2 overflow-x-auto hide-scrollbar scrollbar-hide">
@@ -293,8 +293,8 @@
         </div>
       </section>
       <!-- Right Section -->
-      <div class="lg:w-1/2 space-y-2 py-4 lg:p-0">
-          <RentalApplicationsAmountCard :roomObj="property?.rentalApplication?.room" />
+      <div class="lg:w-1/2 space-y-2 p-4">
+          <RentalApplicationsAmountCard v-if="property?.rentalApplication" :roomObj="property?.rentalApplication?.room" />
 
         <!-- Property Manager -->
         <div class="bg-[#F0F2F5] p-6 rounded-md">

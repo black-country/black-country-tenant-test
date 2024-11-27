@@ -39,6 +39,7 @@ export const use_update_profile = () => {
     nextOfKinEmployer: null,
     nextOfKinEmployerAddress: null,
     shouldContactReferences: null,
+    cityId: null
   }) as any;
 
   const loading = ref(false);

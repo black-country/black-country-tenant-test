@@ -5,11 +5,11 @@
     <!-- Property Overview Section -->
     <HomePropertyOverview :myHomeInfo="myHomeInfo" />
 
-    <div @click="router.push('/dashboard/home/move-in-checklist')" class="space-y-2 mb-8 border-[0.5px] border-gray-50 rounded-md mt-4">
+    <div @click="handleClick" class="space-y-2 mb-8 border-[0.5px] border-gray-50 rounded-md mt-4">
         <div class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
         <div class="flex items-center gap-x-3">
           <div>
-            <input disabled type="checkbox" checked class="form-checkbox h-5 w-5 text-blue-600" />            
+            <input :disabled="user.hasMoveInChecklist" type="checkbox" :checked="user.hasMoveInChecklist" class="form-checkbox h-5 w-5 text-blue-600" />            
           </div>
           <div>
             <h2 class="text-base font-medium text-[#1D2739]">Move-in checklist</h2>
@@ -51,16 +51,24 @@
       <HomeNoTransactions />
     </section>
   </section>
-  <section class="m-6" v-else>
-        <div
-          class="rounded-md h-44 bg-gray-100 animate-pulse p-4 w-full mx-auto mt-10"
-        ></div>
-      </section>
+  <CoreFullScreenLoader
+      :visible="fetching"
+      text="Fetching Home Details"
+      logo=""
+  />
   </main>
 </template>
 
 <script setup lang="ts">
   import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
   const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
+  import { useUser } from '@/composables/auth/user';
+  const { user } = useUser()
   const router = useRouter()
+
+  const handleClick = () => {
+    if(!user.value.hasMoveInChecklist){
+      router.push('/dashboard/home/move-in-checklist')
+    }
+  }
 </script>

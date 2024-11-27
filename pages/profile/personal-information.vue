@@ -145,6 +145,8 @@ watch(profileObj, (newProfile) => {
       dateOfBirth: newProfile.dateOfBirth || '',
       gender: newProfile.gender || '',
       maritalStatus: newProfile.maritalStatus || '',
+      state: newProfile?.city?.state || '',
+      lga: newProfile?.city?.lga || ''
     };
 
     // Update full name and address fields in addressObj
@@ -200,6 +202,8 @@ watch(profileObj, (newProfile) => {
       dateOfBirth: newProfile.dateOfBirth ? formatDate(newProfile.dateOfBirth) : '',  // Use formatted date
       gender: newProfile.gender || '',
       maritalStatus: newProfile.maritalStatus || '',
+      lga: newProfile?.city?.lga || '',
+      state: newProfile?.city?.state || '',
     };
 
     // Update full name and address fields in addressObj

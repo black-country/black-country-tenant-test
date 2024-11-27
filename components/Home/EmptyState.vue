@@ -1,7 +1,6 @@
 <!-- components/EmptyState.vue -->
 <template>
-   <main>
-    {{ myHomeInfo.id }}
+   <main v-if="!fetching">
     <div class="flex items-center text-gray-600 mb-4">
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
@@ -47,11 +46,18 @@
       </div>
     </div>
    </main>
+   <CoreFullScreenLoader
+      :visible="fetching"
+      text="Fetching Home Details"
+      logo=""
+  />
   </template>
   
   <script setup lang="ts">
+  import { useUser } from '@/composables/auth/user';
   import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
   import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
+  const { user } = useUser()
   const { intiateMoveIn, loading } = useInitiateMoveIn()
   const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
   const route = useRoute()
@@ -64,6 +70,10 @@
           })
           intiateMoveIn();
         }
+  }
+
+  if(user?.value?.hasMovedIn && user?.value?.hasHome){
+    router.push('/dashboard/home/details')
   }
 
 </script>

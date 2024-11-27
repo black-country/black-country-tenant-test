@@ -732,14 +732,14 @@
             </p>
           </section>
         </div>
-        <div
+        <!-- <div
           v-if="loadingProperties"
           class="border-[0.5px] bg-gray-100 shadow rounded-md w-full mx-auto"
         >
           <div class="animate-pulse flex space-x-4">
             <div class="rounded-md bg-slate-100 h-96 w-full"></div>
           </div>
-        </div>
+        </div> -->
       </div>
     </section>
     <section v-else-if="viewType === 'map'" class="z-10">
@@ -1009,6 +1009,11 @@
         </div>
       </div>
     </CoreModal>
+      <CoreFullScreenLoader
+      :visible="loadingProperties"
+      text="Fetching properties..."
+      logo=""
+  />
   </main>
 </template>
 
