@@ -617,6 +617,7 @@
   </template>
   
   <script setup lang="ts">
+  import moment from "moment";
 const propertyManagerImage = ref("shape.png");
 import { useRooms } from '@/composables/modules/rentals/useFormatRoomsByAvailability';
 import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
@@ -760,11 +761,12 @@ if(props.property.rooms){
     return {
       occupant: room.occupantName || "No occupant",
       roomOccupied: room.name,
-      availableFrom: room.availability === "available_now"
-        ? "Available now"
-        : room.availableFrom
-          ? new Date(room.availableFrom).toLocaleDateString()
-          : "Not available"
+      availableFrom: 
+      room.availability === "available_now" ? "Available now" 
+      : room.availableFrom ?
+      //  new Date(room.availableFrom).toLocaleDateString() 
+      moment(room.availableFrom).utc().format("MMMM Do YYYY")
+       : "Not available"
     };
   });
 }

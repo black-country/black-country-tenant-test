@@ -141,7 +141,7 @@ const submitChecklist = async () => {
         setPayload(payloadObj);
 
         // Submit the checklist to the backend
-        await addChecklistItem(user?.value?.room?.rentalApplication?.id);
+        await addChecklistItem(user?.value?.rentalApplicationId);
 
         console.log('Checklist successfully submitted!');
     } catch (error) {

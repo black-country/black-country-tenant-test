@@ -20,7 +20,7 @@ export const useFetchMyHomeInfo = () => {
         // Update localStorage with user data if needed
         const userObj = JSON.parse(localStorage.getItem('user') || '{}');
         if (response?.data?.movedIn) {
-          localStorage.setItem('user', JSON.stringify({ ...userObj, ...response?.data }));
+          localStorage.setItem('user', JSON.stringify({ ...userObj, rentalApplicationId: response.data.id, ...response?.data }));
           router.push('/dashboard/home/details');
         }
       } else {
