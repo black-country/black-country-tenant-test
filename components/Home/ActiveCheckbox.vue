@@ -17,6 +17,7 @@
       >
         <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
       </svg>
+
     </div>
   </template>
   
@@ -25,10 +26,16 @@
   
   const isActive = ref(false);
   const emits = defineEmits(['update']);
+
+  const props = defineProps({
+    uncheckedObj: { type: Object, required: true },
+    checkedObj: { type: Object, required: true }
+  })
   
   const toggleActive = () => {
     isActive.value = !isActive.value;
     emits('update', isActive.value);
   };
   </script>
+  
   

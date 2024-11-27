@@ -12,6 +12,8 @@
             <label class="flex items-center space-x-6">
               <span class="text-[#667185] text-sm">Good</span>
               <HomeActiveCheckbox
+               :uncheckedObj="uncheckedObj"
+               :checkedObj="checkedObj"
                 @update="state => emitUpdateState(item, 'good', state)"
               />
             </label>
@@ -33,6 +35,9 @@
   const props = defineProps<{
     title: string;
     items: { itemName: string; group: string }[];
+    uncheckedObj: { type: Object, required: true },
+    checkedObj: { type: Object, required: true }
+
   }>();
   
   const emits = defineEmits(['update-state']);

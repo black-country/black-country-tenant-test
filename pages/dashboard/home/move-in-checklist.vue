@@ -34,6 +34,7 @@
               :checklist="checklist"
               actionType="move-in"
               @update-state="updateChecklistState"
+              :rentalChecklist="rentalChecklist"
             />
           </div>
           <CoreFullScreenLoader
@@ -89,6 +90,7 @@
   <script setup lang="ts">
   import { ref } from 'vue';
   import { useAddChecklistItem } from '@/composables/modules/home/useAddChecklistItem';
+  import { useFetchRentalChecklist } from '@/composables/modules/home/useFetchRentalCheckList'
   import { useFetchChecklist } from '@/composables/modules/home/useFetchChecklist';
   import { useUser } from '@/composables/auth/user';
 //   const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
@@ -98,6 +100,7 @@
   const router = useRouter();
   const { loading, checklist } = useFetchChecklist();
   const { loading: processing, addChecklistItem, setPayload } = useAddChecklistItem();
+  const { loading: fetchingRentalsChecklist, rentalChecklist } = useFetchRentalChecklist()
   
   const checklistState = ref([]); // To track changes
   

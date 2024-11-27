@@ -3,6 +3,9 @@
       <h2 class="text-lg font-medium border-[0.5px] px-6 rounded-lg py-3 border-gray-50 mb-4">
         {{ actionType === 'move-in' ? 'Move - in' : 'Move - out' }} checklist
       </h2>
+
+      <!-- {{ rentalChecklist }} -->
+        <!-- {{ checklist }} -->
   
       <div class="border-[0.5px] border-gray-100 rounded-lg p-5 bg-white">
         <div class="mb-6">
@@ -21,6 +24,8 @@
             :title="formatTitle(group)"
             :items="items"
             @update-state="updateChecklistState"
+            :uncheckedObj="checklist"
+            :checkedObj="rentalChecklist"
           />
         </div>
         <div v-else>
@@ -38,6 +43,7 @@
   const props = defineProps({
     actionType: { type: String, default: '' },
     checklist: { type: Object, required: true },
+    rentalChecklist: { type: Object, required: true }
   });
   
   const checklistState = ref([]); // Track all changes dynamically
