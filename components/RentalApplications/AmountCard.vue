@@ -17,8 +17,10 @@
       </div>
       <div>
         <p class="text-gray-500 text-sm">Rent Amount</p>
+      <div class="flex items-center gap-x-2">
         <p class="text-gray-900 font-bold text-lg">{{formatCurrency(roomObj?.rentAmount) ?? '0.00'}}</p>
         <p class="text-gray-400 text-sm">{{roomObj?.rentFrequency ?? 'Nil'}}</p>
+      </div>
       </div>
     </div>
   </div>

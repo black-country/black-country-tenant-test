@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2c1c9f7e-816b-42d2-a1dd-6d96d4bab59d" name="Changes" comment="" />
+    <list default="true" id="2c1c9f7e-816b-42d2-a1dd-6d96d4bab59d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/components/RentalApplications/AmountCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/RentalApplications/AmountCard.vue" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,10 +15,13 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 1
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
   <component name="ProjectId" id="2pHWurgReHF7FGU2NNgJpAIuSKU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -32,6 +37,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
+    "ts.external.directory.path": "/Users/mac/projects/blackCountry/black-country-tenant/node_modules/typescript/lib",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -51,6 +57,7 @@
       <option name="presentableId" value="Default" />
       <updated>1732423706905</updated>
       <workItem from="1732423708124" duration="706000" />
+      <workItem from="1732617855406" duration="3806000" />
     </task>
     <servers />
   </component>

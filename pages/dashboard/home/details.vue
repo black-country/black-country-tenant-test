@@ -5,7 +5,7 @@
     <!-- Property Overview Section -->
     <HomePropertyOverview :myHomeInfo="myHomeInfo" />
 
-    <div class="space-y-2 mb-8 border-[0.5px] border-gray-50 rounded-md mt-4">
+    <div @click="router.push('/dashboard/home/move-in-checklist')" class="space-y-2 mb-8 border-[0.5px] border-gray-50 rounded-md mt-4">
         <div class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
         <div class="flex items-center gap-x-3">
           <div>
@@ -62,4 +62,5 @@
 <script setup lang="ts">
   import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
   const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
+  const router = useRouter()
 </script>

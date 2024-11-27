@@ -21,16 +21,14 @@
   </template>
   
   <script lang="ts" setup>
-  import { ref } from 'vue'
+  import { ref, defineEmits } from 'vue';
   
-  const isActive = ref(false)
+  const isActive = ref(false);
+  const emits = defineEmits(['update']);
   
   const toggleActive = () => {
-    isActive.value = !isActive.value
-  }
+    isActive.value = !isActive.value;
+    emits('update', isActive.value);
+  };
   </script>
-  
-  <style scoped>
-  /* Additional styling if needed */
-  </style>
   
