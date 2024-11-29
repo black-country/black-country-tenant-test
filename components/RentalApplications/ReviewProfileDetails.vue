@@ -52,9 +52,9 @@
             <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Marital status:
               </strong>{{ profile.personal.maritalStatus || '---' }}</li>
             <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>State of Origin:
-                <span class="text-red-600">*</span></strong>{{ profile.personal.stateOfOrigin || '---' }}</li>
+                <span class="text-red-600">*</span></strong>{{ profile.personal.lga.stateName || '---' }}</li>
             <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>LGA: </strong>{{
-              profile.personal.lga || '---' }}</li>
+              profile.personal.lga.name || '---' }}</li>
           </ul>
         </div>
 

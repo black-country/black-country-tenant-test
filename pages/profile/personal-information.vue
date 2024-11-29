@@ -57,6 +57,7 @@
           </div>
 
           <div class="grid grid-cols-2 gap-4">
+            {{ credential.state }}
             <div>
               <label class="text-[#1D2739] text-sm">State of Origin <span class="text-red-500">*</span></label>
               <select v-model="selectedState" @change="handleStateChange(selectedState)" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
@@ -68,11 +69,6 @@
             <!-- {{ selectedCity }} -->
             <div v-if="!loadingCities">
               <label class="text-[#1D2739] text-sm">Local Government (LGA) <span class="text-red-500">*</span></label>
-              <!-- <select v-model="addressObj.lga" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
-                <option value="">Select LGA</option>
-                <option v-for="lga in lgasArray.lgas" :key="lga" :value="lga">{{ lga }}</option>
-              </select> -->
-
               <select v-model="selectedCity" class="w-full p-2 mt-1 border-[0.5px] outline-none  focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
                 <option value="">Select LGA</option>
                 <option v-for="city in cities" :key="city.id" :value="city.id">{{ city.name }}</option>
@@ -128,6 +124,12 @@ const today = ref(new Date().toISOString().split('T')[0]);
 // API to update profile
 const { credential, updateProfile, loading: updating } = use_update_profile();
 
+onMounted(() => {
+      selectedCity.value = credential.value.name
+      selectedState.value = credential.value.stateName
+    })
+
+
 // Router instance
 const router = useRouter();
 
@@ -145,8 +147,8 @@ watch(profileObj, (newProfile) => {
       dateOfBirth: newProfile.dateOfBirth || '',
       gender: newProfile.gender || '',
       maritalStatus: newProfile.maritalStatus || '',
-      state: newProfile?.city?.state || '',
-      lga: newProfile?.city?.lga || ''
+      state: newProfile?.city?.stateName || '',
+      lga: newProfile?.city?.name || ''
     };
 
     // Update full name and address fields in addressObj
@@ -202,8 +204,8 @@ watch(profileObj, (newProfile) => {
       dateOfBirth: newProfile.dateOfBirth ? formatDate(newProfile.dateOfBirth) : '',  // Use formatted date
       gender: newProfile.gender || '',
       maritalStatus: newProfile.maritalStatus || '',
-      lga: newProfile?.city?.lga || '',
-      state: newProfile?.city?.state || '',
+      lga: newProfile?.city?.name || '',
+      state: newProfile?.city?.stateName || '',
     };
 
     // Update full name and address fields in addressObj
