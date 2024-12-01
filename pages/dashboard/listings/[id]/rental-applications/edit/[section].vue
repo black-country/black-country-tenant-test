@@ -596,30 +596,74 @@ onMounted(async () => {
   }
 });
 
+// watch(selectedState, async (newState) => {
+//   console.log(newState, "watching from outsie");
+//   const stateField = fields.value.find(
+//     (field) => field.label === "State of Origin"
+//   );
+//   stateField.value = newState.name;
+//   if (newState) {
+//     await getCities(newState.stateCode);
+//     const lgaField = fields.value.find(
+//       (field) => field.label === "Local Government"
+//     );
+//     if (lgaField && cities.value.length) {
+//       lgaField.options = cities.value.map((city) => city.name);
+//     }
+//   }
+// });
+
+// watch(selectedLga, async (newLga) => {
+//   console.log(newLga, "watching from outsie");
+//   const lgaField = fields.value.find(
+//     (field) => field.label === "Local Government (LGA)"
+//   );
+//   lgaField.value = newLga;
+// });
+
 watch(selectedState, async (newState) => {
-  console.log(newState, "watching from outsie");
-  const stateField = fields.value.find(
-    (field) => field.label === "State of Origin"
-  );
-  stateField.value = newState.name;
-  if (newState) {
-    await getCities(newState.stateCode);
-    const lgaField = fields.value.find(
-      (field) => field.label === "Local Government"
-    );
-    if (lgaField && cities.value.length) {
-      lgaField.options = cities.value.map((city) => city.name);
+  console.log(newState, "watching from outside");
+
+  // Ensure newState exists and has the necessary properties
+  if (newState && newState.name && newState.stateCode) {
+    const stateField = fields.value.find((field) => field.label === "State of Origin");
+    if (stateField) {
+      stateField.value = newState.name;
     }
+
+    // Proceed with fetching cities for the state
+    try {
+      await getCities(newState.stateCode);
+
+      // Find the Local Government field and update it with fetched cities
+      const lgaField = fields.value.find((field) => field.label === "Local Government");
+      if (lgaField && cities.value.length) {
+        lgaField.options = cities.value.map((city) => city.name);
+      }
+    } catch (error) {
+      console.error("Error fetching cities:", error);
+    }
+  } else {
+    console.warn("Invalid state selected:", newState);
   }
 });
 
-watch(selectedLga, async (newLga) => {
-  console.log(newLga, "watching from outsie");
-  const lgaField = fields.value.find(
-    (field) => field.label === "Local Government (LGA)"
-  );
-  lgaField.value = newLga.name;
+watch(selectedLga, (newLga) => {
+  console.log(newLga, "watching from outside");
+
+  // Ensure selected LGA is valid before updating the field
+  if (newLga) {
+    const lgaField = fields.value.find((field) => field.label === "Local Government (LGA)");
+    if (lgaField) {
+      lgaField.value = newLga;
+    } else {
+      console.warn("LGA field not found.");
+    }
+  } else {
+    console.warn("Invalid LGA selected:", newLga);
+  }
 });
+
 
 // Computed property to check if all compulsory fields are filled
 // const isFormValid = computed(() => {
@@ -664,6 +708,7 @@ const saveSection = async () => {
         duration: 3000,
       });
       saveData(section.value, fields.value);
+      console.log('Hit here')
       router.back()
       router.push({ query: { step: "2" } });
     });

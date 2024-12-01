@@ -4,7 +4,6 @@ import { ref } from "vue";
 import { useUser } from '@/composables/auth/user'
 import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
-import { useNuxtApp } from "#app"; // Use this to show toast notifications
 
 export const use_update_profile = () => {
   const Router = useRouter();
@@ -55,9 +54,11 @@ export const use_update_profile = () => {
       loading.value = false;
 
       if (res.type !== "ERROR") {
-        useNuxtApp().$toast.success("Profile was updated successfully.", {
-          autoClose: 5000,
-          dangerouslyHTMLString: true,
+        showToast({
+          title: "Success",
+          message: 'Profile was updated successfully',
+          toastType: "success",
+          duration: 3000
         });
         Router.push('/profile/profile-update-success')
         const data = {
@@ -78,13 +79,14 @@ export const use_update_profile = () => {
         error.value = res.message || "An error occurred while updating the profile.";
         return Promise.reject(error.value);
       }
-    } catch (err) {
+    } catch (err: any) {
       console.log(err, 'res here')
       loading.value = false;
-      error.value = err.message || "An unexpected error occurred while updating the profile.";
-      useNuxtApp().$toast.error(error.value, {
-        autoClose: 5000,
-        dangerouslyHTMLString: true,
+      showToast({
+        title: "Error",
+        message: err.message || "An unexpected error occurred while updating the profile.",
+        toastType: "error",
+        duration: 3000
       });
       return Promise.reject(error.value); // Return the error to the calling function
     }
