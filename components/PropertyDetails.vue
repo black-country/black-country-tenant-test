@@ -120,10 +120,10 @@
               </tbody>
             </table>
           </div> -->
-          <PropertyVisitationTable :property="property" />
-          <div class="mt-5">
+          <PropertyVisitationTable :visitations="visitations" :property="property" />
+          <!-- <div class="mt-5">
             <button @click="showBookingModal = true" class="mt-4 w-full bg-[#292929]  text-white py-4 rounded-md">Schedule a visit</button>
-         </div>
+         </div> -->
          </section>
       
             <!-- House Rules -->
@@ -618,11 +618,15 @@
   
   <script setup lang="ts">
   import moment from "moment";
+  import { useFetchVisitations } from '@/composables/modules/visitation/fetch'
+  import { useUser } from '@/composables/auth/user'
 const propertyManagerImage = ref("shape.png");
 import { useRooms } from '@/composables/modules/rentals/useFormatRoomsByAvailability';
 import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
 const { formatCurrency } = useCurrencyFormatter('en-NG', 'NGN');
 const activeTab = ref('property-overview')
+const { getVisitations, loading, visitations } = useFetchVisitations()
+const { user } = useUser()
 const router = useRouter()
 
 const showBookingModal = ref(false);
@@ -640,9 +644,23 @@ const props = defineProps({
     type: Boolean,
     default: false
   }
-
-  
 })
+
+// onMounted(() => {
+//   console.log(props.property, 'sdfdfs')
+//   if(props.property){
+//     getVisitations(user?.value?.id, props?.property?.id)
+//   }
+// })
+
+// onMounted(() => {
+//   console.log(props.property, 'sdfdfs');
+//   if (props.property && props.property.id) {
+//     getVisitations(user?.value?.id, props.property.id);
+//   } else {
+//     console.log('Property or Property ID is missing');
+//   }
+// });
 
 // Ensure roomData is provided, fallback to an empty array
 const roomData = props?.property?.rooms ?? [];

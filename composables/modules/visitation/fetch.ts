@@ -23,12 +23,12 @@ export const useFetchVisitations = () => {
         });
       }
     } catch (error) {
-      showToast({
-        title: "Error",
-        message: "An error occurred while fetching visitations.",
-        toastType: "error",
-        duration: 3000,
-      });
+      // showToast({
+      //   title: "Error",
+      //   message: "An error occurred while fetching visitations.",
+      //   toastType: "error",
+      //   duration: 3000,
+      // });
       console.error("Error fetching visitations:", error);
     } finally {
       loading.value = false;

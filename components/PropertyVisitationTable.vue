@@ -1,5 +1,6 @@
 <template>
  <main class="lg:p-0 mt-4">
+  <!-- {{ visitations }} -->
     <div v-if="!loading && visitations?.length" class="rounded-md border-[0.5px] border-gray-50 bg-white">
         <table
           class="w-full mt-2 table-fixed text-sm"
@@ -49,9 +50,14 @@ const props = defineProps({
   property: {
     type: Object,
   },
+  visitations: {
+    type: Array,
+  }
 });
 
-// onMounted(() => {
-//   getVisitations(user.value.id, props.property.id);
-// });
+onMounted(() => {
+  if(props?.property?.id){
+    getVisitations(user?.value?.id, props?.property?.id);
+  }
+});
 </script>
