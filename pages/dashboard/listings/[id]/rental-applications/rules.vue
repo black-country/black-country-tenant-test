@@ -97,9 +97,7 @@
     </div>
 
     <!-- Buttons (Fixed to bottom of page) -->
-  </div>
-
-  <div class="">
+    <!-- <div class="border-4 border-red-500 h-20 w-full">
     <div class="fixed bottom-0 border-[0.5px] rounded-t-lg left-0 right-0 max-w-2xl mx-auto bg-white py-4 px-6 flex justify-between">
       <button @click="router.back()" class="px-10 py-3 rounded-md text-sm border bg-white text-[#292929]">
         Cancel
@@ -108,7 +106,34 @@
         Continue
       </button>
     </div>
-   </div>
+   </div> -->
+  </div>
+
+  <div class="fixed bottom-0 w-full bg-white py-4 border-t">
+    <div class="w-full px-4">
+      <div class="flex justify-between  max-w-xl mx-auto">
+        <button @click="router.back()" class="px-10 py-3 rounded-md text-sm border bg-white text-[#292929]">
+          Cancel
+        </button>
+        <button 
+          @click="router.push(`/dashboard/listings/${route.params.id}/rental-applications/create`)" 
+          class="px-10 text-sm py-3 rounded-md bg-[#292929] text-white hover:bg-gray-800"
+        >
+          Continue
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="">
+    <div class="fixed bottom-0 border-[0.5px] rounded-t-lg left-0 right-0 max-w-2xl mx-auto bg-white py-4 px-6 flex justify-between">
+      <button @click="router.back()" class="px-10 py-3 rounded-md text-sm border bg-white text-[#292929]">
+        Cancel
+      </button>
+      <button @click="router.push(`/dashboard/listings/${route.params.id}/rental-applications/create`)" class="px-10 text-sm py-3 rounded-md bg-[#292929] text-white hover:bg-gray-800">
+        Continue
+      </button>
+    </div>
+   </div> -->
 </main>
   </template>
   
