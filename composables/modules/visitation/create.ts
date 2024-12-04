@@ -4,9 +4,9 @@ const { showToast } = useCustomToast();
 
 const route = useRoute() as any
 const router = useRouter()
+const scheduling = ref(false);
 
 export const useCreateVisitation = () => {
-  const scheduling = ref(false);
 
   const createVisitation = async (payload: any) => {
     scheduling.value = true;

@@ -21,7 +21,7 @@
         />
       </svg>
       <h2 class="text-xl font-medium mb-4 text-[#1D2739] my-4">
-        {{ sectionTitle }} Information
+        {{ sectionTitle }}
       </h2>
       <form @submit.prevent="saveSection">
         <div v-for="(field, index) in fields" :key="index" class="mb-4">
@@ -43,6 +43,7 @@
               field.label !== 'Local Government'
             "
           >
+          {{ field.value === 'unemployed' }}
             <select
               v-model="field.value"
               class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md"
@@ -57,11 +58,6 @@
             </select>
           </div>
           <div class="w-full" v-if="field.type === 'date'">
-            <!-- <input
-              v-model="field.value"
-              type="date"
-              class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md"
-            /> -->
             <AgeValidationDatePicker  v-model="field.value"
             label="" />
           </div>
@@ -95,14 +91,9 @@
             <p v-if="field.preview">{{ field.preview }}</p>
           </div>
 
-     
-
-
-
-
+    
           <section v-if="!editMode && (field.label === 'Local Government' || field.label === 'State of Origin')">
   <div class="flex items-center space-x-4">
-    <!-- State of Origin Input -->
     <div v-if="field.label === 'State of Origin'" class="flex-1">
       <input
         readonly
@@ -111,7 +102,6 @@
       />
     </div>
     
-    <!-- Local Government Input -->
     <div v-if="field.label === 'Local Government'" class="flex-1">
       <input
         readonly
@@ -120,7 +110,6 @@
       />
     </div>
 
-    <!-- Edit Icon -->
     <div>
       <svg
         @click="editMode = !editMode"
@@ -140,55 +129,9 @@
       </svg>
     </div>
   </div>
-</section>
+          </section>
 
 
-
-
-          <!-- <section
-            v-if="!editMode && (field.label === 'Local Government' || field.label === 'State of Origin')
-            "
-          >
-            <div>
-              <div>
-    
-                <input
-                  readonly
-                  class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-                  :value="profileObj?.city?.stateName"
-                />
-              </div>
-
-              <div>
-        
-                <input
-                  readonly
-                  class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-                  :value="profileObj?.city?.name"
-                />
-              </div>
-            </div>
-            <div>
-              <svg
-                @click="editMode = !editMode"
-                class="cursor-pointer"
-                xmlns="http://www.w3.org/2000/svg"
-                width="23"
-                height="23"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="#5B8469"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path
-                  d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"
-                ></path>
-                <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-              </svg>
-            </div>
-          </section> -->
          <section v-if="editMode && (field.label === 'Local Government' || field.label === 'State of Origin')">
           <div>
             <div

@@ -13,4 +13,12 @@ export const visitation_api = {
         const url = `/houses/${id}/visitations`;
         return GATEWAY_ENDPOINT.post(url, payload);
       },
+      $_get_availability_time_in_selected_day: (houseId: string | number, dayId: string | number) => {
+        const url = `/houses/${houseId}/visitations/days/${dayId}/times`;
+        return GATEWAY_ENDPOINT.get(url);
+      },
+      $_get_house_availability_by_id: (houseId: string | number) => {
+        const url = `/houses/${houseId}/visitations/availability-days`;
+        return GATEWAY_ENDPOINT.get(url);
+      }
 };

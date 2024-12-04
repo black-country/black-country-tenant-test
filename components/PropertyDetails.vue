@@ -96,34 +96,10 @@
          <!-- <section v-if="property?.rentalApplication"> -->
           <section class="mt-10">
           <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-50">Property visitation</h2>
-          <!-- <div class="rounded-md border-[0.5px] border-gray-50 bg-white">
-            <table class="w-full mt-2 table-fixed text-sm">
-              <thead>
-                <tr class="bg-[#F9FAFB] rounded-lg">
-                  <th class="text-left py-3 text-[#667185] pl-4">Day</th>
-                  <th class="text-left py-3 text-[#667185]">Time</th>
-                </tr>
-              </thead>
-              <tbody class="space-y-6">
-                <tr class="">
-                  <td class="text-[#1D2739] py-3  pl-4">Monday</td>
-                  <td class="text-[#1D2739] py-3 ">10:00 AM</td>
-                </tr>
-                <tr class="">
-                  <td class="text-[#1D2739] py-3  pl-4">Tuesday</td>
-                  <td class="text-[#1D2739] py-3 ">10:00 AM</td>
-                </tr>
-                <tr class="">
-                  <td class="text-[#1D2739] py-3  pl-4">Wednesday</td>
-                  <td class="text-[#1D2739] py-3 ">10:00 AM</td>
-                </tr>       
-              </tbody>
-            </table>
-          </div> -->
           <PropertyVisitationTable :visitations="visitations" :property="property" />
-          <!-- <div class="mt-5">
+          <div class="mt-5">
             <button @click="showBookingModal = true" class="mt-4 w-full bg-[#292929]  text-white py-4 rounded-md">Schedule a visit</button>
-         </div> -->
+         </div>
          </section>
       
             <!-- House Rules -->
@@ -611,7 +587,8 @@
     :isOpen="showBookingModal"
     @close="showBookingModal = false"
     >
-      <BookingModal :property="property" class="lg:w-4/12 m-6 lg:m-0" />
+    <VisitationCalender @close="showBookingModal = false" class="lg:w-5/12  w-full m-6 lg:m-0" />
+      <!-- <BookingModal :property="property" class="lg:w-4/12 m-6 lg:m-0" /> -->
     </CoreModal>
   </main>
   </template>

@@ -33,7 +33,6 @@
               v-model="addressObj.fullName"
               type="text"
               class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-              :disabled="!!addressObj.fullName"
             />
           </div>
 
@@ -62,50 +61,6 @@
           <div class="grid grid-cols-2 gap-4">
             <AgeValidationDatePicker  v-model="credential.dateOfBirth"
             label="Date of Birth" />
-            <!-- <div class="flex justify-center items-center space-x-4">
-    <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
-    <input
-      id="dob"
-      v-model="selectedDate"
-      type="date"
-      class="border border-gray-300 p-2 rounded-md"
-      :min="minDate"
-      :max="maxDate"
-      @input="checkAge"
-    />
-    <p v-if="isUnderage" class="text-red-500 text-sm">You must be at least 18 years old to sign up.</p>
-  </div> -->
-            <!-- <input
-                id="dob"
-                v-model="selectedDate"
-                type="date"
-                class="border border-gray-300 p-2 rounded-md"
-                :min="minDate"
-                :max="maxDate"
-              /> -->
-            <!-- <div>
-              <label class="text-[#1D2739] text-sm"
-                >Date of Birth <span class="text-red-500">*</span></label
-              >
-              <input
-                v-model="credential.dateOfBirth"
-                type="date"
-                class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-                   />
-
-            </div> -->
-            <!-- <div>
-              <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
-                <input
-                  v-model="credential.dateOfBirth"
-                  type="date"
-                  :min="minDate"
-                  :max="maxDate"
-                  class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-                  @input="checkAge"
-                />
-                <p v-if="isUnderage" class="text-red-500 text-sm">Date of birth must be at least 18 years old.</p>
-              </div> -->
             <div>
               <label class="text-[#1D2739] text-sm">Gender</label>
               <select
@@ -132,6 +87,31 @@
               <option value="married">Married</option>
             </select>
           </div>
+
+          <select
+                v-model="locationCredential.state"
+                @change="handleStateChange(selectedState)"
+                class="w-full p-2 mt-1 border-[0.5px] outline-none focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4"
+              >
+                <option value="">Select state</option>
+                <option
+                  v-for="item in states"
+                  :key="item.stateCode"
+                  :value="item.name"
+                >
+                  {{ item?.name ?? "Nil" }}
+                </option>
+              </select>
+
+              <select
+                v-model="locationCredential.lga"
+                class="w-full p-2 mt-1 border-[0.5px] outline-none focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4"
+              >
+                <option value="">Select LGA</option>
+                <option v-for="city in cities" :key="city.id" :value="city.name">
+                  {{ city.name }}
+                </option>
+              </select>
 
           <div v-if="!editMode" class="flex items-center gap-x-3">
             <div class="flex justify-between gap-x-6 items-center w-full">
@@ -201,7 +181,6 @@
               </select>
             </div>
 
-            <!-- {{ selectedCity }} -->
             <div v-if="!loadingCities">
               <label class="text-[#1D2739] text-sm"
                 >Local Government (LGA)
@@ -261,7 +240,6 @@ import { useUser } from "@/composables/auth/user";
 import moment from 'moment'
 import { use_tenant_profile } from "@/composables/auth/fetchProfile";
 import { use_update_profile } from "@/composables/auth/updateProfile";
-import { format, subYears } from 'date-fns'
 import { useRouter } from "vue-router";
 const {
   states,
@@ -294,87 +272,12 @@ const today = ref(new Date().toISOString().split("T")[0])
 // const eighteenYearsAgo = subYears(new Date(today.value), 18)
 const eighteenYearsAgo = moment().subtract(18, 'years').format('YYYY-MM-DD')
 
-// // Format the date 18 years ago to 'yyyy-MM-dd' for minDate
-// const minDate = format(eighteenYearsAgo, 'yyyy-MM-dd')
-
-// // maxDate is today, preventing future date selection
-// const maxDate = today.value
-
-// Set the minimum date to 18 years ago and the maximum date to today
 const minDate = eighteenYearsAgo
 const maxDate = today.value
 
 // Flag to track if the user is underage
 const isUnderage = ref(false)
 
-// Function to check if the selected date makes the user under 18
-
-// Function to check if the selected date makes the user under 18
-// const checkAge = () => {
-//   const selected = new Date(credential.value.dateOfBirth)
-
-//   // Compare the selected date to the date 18 years ago to ensure the user is at least 18
-//   const isUnder18 = isBefore(selected, eighteenYearsAgo)
-
-//   if (!isUnder18) {
-//     isUnderage.value = false
-//   } else {
-//     isUnderage.value = true
-//   }
-// }
-
-// Function to check if the selected date makes the user under 18
-const checkAge = () => {
-  const selected = moment(credential.value.dateOfBirth)
-
-  // Compare the selected date to the date 18 years ago to ensure the user is at least 18
-  if (selected.isBefore(eighteenYearsAgo, 'day')) {
-    isUnderage.value = false
-  } else {
-    isUnderage.value = true
-  }
-}
-
-// const today = ref(new Date().toISOString().split("T")[0])
-
-// import { format, subYears } from 'date-fns'
-
-// Get today's date and calculate the date 18 years ago
-// const today = new Date()
-// const eighteenYearsAgo = subYears(today, 18)
-
-// // Format the dates to 'yyyy-MM-dd' to be compatible with input[type="date"]
-// const minDate = format(eighteenYearsAgo, 'yyyy-MM-dd')  // Ensures the user is at least 18
-// const maxDate = format(today, 'yyyy-MM-dd')  // Prevents future date selection
-
-// // Reactive variable to store the selected date
-// const selectedDate = ref<string>('')
-
-// // Flag to track if the user is underage
-// const isUnderage = ref(false)
-
-// // Check if the selected date is valid (i.e., the user is 18+)
-// const checkAge = () => {
-//   const selected = new Date(selectedDate.value)
-//   const age = today.getFullYear() - selected.getFullYear()
-
-//   if (age < 18 || (age === 18 && selected > eighteenYearsAgo)) {
-//     isUnderage.value = true
-//   } else {
-//     isUnderage.value = false
-//   }
-// }
-
-// // Get today's date and calculate the relevant min and max dates
-// // const today = new Date()
-// const eighteenYearsAgo = subYears(today, 18)
-
-// // Format the dates to 'yyyy-mm-dd' to be compatible with input[type="date"]
-// const minDate = format(eighteenYearsAgo, 'yyyy-MM-dd')  // For users who are at least 18 years old
-// const maxDate = format(today, 'yyyy-MM-dd')  // Prevent future dates
-
-// // Bind the selected date to this ref
-// const selectedDate = ref<string>('')
 
 
 // Import user composable
@@ -383,13 +286,13 @@ const { user } = useUser();
 // const today = ref(new Date().toISOString().split("T")[0]);
 
 // API to update profile
-const { credential, updateProfile, loading: updating } = use_update_profile();
+const { credential, updateProfile, loading: updating, locationCredential } = use_update_profile();
 
 onMounted(() => {
   if (credential.value) {
     // Prefill the state and LGA if the credential object is already available
-    selectedState.value = credential.value.state;
-    selectedCity.value = credential.value.lga;
+    selectedState.value = credential.value.state || locationCredential.value.state;
+    selectedCity.value = credential.value.lga || locationCredential.value.lga;
   }
 });
 
@@ -494,3 +397,286 @@ watch(
   { immediate: true }
 );
 </script>
+
+
+<!-- <script setup lang="ts">
+import { use_update_profile } from "@/composables/auth/updateProfile";
+import { useGetLocation } from "@/composables/core/useGetLocation";
+import { watch, onMounted } from 'vue';
+
+const {
+  credential,
+  locationCredential,
+  loading,
+  error,
+  updateProfile,
+  resetForm
+} = use_update_profile();
+
+const {
+  states,
+  cities,
+  loadingStates,
+  loadingCities,
+  selectedState,
+  selectedCity,
+  handleStateChange,
+} = useGetLocation();
+
+// Watch for profile data changes to set initial state
+watch(() => locationCredential.value, (newLocation) => {
+  if (newLocation?.state && states.value?.length) {
+    // Find and set the initial selected state
+    const foundState = states.value.find(
+      state => state.name === newLocation.state
+    );
+    if (foundState) {
+      selectedState.value = foundState;
+      handleStateChange(foundState.id);
+    }
+  }
+}, { immediate: true });
+
+// Watch for cities to be loaded to set initial city
+watch(() => cities.value, (newCities) => {
+  if (locationCredential.value?.lga && newCities?.length) {
+    // Find and set the initial selected city
+    const foundCity = newCities.find(
+      city => city.name === locationCredential.value.lga
+    );
+    if (foundCity) {
+      selectedCity.value = foundCity;
+      credential.value.cityId = foundCity.id;
+    }
+  }
+}, { immediate: true });
+
+const handleSubmit = async () => {
+  try {
+    await updateProfile(credential.value);
+  } catch (err) {
+    console.error('Error updating profile:', err);
+  }
+};
+</script>
+
+<template>
+  <form @submit.prevent="handleSubmit" class="max-w-4xl mx-auto p-6 space-y-6">
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold">Personal Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">First Name</label>
+          <input
+            v-model="credential.firstName"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Last Name</label>
+          <input
+            v-model="credential.lastName"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Email</label>
+          <input
+            v-model="credential.email"
+            type="email"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Phone Number</label>
+          <input
+            v-model="credential.phoneNumber"
+            type="tel"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            required
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Date of Birth</label>
+          <input
+            v-model="credential.dateOfBirth"
+            type="date"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Gender</label>
+          <select
+            v-model="credential.gender"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          >
+            <option value="">Select Gender</option>
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold">Location Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">State</label>
+          <select
+            v-model="selectedState"
+            @change="handleStateChange(selectedState?.id)"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            :disabled="loadingStates"
+          >
+            <option value="">Select State</option>
+            <option
+              v-for="state in states"
+              :key="state.id"
+              :value="state.name"
+            >
+              {{ state.name }}
+            </option>
+          </select>
+          <span v-if="loadingStates" class="text-sm text-gray-500">Loading states...</span>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">City/LGA</label>
+          <select
+            v-model="selectedCity"
+            @change="credential.cityId = selectedCity?.id"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+            :disabled="loadingCities || !selectedState"
+          >
+            <option value="">Select City/LGA</option>
+            <option
+              v-for="city in cities"
+              :key="city.id"
+              :value="city"
+            >
+              {{ city.name }}
+            </option>
+          </select>
+          <span v-if="loadingCities" class="text-sm text-gray-500">Loading cities...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold">Employment Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Employment Status</label>
+          <select
+            v-model="credential.employmentStatus"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          >
+            <option value="">Select Status</option>
+            <option value="employed">Employed</option>
+            <option value="self-employed">Self Employed</option>
+            <option value="unemployed">Unemployed</option>
+            <option value="student">Student</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Employer Name</label>
+          <input
+            v-model="credential.employerName"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Employer Address</label>
+          <input
+            v-model="credential.employerAddress"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Monthly Net Salary</label>
+          <input
+            v-model="credential.monthlyNetSalary"
+            type="number"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <h2 class="text-xl font-semibold">Next of Kin Information</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Next of Kin Name</label>
+          <input
+            v-model="credential.nextOfKinName"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Relationship</label>
+          <input
+            v-model="credential.nextOfKinRelationship"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Next of Kin Email</label>
+          <input
+            v-model="credential.nextOfKinEmail"
+            type="email"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Next of Kin Phone</label>
+          <input
+            v-model="credential.nextOfKinPhone"
+            type="tel"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+        <div class="md:col-span-2">
+          <label class="block text-sm font-medium text-gray-700">Next of Kin Address</label>
+          <input
+            v-model="credential.nextOfKinAddress"
+            type="text"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
+          />
+        </div>
+      </div>
+    </div>
+
+    <div class="flex justify-end space-x-4">
+      <button
+        type="button"
+        @click="resetForm"
+        class="px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50"
+        :disabled="loading"
+      >
+        Reset
+      </button>
+      <button
+        type="submit"
+        class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700"
+        :disabled="loading"
+      >
+        {{ loading ? 'Updating...' : 'Update Profile' }}
+      </button>
+    </div>
+
+    <div v-if="error" class="text-red-600 text-sm mt-2">
+      {{ error }}
+    </div>
+  </form>
+</template> -->

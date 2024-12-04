@@ -31,7 +31,7 @@
           <!-- User Info -->
           <div>
              <div class="flex justify-center items-center">
-              <span class="text-white rounded-full text-xs px-2 py-1 font-semibold bg-[#5B8469] absolute top-[81px]">{{ percentage }}%</span> 
+              <span class="text-white rounded-full text-xs px-2 py-1 font-semibold bg-[#5B8469] absolute top-[81px]">{{ completionPercentage }}%</span> 
              </div>
             <p class="text-xl font-bold text-[#1D2739]">{{user.firstName ?? 'Nil'}} {{user.lastName ?? 'Nil'}}</p>
             <p class="text-sm text-[#667185]">{{user.email ?? 'Nil'}}</p>
@@ -295,6 +295,7 @@
 </template>
 
 <script setup lang="ts">
+import { useProfileCompletion } from '@/composables/core/useProfileCompletion'
 import { useUser } from '@/composables/auth/user'
 import { dynamicIcons } from "@/utils/assets";
 const { user } = useUser()
@@ -406,6 +407,8 @@ const progressSize = computed(() => {
   return percentage.value < 100 ? '4px' : '6px'
 })
 
+const { completionPercentage } = useProfileCompletion(user.value)
+
 // Define the percentage of profile completion
 const percentage = ref(80) // You can dynamically update this value
 
@@ -413,7 +416,7 @@ const percentage = ref(80) // You can dynamically update this value
 const progressBackground = computed(() => {
   // Use conic-gradient to create the circular effect
   return `conic-gradient(
-    green ${percentage.value * 3.6}deg, 
+    green ${completionPercentage.value * 3.6}deg, 
     lightgray 0deg
   )`
 })
