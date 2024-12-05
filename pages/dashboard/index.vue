@@ -129,16 +129,19 @@
         <section class="mt-10">
           <div class="flex justify-between items-center bg-white rounded-md py-5 px-4">
             <h3 class="text-base font-medium text-[#171717]">Recent transactions</h3>
-            <a href="#" class="text-[#171717]">View all</a>
+            <NuxtLink to="/dashboard/payment-list" class="text-[#171717]">View all</NuxtLink>
           </div>
           <div class="pt-3 rounded-lg">
-            <div v-if="recentTransactions.length === 0" class="text-center text-gray-500 py-12">
+            <div v-if="!paymentList?.length && !loading" class="text-center text-gray-500 py-12">
               <img src="@/assets/icons/transaction-illustration.svg" alt="No transactions"
                 class="h-12 w-12 mx-auto mb-2" />
               <p>No recent transactions made</p>
             </div>
+            <section class="mb-6" v-if="!paymentList?.length && loading">
+            <div class="animate-pulse flex space-x-4 h-20 bg-slate-200 rounded"></div>
+            </section>
             <div v-else>
-              <div v-for="transaction in recentTransactions" :key="transaction.id"
+              <div v-for="transaction in paymentList" :key="transaction.id"
                 class="flex justify-between items-center bg-white p-4 rounded-lg mb-2">
                 <div class="flex items-center gap-x-3">
                   <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -160,11 +163,13 @@
                   </svg>
 
                   <div class="space-y-1">
-                    <h4 class="font-medium text-[#1D2739] text-sm">{{ transaction.title }}</h4>
-                    <p class="text-sm text-[#667185]">{{ transaction.date }}</p>
+                    <h4 class="font-medium text-[#1D2739] text-sm">{{ transaction?.narration ?? 'Nil' }}</h4>
+                    <p class="text-xs text-[#667185]">
+                      {{  moment(transaction?.transactionDate).format("MMMM Do YYYY, HH:MM A") ?? 'Nil' }}
+                    </p>
                   </div>
                 </div>
-                <span class="text-sm font-semibold text-[#292929]">{{ transaction.amount }}</span>
+                <span class="text-sm font-semibold text-[#292929]">{{ formatCurrency(transaction?.amountSubunit) ?? '0.00' }}</span>
               </div>
             </div>
           </div>
@@ -179,6 +184,10 @@
 </template>
 
 <script setup lang="ts">
+import moment from "moment";
+import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
+const { formatCurrency } = useCurrencyFormatter()
+import { useGetTransactionHistory } from '@/composables/modules/payment/useFetchPaymenttHistory'
 import { useInitializeRentPayment } from '@/composables/modules/rentals/useInitializeRentPayment'
 import { useFetchMyHomeInfo } from '@/composables/modules/home/useFetchMyHomeInfo'
 // import { useCheckout } from '@/composables/modules/banks/useCheckout'
@@ -189,6 +198,7 @@ import { useGreeting } from '@/composables/core/useGreeting'
 import { useUser } from '@/composables/auth/user'
 const { user } = useUser()
 const { loading: fetchingMyHomeInfo, myHomeInfo } = useFetchMyHomeInfo()
+const { paymentList, loading } = useGetTransactionHistory()
 const {
   initializeRentPayment,
   loading: initializing,
