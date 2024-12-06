@@ -7,7 +7,6 @@
             to="/dashboard"
             class="flex cursor-pointer items-center gap-x-3"
           >
-            <!-- Logo -->
             <div class="flex items-center space-x-2">
               <img
                 src="@/assets/icons/logo-with-text.svg"
@@ -81,6 +80,7 @@
                </div>
               <div ref="listingsRef">
                 <NuxtLink
+                data-v-tour="listings"
                 :class="[
                   route.path === '/dashboard/listings' ? 'bg-[#1D1D1D]' : '',
                 ]"
@@ -537,7 +537,7 @@
           </div>
 
           <button
-            @click="isFilterModalVisible = true"
+            @click="handleFilterClick"
             type="button"
             class="bg-[#EAEAEA] text-[#1D2739] text-sm px-4 py-2 rounded-md hover:bg-gray-200 flex items-center"
           >
@@ -1014,6 +1014,11 @@
       text="Fetching properties..."
       logo=""
   />
+  <CoreTourGuide />
+
+  <CoreDrawer title="Filters" :show="showFilterDrawer" @close="showFilterDrawer = false">
+    <CorePropertyFilters />
+  </CoreDrawer>
   </main>
 </template>
 
@@ -1041,6 +1046,13 @@ const propertySearch = ref("");
 const tour = useShepherd({
   useModalOverlay: true,
 });
+
+const showFilterDrawer = ref(false)
+
+const handleFilterClick = () => {
+  showFilterDrawer.value = true
+  // alert('Handle Filter Click')
+}
 
 const dashboardRef = ref(null);
 const listingsRef = ref(null);

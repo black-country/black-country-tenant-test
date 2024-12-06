@@ -22,15 +22,6 @@
             <div class="mt-6 space-y-4">
                 <div class="relative">
                 <label class="text-[#1D2739] text-base">Bank Name</label>
-                <!-- <select
-                  v-if="!loading"
-                  v-model="selectedBank"
-                  @change="handleBankSelection"
-                  :disabled="!isAccountNumberValid"
-                  class="w-full p-2 mt-1 outline-none focus-within:border-2 pl-6 focus-within:border-[#5B8469] border-[0.5px] text-base rounded-md bg-[#E4E7EC] py-4"
-                >
-                  <option v-for="(bank, idx) in banksList" :key="idx" :value="bank">{{ bank.name }}</option>
-                </select> -->
                 <select
                   v-if="!loading"
                   v-model="selectedBank"

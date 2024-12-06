@@ -25,7 +25,7 @@
       </h2>
       <form @submit.prevent="saveSection">
         <div v-for="(field, index) in fields" :key="index" class="mb-4">
-          <label class="block text-sm font-medium text-[#1D2739]">
+          <label :class="[(field.label === 'Local Government' || field.label === 'State of Origin') ? 'hidden' : 'block']" class="text-sm font-medium text-[#1D2739]">
             {{ field.label }}
             <span v-if="field.isCompulsory" class="text-red-600">*</span>
           </label>
@@ -43,7 +43,6 @@
               field.label !== 'Local Government'
             "
           >
-          {{ field.value === 'unemployed' }}
             <select
               v-model="field.value"
               class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md"
@@ -90,107 +89,25 @@
             />
             <p v-if="field.preview">{{ field.preview }}</p>
           </div>
-
-    
-          <section v-if="!editMode && (field.label === 'Local Government' || field.label === 'State of Origin')">
-  <div class="flex items-center space-x-4">
-    <div v-if="field.label === 'State of Origin'" class="flex-1">
-      <input
-        readonly
-        class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-        :value="profileObj?.city?.stateName"
-      />
-    </div>
-    
-    <div v-if="field.label === 'Local Government'" class="flex-1">
-      <input
-        readonly
-        class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-        :value="profileObj?.city?.name"
-      />
-    </div>
-
-    <div>
-      <svg
-        @click="editMode = !editMode"
-        class="cursor-pointer"
-        xmlns="http://www.w3.org/2000/svg"
-        width="23"
-        height="23"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="#5B8469"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-      >
-        <path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path>
-        <polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon>
-      </svg>
-    </div>
-  </div>
-          </section>
-
-
-         <section v-if="editMode && (field.label === 'Local Government' || field.label === 'State of Origin')">
           <div>
-            <div
-              v-if="loadingStates && field.label === 'State of Origin'"
-              class=""
-            >
-              <div class="h-14 w-full animate-pulse rounded bg-slate-200"></div>
-            </div>
-            <div v-else>
-              <div
-                v-if="
-                  field.label === 'State of Origin' &&
-                  field.code === 'state_of_origin'
-                "
-              >
-                <select
-                  v-model="selectedState"
-                  class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md"
-                >
-                  <option
-                    v-for="option in field.options"
-                    :key="option"
-                    :value="option"
-                  >
-                    {{ option.name }}
-                  </option>
-                </select>
-              </div>
-            </div>
+
+            <LocationDropdowns
+              v-if="field.label === 'State of Origin'"
+              v-model="stateOfOriginCityId"
+              @update:state="handleStateOfOriginChange"
+              @citySelected="handleStateOfOriginCitySelection"
+              :key="'state-of-origin'"
+            />
+
+
+            <!-- <LocationDropdowns
+              v-if="field.label === 'Local Government'"
+              v-model="currentStateCityId"
+              @update:state="handleCurrentStateChange"
+              @citySelected="handleCurrentCitySelection"
+              :key="'current-state'"
+            /> -->
           </div>
-          <div>
-            <div
-              v-if="loadingCities && field.label === 'Local Government'"
-              class=""
-            >
-              <div class="h-14 w-full animate-pulse rounded bg-slate-200"></div>
-            </div>
-            <div v-else>
-              <div
-                v-if="
-                  field.label === 'Local Government' && field.code === 'lga'
-                "
-              >
-                <select
-                  v-model="selectedLga"
-                  class="mt-1 block w-full p-2 pl-3 py-3.5 bg-[#F0F2F5] outline-none border-[0.5px] border-gray-100 rounded-md"
-                >
-                  <option
-                    v-for="option in field.options"
-                    :key="option"
-                    :value="option"
-                  >
-                    {{ option }}
-                  </option>
-                </select>
-              </div>
-            </div>
-          </div>
-         </section>
         </div>
         <div
           class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center border-[0.5px]"
@@ -237,11 +154,45 @@ const { removeNullValues } = useRemoveNullValues();
 const { states, cities, loadingStates, loadingCities, getStates, getCities } =
   useGetLocation();
 
+  const currentEmploymentStatus =ref('')
+
+  const handleEmploymentStatusChang = (event) => {
+      currentEmploymentStatus.value = event.target.value;
+    }
+
+    
+
 const cleanedObject = ref({});
 const selectedState = ref(""); // Define selectedState to track selected state
 const selectedLga = ref(""); // Define selectedLga to track selected LGA (city)
 
 const editMode = ref(false);
+
+const selectedCityId = ref('');
+const selectedLocation = ref<City | null>(null);
+
+// const handleStateChanged = (stateCode: string) => {
+//   console.log('Selected state code:', stateCode);
+// };
+
+// const handleCitySelection = (city: City | null) => {
+//   console.log(city, 'city from parent')
+//   selectedLocation.value = city;
+// };
+
+// Handlers for State of Origin
+const handleStateOfOriginChange = (stateCode: string) => {
+  // Handle state of origin change
+  console.log('State of Origin changed:', stateCode);
+};
+
+const handleStateOfOriginCitySelection = (city: City | null) => {
+  if (city) {
+    selectedCityId.value = city.id
+    // Handle state of origin city selection
+    console.log('State of Origin LGA selected:', city.id);
+  }
+};
 
 const route = useRoute();
 const router = useRouter();
@@ -641,6 +592,7 @@ const isFormValid = computed(() => {
 const saveSection = async () => {
   try {
     mapDataToCredential(fields.value);
+    credential.value.cityId = selectedCityId.value
     cleanedObject.value = removeNullValues(credential.value);
     console.log(cleanedObject.value, "cleaned");
     updateProfile(cleanedObject.value).then(() => {

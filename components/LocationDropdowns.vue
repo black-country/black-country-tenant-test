@@ -2,7 +2,7 @@
   <div class="space-y-4">
     <!-- State Dropdown -->
     <div class="flex flex-col gap-2">
-      <label class="text-sm font-medium text-gray-700">State</label>
+      <label  class="text-sm font-medium text-gray-700">State</label>
       <select
         v-model="selectedStateCode"
         @change="handleStateSelection"
@@ -81,6 +81,10 @@ interface City {
 // Props
 const props = defineProps<{
   modelValue?: string; // for v-model of selected city ID
+  showLabel: {
+    type: Boolean,
+    default: true
+  }
 }>();
 
 // Composables

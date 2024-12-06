@@ -186,7 +186,6 @@ const handleCitySelection = (city: City | null) => {
 
 
 
-
 // Import user composable
 const { user } = useUser();
 

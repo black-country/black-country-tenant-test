@@ -26,10 +26,14 @@ export default {
   },
 
   modules: ["@nuxtjs/tailwindcss"],
-  css: ["/assets/css/main.css"],
+  css: ["/assets/css/main.css", 'vue-tour/dist/vue-tour.css'],
 
   tailwindcss: {
     cssPath: "@/assets/css/main.css",
+  },
+  // css: ['vue-tour/dist/vue-tour.css'],
+  build: {
+    transpile: ['vue-tour']
   },
 
   axios: {
@@ -37,7 +41,7 @@ export default {
     timeout: 10000, // Example: set timeout to 10 seconds
   },
 
-  plugins: [],
+  plugins: ['~/plugins/vue-tour.ts', '~/plugins/vue-tour.client.ts',],
 
   vite: {
     optimizeDeps: {

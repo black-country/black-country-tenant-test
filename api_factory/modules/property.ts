@@ -27,5 +27,9 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
   $_fetch_bookmarked_listings: () => {
     const url = '/bookmarked-houses';
     return GATEWAY_ENDPOINT.get(url);
+  },
+  $_filter_listings: (payload: any) => {
+    const url = '/houses/search';
+    return GATEWAY_ENDPOINT.post(url, payload);
   }
 };
