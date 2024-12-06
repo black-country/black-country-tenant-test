@@ -12,7 +12,7 @@
           <nav class="text-sm text-gray-500 flex items-center space-x-2">
             <span class="hover:text-gray-700 cursor-pointer">Dashboard</span>
             <span>|</span>
-            <span class="hover:text-gray-700 cursor-pointer">Jason Gardens</span>
+            <span class="hover:text-gray-700 cursor-pointer">{{ propertyObj?.name ?? 'Nil' }}</span>
             <span>|</span>
             <span class="font-semibold text-black">Lease agreement</span>
           </nav>

@@ -1,4 +1,4 @@
-<!-- <template>
+ <template>
     <div class="bg-white rounded-lg p-6 h-[500px] overflow-y-auto shadow">
         <h2 class="text- text-[#1D2739] font-medium mb-6">Pick a visitation day</h2>
 
@@ -124,10 +124,10 @@ const handleSchedule = async () => {
     };
     await createVisitation(payload);
 };
-</script> -->
+</script>
 
 
-<template>
+<!-- <template>
     <div class="bg-white rounded-lg p-6 h-[500px] overflow-y-auto shadow">
         <h2 class="text-[#1D2739] font-medium mb-6">Pick a visitation day</h2>
 
@@ -274,7 +274,7 @@ const handleSchedule = async () => {
     };
     await createVisitation(payload);
 };
-</script>
+</script> -->
 
 
 <!-- <template>

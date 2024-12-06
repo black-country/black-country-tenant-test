@@ -1,19 +1,15 @@
 <template>
     <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <!-- Modal overlay background -->
       <div class="absolute inset-0 backdrop-blur-lg bg-black opacity-80"></div>
   
-      <!-- Modal content -->
       <div class="relative max-w-screen-lg w-full mx-auto bg-transparent">
         <div class="relative">
-          <!-- Carousel Image -->
           <img
             :src="propertyImages[currentImage].image"
             :alt="propertyImages[currentImage].name"
             class="w-full h-[70vh] object-cover rounded-lg"
           />
   
-          <!-- Close Button -->
           <button
             class="absolute top-4 right-4 text-white bg-gray-800 rounded-full p-2"
             @click="closeModal"
@@ -24,7 +20,6 @@
             
           </button>
   
-          <!-- Previous Button -->
           <button
             class="absolute top-1/2 left-4 text-white bg-gray-800 rounded-full p-2 transform -translate-y-1/2"
             @click="prevImage"
@@ -36,7 +31,6 @@
             
           </button>
   
-          <!-- Next Button -->
           <button
             class="absolute top-1/2 right-4 text-white bg-gray-800 rounded-full p-2 transform -translate-y-1/2"
             @click="nextImage"
@@ -48,7 +42,6 @@
             
           </button>
   
-          <!-- Image Label -->
           <div class="absolute bottom-4 right-4 bg-black bg-opacity-50 text-white text-sm py-3 px-3 rounded-full">
             {{ propertyImages[currentImage].name }}
           </div>

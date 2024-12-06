@@ -108,7 +108,7 @@
               <ul v-if="property?.rules?.length" class="space-y-1">
                 <p class="border-[0.5px] rounded-lg border-gray-50 py-3 text-sm pl-4">{{property?.rules[0]?.rule }}</p>
                 <p class="border-[0.5px] rounded-lg border-gray-50 py-3 text-sm pl-4">{{property?.rules[1]?.rule }}</p>
-                <div class="border-[0.5px] rounded-lg border-gray-50 py-3">
+                <div v-if="otherRules?.length" class="border-[0.5px] rounded-lg border-gray-50 py-3">
                     <p class="py-3 text-sm pl-4">Other rules</p>
                   <div class="pl-5">
                     <ul class="list-disc ml-5 space-y-4 text-sm">

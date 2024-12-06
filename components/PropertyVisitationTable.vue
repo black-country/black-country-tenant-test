@@ -2,17 +2,20 @@
  <main class="lg:p-0 mt-4">
   <!-- {{ visitations }} -->
     <div v-if="!loading && visitations?.length" class="rounded-md border-[0.5px] border-gray-50 bg-white">
+      <!-- {{ visitations }} -->
         <table
           class="w-full mt-2 table-fixed text-sm"
         >
           <thead>
             <tr class="bg-[#F9FAFB] rounded-lg">
+              <th class="text-left py-3 text-[#667185] pl-4">Date</th>
               <th class="text-left py-3 text-[#667185] pl-4">Day</th>
               <th class="text-left py-3 text-[#667185]">Time</th>
             </tr>
           </thead>
           <tbody class="space-y-6">
             <tr v-for="(item, index) in visitations" :key="index" class="">
+              <td class="text-[#1D2739] py-3 pl-4"> {{  moment(item?.date).format("MMMM Do YYYY") ?? 'Nil' }}</td>
               <td class="text-[#1D2739] py-3 pl-4">{{ getDayName(item?.date) ?? "Nil" }}</td>
               <td class="text-[#1D2739] py-3">{{ item?.time ?? "Nil" }}</td>
             </tr>
@@ -39,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import moment from "moment";
 import { useFetchVisitations } from "@/composables/modules/visitation/fetch";
 import { useDayFromDate } from '@/composables/core/useDayFromDate';
 import { useUser } from "@/composables/auth/user";
