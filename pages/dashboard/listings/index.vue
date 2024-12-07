@@ -1018,6 +1018,11 @@
 
   <CoreDrawer title="Filters" :show="showFilterDrawer" @close="showFilterDrawer = false">
     <CorePropertyFilters />
+
+    <template #action>
+      <button class="text-gray-900 text-[#1D192B] border text-sm py-3 rounded-lg w-full">Reset</button>
+      <button class="bg-[#292929] text-sm text-white rounded-lg py-3 w-full">Show 500 homes</button>
+    </template>
   </CoreDrawer>
   </main>
 </template>

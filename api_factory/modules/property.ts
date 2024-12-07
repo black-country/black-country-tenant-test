@@ -31,5 +31,13 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
   $_filter_listings: (payload: any) => {
     const url = '/houses/search';
     return GATEWAY_ENDPOINT.post(url, payload);
-  }
+  },
+  $_fetch_property_types: () => {
+    const url = "/house-types";
+    return GATEWAY_ENDPOINT.get(url);
+  },
+  $_fetch_common_areas: () => {
+    const url = "/common-areas";
+    return GATEWAY_ENDPOINT.get(url);
+  },
 };
