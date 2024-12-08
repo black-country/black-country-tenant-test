@@ -79,7 +79,7 @@ const close = () => {
                 <slot></slot>
               </div>
             </div>
-            <div class="flex justify-between space-x-6 items-center w-full px-4 py-4">
+            <div v-if="footer" class="flex justify-between space-x-6 items-center w-full px-4 py-4">
               <slot name="action"></slot>
               <!-- <button type="button" class="rounded-md w-full bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:ring-gray-400">Cancel</button>
               <button type="submit" class="ml-4 w-full inline-flex justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">Save</button> -->
@@ -101,6 +101,10 @@ const props = defineProps({
     },
     title: {
         type: String
+    },
+    footer: {
+      type: Boolean,
+      default: false
     }
 })
 

@@ -1,231 +1,3 @@
-<!-- <script setup lang="ts">
-
-import { useGetCommonAreas } from '@/composables/modules/property/fetchCommonAreas'
-import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
-import { useGetPropertyTypes } from '@/composables/modules/property/fetchPropertyTypes'
-const { filterProperty, setPayload, loading, filterPayload } = useFilterProperty()
-const { propertyTypesList } = useGetPropertyTypes()
-const { loading: fetchingCommonAreas, commonAreasList } = useGetCommonAreas()
-import { ref, reactive, watch } from 'vue'
-
-interface FilterPayload {
-  order: Array<{ field: string; value: string }>;
-  sharedCount: number;
-  houseTypeIds: string[];
-  priceMin: number;
-  priceMax: number;
-  bedroomsCount: number[];
-  bathroomsCount: number[];
-  roomSizeMin: number;
-  roomSizeMax: number;
-  roomSizeUnit: string;
-  amenities: string[];
-  pets: string[];
-}
-
-const filters = reactive({
-  sortBy: '',
-  priceRange: [200000, 3000000] as [number, number],
-  roomSizeRange: [200, 6000] as [number, number],
-  coLiving: 1,
-  features: {} as Record<string, boolean>,
-  bedrooms: [] as number[],
-  propertyTypes: {} as Record<string, boolean>,
-  amenities: {} as Record<string, boolean>,
-  moveInDate: '',
-  availableNow: false
-});
-
-// const sortOptions = [
-//   { id: 'all', label: 'All' },
-//   { id: 'newest', label: 'Newest Listings' },
-//   { id: 'oldest', label: 'Oldest Listings' },
-//   { id: 'lowest', label: 'Lowest price to highest price' },
-//   { id: 'highest', label: 'Highest price to lowest price' },
-// ]
-
-// const propertyTypes = [
-//   { id: 'all', label: 'All' },
-//   { id: 'single-family', label: 'Single - family home' },
-//   { id: 'apartment', label: 'Apartment' },
-//   { id: 'condominium', label: 'Condominium' },
-//   { id: 'townhouse', label: 'Townhouse' },
-//   { id: 'duplex', label: 'Duplex' },
-// ]
-
-// const amenities = [
-//   { id: 'all', label: 'All' },
-//   { id: 'furnished', label: 'Furnished' },
-//   { id: 'private-bath', label: 'Private Bath' },
-//   { id: 'pet-friendly', label: 'Pet-friendly' },
-//   { id: 'garden', label: 'Garden' },
-//   { id: 'fitness', label: 'Fitness Center' },
-// ]
-
-const listingFeatures = [
-  { id: 'all', label: 'All' },
-  { id: 'furnished', label: 'Furnished' },
-  { id: 'not-furnished', label: 'Not furnished' },
-]
-
-const selectedSortOptions = ref<Set<string>>(new Set())
-const selectedPropertyTypes = ref<Set<string>>(new Set())
-const selectedAmenities = ref<Set<string>>(new Set())
-const selectedFeatures = ref<Set<string>>(new Set())
-
-const sharedCount = ref(0)
-const priceRange = reactive({
-  min: 200000,
-  max: 3000000
-})
-const roomSize = reactive({
-  min: 1000,
-  max: 3000
-})
-const selectedBedrooms = ref<number[]>([])
-const bathroomCount = ref('')
-const moveInDate = ref('')
-const availableNow = ref(false)
-
-const bedroomOptions = Array.from({ length: 8 }, (_, i) => i + 1)
-
-const toggleOption = (set: Set<string>, id: string) => {
-  if (id === 'all') {
-    if (set.has('all')) {
-      set.clear()
-    } else {
-      set.clear()
-      set.add('all')
-    }
-    return
-  }
-
-  if (set.has('all')) {
-    set.delete('all')
-  }
-
-  if (set.has(id)) {
-    set.delete(id)
-  } else {
-    set.add(id)
-  }
-}
-
-const getFilterPayload = (): FilterPayload => {
-  return {
-    order: [{ field: 'price', value: 'DESC' }],
-    sharedCount: sharedCount.value,
-    houseTypeIds: Array.from(selectedPropertyTypes.value),
-    priceMin: priceRange.min,
-    priceMax: priceRange.max,
-    bedroomsCount: selectedBedrooms.value,
-    bathroomsCount: bathroomCount.value ? [parseInt(bathroomCount.value)] : [],
-    roomSizeMin: roomSize.min,
-    roomSizeMax: roomSize.max,
-    roomSizeUnit: 'sqft',
-    amenities: Array.from(selectedAmenities.value),
-    pets: []
-  }
-}
-
-watch([selectedSortOptions, selectedPropertyTypes, selectedAmenities, selectedFeatures,
-      sharedCount, priceRange, roomSize, selectedBedrooms, bathroomCount, moveInDate, availableNow],
-  () => {
-    const payload = getFilterPayload()
-    console.log('Filter payload:', payload)
-  }
-)
-
-enum SortField {
-  CREATED_AT = 'createdAt',
-  PRICE = 'price'
-}
-
-enum SortValue {
-  DESC = 'DESC',
-  ASC = 'ASC'
-}
-
-interface SortConfig {
-  field: SortField
-  value: SortValue
-}
-
-interface SortPayload {
-  order: SortConfig[]
-}
-
-interface SortOption {
-  id: string
-  label: string
-  sortConfig: SortConfig | null
-}
-
-// Reactive state
-const selectedSort = ref<string>('all')
-const sortGroup = ref<string>('sortOptions')
-const currentSortConfig = ref<SortPayload | null>(null)
-
-// Sort options with corresponding configurations
-const sortOptions = ref<SortOption[]>([
-  {
-    id: 'all',
-    label: 'All',
-    sortConfig: null
-  },
-  {
-    id: 'newest',
-    label: 'Newest Listings',
-    sortConfig: {
-      field: SortField.CREATED_AT,
-      value: SortValue.DESC
-    }
-  },
-  {
-    id: 'oldest',
-    label: 'Oldest Listings',
-    sortConfig: {
-      field: SortField.CREATED_AT,
-      value: SortValue.ASC
-    }
-  },
-  {
-    id: 'lowest',
-    label: 'Lowest price to highest price',
-    sortConfig: {
-      field: SortField.PRICE,
-      value: SortValue.ASC
-    }
-  },
-  {
-    id: 'highest',
-    label: 'Highest price to lowest price',
-    sortConfig: {
-      field: SortField.PRICE,
-      value: SortValue.DESC
-    }
-  }
-])
-
-// Methods
-const handleSortChange = async (option: SortOption): Promise<void> => {
-  selectedSort.value = option.id
-  
-  if (option.sortConfig) {
-    currentSortConfig.value = {
-      order: [option.sortConfig]
-    }
-  } else {
-    currentSortConfig.value = null
-  }
-  
-  // Fetch products with new sort configuration
-  // await fetchProducts()
-}
-
-
-</script>
-
 <template>
   <div class="w-full max-w-md space-y-6">
 
@@ -301,32 +73,6 @@ const handleSortChange = async (option: SortOption): Promise<void> => {
       title="Average Room size range"
       prefix="sqft "
     />
-
-
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Listings features</h3>
-      <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <div v-for="feature in listingFeatures" :key="feature.id"
-             class="flex justify-between items-center">
-          <label :for="'feature-' + feature.id" class="ml-3 text-sm text-gray-700">{{ feature.label }}</label>
-          <div class="relative flex items-center">
-            <input
-              :id="'feature-' + feature.id"
-              type="checkbox"
-              :checked="selectedFeatures.has(feature.id)"
-              @change="toggleOption(selectedFeatures, feature.id)"
-              class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-            >
-            <div v-if="selectedFeatures.has(feature.id)"
-                 class="absolute pointer-events-none">
-              <svg class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
     <div class="space-y-3">
@@ -427,6 +173,47 @@ const handleSortChange = async (option: SortOption): Promise<void> => {
     </div>
 
     <div class="space-y-3">
+  <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Pets</h3>
+  <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
+    <div v-for="pet in petsList" :key="pet.id" class="flex justify-between items-center">
+      <label :for="'pet-' + pet.id" class="ml-3 text-sm text-gray-700">{{ pet.name }}</label>
+      <div class="relative flex items-center">
+        <input
+          :id="'pet-' + pet.id"
+          type="checkbox"
+          :checked="selectedPets.has(pet.id)"
+          @change="togglePetSelection(pet.id)"
+          class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
+        >
+      </div>
+    </div>
+  </div>
+</div>
+
+    <!-- <div class="space-y-3">
+  <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Pets Allowed</h3>
+  <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
+    <div v-for="pet in ['dog', 'cat', 'other']" :key="pet" class="flex justify-between items-center">
+      <label :for="'pet-' + pet" class="ml-3 text-sm text-gray-700">{{ pet.charAt(0).toUpperCase() + pet.slice(1) }}</label>
+      <div class="relative flex items-center">
+        <input
+          :id="'pet-' + pet"
+          type="checkbox"
+          :checked="selectedPets.has(pet)"
+          @change="toggleOption(selectedPets, pet)"
+          class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
+        />
+        <div v-if="selectedPets.has(pet)" class="absolute pointer-events-none">
+          <svg class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+    <!-- <div class="space-y-3">
       <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Move-in date</h3>
       <div class="relative">
         <input
@@ -436,9 +223,9 @@ const handleSortChange = async (option: SortOption): Promise<void> => {
           placeholder="dd/mm/yyyy"
         >
       </div>
-    </div>
+    </div> -->
 
-    <div class="flex items-center justify-between">
+    <!-- <div class="flex items-center justify-between">
       <span class="text-sm">Available now</span>
       <button
         @click="availableNow = !availableNow"
@@ -450,14 +237,277 @@ const handleSortChange = async (option: SortOption): Promise<void> => {
           :class="availableNow ? 'translate-x-6' : 'translate-x-1'"
         />
       </button>
-    </div>
+    </div> -->
 
-    <div class="flex justify-between items-center gap-x-6">
+    <!-- <div class="flex justify-between items-center gap-x-6">
         <button class="text-[#EBE5E0] text-[#1D192B] border text-sm py-3 rounded-lg w-full">Reset</button>
         <button class="bg-[#292929] text-sm text-white rounded-lg py-3 w-full">Submit</button>
+    </div> -->
+    <div class="flex justify-between items-center gap-x-6">
+        <button class="text-[#EBE5E0] text-[#1D192B] border text-sm py-3 rounded-lg w-full">Reset</button>
+        <button :disabled="loading" @click="handleSubmit" class="bg-[#292929] disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3 w-full">Submit {{ loading ? 'processing..' : 'Submit' }}</button>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+
+import { useGetCommonAreas } from '@/composables/modules/property/fetchCommonAreas'
+import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
+import { useGetPropertyTypes } from '@/composables/modules/property/fetchPropertyTypes'
+const { filterProperty, setPayload, loading, filterPayload } = useFilterProperty()
+const { propertyTypesList } = useGetPropertyTypes()
+const { loading: fetchingCommonAreas, commonAreasList } = useGetCommonAreas()
+import { ref, reactive, watch } from 'vue'
+
+interface FilterPayload {
+  order: Array<{ field: string; value: string }>;
+  sharedCount: number;
+  houseTypeIds: string[];
+  priceMin: number;
+  priceMax: number;
+  bedroomsCount: number[];
+  bathroomsCount: number[];
+  roomSizeMin: number;
+  roomSizeMax: number;
+  roomSizeUnit: string;
+  amenities: string[];
+  pets: string[];
+}
+
+const filters = reactive({
+  sortBy: '',
+  priceRange: [200000, 3000000] as [number, number],
+  roomSizeRange: [200, 6000] as [number, number],
+  coLiving: 1,
+  features: {} as Record<string, boolean>,
+  bedrooms: [] as number[],
+  propertyTypes: {} as Record<string, boolean>,
+  amenities: {} as Record<string, boolean>,
+  moveInDate: '',
+  availableNow: false
+});
+
+
+const listingFeatures = [
+  { id: 'all', label: 'All' },
+  { id: 'furnished', label: 'Furnished' },
+  { id: 'not-furnished', label: 'Not furnished' },
+]
+
+const selectedSortOptions = ref<Set<string>>(new Set())
+const selectedPropertyTypes = ref<Set<string>>(new Set())
+const selectedAmenities = ref<Set<string>>(new Set())
+const selectedFeatures = ref<Set<string>>(new Set())
+
+const sharedCount = ref(0)
+const priceRange = reactive({
+  min: 200000,
+  max: 3000000
+})
+const roomSize = reactive({
+  min: 1000,
+  max: 3000
+})
+const selectedBedrooms = ref<number[]>([])
+const bathroomCount = ref('')
+const moveInDate = ref('')
+const availableNow = ref(false)
+
+const bedroomOptions = Array.from({ length: 8 }, (_, i) => i + 1)
+
+const toggleOption = (set: Set<string>, id: string) => {
+  if (id === 'all') {
+    if (set.has('all')) {
+      set.clear()
+    } else {
+      set.clear()
+      set.add('all')
+    }
+    return
+  }
+
+  if (set.has('all')) {
+    set.delete('all')
+  }
+
+  if (set.has(id)) {
+    set.delete(id)
+  } else {
+    set.add(id)
+  }
+}
+
+
+const getFilterPayload = (): FilterPayload => {
+  return {
+    order: [{ field: 'price', value: 'DESC' }],
+    sharedCount: sharedCount.value,
+    houseTypeIds: Array.from(selectedPropertyTypes.value),
+    priceMin: priceRange.min,
+    priceMax: priceRange.max,
+    bedroomsCount: selectedBedrooms.value,
+    bathroomsCount: bathroomCount.value ? [parseInt(bathroomCount.value)] : [],
+    roomSizeMin: roomSize.min,
+    roomSizeMax: roomSize.max,
+    roomSizeUnit: 'sqft',
+    amenities: Array.from(selectedAmenities.value),
+    pets: Array.from(selectedPets.value) // Add selected pets
+  }
+}
+
+
+watch([selectedSortOptions, selectedPropertyTypes, selectedAmenities, selectedFeatures,
+      sharedCount, priceRange, roomSize, selectedBedrooms, bathroomCount, moveInDate, availableNow],
+  () => {
+    const payload = getFilterPayload()
+    console.log('Filter payload:', payload)
+  }
+)
+
+enum SortField {
+  CREATED_AT = 'createdAt',
+  PRICE = 'price'
+}
+
+enum SortValue {
+  DESC = 'DESC',
+  ASC = 'ASC'
+}
+
+interface SortConfig {
+  field: SortField
+  value: SortValue
+}
+
+interface SortPayload {
+  order: SortConfig[]
+}
+
+interface SortOption {
+  id: string
+  label: string
+  sortConfig: SortConfig | null
+}
+
+// Reactive state
+const selectedSort = ref<string>('all')
+const sortGroup = ref<string>('sortOptions')
+const currentSortConfig = ref<SortPayload | null>(null)
+
+// Sort options with corresponding configurations
+const sortOptions = ref<SortOption[]>([
+  {
+    id: 'all',
+    label: 'All',
+    sortConfig: null
+  },
+  {
+    id: 'newest',
+    label: 'Newest Listings',
+    sortConfig: {
+      field: SortField.CREATED_AT,
+      value: SortValue.DESC
+    }
+  },
+  {
+    id: 'oldest',
+    label: 'Oldest Listings',
+    sortConfig: {
+      field: SortField.CREATED_AT,
+      value: SortValue.ASC
+    }
+  },
+  {
+    id: 'lowest',
+    label: 'Lowest price to highest price',
+    sortConfig: {
+      field: SortField.PRICE,
+      value: SortValue.ASC
+    }
+  },
+  {
+    id: 'highest',
+    label: 'Highest price to lowest price',
+    sortConfig: {
+      field: SortField.PRICE,
+      value: SortValue.DESC
+    }
+  }
+])
+
+// // Methods
+// const handleSortChange = async (option: SortOption): Promise<void> => {
+//   selectedSort.value = option.id
+  
+//   if (option.sortConfig) {
+//     currentSortConfig.value = {
+//       order: [option.sortConfig]
+//     }
+//   } else {
+//     currentSortConfig.value = null
+//   }
+  
+//   // Fetch products with new sort configuration
+//   // await fetchProducts()
+// }
+
+const handleSortChange = async (option: SortOption): Promise<void> => {
+  selectedSort.value = option.id
+
+  if (option.sortConfig) {
+    currentSortConfig.value = {
+      order: [option.sortConfig]
+    }
+  } else {
+    currentSortConfig.value = null
+  }
+
+  // Fetch products with new sort configuration
+  // await fetchProducts()
+}
+
+
+const handleSubmit = () => {
+  const payload = getFilterPayload()
+  setPayload(payload)
+  filterProperty()
+  console.log(JSON.stringify({
+    order: payload.order,
+    sharedCount: payload.sharedCount,
+    houseTypeIds: payload.houseTypeIds,
+    priceMin: payload.priceMin,
+    priceMax: payload.priceMax,
+    bedroomsCount: payload.bedroomsCount,
+    bathroomsCount: payload.bathroomsCount,
+    roomSizeMin: payload.roomSizeMin,
+    roomSizeMax: payload.roomSizeMax,
+    roomSizeUnit: payload.roomSizeUnit,
+    amenities: payload.amenities,
+    pets: payload.pets // Log the pets as part of the payload
+  }, null, 2))
+}
+
+const petsList = [
+  { id: 'dog', name: 'Dog' },
+  { id: 'cat', name: 'Cat' },
+  { id: 'rabbit', name: 'Rabbit' },
+  { id: 'hamster', name: 'Hamster' },
+  { id: 'parrot', name: 'Parrot' }
+]
+
+const selectedPets = ref(new Set<string>()) // Initialize with an empty Set
+
+const togglePetSelection = (petId: string) => {
+  if (selectedPets.value.has(petId)) {
+    selectedPets.value.delete(petId)
+  } else {
+    selectedPets.value.add(petId)
+  }
+}
+
+</script>
+
 
 <style scoped>
 /* Custom checkbox styles */
@@ -507,299 +557,4 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 0.5rem;
   }
 }
-</style> -->
-
-
-<script setup lang="ts">
-import { useGetCommonAreas } from '@/composables/modules/property/fetchCommonAreas'
-import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
-import { useGetPropertyTypes } from '@/composables/modules/property/fetchPropertyTypes'
-const { filterProperty, setPayload, loading, filterPayload } = useFilterProperty()
-const { propertyTypesList } = useGetPropertyTypes()
-const { loading: fetchingCommonAreas, commonAreasList } = useGetCommonAreas()
-import { ref, reactive, watch, defineProps, defineEmits } from 'vue'
-
-interface FilterPayload {
-  order: Array<{ field: string; value: string }>;
-  sharedCount: number;
-  houseTypeIds: string[];
-  priceMin: number;
-  priceMax: number;
-  bedroomsCount: number[];
-  bathroomsCount: number[];
-  roomSizeMin: number;
-  roomSizeMax: number;
-  roomSizeUnit: string;
-  amenities: string[];
-  pets: string[];
-}
-
-enum SortField {
-  CREATED_AT = 'createdAt',
-  PRICE = 'price'
-}
-
-enum SortValue {
-  DESC = 'DESC',
-  ASC = 'ASC'
-}
-
-interface SortConfig {
-  field: SortField
-  value: SortValue
-}
-
-interface SortPayload {
-  order: SortConfig[]
-}
-
-interface SortOption {
-  id: string
-  label: string
-  sortConfig: SortConfig | null
-}
-
-// Props and Emits for the parent-child communication
-const props = defineProps({
-  initialFilterPayload: Object as PropType<FilterPayload>
-})
-
-const emit = defineEmits(['updatePayload'])
-
-const selectedSort = ref<string>('all')
-const sortGroup = ref<string>('sortOptions')
-const currentSortConfig = ref<SortPayload | null>(null)
-
-const filters = reactive({
-  sortBy: '',
-  priceRange: [200000, 3000000] as [number, number],
-  roomSizeRange: [200, 6000] as [number, number],
-  coLiving: 1,
-  features: {} as Record<string, boolean>,
-  bedrooms: [] as number[],
-  propertyTypes: {} as Record<string, boolean>,
-  amenities: {} as Record<string, boolean>,
-  moveInDate: '',
-  availableNow: false
-})
-
-const selectedSortOptions = ref<Set<string>>(new Set())
-const selectedPropertyTypes = ref<Set<string>>(new Set())
-const selectedAmenities = ref<Set<string>>(new Set())
-const selectedFeatures = ref<Set<string>>(new Set())
-
-const sharedCount = ref(0)
-const priceRange = reactive({
-  min: 200000,
-  max: 3000000
-})
-const roomSize = reactive({
-  min: 1000,
-  max: 3000
-})
-const selectedBedrooms = ref<number[]>([])
-const bathroomCount = ref('')
-const moveInDate = ref('')
-const availableNow = ref(false)
-
-const bedroomOptions = Array.from({ length: 8 }, (_, i) => i + 1)
-
-const toggleOption = (set: Set<string>, id: string) => {
-  if (id === 'all') {
-    if (set.has('all')) {
-      set.clear()
-    } else {
-      set.clear()
-      set.add('all')
-    }
-    return
-  }
-
-  if (set.has('all')) {
-    set.delete('all')
-  }
-
-  if (set.has(id)) {
-    set.delete(id)
-  } else {
-    set.add(id)
-  }
-}
-
-const getFilterPayload = (): FilterPayload => {
-  return {
-    order: [{ field: 'price', value: 'DESC' }],
-    sharedCount: sharedCount.value,
-    houseTypeIds: Array.from(selectedPropertyTypes.value),
-    priceMin: priceRange.min,
-    priceMax: priceRange.max,
-    bedroomsCount: selectedBedrooms.value,
-    bathroomsCount: bathroomCount.value ? [parseInt(bathroomCount.value)] : [],
-    roomSizeMin: roomSize.min,
-    roomSizeMax: roomSize.max,
-    roomSizeUnit: 'sqft',
-    amenities: Array.from(selectedAmenities.value),
-    pets: []
-  }
-}
-
-watch([selectedSortOptions, selectedPropertyTypes, selectedAmenities, selectedFeatures,
-      sharedCount, priceRange, roomSize, selectedBedrooms, bathroomCount, moveInDate, availableNow],
-  () => {
-    const payload = getFilterPayload()
-    console.log('Filter payload:', payload)
-  }
-)
-
-// Sort options with corresponding configurations
-const sortOptions = ref<SortOption[]>([
-  {
-    id: 'all',
-    label: 'All',
-    sortConfig: null
-  },
-  {
-    id: 'newest',
-    label: 'Newest Listings',
-    sortConfig: {
-      field: SortField.CREATED_AT,
-      value: SortValue.DESC
-    }
-  },
-  {
-    id: 'oldest',
-    label: 'Oldest Listings',
-    sortConfig: {
-      field: SortField.CREATED_AT,
-      value: SortValue.ASC
-    }
-  },
-  {
-    id: 'lowest',
-    label: 'Lowest price to highest price',
-    sortConfig: {
-      field: SortField.PRICE,
-      value: SortValue.ASC
-    }
-  },
-  {
-    id: 'highest',
-    label: 'Highest price to lowest price',
-    sortConfig: {
-      field: SortField.PRICE,
-      value: SortValue.DESC
-    }
-  }
-])
-
-// Methods
-const handleSortChange = (option: SortOption): void => {
-  selectedSort.value = option.id
-  
-  if (option.sortConfig) {
-    currentSortConfig.value = {
-      order: [option.sortConfig]
-    }
-  } else {
-    currentSortConfig.value = null
-  }
-
-  // Fetch products with new sort configuration
-  // await fetchProducts()
-}
-
-const submitFilter = () => {
-  const payload = getFilterPayload()
-  emit('updatePayload', payload)  // Emit the payload to the parent component
-}
-
-</script>
-
-<template>
-  <div class="w-full max-w-md space-y-6">
-
-    <!-- Sort by section -->
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Sort by</h3>
-      <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <div
-          v-for="option in sortOptions"
-          :key="option.id"
-          class="flex justify-between items-center"
-        >
-          <label :for="option.id" class="ml-3 text-sm text-gray-700">{{ option.label }}</label>
-          <div class="relative flex items-center">
-            <input
-              :id="option.id"
-              type="radio"
-              :name="sortGroup"
-              :value="option.id"
-              :checked="selectedSort === option.id"
-              @change="handleSortChange(option)"
-              class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-            >
-            <div
-              v-if="selectedSort === option.id"
-              class="absolute pointer-events-none"
-            >
-              <svg
-                class="h-5 w-5 text-green-600"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-              </svg>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Co-living Section -->
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Co-living with</h3>
-      <div class="flex items-center space-x-4 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <button @click="sharedCount = Math.max(0, sharedCount - 1)"
-                class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-          -
-        </button>
-        <span class="w-20 text-center">{{ sharedCount }}</span>
-        <button @click="sharedCount++"
-                class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-          +
-        </button>
-      </div>
-    </div>
-
-    <!-- Price Range -->
-    <FiltersRangeSlider
-      v-model="filters.priceRange"
-      :min="200000"
-      :max="3000000"
-      :step="100000"
-      title="Price range"
-      prefix="NGN "
-    />
-
-    <!-- Room Size Range -->
-    <FiltersRangeSlider
-      v-model="filters.roomSizeRange"
-      :min="200"
-      :max="6000"
-      :step="100"
-      title="Average Room size range"
-      prefix="sqft "
-    />
-
-    <!-- Bedrooms, Bathrooms, Property Type, Amenities, etc. sections -->
-    <!-- Similar sections as above for selecting filters go here -->
-
-    <!-- Submit Button -->
-    <button
-      class="bg-[#292929] text-sm text-white rounded-lg py-3 w-full"
-      @click="submitFilter"
-    >
-      Submit
-    </button>
-  </div>
-</template>
+</style>
