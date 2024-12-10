@@ -9,23 +9,23 @@ const properties = ref([])
 
 export const useFilterProperty = () => {
   // Reactive state for filter payload
-  const filterPayload = ref<FilterPayload>({
+  const filterPayload = ref({
     order: [{ field: 'price', value: 'DESC' }],
     sharedCount: 0,
     houseTypeIds: [],
-    priceMin: 200000,
-    priceMax: 3000000,
+    priceMin: 0,
+    priceMax: 0,
     bedroomsCount: [],
     bathroomsCount: [],
-    roomSizeMin: 200,
-    roomSizeMax: 6000,
-    roomSizeUnit: 'sqm',
+    roomSizeMin: 0,
+    roomSizeMax: 0,
+    roomSizeUnit: '',
     amenities: [],
     pets: []
   });
 
   // Dynamically set filter payload
-  const setPayload = (newFilterPayload: Partial<FilterPayload>) => {
+  const setPayload = (newFilterPayload: any) => {
     Object.assign(filterPayload.value, newFilterPayload);
   };
 
@@ -44,6 +44,7 @@ export const useFilterProperty = () => {
           duration: 3000
         });
         properties.value = res?.data?.result || []
+        return res?.data?.result
       } else {
         showToast({
           title: "Error",

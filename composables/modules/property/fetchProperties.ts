@@ -1,6 +1,7 @@
 import { ref, onMounted, watch } from 'vue'
 import { property_api } from '@/api_factory/modules/property'
 import { debounce } from 'lodash'
+import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
 
 export const useGetProperties = () => {
     const loadingProperties = ref(false) // Loading state for general properties
@@ -12,6 +13,7 @@ export const useGetProperties = () => {
     const perPage = ref(20)
     const totalPages = ref(1) // To store total pages
     const sortBy = ref('all') // To store the sort type
+    const { properties, loading } = useFilterProperty()
 
     const { $_fetch_properties } = property_api
 

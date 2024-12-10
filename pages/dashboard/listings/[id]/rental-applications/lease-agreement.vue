@@ -42,8 +42,14 @@
       <div class="bg-white rounded-lg border-[0.5px] border-gray-100 p-8">
 
         <div class="mt-6 space-y-6">
-          <div v-html="propertyObj?.rentalApplication?.leaseAgreement"></div>
-
+          <div v-if="!containsHttps(lease?.leaseAgreementContent)" v-html="propertyObj?.rentalApplication?.leaseAgreement"></div>
+        <div v-else>
+          <iframe
+            :src="`https://docs.google.com/viewer?url=${encodeURIComponent(extractUrl(propertyObj?.rentalApplication?.leaseAgreement))}&embedded=true`"
+            class="w-full h-96"
+            frameborder="0"
+           ></iframe>
+        </div>
           <div class="">
             <h2 class="text-lg font-medium mb-2">Signature</h2>
             <p class="text-gray-500 mb-6">
@@ -323,6 +329,8 @@
 </template>
 
 <script setup lang="ts">
+import { useUrlExtractor } from '@/composables/core/useUrlExtractor';
+import { useHttpsDetector } from '@/composables/core/useUrlCheck'
 import { useRejectLease } from '@/composables/modules/lease/reject'
 import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 import { useCustomToast } from "@/composables/core/useCustomToast";
@@ -330,6 +338,8 @@ import { useSignLeaseAgreement } from "@/composables/modules/rentals/signLeaseAg
 const { propertyObj, loading } = useFetchProperty();
 const { rejectLeaseAgreement, loading: rejecting } = useRejectLease()
 const { showToast } = useCustomToast();
+const { containsHttps } = useHttpsDetector();
+const { extractUrl } = useUrlExtractor();
 const route = useRoute();
 const router = useRouter();
 const {

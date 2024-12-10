@@ -465,7 +465,7 @@
                 </button>
                 <p class="text-red-600 mt-2 text-xs text-center">Cancel application</p>
               </div>
-
+<!-- {{ rentalObj.rentalLeaseAgreement }} -->
               <div class="flex flex-col items-center">
                 <button
                   class="rounded-lg transition"

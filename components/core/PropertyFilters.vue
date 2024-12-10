@@ -1,128 +1,62 @@
 <template>
-  <div class="w-full max-w-md space-y-6">
+  <div class="w-full custom-scroll max-w-md space-y-6">
 
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Sort by</h3>
+   <section class="space-y-1">
+    <div class="">
+      <h3 class="font-medium text-sm bg-white py-3 bg-white border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Sort by</h3>
     </div>
 
-    <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-    <div
-      v-for="option in sortOptions"
-      :key="option.id"
-      class="flex justify-between items-center"
-    >
-      <label :for="option.id" class="ml-3 text-sm text-gray-700">{{ option.label }}</label>
-      <div class="relative flex items-center">
-        <input
-          :id="option.id"
-          type="radio"
-          :name="sortGroup"
-          :value="option.id"
-          :checked="selectedSort === option.id"
-          @change="handleSortChange(option)"
-          class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-        >
-        <div
-          v-if="selectedSort === option.id"
-          class="absolute pointer-events-none"
-        >
-          <svg
-            class="h-5 w-5 text-green-600"
-            viewBox="0 0 20 20"
-            fill="currentColor"
+    <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 px-4">
+      <div
+        v-for="option in sortOptions"
+        :key="option.id"
+        class="flex justify-between items-center py-1 cursor-pointer"
+        @click="handleSortChange(option)"
+      >
+        <label :for="option.id" class="text-sm text-gray-700 cursor-pointer">
+          {{ option.label }}
+        </label>
+        
+        <div class="relative flex items-center">
+          <input
+            :id="option.id"
+            type="radio"
+            :name="sortGroup"
+            :value="option.id"
+            :checked="selectedSort === option.id"
+            class="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-500 focus:ring-offset-0"
+            @change="handleSortChange(option)"
           >
-            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-          </svg>
         </div>
       </div>
     </div>
-  </div>
+   </section>
 
 
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Co-living with</h3>
-      <div class="flex items-center space-x-4 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
+    <section class="space-y-1">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Co-living with</h3>
+      <div class="flex items-center space-x-4 bg-white rounded-md border-[0.5px] border-gray-50 py-4 px-2">
         <button @click="sharedCount = Math.max(0, sharedCount - 1)"
-                class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-          -
+                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.3333 10H4" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
         </button>
-        <span class="w-20 text-center">{{ sharedCount }}</span>
+        <span class="w-20 text-center bg-[#EAEAEA] py-3 px-20 rounded-md">{{ sharedCount }}</span>
         <button @click="sharedCount++"
-                class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-          +
+                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.334 3.33301V16.6663" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.66699 10H17.0003" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
         </button>
       </div>
-    </div>
+    </section>
 
-
-    <FiltersRangeSlider
-      v-model="filters.priceRange"
-      :min="200000"
-      :max="3000000"
-      :step="100000"
-      title="Price range"
-      prefix="NGN "
-    />
-
-   
-    <FiltersRangeSlider
-      v-model="filters.roomSizeRange"
-      :min="200"
-      :max="6000"
-      :step="100"
-      title="Average Room size range"
-      prefix="sqft "
-    />
-
-
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Bathrooms</h3>
-      <div class="flex items-center space-x-4 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <button @click="bathroomCount = String(Math.max(1, parseInt(bathroomCount || '1') - 1))"
-                class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-          -
-        </button>
-        <span class="w-20 text-center">{{ bathroomCount || 1 }}</span>
-        <button @click="bathroomCount = String(parseInt(bathroomCount || '1') + 1)"
-                class="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center">
-          +
-        </button>
-      </div>
-    </div>
-
-
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Bedrooms</h3>
-      <div class="flex flex-wrap gap-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <button
-          class="px-4 py-2 text-sm rounded-full"
-          :class="selectedBedrooms.length === 0 ? 'bg-green-600 text-white' : 'border border-gray-300 text-gray-700'"
-          @click="selectedBedrooms = []"
-        >
-          Any
-        </button>
-        <button
-          v-for="num in bedroomOptions"
-          :key="num"
-          class="px-4 py-2 text-sm rounded-full"
-          :class="selectedBedrooms.includes(num) ? 'bg-green-600 text-white' : 'border border-gray-300 text-gray-700'"
-          @click="selectedBedrooms = selectedBedrooms.includes(num) ? selectedBedrooms.filter(n => n !== num) : [...selectedBedrooms, num]"
-        >
-          {{ num }}
-        </button>
-        <button
-          class="px-4 py-2 text-sm rounded-full border border-gray-300 text-gray-700"
-          :class="selectedBedrooms.includes(9) ? 'bg-green-600 text-white' : ''"
-          @click="selectedBedrooms = selectedBedrooms.includes(9) ? selectedBedrooms.filter(n => n !== 9) : [...selectedBedrooms, 9]"
-        >
-          9+
-        </button>
-      </div>
-    </div>
-
-
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Property type</h3>
+    <section class="space-y-1">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Property type</h3>
       <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
         <div v-for="type in propertyTypesList" :key="type.id"
              class="flex justify-between items-center">
@@ -144,11 +78,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
 
-    <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Building amenities</h3>
+    <section class="space-y-1">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Building amenities</h3>
       <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
         <div v-for="amenity in commonAreasList" :key="amenity.id"
              class="flex justify-between items-center">
@@ -170,10 +104,83 @@
           </div>
         </div>
       </div>
+    </section>
+
+
+    <FiltersRangeSlider
+      v-model="filters.priceRange"
+      :min="200000"
+      :max="3000000"
+      :step="100000"
+      title="Price range"
+      prefix="₦ "
+    />
+
+   
+    <FiltersRangeSlider
+      v-model="filters.roomSizeRange"
+      :min="200"
+      :max="6000"
+      :step="100"
+      code="room"
+      title="Average Room size range"
+      prefix=""
+      @update:selectedUnit="onUnitUpdate"
+    />
+
+
+    <div class="space-y-1">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Bedrooms</h3>
+      <div class="flex flex-wrap gap-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
+        <button
+          class="px-4 py-2 text-xs rounded-md"
+          :class="selectedBedrooms.length === 0 ? 'bg-[#5B8469] text-white' : 'border border-gray-100 text-gray-700'"
+          @click="selectedBedrooms = []"
+        >
+          Any
+        </button>
+        <button
+          v-for="num in bedroomOptions"
+          :key="num"
+          class="px-4 py-2 text-xs rounded-md"
+          :class="selectedBedrooms.includes(num) ? 'bg-[#5B8469] text-white' : 'border-[0.5px] border-gray-100 text-gray-700'"
+          @click="selectedBedrooms = selectedBedrooms.includes(num) ? selectedBedrooms.filter(n => n !== num) : [...selectedBedrooms, num]"
+        >
+          {{ num }}
+        </button>
+        <button
+          class="px-4 py-2 text-xs rounded-md border-[0.5px] border-gray-100 text-gray-700"
+          :class="selectedBedrooms.includes(9) ? 'bg-[#5B8469] text-white' : ''"
+          @click="selectedBedrooms = selectedBedrooms.includes(9) ? selectedBedrooms.filter(n => n !== 9) : [...selectedBedrooms, 9]"
+        >
+          9+
+        </button>
+      </div>
     </div>
 
-    <div class="space-y-3">
-  <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Pets</h3>
+    <div class="space-y-1">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Bathrooms</h3>
+      <div class="flex items-center space-x-4 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
+        <button @click="bathroomCount = String(Math.max(1, parseInt(bathroomCount || '1') - 1))"
+                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M17.3333 10H4" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+        </button>
+        <span class="w-20 text-center bg-[#EAEAEA] py-3 px-20 rounded-md">{{ bathroomCount || 1 }}</span>
+        <button @click="bathroomCount = String(parseInt(bathroomCount || '1') + 1)"
+                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10.334 3.33301V16.6663" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.66699 10H17.0003" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+        </button>
+      </div>
+    </div>
+
+
+    <div class="space-y-1">
+  <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Pets</h3>
   <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
     <div v-for="pet in petsList" :key="pet.id" class="flex justify-between items-center">
       <label :for="'pet-' + pet.id" class="ml-3 text-sm text-gray-700">{{ pet.name }}</label>
@@ -190,68 +197,14 @@
   </div>
 </div>
 
-    <!-- <div class="space-y-3">
-  <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Pets Allowed</h3>
-  <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-    <div v-for="pet in ['dog', 'cat', 'other']" :key="pet" class="flex justify-between items-center">
-      <label :for="'pet-' + pet" class="ml-3 text-sm text-gray-700">{{ pet.charAt(0).toUpperCase() + pet.slice(1) }}</label>
-      <div class="relative flex items-center">
-        <input
-          :id="'pet-' + pet"
-          type="checkbox"
-          :checked="selectedPets.has(pet)"
-          @change="toggleOption(selectedPets, pet)"
-          class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-        />
-        <div v-if="selectedPets.has(pet)" class="absolute pointer-events-none">
-          <svg class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-            <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-          </svg>
-        </div>
-      </div>
-    </div>
-  </div>
-</div> -->
-
-    <!-- <div class="space-y-3">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-100 rounded-lg px-4 text-gray-900">Move-in date</h3>
-      <div class="relative">
-        <input
-          type="date"
-          v-model="moveInDate"
-          class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"
-          placeholder="dd/mm/yyyy"
-        >
-      </div>
-    </div> -->
-
-    <!-- <div class="flex items-center justify-between">
-      <span class="text-sm">Available now</span>
-      <button
-        @click="availableNow = !availableNow"
-        class="relative inline-flex h-6 w-11 items-center rounded-full"
-        :class="availableNow ? 'bg-green-600' : 'bg-gray-200'"
-      >
-        <span
-          class="inline-block h-4 w-4 transform rounded-full bg-white transition"
-          :class="availableNow ? 'translate-x-6' : 'translate-x-1'"
-        />
-      </button>
-    </div> -->
-
-    <!-- <div class="flex justify-between items-center gap-x-6">
-        <button class="text-[#EBE5E0] text-[#1D192B] border text-sm py-3 rounded-lg w-full">Reset</button>
-        <button class="bg-[#292929] text-sm text-white rounded-lg py-3 w-full">Submit</button>
-    </div> -->
     <div class="flex justify-between items-center gap-x-6">
-        <button class="text-[#EBE5E0] text-[#1D192B] border text-sm py-3 rounded-lg w-full">Reset</button>
-        <button :disabled="loading" @click="handleSubmit" class="bg-[#292929] disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3 w-full">Submit {{ loading ? 'processing..' : 'Submit' }}</button>
+        <button @click="resetFilterOptions" class="text-[#EBE5E0] text-[#1D192B] border text-sm py-3 rounded-lg w-full">Reset</button>
+        <button :disabled="loading" @click="handleSubmit" class="bg-[#292929] disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3 w-full">{{ loading ? 'processing..' : 'Apply Filter' }}</button>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-
 import { useGetCommonAreas } from '@/composables/modules/property/fetchCommonAreas'
 import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
 import { useGetPropertyTypes } from '@/composables/modules/property/fetchPropertyTypes'
@@ -275,6 +228,11 @@ interface FilterPayload {
   pets: string[];
 }
 
+const onUnitUpdate = (newUnit: any) => {
+  filterPayload.value.roomSizeUnit = newUnit
+      // console.log('Unit updated:', newUnit);
+    }
+
 const filters = reactive({
   sortBy: '',
   priceRange: [200000, 3000000] as [number, number],
@@ -288,12 +246,13 @@ const filters = reactive({
   availableNow: false
 });
 
+// Reactive filters object
+const filtersObj = reactive({ ...filters });
 
-const listingFeatures = [
-  { id: 'all', label: 'All' },
-  { id: 'furnished', label: 'Furnished' },
-  { id: 'not-furnished', label: 'Not furnished' },
-]
+// Function to reset filters to their default state
+const resetFilterOptions = () => {
+  Object.assign(filtersObj, filters);
+};
 
 const selectedSortOptions = ref<Set<string>>(new Set())
 const selectedPropertyTypes = ref<Set<string>>(new Set())
@@ -340,17 +299,26 @@ const toggleOption = (set: Set<string>, id: string) => {
 
 
 const getFilterPayload = (): FilterPayload => {
+    const selectedOption = sortOptions.value.find(option => option.id === selectedSort.value)
+  const orderConfig = selectedOption?.sortConfig || {
+    field: SortField.PRICE,
+    value: SortValue.DESC
+  }
+
   return {
-    order: [{ field: 'price', value: 'DESC' }],
+    order: [{
+      field: orderConfig.field,
+      value: orderConfig.value
+    }],
     sharedCount: sharedCount.value,
     houseTypeIds: Array.from(selectedPropertyTypes.value),
-    priceMin: priceRange.min,
-    priceMax: priceRange.max,
+    priceMin:filters.priceRange[0],
+    priceMax: filters.priceRange[1],
     bedroomsCount: selectedBedrooms.value,
     bathroomsCount: bathroomCount.value ? [parseInt(bathroomCount.value)] : [],
-    roomSizeMin: roomSize.min,
-    roomSizeMax: roomSize.max,
-    roomSizeUnit: 'sqft',
+    roomSizeMin: filters.roomSizeRange[0],
+    roomSizeMax: filters.roomSizeRange[1],
+    roomSizeUnit: filterPayload?.value?.roomSizeUnit,
     amenities: Array.from(selectedAmenities.value),
     pets: Array.from(selectedPets.value) // Add selected pets
   }
@@ -436,10 +404,9 @@ const sortOptions = ref<SortOption[]>([
   }
 ])
 
-// // Methods
 // const handleSortChange = async (option: SortOption): Promise<void> => {
 //   selectedSort.value = option.id
-  
+
 //   if (option.sortConfig) {
 //     currentSortConfig.value = {
 //       order: [option.sortConfig]
@@ -447,45 +414,61 @@ const sortOptions = ref<SortOption[]>([
 //   } else {
 //     currentSortConfig.value = null
 //   }
-  
-//   // Fetch products with new sort configuration
-//   // await fetchProducts()
+
 // }
 
-const handleSortChange = async (option: SortOption): Promise<void> => {
+const handleSortChange = (option: SortOption) => {
   selectedSort.value = option.id
-
+  
+  // Update the main filter payload
+  const payload = getFilterPayload()
   if (option.sortConfig) {
-    currentSortConfig.value = {
-      order: [option.sortConfig]
-    }
+    payload.order = [{
+      field: option.sortConfig.field,
+      value: option.sortConfig.value
+    }]
   } else {
-    currentSortConfig.value = null
+    // Default sorting when 'All' is selected
+    payload.order = [{
+      field: SortField.PRICE,
+      value: SortValue.DESC
+    }]
   }
-
-  // Fetch products with new sort configuration
-  // await fetchProducts()
+  
+  // setPayload(payload)
+  // filterProperty()
 }
 
+// Watch for sort changes
+watch(selectedSort, (newSort) => {
+  const selectedOption = sortOptions.value.find(option => option.id === newSort)
+  if (selectedOption) {
+    handleSortChange(selectedOption)
+  }
+})
 
-const handleSubmit = () => {
+const emit = defineEmits(['close', 'result'])
+
+const handleSubmit = async () => {
   const payload = getFilterPayload()
   setPayload(payload)
-  filterProperty()
-  console.log(JSON.stringify({
-    order: payload.order,
-    sharedCount: payload.sharedCount,
-    houseTypeIds: payload.houseTypeIds,
-    priceMin: payload.priceMin,
-    priceMax: payload.priceMax,
-    bedroomsCount: payload.bedroomsCount,
-    bathroomsCount: payload.bathroomsCount,
-    roomSizeMin: payload.roomSizeMin,
-    roomSizeMax: payload.roomSizeMax,
-    roomSizeUnit: payload.roomSizeUnit,
-    amenities: payload.amenities,
-    pets: payload.pets // Log the pets as part of the payload
-  }, null, 2))
+  const result = await filterProperty()
+  emit('result',result)
+  emit('close')
+  // console.log(JSON.stringify({
+  //   order: payload.order,
+  //   sharedCount: payload.sharedCount,
+  //   houseTypeIds: payload.houseTypeIds,
+  //   priceMin: payload.priceMin,
+  //   priceMax: payload.priceMax,
+  //   bedroomsCount: payload.bedroomsCount,
+  //   bathroomsCount: payload.bathroomsCount,
+  //   roomSizeMin: payload.roomSizeMin,
+  //   roomSizeMax: payload.roomSizeMax,
+  //   roomSizeUnit: payload.roomSizeUnit,
+  //   amenities: payload.amenities,
+  //   pets: payload.pets // Log the pets as part of the payload
+  // }, null, 2))
 }
 
 const petsList = [
@@ -505,6 +488,23 @@ const togglePetSelection = (petId: string) => {
     selectedPets.value.add(petId)
   }
 }
+
+// Watch specific properties and log changes
+watch(
+  () => filters.priceRange,
+  (newVal) => {
+    console.log('Parent priceRange updated:', newVal);
+  },
+  { immediate: true }
+);
+
+watch(
+  () => filters.roomSizeRange,
+  (newVal) => {
+    console.log('Parent roomSizeRange updated:', newVal);
+  },
+  { immediate: true }
+);
 
 </script>
 
@@ -557,4 +557,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 0.5rem;
   }
 }
+
 </style>
+
