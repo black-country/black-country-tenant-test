@@ -6,22 +6,22 @@ export const useTour = () => {
   const hasSeenTour = ref(false)
 
   const steps = ref<TourStep[]>([
-    {
-      target: '[data-v-tour="dashboard"]',
-      header: 'Welcome to Dashboard',
-      content: 'This is your main dashboard where you can see all important information.',
-      params: {
-        placement: 'bottom'
-      }
-    },
-    {
-      target: '[data-v-tour="profile"]',
-      header: 'Your Profile',
-      content: 'Click here to manage your profile settings.',
-      params: {
-        placement: 'right'
-      }
-    },
+    // {
+    //   target: '[data-v-tour="dashboard"]',
+    //   header: 'Welcome to Dashboard',
+    //   content: 'This is your main dashboard where you can see all important information.',
+    //   params: {
+    //     placement: 'bottom'
+    //   }
+    // },
+    // {
+    //   target: '[data-v-tour="profile"]',
+    //   header: 'Your Profile',
+    //   content: 'Click here to manage your profile settings.',
+    //   params: {
+    //     placement: 'right'
+    //   }
+    // },
     {
         target: '[data-v-tour="listings"]',
         header: 'Listings',

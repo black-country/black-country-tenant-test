@@ -70,6 +70,10 @@ export const useGetProperties = () => {
         debouncedSearchProperties() // Call the debounced version
     })
 
+    watch(properties, (oldVal, newVal) => {
+        propertiesList.value = newVal
+    })
+
     // Watch currentPage for pagination
     watch(currentPage, () => {
         if (!searchQuery.value) {

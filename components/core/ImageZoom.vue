@@ -56,8 +56,8 @@ const computedClasses = computed(() => {
   return `${defaultClasses} ${props.class}`;
 });
 </script>
-
-<style scoped>
+                                                                                                                                                    
+<!-- <style scoped>
 .fade-zoom-enter-active,
 .fade-zoom-leave-active {
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -72,4 +72,19 @@ const computedClasses = computed(() => {
   opacity: 1;
   transform: scale(1);
 }
-</style>
+</style> -->
+
+<style scoped>
+/* Define the enter/leave transition classes */
+.fade-zoom-enter-active, .fade-zoom-leave-active {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.fade-zoom-enter-from, .fade-zoom-leave-to {
+  opacity: 0;
+  transform: scale(0.8);
+}
+.fade-zoom-enter-to, .fade-zoom-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}
+</style> 

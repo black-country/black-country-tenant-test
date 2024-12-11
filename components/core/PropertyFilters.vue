@@ -198,7 +198,7 @@
 </div>
 
     <div class="flex justify-between items-center gap-x-6">
-        <button @click="resetFilterOptions" class="text-[#EBE5E0] text-[#1D192B] border text-sm py-3 rounded-lg w-full">Reset</button>
+        <button @click="resetFilterOptions" class="text-[#EBE5E0] text-gray-800 font-semibold border text-sm py-3 rounded-lg w-full">Reset</button>
         <button :disabled="loading" @click="handleSubmit" class="bg-[#292929] disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3 w-full">{{ loading ? 'processing..' : 'Apply Filter' }}</button>
     </div>
   </div>
@@ -252,6 +252,8 @@ const filtersObj = reactive({ ...filters });
 // Function to reset filters to their default state
 const resetFilterOptions = () => {
   Object.assign(filtersObj, filters);
+  emit('close')
+  window.location.reload()
 };
 
 const selectedSortOptions = ref<Set<string>>(new Set())
