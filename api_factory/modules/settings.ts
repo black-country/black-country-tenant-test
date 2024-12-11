@@ -8,5 +8,9 @@ export const settings_api = {
       $_fetch_notification_preferences: () => {
         const url = '/preferences/users';
         return GATEWAY_ENDPOINT.get(url);
+      },
+      $_fetch_upcoming_activities: (id: any) => {
+        const url = `/tenants/${id}/upcoming-activities`;
+        return GATEWAY_ENDPOINT.get(url);
       }
 };

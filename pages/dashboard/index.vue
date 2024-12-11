@@ -2,7 +2,6 @@
   <main>
     <TopNavBar class="" />
     <div class="bg-gray-25 min-h-screen p-6">
-      <!-- {{ myHomeInfo }} -->
       <div class="max-w-4xl mx-auto">
         <h1 class="text-lg text-[#1D2739] font-medium mb-6">{{ greeting ?? 'Hello' }}, {{ user.firstName ?? 'Nil' }}
           {{ user.lastName ?? 'Nil' }}</h1>
@@ -83,9 +82,10 @@
         <section class="mt-10">
           <div class="flex justify-between items-center bg-white rounded-md py-5 px-4">
             <h3 class="text-base font-medium text-[#171717]">Upcoming activities</h3>
-            <a href="#" class="text-[#171717]">View all</a>
+            <NuxtLink to="/dashboard/upcoming-activities" class="text-[#171717]">View all</NuxtLink>
           </div>
-          <div
+          <UpcomingActivities />
+          <!-- <div
           v-if="!requestDates.some(date => filteredRequestsByStatus(date).length > 0) && !loading"
           class="flex flex-col items-center mt-20 text-gray-500"
         >
@@ -116,9 +116,8 @@
 
           </div>
           <p>No request made yet</p>
-        </div>
+          </div>
 
-        <!-- Requests List -->
         <div v-else-if="!fetchingRequests && requestDates.length">
           <div class="space-y-4">
             <div v-for="date in requestDates" :key="date" class="space-y-2">
@@ -159,12 +158,6 @@
                 >
                   {{ request.status }}
                 </span>
-                <!-- <span
-                  :class="statusClasses(request.status)"
-                  class="px-2 py-1 text-xs font-semibold rounded-full text-xs px-3"
-                >
-                  {{ request.status }}
-                </span> -->
               </div>
             </div>
           </div>
@@ -173,7 +166,7 @@
           <div class="rounded-md p-4 w-full mx-auto mt-4">
             <div class="animate-pulse h-60 bg-slate-200 flex space-x-4"></div>
           </div>
-        </section>
+        </section> -->
           <!-- <div class="pt-3 rounded-lg">
             <div v-if="upcomingActivities.length === 0" class="text-center text-gray-500 py-12">
               <img src="@/assets/icons/event-illustrations.svg" alt="No events" class="h-12 w-12 mx-auto mb-2" />
@@ -274,6 +267,7 @@
 
 <script setup lang="ts">
 import moment from "moment";
+import { useFetchUpcomingActivities } from '@/composables/modules/settings/useFetchUpcomingActivities'
 import { useFetchMaintenanceRequests } from '@/composables/modules/maintenance/useFetchMaintenanceRequests'
 const { maintenanceRequests, loading: fetchingRequests } = useFetchMaintenanceRequests()
 import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
@@ -290,6 +284,7 @@ import { useUser } from '@/composables/auth/user'
 const { user } = useUser()
 const { loading: fetchingMyHomeInfo, myHomeInfo } = useFetchMyHomeInfo()
 const { paymentList, loading } = useGetTransactionHistory()
+const { loading: fetchingUpcomingActivities, upcomingActivitiesList } = useFetchUpcomingActivities()
 const {
   initializeRentPayment,
   loading: initializing,
