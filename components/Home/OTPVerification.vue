@@ -1,5 +1,12 @@
 <template>
     <div class="min-h-screen flex justify-center items-center bg-white">
+      <button
+            type="button"
+            @click="router.back()"
+            class="px-6 py-3 text-sm border border-gray-300 rounded-md text-[#292929]"
+          >
+            Back
+          </button>
       <form @submit.prevent="verifyMoveIn" class="w-full max-w-md text-center">
        <div class="mb-3 flex justify-center items-center">
         <svg width="51" height="82" viewBox="0 0 51 82" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -34,7 +41,7 @@
     <script setup lang="ts">
       import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
     import { useVerifyMoveInOTP } from '@/composables/modules/maintenance/useVerifyMoveIn'
-
+const router = useRouter()
   const { intiateMoveIn, loading: processing } = useInitiateMoveIn()
   const { loading,
     setCredential,

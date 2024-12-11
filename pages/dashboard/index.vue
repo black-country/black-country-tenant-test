@@ -430,18 +430,6 @@ const requestDates = computed(() =>
   [...new Set(requests.value.map((req) => req.date))].sort()
 )
 
-
-const upcomingActivities = ref([
-  { id: 1, title: 'Plumbing maintenance', date: '03/04/2024', status: 'Upcoming' },
-  { id: 2, title: 'Rent payment', date: '03/04/2024', status: 'Due' },
-  { id: 3, title: 'Scheduled property viewing', date: '03/04/2024', status: 'Upcoming' }
-]);
-
-const recentTransactions = ref([
-  { id: 1, title: 'Electricity bill', date: '03/04/2024, 16:00 pm', amount: '₦50,000.00' },
-  { id: 2, title: 'Cable bill', date: '03/04/2024, 16:00 pm', amount: '₦50,000.00' },
-  { id: 3, title: 'Security bill', date: '03/04/2024, 16:00 pm', amount: '₦50,000.00' }
-]);
 </script>
 
 <style scoped>

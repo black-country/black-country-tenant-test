@@ -734,7 +734,7 @@
           </section>
         </div>
       </div>
-      <div class="border-[0.5px] max-w-7xl mx-auto rounded-lg border-gray-200 py-10 flex justify-center items-center flex-col gap-y-3">
+      <div v-else class="border-[0.5px] max-w-7xl mx-auto rounded-lg border-gray-200 py-10 flex justify-center items-center flex-col gap-y-3">
         <img src="@/assets/icons/transaction-illustration.svg" alt="" />
         NO PROPERTIES AVAILABLE
       </div>
