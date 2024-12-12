@@ -12,5 +12,9 @@ export const settings_api = {
       $_fetch_upcoming_activities: (id: any) => {
         const url = `/tenants/${id}/upcoming-activities`;
         return GATEWAY_ENDPOINT.get(url);
+      },
+      $_fetch_faq: () => {
+        const url = '/faqs?app=tenant-app';
+        return GATEWAY_ENDPOINT.get(url);
       }
 };

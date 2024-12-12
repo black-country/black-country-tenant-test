@@ -47,7 +47,7 @@
 
   // Simulate closing the confirmation (you can handle navigation or state changes here)
   const closeConfirmation = () => {
-    router.push('/dashboard/listings')
+    router.back()
   };
   </script>
   

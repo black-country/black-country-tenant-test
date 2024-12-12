@@ -36,6 +36,7 @@
         alt="leases empty state"
         class=""
       />
+      <!-- {{ availabilityList }} -->
       <p class="text-[#1D2739]">No visitations schedule available</p>
     </div>
  </main>

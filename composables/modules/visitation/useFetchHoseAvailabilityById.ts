@@ -12,8 +12,9 @@ export const useFetchHouseAvailability = () => {
     loading.value = true;
     try {
       const res = (await visitation_api.$_get_house_availability_by_id(route?.params?.id)) as any;
+      console.log(res, 'house availability')
       if (res.type !== "ERROR") {
-        availabilityList.value = res.data
+        availabilityList.value = res?.data ?? []
         return res;
       } else {
         showToast({

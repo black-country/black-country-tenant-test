@@ -97,7 +97,7 @@
           <section class="mt-10">
           <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-50">Property visitation</h2>
           <PropertyVisitationTable :visitations="visitations" :property="property" />
-          <div class="mt-5">
+          <div v-if="availabilityList?.length" class="mt-5">
             <button @click="showBookingModal = true" class="mt-4 w-full bg-[#292929]  text-white py-4 rounded-md">Schedule a visit</button>
          </div>
          </section>
@@ -595,6 +595,8 @@
   
   <script setup lang="ts">
   import moment from "moment";
+  import { useFetchHouseAvailability } from '@/composables/modules/visitation/useFetchHoseAvailabilityById'
+const { loading: fetchingAvailabilities, availabilityList } = useFetchHouseAvailability()
   import { useFetchVisitations } from '@/composables/modules/visitation/fetch'
   import { useUser } from '@/composables/auth/user'
 const propertyManagerImage = ref("shape.png");

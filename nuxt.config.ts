@@ -41,7 +41,7 @@ export default {
     timeout: 10000, // Example: set timeout to 10 seconds
   },
 
-  plugins: ['~/plugins/vue-tour.ts', '~/plugins/vue-tour.client.ts',],
+  plugins: ['~/plugins/vue-tour.ts', '~/plugins/vue-tour.client.ts', '~/plugins/dayjs.ts'],
 
   vite: {
     optimizeDeps: {

@@ -1,6 +1,6 @@
 {
   "extends": "./.nuxt/tsconfig.json",
     "compilerOptions": {
-    "types": ["@types/node", "path-to-types/driver", "vue-stage-play"] // Add this line
+    "types": ["@types/node", "@nuxtjs/dayjs", "path-to-types/driver", "vue-stage-play"] // Add this line
   }
 }
