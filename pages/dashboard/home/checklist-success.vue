@@ -37,7 +37,7 @@ const router = useRouter();
 const route = useRoute()
 
 const handleSuccess = () => {
-  router.push('/dashboard/home/move-out');
+  router.push('/dashboard/home');
 };
 
 definePageMeta({

@@ -71,7 +71,7 @@
             <!-- Contacts -->
             <div v-if="!loadingActiveChats && activeChatsList.length" class="bg-grey-lighter flex-1 overflow-auto">
             <div class="bg-grey-lighter flex-1 overflow-auto">
-              <ChatUserList
+              <!-- <ChatUserList
               class="px-3 flex items-center bg-grey-light cursor-pointer"
               v-if="route.query.agentId"
               :loading="loadingActiveChats"
@@ -84,7 +84,9 @@
                 :loading="loadingActiveChats"
                 :users="activeChatsList"
                 @selectUser="selectUser"
-              />
+              /> -->
+              <ChatUserList class="px-3 flex items-center bg-grey-light cursor-pointer" :loading="loadingActiveChats"
+              :users="activeChatsList" @selectUser="selectUser" />
             </div>
           </div>
             <section v-else-if="loadingActiveChats && !activeChatsList?.length">
@@ -217,6 +219,28 @@ watch(messages, (newMessages) => {
   }
 }, { deep: true });
 
+// Watch `activeChatsList` to handle delayed population
+watch(activeChatsList, (newVal) => {
+  console.log(newVal, 'active chats (watch)');
+  const userId = route.query.userId;
+  if (userId) {
+    const user = newVal.find(u => u?.participant?.id === userId);
+    if (user) {
+      selectUser(user);
+    } else {
+      if(newVal.length === 1){
+        selectUser(newVal[0]);
+      }
+    }
+  }
+
+  if(newVal.length) {
+    selectUser(newVal[0])
+    console.log('only one item found')
+  }
+
+}, { immediate: true })
+
 onMounted(() => {
   if (route.query.agentId) {
     const payload = {
@@ -243,12 +267,28 @@ const scrollToBottom = () => {
   }
 };
 
+// const selectUser = (user: any) => {
+//   selectedUser.value = user;
+// };
+
+// User selection
 const selectUser = (user: any) => {
   selectedUser.value = user;
+  // Optionally update URL
+  router.push({ query: { agentId: user?.participant?.id } });
 };
+
 
 const sendMessageToUser = async (content: string) => {
   if (!selectedUser.value?.participant?.id || !isConnected.value) {
+    console.error('Cannot send message: No recipient selected or not connected');
+    return;
+  }
+
+  const userId =  selectedUser?.value?.participant?.id || route?.query?.agentId
+
+
+  if (!userId || !isConnected.value) {
     console.error('Cannot send message: No recipient selected or not connected');
     return;
   }
@@ -258,8 +298,8 @@ const sendMessageToUser = async (content: string) => {
   try {
     const socketPayload = {
       content,
-      recipientId: selectedUser.value.participant.id,
-      recipientType: selectedUser.value.participant.role,
+      recipientId: selectedUser?.value?.participant?.id,
+      recipientType: selectedUser?.value?.participant?.role,
       messageType: 'private',
       room: selectedUser.value.id // Include room ID if needed
     };
@@ -272,6 +312,25 @@ const sendMessageToUser = async (content: string) => {
     messageStatus.value = 'error';
   }
 };
+
+onMounted(() => {
+  console.log(activeChatsList.value, 'active chats (onMounted)');
+  const userId = route.query.agentId;
+
+  if (userId && activeChatsList.value?.length > 0) {
+    const user = activeChatsList.value.find(u => u.id === userId);
+    if (user) {
+      selectUser(user);
+    }
+  }
+
+  $emitter.on('customEvent', async (payload: any) => {
+    if (payload.data) {
+      await getRoomChats(payload.data);
+      scrollToBottom();
+    }
+  });
+});
 
 onUnmounted(() => {
   // Clean up event listeners

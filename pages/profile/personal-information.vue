@@ -1,8 +1,8 @@
 <template>
   <main>
     <TopNavBar />
-    <div v-if="!loading" class="min-h-screen flex flex-col justify-between">
-      <div class="max-w-3xl mx-auto bg-white p-6">
+    <div v-if="!loading" class="min-h-screen flex flex-col justify-between w-full">
+      <div class="max-w-2xl mx-auto bg-white p-6 w-full">
         <div class="text-gray-500 flex-col">
           <svg
             @click="router.back()"
@@ -41,8 +41,9 @@
             <input
               v-model="credential.email"
               type="email"
-              class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
+              class="w-full p-2 mt-1 outline-none focus-within:border-2 cursor-not-allowed opacity-25 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
               :disabled="!!credential.email"
+              readonly
             />
           </div>
 

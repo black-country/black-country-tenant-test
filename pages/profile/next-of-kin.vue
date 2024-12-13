@@ -25,6 +25,12 @@
               <select v-model="credential.nextOfKinRelationship" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4">
                 <option value="brother">Brother</option>
                 <option value="sister">Sister</option>
+                <option value="father">Father</option>
+                <option value="mother">Mother</option>
+                <option value="son">Son</option>
+                <option value="daughter">Daughter</option>
+                <option value="wife">Wife</option>
+                <option value="husband">Husband</option>
               </select>
             </div>
           </section>

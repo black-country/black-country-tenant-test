@@ -38,7 +38,7 @@
           </div>
       
           <!-- Action Button -->
-          <div class="flex justify-center items-center space-x-2 bg-[#F0F2F5] rounded-full py-2 px-4">
+          <div v-if="completionPercentage !== 100" class="flex justify-center items-center space-x-2 bg-[#F0F2F5] rounded-full py-2 px-4">
             <p class="text-sm font-medium text-[#1D2739]">Complete your Account Setup</p>
             <span class="w-3 h-3 bg-[#099137] rounded-full"></span>
           </div>
@@ -328,11 +328,11 @@ const accountSettings = ref([
     icon: "profile",
     path: "/profile/profile-settings",
   },
-  {
-    label: "Payment Information",
-    icon: "payment",
-    path: "/profile/payment-information",
-  },
+  // {
+  //   label: "Payment Information",
+  //   icon: "payment",
+  //   path: "/profile/payment-information",
+  // },
   {
     label: "Notification Preference",
     icon: "notification",

@@ -1,5 +1,6 @@
 <template>
     <div class="sticky top-0  p-4 bg-white">
+      <!-- {{ users }} hello -->
       <ul class="w-full" v-if="users?.length && !loading">
         <li
           v-for="user in users"

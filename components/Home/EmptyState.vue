@@ -7,7 +7,7 @@
       <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
 
-        <span class="ml-2 text-[#667185]">Dashboard | <span class="text-[#1D2739] font-medium">Rental Application</span></span>
+        <span class="ml-2 text-[#667185]">Dashboard | <span class="text-[#1D2739] font-medium">My Home</span></span>
       </div>
     <div class="flex flex-col items-center p-6 bg-white rounded-lg border-[0.5px] border-gray-you 50 text-center">
       <div class="mb-4">

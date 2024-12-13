@@ -1,9 +1,8 @@
 <template>
- <main class="z-30">
-  <nav class="bg-[#292929] text-white py-3 z-10 sticky top-0">
+ <main class="z-30 pb-20">
+  <nav class="bg-[#292929] text-white py-3 z-10 fixed w-full top-0">
     <div class="mx-auto container flex justify-between items-center px-4">
       <NuxtLink to="/dashboard" class="flex cursor-pointer items-center gap-x-3">
-        <!-- Logo -->
         <div class="flex items-center space-x-2">
           <img src="@/assets/icons/logo-with-text.svg" alt="logo" class=" object-contain" />
         </div>

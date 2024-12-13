@@ -10,7 +10,7 @@ export const useGetProperties = () => {
     const searchResults = ref([] as any) // Array to hold search results
     const searchQuery = ref('')
     const currentPage = ref(1)
-    const perPage = ref(20)
+    const perPage = ref(10000000)
     const totalPages = ref(1) // To store total pages
     const sortBy = ref('all') // To store the sort type
     const { properties, loading } = useFilterProperty()

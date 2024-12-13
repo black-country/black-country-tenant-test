@@ -1,8 +1,20 @@
 <template>
   <main>
-    <div class="flex flex-col lg:flex-row gap-6">
+      <div>
+        <h3 class="text-[#1D2739] text-lg pb-3">
+            {{ property?.name ?? 'Nil' }}
+          </h3>
+          <p class="flex items-center space-x-3 text-[#667185] text-sm">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9.07847 14.2443C8.7894 14.515 8.40293 14.6663 8.00073 14.6663C7.59853 14.6663 7.21213 14.515 6.923 14.2443C4.27535 11.7503 0.727174 8.96427 2.45751 4.91945C3.39309 2.73245 5.63889 1.33301 8.00073 1.33301C10.3626 1.33301 12.6084 2.73245 13.544 4.91945C15.2721 8.95921 11.7327 11.7589 9.07847 14.2443Z" fill="#5B8469" stroke="#5B8469"/>
+      <path d="M10.3337 7.33333C10.3337 8.622 9.28899 9.66667 8.00033 9.66667C6.71166 9.66667 5.66699 8.622 5.66699 7.33333C5.66699 6.04467 6.71166 5 8.00033 5C9.28899 5 10.3337 6.04467 10.3337 7.33333Z" fill="white" stroke="#5B8469"/>
+      </svg>
+
+            {{ property?.description ?? 'Nil' }}</p>
+      </div>
+     <div class="flex flex-col lg:flex-row gap-6">
   
-      <section class="lg:w-7/12 space-y-6 p-4">
+      <section class="lg:w-7/12 space-y-6 lg:p-0 p-4">
         <div class="max-w-3xl mx-auto bg-white">
           <!-- Dynamic Tabs -->
           <div class="mt-4 flex space-x-2 overflow-x-auto hide-scrollbar scrollbar-hide">
@@ -96,10 +108,24 @@
          <!-- <section v-if="property?.rentalApplication"> -->
           <section class="mt-10">
           <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-50">Property visitation</h2>
-          <PropertyVisitationTable :visitations="visitations" :property="property" />
+          <!-- {{ availabilityList }} -->
+          <VisitationScheduler v-if="availabilityList?.length" @schedule="showBookingModal = true" :intervals="availabilityList" />
+             <div
+      v-else
+      class="bg-white px-4 py-5 sm:p-6 h-80 rounded-lg flex flex-col gap-y-4 justify-center border items-center border-gray-50"
+    >
+      <img
+        :src="dynamicIcons('payment-empty-state')"
+        alt="leases empty state"
+        class=""
+      />
+      <!-- {{ availabilityList }} -->
+      <p class="text-[#1D2739]">No visitations schedule available</p>
+    </div>
+          <!-- <PropertyVisitationTable :visitations="visitations" :property="property" />
           <div v-if="availabilityList?.length" class="mt-5">
             <button @click="showBookingModal = true" class="mt-4 w-full bg-[#292929]  text-white py-4 rounded-md">Schedule a visit</button>
-         </div>
+         </div> -->
          </section>
       
             <!-- House Rules -->
@@ -543,6 +569,7 @@
               {{ room.price }}
             </p>
           </button> -->
+          <!-- {{ rooms }} -->
           <button
             v-for="(room, index) in rooms"
             :key="room.id"

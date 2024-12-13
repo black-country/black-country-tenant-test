@@ -1,6 +1,6 @@
 <template>
   <main>
-   <TopNavBar />
+   <TopNavBar class="mb-6" />
   <section v-if="!fetching" class="max-w-4xl mx-auto mt-10 p-4 lg:p-0">
     <!-- Property Overview Section -->
     <HomePropertyOverview :myHomeInfo="myHomeInfo" />
