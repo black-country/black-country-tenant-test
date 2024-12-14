@@ -1,5 +1,6 @@
 <template>
   <div class="max-w-2xl mx-auto p-4 space-y-6">
+    <CoreGoBack />
     <h2 class="text font-medium text-gray-700">
       <NuxtLink to="/dashboard/profile" class="text-[#667185]">Profile </NuxtLink>|
       <span class="text-[#1D2739]"> Notification Preference</span>

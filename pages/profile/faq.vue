@@ -1,213 +1,103 @@
 <template>
- <main>
-  <TopNavBar />
-  <div class="p-6 bg-gray-25 min-h-screen">
-    <div class="max-w-xl mx-auto">
-      <svg
-            @click="router.back()"
-            class="cursor-pointer mb-3"
-            width="36"
-            height="36"
-            viewBox="0 0 36 36"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <rect width="36" height="36" rx="18" fill="#EAEAEA" />
-            <path
-              d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23"
-              stroke="#1D2739"
-              stroke-width="1.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            />
-          </svg>
-      <!-- Breadcrumbs -->
-      <div class="text-sm text-gray-500 mb-4">
-        <span>Profile</span>
-        <span class="mx-2">|</span>
-        <span class="font-semibold text-gray-700">FAQs</span>
-      </div>
-
-      <!-- Title -->
-      <h2 class="text-center text-xl font-medium text-[#1D2739] mb-6">
-        How can we help you?
-      </h2>
-
-      <!-- Search Bar -->
-      <div class="relative w-full mb-8">
-        <input
-          type="text"
-          placeholder="Search for how tos and more"
-          class="w-full p-3 py-4 outline-none border text-sm rounded-md bg-[#EAEAEA] pl-10"
-        />
-        <!-- Search Icon -->
-        <svg class="absolute top-5 left-3" width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.668 12.166L14.668 15.166" stroke="#667185" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M13.332 7.83398C13.332 4.52028 10.6458 1.83398 7.33203 1.83398C4.01832 1.83398 1.33203 4.52028 1.33203 7.83398C1.33203 11.1477 4.01832 13.834 7.33203 13.834C10.6458 13.834 13.332 11.1477 13.332 7.83398Z" stroke="#667185" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-          
-      </div>
-
-      <!-- FAQ Items -->
-      <div class="space-y-4">
-        <!-- FAQ Item 1 (Expanded) -->
-        <div class="bg-white border-[0.5px] border-gray-25 rounded-md">
-          <div
-            class="flex justify-between items-center p-4 cursor-pointer"
-            @click="toggleFAQ(1)"
-          >
-            <p class="text-[#1D2739] bg-white font-medium">Question</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-gray-400"
-              :class="{ 'rotate-180': isOpen(1) }"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-          <div v-if="isOpen(1)" class="p-4 border-t text-gray-600 text-sm leading-relaxed">
-            Lorem ipsum dolor sit amet consectetur. Ultrices enim aliquet
-            phasellus amet tincidunt ac mollis metus consequat. Pulvinar
-            sollicitudin egestas tortor gravida. Volutpat turpis amet vestibulum
-            pretium purus elementum dictum. Ut at augue id orci at nunc in sociis
-            molestie.
-          </div>
-        </div>
-
-        <!-- FAQ Item 2 -->
-        <div class="bg-white border-[0.5px]  border-gray-25 rounded-md">
-          <div
-            class="flex justify-between items-center p-4 cursor-pointer"
-            @click="toggleFAQ(2)"
-          >
-            <p class="text-[#1D2739] bg-white font-medium">Question</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-gray-400"
-              :class="{ 'rotate-180': isOpen(2) }"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
-          </div>
-        </div>
-
-    <!-- FAQ Item 2 -->
-    <div class="bg-white border-[0.5px]  border-gray-25 rounded-md">
-      <div
-        class="flex justify-between items-center p-4 cursor-pointer"
-        @click="toggleFAQ(3)"
-      >
-        <p class="text-[#1D2739] bg-white font-medium">Question</p>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-5 w-5 text-gray-400"
-          :class="{ 'rotate-180': isOpen(3) }"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M19 9l-7 7-7-7"
-          />
+  <main>
+    <TopNavBar />
+    <div class="p-6 bg-gray-25 min-h-screen">
+      <div class="max-w-xl mx-auto">
+        <svg @click="router.back()" class="cursor-pointer mb-3" width="36" height="36" viewBox="0 0 36 36" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <rect width="36" height="36" rx="18" fill="#EAEAEA" />
+          <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739"
+            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-      </div>
-    </div>
+        <div class="text-sm text-gray-500 mb-4">
+          <span>Profile</span>
+          <span class="mx-2">|</span>
+          <span class="font-semibold text-gray-700">FAQs</span>
+        </div>
 
-          <!-- FAQ Item 2 -->
-          <div class="bg-white border-[0.5px]  border-gray-25 rounded-md">
-              <div
-                class="flex justify-between items-center p-4 cursor-pointer"
-                @click="toggleFAQ(4)"
-              >
-                <p class="text-[#1D2739] bg-white font-medium">Question</p>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="h-5 w-5 text-gray-400"
-                  :class="{ 'rotate-180': isOpen(4) }"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M19 9l-7 7-7-7"
-                  />
+        <h2 class="text-center text-xl font-medium text-[#1D2739] mb-6">
+          How can we help you?
+        </h2>
+
+        <div class="relative w-full mb-8">
+          <input type="text" placeholder="Search for how tos and more"
+            class="w-full p-3 py-4 outline-none border text-sm rounded-md bg-[#EAEAEA] pl-10" />
+          <svg class="absolute top-5 left-3" width="16" height="17" viewBox="0 0 16 17" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.668 12.166L14.668 15.166" stroke="#667185" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path
+              d="M13.332 7.83398C13.332 4.52028 10.6458 1.83398 7.33203 1.83398C4.01832 1.83398 1.33203 4.52028 1.33203 7.83398C1.33203 11.1477 4.01832 13.834 7.33203 13.834C10.6458 13.834 13.332 11.1477 13.332 7.83398Z"
+              stroke="#667185" stroke-width="1.5" stroke-linejoin="round" />
+          </svg>
+
+        </div>
+        <section class="space-y-4">
+          <div v-for="item in faqList" :key="item.id" class="overflow-hidden border-[0.5px] border-gray-50 px-3 bg-white rounded-lg">
+          <button class="w-full text-left py-6  transition-colors duration-300 flex justify-between items-center"
+            @click="toggle(item.id)">
+            <p class="text-[#1D2739] font-light">
+              {{ item.question }}
+            </p>
+            <span class="relative h-5 w-5 shrink-0">
+              <svg v-if="isClose(item.id)" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 6.00003C12 6.00003 9.05407 10 8 10C6.94587 10 4 6 4 6" stroke="#667185" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+
+              <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6" />
+              </svg>
+              <svg  v-if="isOpen(item.id)" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 10C12 10 9.05407 6.00001 8 6C6.94587 5.99999 4 10 4 10" stroke="#667185" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-              </div>
-            </div>
 
-                  <!-- FAQ Item 2 -->
-        <div class="bg-white border-[0.5px]  border-gray-25 rounded-md">
-          <div
-            class="flex justify-between items-center p-4 cursor-pointer"
-            @click="toggleFAQ(5)"
-          >
-            <p class="text-[#1D2739] bg-white font-medium">Question</p>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              class="h-5 w-5 text-gray-400"
-              :class="{ 'rotate-180': isOpen(5) }"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
+            </span>
+          </button>
+          <div v-if="isOpen(item.id)" class="overflow-hidden transition-max-height duration-500 pb-3"
+            :style="{ maxHeight: isOpen(item.id) ? `${maxHeight}px` : '0' }">
+            <p class="p-1 lg:p-4 text-gray-700 text-sm font-light md:text-base rounded-lg">
+              {{ item.answer }}
+            </p>
           </div>
         </div>
+        </section>
       </div>
     </div>
-  </div>
- </main>
-  </template>
-  
-  <script setup lang="ts">
-  const router = useRouter()
-  const openFAQ = ref<number | null>(null);
-  
-  const toggleFAQ = (index: number) => {
-    if (openFAQ.value === index) {
-      openFAQ.value = null;
-    } else {
-      openFAQ.value = index;
-    }
-  };
+  </main>
+</template>
 
-  const isOpen = (index: number) => {
-    return openFAQ.value === index;
-  };
+<script setup lang="ts">
+import { useFetchFaqs } from '@/composables/modules/settings/useFetchFaqs'
+const { loading, faqList } = useFetchFaqs()
+const router = useRouter()
+const openFAQ = ref<number | null>(null);
 
+const toggleFAQ = (index: number) => {
+  if (openFAQ.value === index) {
+    openFAQ.value = null;
+  } else {
+    openFAQ.value = index;
+  }
+};
 
-  definePageMeta({
+definePageMeta({
   middleware: "auth",
 });
-  </script>
-  
-  <style scoped></style>
-  
+
+const openId = ref(null)
+const maxHeight = ref(0)
+
+const toggle = (id: any) => {
+  openId.value = openId.value === id ? null : id
+  maxHeight.value = openId.value ? 200 : 0
+}
+
+const isOpen = (id: any) => {
+  return openId.value === id
+}
+
+const isClose = (id: any) => {
+  return openId.value !== id
+}
+</script>

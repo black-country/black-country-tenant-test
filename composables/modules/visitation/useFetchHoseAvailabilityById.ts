@@ -17,12 +17,12 @@ export const useFetchHouseAvailability = () => {
         availabilityList.value = res?.data ?? []
         return res;
       } else {
-        showToast({
-          title: "Error",
-          message: res.data.error,
-          toastType: "error",
-          duration: 3000,
-        });
+        // showToast({
+        //   title: "Error",
+        //   message: res.data.error,
+        //   toastType: "error",
+        //   duration: 3000,
+        // });
       }
     } catch (error) {
       // showToast({

@@ -3,6 +3,7 @@
   <TopNavBar />
   <div class="p-8 bg-gray-25 min-h-screen">
     <div class="max-w-xl mx-auto">
+      <CoreGoBack />
       <!-- Breadcrumbs -->
       <div class="text-sm text-gray-500 mb-4">
         <span>Profile</span>

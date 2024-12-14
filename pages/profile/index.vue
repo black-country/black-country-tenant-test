@@ -3,6 +3,7 @@
     <TopNavBar />
     <div class="min-h-screen bg-gray-25 pb-10">
       <div class="max-w-xl mx-auto space-y-4 pt-10">
+        <CoreGoBack />
           <h3 class="text-[#1D2739] text-lg font-semibold pl-10 lg:pl-0">Profile</h3>
         <div class="max-w-sm mx-auto px-6 pb-6 text-center space-y-4 relative">
           <!-- Profile Picture with Border-Based Circular Progress -->
@@ -372,9 +373,14 @@ const legalSettings = ref([
 ]);
 
 const helpSettings = ref([
+{
+    label: "Emergency contacts",
+    icon: "contact-book",
+    path: "/profile/emergency-contact",
+  },
   {
     label: "Contact Us",
-    icon: "contact-us",
+    icon: "contact-book",
     path: "/profile/contact-us",
   },
   {

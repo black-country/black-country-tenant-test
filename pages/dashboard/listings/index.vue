@@ -618,7 +618,7 @@
         </div>
       </div>
       <div ref="propertyCardsRef"
-        v-if="!properties?.length"
+        v-if="propertiesList.length"
         class="p-6 container mx-auto space-y-6 lg:space-y-0 lg:flex flex-wrap gap-7"
       >
         <div
@@ -1013,7 +1013,7 @@
   />
   <CoreTourGuide />
 
-  <CoreDrawer :footer="false" title="Filters" :show="showFilterDrawer">
+  <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
     <CorePropertyFilters @close="showFilterDrawer = false" />
   </CoreDrawer>
   </main>

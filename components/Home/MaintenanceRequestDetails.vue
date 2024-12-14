@@ -12,7 +12,7 @@
             <div
                 class="flex justify-between items-center border-[0.5px] border-gray-50 bg-white p-3 rounded-md">
                 <div class="space-y-2">
-                    <h4 class="text-sm font-medium text-[#1D2739]">Confirm Completed Work</h4>
+                    <!-- <h4 class="text-sm font-medium text-[#1D2739]">Confirm Completed Work</h4> -->
                     <p class="text-sm text-[#667185]">
                         This action allows the property manager to ensure your satisfaction with the completed
                         task and facilitates payment to the service provider.
