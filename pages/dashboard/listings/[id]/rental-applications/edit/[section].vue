@@ -60,6 +60,7 @@
             <AgeValidationDatePicker  v-model="field.value"
             label="" />
           </div>
+          <!-- {{ field }} -->
           <div v-if="field.type === 'email'">
             <input
               v-model="field.value"
@@ -98,15 +99,6 @@
               @citySelected="handleStateOfOriginCitySelection"
               :key="'state-of-origin'"
             />
-
-
-            <!-- <LocationDropdowns
-              v-if="field.label === 'Local Government'"
-              v-model="currentStateCityId"
-              @update:state="handleCurrentStateChange"
-              @citySelected="handleCurrentCitySelection"
-              :key="'current-state'"
-            /> -->
           </div>
         </div>
         <div
@@ -219,72 +211,6 @@ watch(
   }
 );
 
-// Function to prefill profile data from profileObj
-// const prefillProfileData = () => {
-//   fields.value.forEach(field => {
-//     if (field.label === 'Name') {
-//       field.value = `${profileObj.value.firstName} ${profileObj.value.lastName}`;
-//     } else if (field.label === 'Email address') {
-//       field.value = profileObj.value.email || '';
-//     } else if (field.label === 'Phone number') {
-//       field.value = profileObj.value.phoneNumber || '';
-//     } else if (field.label === 'Date of Birth') {
-//       field.value = profileObj.value.dateOfBirth || '';
-//     } else if (field.label === 'Gender') {
-//       field.value = profileObj.value.gender || '';
-//     } else if (field.label === 'Marital status') {
-//       field.value = profileObj.value.maritalStatus || '';
-//     } else if (field.label === 'State of Origin') {
-//       selectedState.value = profileObj.value.stateOfOrigin || '';
-//     } else if (field.label === 'Local Government (LGA)') {
-//       selectedLga.value = profileObj.value.lga || '';
-//     }
-
-//        // Rental history pre-fill
-//     else if (field.label === 'Current Landlord') {
-//       field.value = profileObj.value.currentLandlord || '';
-//     } else if (field.label === 'Rental Address') {
-//       field.value = profileObj.value.rentalAddress || '';
-//     } else if (field.label === 'Length of Tenancy') {
-//       field.value = profileObj.value.lengthOfTenancy || '';
-//     } else if (field.label === 'Reason for moving out') {
-//       field.value = profileObj.value.reasonForMovingOut || '';
-//     }
-
-//     // Employment information pre-fill
-//     else if (field.label === 'Current employment status') {
-//       field.value = profileObj.value.employmentStatus || '';
-//     } else if (field.label === 'Employer\'s full name') {
-//       field.value = profileObj.value.employerName || '';
-//     } else if (field.label === 'Organization address') {
-//       field.value = profileObj.value.employerAddress || '';
-//     } else if (field.label === 'Occupation') {
-//       field.value = profileObj.value.occupation || '';
-//     } else if (field.label === 'Monthly Net Salary') {
-//       field.value = profileObj.value.monthlyNetSalary || '';
-//     }
-
-//     // Next of kin pre-fill
-//     else if (field.label === 'Full Name') {
-//       field.value = profileObj.value.nextOfKinName || '';
-//     } else if (field.label === 'Relationship') {
-//       field.value = profileObj.value.nextOfKinRelationship || '';
-//     } else if (field.label === 'Email address') {
-//       field.value = profileObj.value.nextOfKinEmail || '';
-//     } else if (field.label === 'Residential address') {
-//       field.value = profileObj.value.nextOfKinAddress || '';
-//     } else if (field.label === 'Phone Number') {
-//       field.value = profileObj.value.nextOfKinPhone || '';
-//     } else if (field.label === 'Occupation') {
-//       field.value = profileObj.value.nextOfKinOccupation || '';
-//     } else if (field.label === 'Organization name') {
-//       field.value = profileObj.value.nextOfKinEmployer || '';
-//     } else if (field.label === 'Office address') {
-//       field.value = profileObj.value.nextOfKinEmployerAddress || '';
-//     }
-//   });
-// };
-
 const prefillProfileData = () => {
   fields.value.forEach((field) => {
     if (field.label === "Name") {
@@ -342,7 +268,7 @@ const prefillProfileData = () => {
       field.value = profileObj.value.nextOfKinName || "";
     } else if (field.label === "Relationship") {
       field.value = profileObj.value.nextOfKinRelationship || "";
-    } else if (field.label === "Email address") {
+    } else if (field.label === "Next of kin email address") {
       field.value = profileObj.value.nextOfKinEmail || "";
     } else if (field.label === "Residential address") {
       field.value = profileObj.value.nextOfKinAddress || "";
@@ -439,7 +365,7 @@ const sectionFields = {
         "relative",
       ],
     },
-    { label: "Email address", isCompulsory: true, value: "", type: "email" },
+    { label: "Next of kin email address", isCompulsory: true, value: "", type: "email" },
     {
       label: "Residential address",
       isCompulsory: true,
@@ -490,30 +416,6 @@ onMounted(async () => {
   }
 });
 
-// watch(selectedState, async (newState) => {
-//   console.log(newState, "watching from outsie");
-//   const stateField = fields.value.find(
-//     (field) => field.label === "State of Origin"
-//   );
-//   stateField.value = newState.name;
-//   if (newState) {
-//     await getCities(newState.stateCode);
-//     const lgaField = fields.value.find(
-//       (field) => field.label === "Local Government"
-//     );
-//     if (lgaField && cities.value.length) {
-//       lgaField.options = cities.value.map((city) => city.name);
-//     }
-//   }
-// });
-
-// watch(selectedLga, async (newLga) => {
-//   console.log(newLga, "watching from outsie");
-//   const lgaField = fields.value.find(
-//     (field) => field.label === "Local Government (LGA)"
-//   );
-//   lgaField.value = newLga;
-// });
 
 watch(selectedState, async (newState) => {
   console.log(newState, "watching from outside");

@@ -96,8 +96,10 @@ const filteredRentalApplications = computed(() => {
         <div class="relative">
           <div class="flex space-x-4">
             <div
+             @click="viewRentalApplication(property)"
               v-for="(property, index) in displayedRentalApplications"
               :key="index"
+              
               class="flex-shrink-0 cursor-pointer w-64 bg-white rounded-lg overflow-hidden shadow-md"
             >
               <div v-if="property?.house?.images" class="relative">

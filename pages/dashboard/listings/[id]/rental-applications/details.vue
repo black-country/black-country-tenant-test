@@ -467,7 +467,7 @@
               </div>
 <!-- {{ rentalObj.rentalLeaseAgreement }} -->
               <div class="flex flex-col items-center">
-                <button
+                <!-- <button
                   class="rounded-lg transition"
                   :class="{
                     'cursor-not-allowed opacity-50':
@@ -519,8 +519,8 @@
                       stroke-linejoin="round"
                     />
                   </svg>
-                </button>
-                <!-- <button 
+                </button> -->
+                <button 
                   class="rounded-lg transition"
                   :class="{
                     'cursor-not-allowed opacity-50': steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress),
@@ -534,7 +534,7 @@
                     <path d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z" stroke="white" stroke-width="1.5"/>
                     <path d="M19.666 20.3333L21.9993 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>  
-                </button> -->
+                </button>
                 <p class="text-gray-500 mt-2 text-xs text-center">Sign Agreement</p>
               </div>
 
@@ -561,7 +561,8 @@
                 </button> -->
                 <button
                   class="rounded-lg transition"
-                  :class="[rentalObj.status !== 'APPROVED' ? 'disabled:cursor-not-allowed disabled:opacity-25' : '' ]"
+                   :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress) || 
+                    !propertyObj?.rentalApplication?.leaseAgreement"
                   @click="proceed"
                 >
                   <svg

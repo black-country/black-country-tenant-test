@@ -38,7 +38,9 @@ export const useFetchHouseAvailability = () => {
   };
 
   onMounted(() => {
-    getHouseAvailability()
+    if(route?.params?.id){
+      getHouseAvailability()
+    }
   })
 
   return { getHouseAvailability, loading, availabilityList };

@@ -20,9 +20,9 @@ export const useGetRental = () => {
     }
   };
 
-  onMounted(() => {
-    getRental();
-  });
+  // onMounted(() => {
+  //   getRental();
+  // });
 
   return {
     getRental,

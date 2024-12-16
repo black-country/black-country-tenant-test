@@ -118,18 +118,17 @@ export const use_update_profile = () => {
     }
   });
 
-  const validateProfile = (profileData: ProfileCredential): string | null => {
-    if (!profileData.firstName || !profileData.lastName) {
-      return "First name and last name are required";
-    }
-    if (!profileData.email) {
-      return "Email is required";
-    }
-    if (!profileData.phoneNumber) {
-      return "Phone number is required";
-    }
-    // Add more validation as needed
-    return null;
+  const processStringFields = (payload: Partial<ProfileCredential>) => {
+    const fieldsToConvert = ['monthlyNetSalary', 'phoneNumber', 'nextOfKinPhone'];
+    const processedPayload = { ...payload };
+
+    fieldsToConvert.forEach(field => {
+      if (field in payload && payload[field as keyof ProfileCredential] !== undefined) {
+        processedPayload[field as keyof ProfileCredential] = String(payload[field as keyof ProfileCredential]);
+      }
+    });
+
+    return processedPayload;
   };
 
   const updateProfile = async (profilePayload: Partial<ProfileCredential>) => {
@@ -137,16 +136,13 @@ export const use_update_profile = () => {
     error.value = null;
 
     try {
-      // Validate profile data
-      const validationError = validateProfile(profilePayload as ProfileCredential);
-      if (validationError) {
-        throw new Error(validationError);
-      }
+      // Process the payload to ensure string types
+      const processedPayload = processStringFields(profilePayload);
 
-      const res = await auth_api.$_update_profile(profilePayload);
+      const res = await auth_api.$_update_profile(processedPayload);
       
       if (res.type !== "ERROR") {
-        // Update location credentials
+        // Update location credentials if city data is returned
         if (res.data?.city) {
           locationCredential.value = {
             state: res.data.city.stateName,
@@ -154,12 +150,13 @@ export const use_update_profile = () => {
           };
         }
 
-        // Update user profile picture
-        updateUser({
-          profilePicture: res.data.profilePicture
-        });
+        // Update user profile picture if it was updated
+        if (res.data.profilePicture) {
+          updateUser({
+            profilePicture: res.data.profilePicture
+          });
+        }
 
-        // Show success message
         showToast({
           title: "Success",
           message: 'Profile was updated successfully',
@@ -167,7 +164,6 @@ export const use_update_profile = () => {
           duration: 3000
         });
 
-        // Navigate to success page
         Router.push('/profile/profile-update-success');
         
         return res;

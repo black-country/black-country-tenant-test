@@ -9,7 +9,7 @@ export function useHttpsDetector() {
    */
   const containsHttps = (content: string): boolean => {
     // Extract text content by removing HTML tags
-    const strippedContent = content.replace(/<\/?[^>]+(>|$)/g, '');
+    const strippedContent = content?.replace(/<\/?[^>]+(>|$)/g, '');
     // Check if the stripped content contains an `https` URL
     const httpsPattern = /https:\/\/[^\s]+/;
     return httpsPattern.test(strippedContent);
