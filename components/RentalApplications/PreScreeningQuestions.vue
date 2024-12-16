@@ -41,6 +41,15 @@
               </select>
             </template>
             <!-- Add a fallback if necessary -->
+
+            <template v-else-if="question.widgetType === 'long-response'">
+              <textarea
+                v-model="question.answer"
+                type="text"
+                class="p-3 py-3.5 border-[0.5px] outline-none text-sm bg-[#E4E7EC] rounded-lg w-full"
+                :placeholder="question.placeholder || 'Enter your response'"
+              ></textarea>
+            </template>
             <template v-else>
               <p class="text-red-500 text-sm">
                 Unsupported widget type: {{ question.widgetType }}

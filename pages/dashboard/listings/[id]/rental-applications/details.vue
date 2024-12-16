@@ -466,6 +466,12 @@
                 <p class="text-red-600 mt-2 text-xs text-center">Cancel application</p>
               </div>
 <!-- {{ rentalObj.rentalLeaseAgreement }} -->
+<!-- :class="{
+                    'cursor-not-allowed opacity-50': steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress),
+                    'bg-[#5B8469]': currentProgress === 'agreement-signed',
+                    'bg-gray-500': currentProgress !== 'agreement-signed'
+                  }"
+                  :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress)" -->
               <div class="flex flex-col items-center">
                 <!-- <button
                   class="rounded-lg transition"
@@ -521,14 +527,9 @@
                   </svg>
                 </button> -->
                 <button 
-                  class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50': steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress),
-                    'bg-[#5B8469]': currentProgress === 'agreement-signed',
-                    'bg-gray-500': currentProgress !== 'agreement-signed'
-                  }"
-                  :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress)"
-                  @click="router.push(`/dashboard/listings/${route.params.id}/rental-applications/lease-agreement`)">
+                  class="rounded-lg transition disabled:cursor-not-allowed disabled:opacity-25"
+                  :disabled="propertyObj?.rentalApplication?.progress === 'application-sent' || propertyObj?.rentalApplication?.status === 'PENDING'"
+                  @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement`)">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="40" height="40" rx="8" fill="#292929"/>
                     <path d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z" stroke="white" stroke-width="1.5"/>
@@ -560,9 +561,8 @@
                     @click="handleCheckout"
                 </button> -->
                 <button
-                  class="rounded-lg transition"
-                   :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress) || 
-                    !propertyObj?.rentalApplication?.leaseAgreement"
+                  class="rounded-lg transition disabled:cursor-not-allowed disabled:opacity-25"
+                   :disabled="propertyObj?.rentalApplication?.progress === 'agreement-pending-signage'"
                   @click="proceed"
                 >
                   <svg
@@ -1253,7 +1253,7 @@ const steps = ref([
   {
     label: "Agreement Signed",
     status: "pending",
-    progressKey: "agreement-signed",
+    progressKey: "agreement-pending-signed",
   },
   { label: "Payment Made", status: "pending", progressKey: "payment-made" },
 ]);
