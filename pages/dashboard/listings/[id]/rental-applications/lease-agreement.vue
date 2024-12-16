@@ -44,11 +44,18 @@
         <div class="mt-6 space-y-6">
           <div v-if="!containsHttps(lease?.leaseAgreementContent)" v-html="propertyObj?.rentalApplication?.leaseAgreement"></div>
         <div v-else>
-          <iframe
+          <!-- <iframe
             :src="`https://docs.google.com/viewer?url=${encodeURIComponent(extractUrl(propertyObj?.rentalApplication?.leaseAgreement))}&embedded=true`"
             class="w-full h-96"
             frameborder="0"
-           ></iframe>
+           ></iframe> -->
+           <iframe
+            :src="`https://docs.google.com/viewer?url=${encodeURIComponent(propertyObj?.rentalApplication?.leaseAgreement)}&embedded=true`"
+            class="w-full h-96"
+            frameborder="0"
+            @load="handleIframeLoad"
+            @error="handleIframeError"
+          ></iframe>
         </div>
           <div class="">
             <h2 class="text-lg font-medium mb-2">Signature</h2>
@@ -422,6 +429,7 @@ const submitLeaseAgreement = async () => {
   setPayload(payload);
   await signLeaseAgreement(propertyObj.value.id);
 };
+
 </script>
 
 <style scoped>
