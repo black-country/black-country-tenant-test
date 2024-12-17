@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full custom-scroll max-w-md space-y-6">
+  <div class="w-full custom-scroll relative max-w-md space-y-6">
 
    <section class="space-y-1">
     <div class="">
@@ -57,27 +57,27 @@
 
     <section class="space-y-1">
       <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Property type</h3>
-      <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
+      <div v-for="type in propertyTypesList" :key="type.id"
+       class="flex justify-between items-center">
+    <label :for="'property-' + type.id" class="ml-3 text-sm text-gray-700">
+      {{ type.name }}
+    </label>
+    <CoreCustomCheckbox
+      :id="'property-' + type.id"
+      :checkbox-id="type.id"
+      v-model="selectedPropertyTypes"
+    />
+  </div>
+      <!-- <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
         <div v-for="type in propertyTypesList" :key="type.id"
              class="flex justify-between items-center">
           <label :for="'property-' + type.id" class="ml-3 text-sm text-gray-700">{{ type.name }}</label>
-          <div class="relative flex items-center">
-            <input
-              :id="'property-' + type.id"
-              type="checkbox"
-              :checked="selectedPropertyTypes.has(type.id)"
-              @change="toggleOption(selectedPropertyTypes, type.id)"
-              class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-            >
-            <div v-if="selectedPropertyTypes.has(type.id)"
-                 class="absolute pointer-events-none">
-              <svg class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-              </svg>
-            </div>
-          </div>
+          <CoreCustomCheckbox
+             :id="'property-' + type.id"
+             v-model="selectedPropertyTypes"
+          />
         </div>
-      </div>
+      </div> -->
     </section>
 
 
@@ -87,21 +87,12 @@
         <div v-for="amenity in commonAreasList" :key="amenity.id"
              class="flex justify-between items-center">
           <label :for="'amenity-' + amenity.id" class="ml-3 text-sm text-gray-700">{{ amenity.name }}</label>
-          <div class="relative flex items-center">
-            <input
-              :id="'amenity-' + amenity.id"
-              type="checkbox"
-              :checked="selectedAmenities.has(amenity.id)"
-              @change="toggleOption(selectedAmenities, amenity.id)"
-              class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-            >
-            <div v-if="selectedAmenities.has(amenity.id)"
-                 class="absolute pointer-events-none">
-              <svg class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
-                <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
-              </svg>
-            </div>
-          </div>
+          <CoreCustomCheckbox
+             :id="'amenity-' + amenity.id"
+            :checkbox-id="amenity.name"
+            v-model="selectedAmenities"
+          />
+
         </div>
       </div>
     </section>
@@ -185,22 +176,61 @@
     <div v-for="pet in petsList" :key="pet.id" class="flex justify-between items-center">
       <label :for="'pet-' + pet.id" class="ml-3 text-sm text-gray-700">{{ pet.name }}</label>
       <div class="relative flex items-center">
-        <input
+        <CoreCustomCheckbox
+             :id="'pet-' + pet.id"
+            :checkbox-id="pet.name"
+            v-model="selectedPets"
+          />
+        <!-- <input
           :id="'pet-' + pet.id"
           type="checkbox"
           :checked="selectedPets.has(pet.id)"
           @change="togglePetSelection(pet.id)"
           class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-        >
+        > -->
       </div>
     </div>
   </div>
-</div>
+   </div>
 
-    <div class="flex justify-between items-center gap-x-6">
-        <button @click="resetFilterOptions" class="text-[#EBE5E0] text-gray-800 font-semibold border text-sm py-3 rounded-lg w-full">Reset</button>
-        <button :disabled="loading" @click="handleSubmit" class="bg-[#292929] disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3 w-full">{{ loading ? 'processing..' : 'Apply Filter' }}</button>
+   <div class="pb-20">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 mb-3 rounded-lg px-4 text-gray-900">Move-in-date</h3>
+      <div class="border-[0.5px] bg-white border-gray-100 rounded-lg p-3">
+        <input type="date" class="w-full border-[0.5px] text-sm rounded-lg p-2 py-3 mt-3" v-model="filters.availabilityFrom" />
+      <div class="flex justify-between items-center items-center pt-6">
+        <h3 class="text-sm">Available Now</h3>
+        <label class="relative inline-flex items-center cursor-pointer">
+          <input type="checkbox" v-model="filters.availableNow" class="sr-only peer">
+          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
+        </label>
+      </div>
+      </div>
     </div>
+
+    <section class="fixed w-full bottom-0 bg-white pr-[200px] z-[999999] px-4 py-3 border-t border-gray-100">
+  <div id="footer" class="flex justify-between items-center gap-x-6 max-w- mx-auto">
+    <button 
+      @click="resetFilterOptions" 
+      class="text-gray-800 font-semibold border text-sm py-3 rounded-lg w-[120px]"
+    >
+      Reset
+    </button>
+    <button 
+      :disabled="loading" 
+      @click="handleSubmit" 
+      class="bg-[#292929] w-[200px] disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3"
+    >
+      {{ loading ? 'processing..' : 'Apply Filter' }}
+    </button>
+  </div>
+</section>
+
+<!-- <section class="fixed w-full bottom-0 bg-white z-[999999px]">
+  <div id="footer" class="flex justify-between items-center gap-x-6 w-full">
+        <button @click="resetFilterOptions" class="text-[#EBE5E0] w-full text-gray-800 font-semibold border text-sm py-3 rounded-lg">Reset</button>
+        <button :disabled="loading" @click="handleSubmit" class="bg-[#292929] w-full disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3">{{ loading ? 'processing..' : 'Apply Filter' }}</button>
+    </div>
+</section> -->
   </div>
 </template>
 
@@ -226,6 +256,9 @@ interface FilterPayload {
   roomSizeUnit: string;
   amenities: string[];
   pets: string[];
+  availabilityFrom: string
+  isFurnished: [boolean, boolean],
+  availableNow: boolean
 }
 
 const onUnitUpdate = (newUnit: any) => {
@@ -242,6 +275,7 @@ const filters = reactive({
   bedrooms: [] as number[],
   propertyTypes: {} as Record<string, boolean>,
   amenities: {} as Record<string, boolean>,
+  availabilityFrom: "",
   moveInDate: '',
   availableNow: false
 });
@@ -320,6 +354,9 @@ const getFilterPayload = (): FilterPayload => {
     bathroomsCount: bathroomCount.value ? [parseInt(bathroomCount.value)] : [],
     roomSizeMin: filters.roomSizeRange[0],
     roomSizeMax: filters.roomSizeRange[1],
+    availabilityFrom: filters.availabilityFrom,
+    availableNow: filters.availableNow,
+    isFurnished: filters.isFurnished,
     roomSizeUnit: filterPayload?.value?.roomSizeUnit,
     amenities: Array.from(selectedAmenities.value),
     pets: Array.from(selectedPets.value) // Add selected pets
@@ -406,19 +443,6 @@ const sortOptions = ref<SortOption[]>([
   }
 ])
 
-// const handleSortChange = async (option: SortOption): Promise<void> => {
-//   selectedSort.value = option.id
-
-//   if (option.sortConfig) {
-//     currentSortConfig.value = {
-//       order: [option.sortConfig]
-//     }
-//   } else {
-//     currentSortConfig.value = null
-//   }
-
-// }
-
 const handleSortChange = (option: SortOption) => {
   selectedSort.value = option.id
   
@@ -457,20 +481,6 @@ const handleSubmit = async () => {
   const result = await filterProperty()
   emit('result',result)
   emit('close')
-  // console.log(JSON.stringify({
-  //   order: payload.order,
-  //   sharedCount: payload.sharedCount,
-  //   houseTypeIds: payload.houseTypeIds,
-  //   priceMin: payload.priceMin,
-  //   priceMax: payload.priceMax,
-  //   bedroomsCount: payload.bedroomsCount,
-  //   bathroomsCount: payload.bathroomsCount,
-  //   roomSizeMin: payload.roomSizeMin,
-  //   roomSizeMax: payload.roomSizeMax,
-  //   roomSizeUnit: payload.roomSizeUnit,
-  //   amenities: payload.amenities,
-  //   pets: payload.pets // Log the pets as part of the payload
-  // }, null, 2))
 }
 
 const petsList = [
@@ -526,12 +536,7 @@ input[type="checkbox"]:checked {
   border-color: #059669;
 }
 
-/* Custom date input styles */
-input[type="date"] {
-  appearance: none;
-  -webkit-appearance: none;
-}
-
+/* 
 input[type="date"]::-webkit-calendar-picker-indicator {
   background: transparent;
   bottom: 0;
@@ -543,7 +548,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   right: 0;
   top: 0;
   width: auto;
-}
+} */
 
 /* Ensure proper spacing on mobile */
 @media (max-width: 640px) {
@@ -559,6 +564,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin-top: 0.5rem;
   }
 }
+
 
 </style>
 

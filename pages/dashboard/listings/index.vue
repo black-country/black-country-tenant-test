@@ -335,6 +335,8 @@
         </div>
       </nav>
     </section>
+    <!-- {{ computedPropertiesList.length }} -->
+      <!-- {{ computedPropertiesList.length }} -->
     <section v-if="viewType === 'grid'">
       <div
         class="lg:flex items-center space-y-6 lg:space-y-0 lg:space-x-4 p-4 bg-white container mx-auto"
@@ -618,12 +620,12 @@
         </div>
       </div>
       <div ref="propertyCardsRef"
-        v-if="propertiesList.length"
+        v-if="computedPropertiesList.length"
         class="p-6 container mx-auto space-y-6 lg:space-y-0 lg:flex flex-wrap gap-7"
       >
         <div
-          v-if="!loadingProperties && propertiesList.length"
-          v-for="(property, index) in propertiesList"
+          v-if="!loadingProperties && computedPropertiesList.length"
+          v-for="(property, index) in computedPropertiesList"
           :key="index"
           class="relative cursor-pointer min-w-[300px] w-full lg:max-w-[350px] bg-white"
         >
@@ -802,7 +804,7 @@
         </div>
 
         <div
-          class="mt-4 bg-[#FDFCFC]"
+          class="mt-4 bg-[#FDFCFC] h-96 overflow-y-auto"
           v-if="searchQuery.length && !loadingSearch && searchResults.length"
         >
           <div class="flex justify-between items-center px-3">
@@ -1031,7 +1033,7 @@ import { dynamicImage } from "@/utils/assets";
 import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
 import { useRouter, useRoute } from "vue-router";
-const { properties, loading: filterProperties } = useFilterProperty()
+const { properties: filteredProperties, loading: filterProperties } = useFilterProperty()
 
 const router = useRouter();
 const isOpen = ref(false)
@@ -1063,113 +1065,10 @@ const notificationsRef = ref(null);
 const profileRef = ref(null);
 const propertyCardsRef = ref(null)
 
-// onMounted(() => {
-//   // Check if the tour has already run
-//   const tourStatus = localStorage.getItem('tourShown');
 
-//   // If tour has not been shown, run the tour
-//   if (!tourStatus) {
-//     // Add tour steps
-//     tour.addSteps([
-//       {
-//         attachTo: { element: dashboardRef.value, on: "bottom" },
-//         text:
-//           "This is the greeting. It displays your name based on the user data.",
-//       },
-//       {
-//         attachTo: { element: listingsRef.value, on: "bottom" },
-//         text:
-//           "Explore available properties, filter by preferences, and find your perfect home.",
-//       },
-//       {
-//         attachTo: { element: myHomeRef.value, on: "bottom" },
-//         text:
-//           "Manage your rented space, pay rent, request maintenance, and more—all from one place.",
-//       },
-//       {
-//         attachTo: { element: messagesRef.value, on: "bottom" },
-//         text:
-//           "Here you can manage your payment actions such as paying rent or utility bills.",
-//       },
-//       {
-//         attachTo: { element: propertyViewRef.value, on: "bottom" },
-//         text: "When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!",
-//       },
-//       {
-//         attachTo: { element: favoritesRef.value, on: "top" },
-//         text: "Manage your rental applications from here.",
-//       },
-//       {
-//         attachTo: { element: notificationsRef.value, on: "bottom" },
-//         text: "Manage your upcoming activities from here.",
-//       },
-//       {
-//         attachTo: { element: profileRef.value, on: "bottom" },
-//         text: "Manage your recent transactions from here.",
-//       },
-//       {
-//         attachTo: { element: propertyCardsRef.value, on: "bottom" },
-//         text: "Manage your recent transactions from here.",
-//       },
-//     ]);
-
-//     // Start the tour
-//     tour.start();
-
-//     // Save status in local storage to indicate the tour has run
-//     localStorage.setItem('tourShown', 'true');
-//   }
-// });
-
-
-// onMounted(() => {
-//   // Add tour steps
-//   tour.addSteps([
-//     {
-//       attachTo: { element: dashboardRef.value, on: "bottom" },
-//       text:
-//         "This is the greeting. It displays your name based on the user data.",
-//     },
-//     {
-//       attachTo: { element: listingsRef.value, on: "bottom" },
-//       text:
-//         "Explore available properties, filter by preferences, and find your perfect home.",
-//     },
-//     {
-//       attachTo: { element: myHomeRef.value, on: "bottom" },
-//       text:
-//         "Manage your rented space, pay rent, request maintenance, and more—all from one place.",
-//     },
-//     {
-//       attachTo: { element: messagesRef.value, on: "bottom" },
-//       text:
-//         "Here you can manage your payment actions such as paying rent or utility bills.",
-//     },
-//     {
-//       attachTo: { element: propertyViewRef.value, on: "bottom" },
-//       text: "When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!",
-//     },
-//     {
-//       attachTo: { element: favoritesRef.value, on: "top" },
-//       text: "Manage your rental applications from here.",
-//     },
-//     {
-//       attachTo: { element: notificationsRef.value, on: "bottom" },
-//       text: "Manage your upcoming activities from here.",
-//     },
-//     {
-//       attachTo: { element: profileRef.value, on: "bottom" },
-//       text: "Manage your recent transactions from here.",
-//     },
-//     {
-//       attachTo: { element: propertyCardsRef.value, on: "bottom" },
-//       text: "Manage your recent transactions from here.",
-//     },
-//   ]);
-
-//   // Start the tour
-//   tour.start();
-// });
+// const computedPropertiesList = computed(() => {
+//   return properties?.value?.length ? properties.value.length : propertiesList.value
+// })
 
 const {
   propertiesList,
@@ -1191,6 +1090,20 @@ const toggleView = (newViewType: string) => {
   viewType.value = newViewType; // Update the current view type
   updateQueryParam("view", newViewType); // Update the query parameter in the URL
 };
+
+// Computed property to handle filtered properties or default to propertiesList
+const computedPropertiesList = computed(() => {
+  // If there are filtered properties, use them
+  if (filteredProperties.value.length) {
+    return filteredProperties.value;
+  }
+  // If no filter, show the full properties list
+  if (propertiesList.value.length) {
+    return propertiesList.value;
+  }
+  // Fallback when no properties are available
+  return [];
+});
 
 // Watch for query parameter changes to update the view
 watch(
