@@ -96,6 +96,7 @@
       </div>
     </button>
     <button
+      @click="emit('moveout')"
       class="bg-[#FBEAE9] text-[#1D2739] p-4 rounded-lg flex items-center justify-between"
     >
      <p class="-mb-14"> Move Out</p>
@@ -141,6 +142,8 @@ import { ref } from 'vue'
 
 // Modal visibility state
 const isModalOpen = ref(false)
+
+const emit = defineEmits(['moveout'])
 
 // Open modal
 const openModal = () => {

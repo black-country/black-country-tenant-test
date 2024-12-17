@@ -25,7 +25,7 @@
       </div>
 
 
-    <HomeActionButtons />
+    <HomeActionButtons @moveout="handleMoveOut" />
 
 
     <!-- <section class="mt-6 space-y-4">
@@ -309,4 +309,8 @@ const formatDate = (date: string) =>
 const requestDates = computed(() =>
   [...new Set(requests.value.map((req) => req.date))].sort()
 )
+
+const handleMoveOut = () => {
+  router.push('/dashboard/home/move-out-check')
+}
 </script>

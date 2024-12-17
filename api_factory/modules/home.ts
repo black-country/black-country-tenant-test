@@ -11,5 +11,13 @@ export const home_api = {
       $_get_rental_checklist: (id: any) => {
         let url = `/rental-applications/${id}/checklists`;
         return GATEWAY_ENDPOINT.get(url);
-      }
+      },
+      $_get_move_out_rental_checklist: (id: any) => {
+        let url = `/rental-applications/${id}/move-out-checklists`;
+        return GATEWAY_ENDPOINT.get(url);
+      },
+      $_add_move_out_checklist_item: (id: string, payload: any) => {
+        let url = `/rental-applications/${id}/move-out-checklists`;
+        return GATEWAY_ENDPOINT.post(url, payload);
+      },
 }
