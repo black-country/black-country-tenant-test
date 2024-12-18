@@ -40,4 +40,8 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
     const url = "/common-areas";
     return GATEWAY_ENDPOINT.get(url);
   },
+  $_save_search: (payload: any) => {
+    const url = '/saved-searches';
+    return GATEWAY_ENDPOINT.post(url, payload);
+  },
 };

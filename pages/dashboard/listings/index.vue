@@ -337,6 +337,7 @@
     </section>
     <!-- {{ computedPropertiesList.length }} -->
       <!-- {{ computedPropertiesList.length }} -->
+
     <section v-if="viewType === 'grid'">
       <div
         class="lg:flex items-center space-y-6 lg:space-y-0 lg:space-x-4 p-4 bg-white container mx-auto"
@@ -742,7 +743,8 @@
       </div>
     </section>
     <section v-else-if="viewType === 'map'" class="z-10">
-      <PropertyMap :properties="propertiesList" />
+      <CoreMapView  />
+      <!-- <PropertyMap :properties="propertiesList" /> -->
     </section>
 
     <CoreModal

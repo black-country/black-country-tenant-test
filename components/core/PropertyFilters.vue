@@ -207,18 +207,18 @@
       </div>
     </div>
 
-    <section class="fixed w-full bottom-0 bg-white pr-[200px] z-[999999] px-4 py-3 border-t border-gray-100">
-  <div id="footer" class="flex justify-between items-center gap-x-6 max-w- mx-auto">
+    <section class="fixed w-[440px] bottom-0 bg-white right-0 flex justify-center items-center  z-[999999] px-4 py-3 border-t border-gray-100">
+  <div id="footer" class="flex justify-between items-center items-center gap-x-6 mx-auto w-full">
     <button 
       @click="resetFilterOptions" 
-      class="text-gray-800 font-semibold border text-sm py-3 rounded-lg w-[120px]"
+      class="text-gray-800 font-semibold border w-full text-sm py-3 rounded-lg"
     >
       Reset
     </button>
     <button 
       :disabled="loading" 
       @click="handleSubmit" 
-      class="bg-[#292929] w-[200px] disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3"
+      class="bg-[#292929] disabled:cursor-not-allowed w-full disabled:opacity-25 text-sm text-white rounded-lg py-3"
     >
       {{ loading ? 'processing..' : 'Apply Filter' }}
     </button>
