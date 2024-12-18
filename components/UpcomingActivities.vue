@@ -6,8 +6,8 @@
             <div class="animate-pulse flex space-x-4 h-44 bg-slate-200 rounded"></div>
              </section>
              <div v-else-if="!loading && upcomingActivitiesList?.length">
-              <div v-for="activity in upcomingActivitiesList" :key="activity.id"
-                class="flex justify-between items-center bg-white p-4 rounded-lg mb-2">
+              <div @click="handleActivity(activity)" v-for="activity in upcomingActivitiesList" :key="activity.id"
+                class="flex justify-between cursor-pointer items-center bg-white p-4 rounded-lg mb-2">
                 <div class="flex items-center gap-x-3">
                   <div class="flex items-center gap-x-3">
                     <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -52,5 +52,7 @@ import moment from "moment";
 import { useFetchUpcomingActivities } from '@/composables/modules/settings/useFetchUpcomingActivities'
 const { loading, upcomingActivitiesList } = useFetchUpcomingActivities()
 
-
+const handleActivity = (data: any) => {
+   console.log(data, 'here')
+}
 </script>
