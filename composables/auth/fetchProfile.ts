@@ -1,5 +1,7 @@
 import { auth_api } from '@/api_factory/modules/auth'
 import { useUser } from '@/composables/auth/user'
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
 export const use_tenant_profile = () => {
   const profileObj = ref({}) as any
   const loading = ref(false);
@@ -12,13 +14,15 @@ export const use_tenant_profile = () => {
 
       if(res.status == 200 || res.status == 201){
          profileObj.value = res.data
-		 updateUser(profileObj.value)
+		     updateUser(profileObj.value)
       }
 
     } catch (error) {
-        useNuxtApp().$toast.error('Error Fetching profile.', {
-            autoClose: 5000,
-            dangerouslyHTMLString: true,
+          showToast({
+            title: "Error",
+            message: 'Error Fetching profile.',
+            toastType: "error",
+            duration: 3000
           });
     } finally {
       loading.value = false;

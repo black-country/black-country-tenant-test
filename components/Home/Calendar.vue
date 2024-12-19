@@ -1,18 +1,18 @@
 <template>
-  <div class="">
+  <div class="border-[0.5px] border-gray-50 bg-white rounded-lg py-3">
     <!-- Month and Year Navigation -->
-    <div class="flex justify-between items-center mb-4 px-9 pb-6">
-      <h3 class="text-lg font-medium">{{ monthYearDisplay }}</h3>
-      <div class="flex space-x-2 pr-10">
+    <div class="flex justify-between items-center mb-4 pb-6 px-4">
+      <h3 class="text- font-medium">{{ monthYearDisplay }}</h3>
+      <div class="flex space-x-6">
         <button @click="changeMonth(-1)" class="text-gray-500 hover:text-gray-700">
-          <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="10" height="14" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M0 9C0 9.3418 0.126953 9.63477 0.400391 9.88867L7.99805 17.3301C8.21289 17.5449 8.48633 17.6621 8.80859 17.6621C9.45312 17.6621 9.9707 17.1543 9.9707 16.5C9.9707 16.1777 9.83398 15.8945 9.61914 15.6699L2.77344 9L9.61914 2.33008C9.83398 2.10547 9.9707 1.8125 9.9707 1.5C9.9707 0.845703 9.45312 0.337891 8.80859 0.337891C8.48633 0.337891 8.21289 0.455078 7.99805 0.669922L0.400391 8.10156C0.126953 8.36523 0 8.6582 0 9Z"
               fill="#101928" />
           </svg>
         </button>
         <button @click="changeMonth(1)" class="text-gray-500 hover:text-gray-700">
-          <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="10" height="14" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M10.002 9C9.99219 8.6582 9.86523 8.36523 9.60156 8.10156L2.00391 0.669922C1.7793 0.455078 1.51562 0.337891 1.19336 0.337891C0.539062 0.337891 0.03125 0.845703 0.03125 1.5C0.03125 1.8125 0.158203 2.10547 0.382812 2.33008L7.21875 9L0.382812 15.6699C0.158203 15.8945 0.03125 16.1777 0.03125 16.5C0.03125 17.1543 0.539062 17.6621 1.19336 17.6621C1.50586 17.6621 1.7793 17.5449 2.00391 17.3301L9.60156 9.88867C9.875 9.63477 10.002 9.3418 10.002 9Z"
               fill="#101928" />
@@ -22,14 +22,14 @@
     </div>
 
     <!-- Day Labels -->
-    <div class="grid grid-cols-7 text-center  pr-10 text-gray-500 mb-2">
+    <div class="flex grid grid-cols-7 pl-6">
       <span v-for="day in dayNames" :key="day" class="text-sm font-medium">{{ day }}</span>
     </div>
 
     <!-- Dates Grid -->
-    <div class="grid grid-cols-7 text-center gap-y-2 pl-8">
+    <div class="grid grid-cols-7 text-center gap-y-2 pl-6 pt-6">
       <!-- Offset for the first day of the month -->
-      <div v-for="(_, index) in firstDayOffset" :key="'offset-' + index" class="p-2"></div>
+      <div v-for="(_, index) in firstDayOffset" :key="'offset-' + index" class=""></div>
 
       <!-- Dates -->
       <div
@@ -40,7 +40,7 @@
           'bg-[#5B8469] text-white': isSelected(day),
           'text-gray-700': !isSelected(day)
         }"
-        class="w-8 h-8 flex items-center justify-center text-center  rounded-full cursor-pointer transition-all"
+        class="w-8 h-8 text-sm flex items-center justify-center text-center  rounded-full cursor-pointer transition-all"
       >
         {{ day }}
       </div>

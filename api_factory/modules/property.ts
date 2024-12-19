@@ -44,4 +44,17 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
     const url = '/saved-searches';
     return GATEWAY_ENDPOINT.post(url, payload);
   },
+  $_fetch_saved_search: (page = 1, perPage = 20) => {
+    let url = `/saved-searches?page=${page}&perPage=${perPage}`
+    return GATEWAY_ENDPOINT.get(url)
+  },
+  $_delete_saved_search: (id: string | any) => {
+    let url = `/saved-searches/${id}`
+    return GATEWAY_ENDPOINT.delete(url)
+  },
+  $_clear_saved_search: (payload: any) => {
+    let url = '/saved-searches/clear'
+    return GATEWAY_ENDPOINT.delete(url, payload)
+  },
+  
 };

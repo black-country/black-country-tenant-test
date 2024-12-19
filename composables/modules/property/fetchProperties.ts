@@ -57,6 +57,7 @@ export const useGetProperties = () => {
         if (res.type !== 'ERROR') {
             let results = res?.data?.result ?? [];
             searchResults.value = sortProperties(results); // Sort search results before setting them
+            loadingSearch.value = false // Reset loading state
         }
         loadingSearch.value = false // Reset loading state
     }

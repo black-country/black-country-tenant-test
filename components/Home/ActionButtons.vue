@@ -96,7 +96,7 @@
       </div>
     </button>
     <button
-      @click="emit('moveout')"
+      @click="router.push('/dashboard/home/move-out')"
       class="bg-[#FBEAE9] text-[#1D2739] p-4 rounded-lg flex items-center justify-between"
     >
      <p class="-mb-14"> Move Out</p>
@@ -139,6 +139,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
+const router = useRouter()
 
 // Modal visibility state
 const isModalOpen = ref(false)

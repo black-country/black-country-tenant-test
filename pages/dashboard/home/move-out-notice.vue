@@ -1,7 +1,7 @@
 <template>
     <TopNavBar />
-    <section class="max-w-3xl mx-auto mt-6 px-10">
-        <div class="flex items-center text-gray-600 mb-4 px-6">
+    <section class="max-w-2xl mx-auto mt-6 px-10">
+        <div class="flex items-center text-gray-600 mb-4">
             <svg
               @click="router.back()"
               class="cursor-pointer"

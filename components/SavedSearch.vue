@@ -1,10 +1,9 @@
 <template>
-    <main>
        <div
-       class="container mx-auto space-y-6 lg:space-y-0 lg:flex flex-wrap gap-7"
+       class="container mx-auto pb-10 space-y-6 lg:space-y-0 lg:flex flex-wrap gap-7"
      >
        <div
-         v-if="!loadingProperties && propertiesList.length"
+         v-if="!loading && propertiesList.length"
          v-for="(property, index) in propertiesList"
          :key="index"
          class="relative cursor-pointer min-w-[300px] w-full lg:max-w-[350px] bg-white"
@@ -48,6 +47,7 @@
            class="space-y-2 cursor-pointer"
          >
            <div>
+            <!-- {{ property }} -->
              <h3 class="text- font-medium text-[#1D2739] mt-4">
                {{ property?.house?.name ?? 'Nil' }}
              </h3>
@@ -88,9 +88,8 @@
            </p>
          </section>
        </div>
-       </div>
        <div
-       v-if="loadingProperties && !propertiesList.length"
+       v-else-if="loading && !propertiesList.length"
        class="border-[0.5px] bg-gray-100 shadow rounded-md w-full mx-auto"
        >
        <div class="animate-pulse flex space-x-4">
@@ -107,22 +106,31 @@
          class=""
        />
        <p class="text-[#1D2739]">No Saved search available</p>
-     </div>
-    </main>
+      </div>
+      </div>
    </template>
    
    <script setup lang="ts">
+   import { useGetSavedSearch } from '@/composables/modules/property/useFetchSavedSearch'
+   const {
+
+        loading,
+        propertiesList,
+        currentPage,
+        perPage,
+        totalPages
+    } = useGetSavedSearch()
 import moment from "moment";
 const router = useRouter();
-const props = defineProps({
-  propertiesList: {
-    type: Array,
-    default: () => [],
-  },
-  loadingProperties: {
-    type: Boolean,
-    default: false,
-  },
-});
+// const props = defineProps({
+//   propertiesList: {
+//     type: Array,
+//     default: () => [],
+//   },
+//   loading: {
+//     type: Boolean,
+//     default: false,
+//   },
+// });
 </script>
    

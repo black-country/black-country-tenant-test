@@ -20,4 +20,8 @@ export const home_api = {
         let url = `/rental-applications/${id}/move-out-checklists`;
         return GATEWAY_ENDPOINT.post(url, payload);
       },
+      $_create_move_out_notice: (payload: any) => {
+        let url = `/move-out-notices`;
+        return GATEWAY_ENDPOINT.post(url, payload);
+      },
 }

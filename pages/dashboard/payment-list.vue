@@ -20,7 +20,7 @@
       <h2 class="bg-white py-3.5 rounded-lg px-6 border-[0.5px] border-gray-50 text-sm text-gray-600">{{ formatDate(date) }}</h2>
       
       <div class="bg-white rounded-lg divide-y">
-        <div v-for="transaction in group" :key="transaction.id"
+        <div v-for="transaction in group" :key="transaction.id" @click="router.push({ path: '/dashboard/transaction', query: { id: transaction.id}})"
                 class="flex justify-between items-center border-[0.5px] border-gray-50 bg-white p-4 rounded-lg mb-2">
                 <div class="flex items-center gap-x-3">
                   <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">

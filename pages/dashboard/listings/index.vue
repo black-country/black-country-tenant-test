@@ -622,13 +622,13 @@
       </div>
       <div ref="propertyCardsRef"
         v-if="computedPropertiesList.length"
-        class="p-6 container mx-auto space-y-6 lg:space-y-0 lg:flex flex-wrap gap-7"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-6 lg:grid-cols-4 container mx-auto gap-6"
       >
         <div
           v-if="!loadingProperties && computedPropertiesList.length"
           v-for="(property, index) in computedPropertiesList"
           :key="index"
-          class="relative cursor-pointer min-w-[300px] w-full lg:max-w-[350px] bg-white"
+          class="relative cursor-pointer min-w-[100px] w-full lg:max-w-[350px] bg-white"
         >
           <button
             @click="toggleLike(index, property)"

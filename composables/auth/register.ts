@@ -1,5 +1,8 @@
 import { useUser } from "@/composables/auth/user";
 import { auth_api } from "@/api_factory/modules/auth";
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
+
 import { useRouter, useNuxtApp } from "#imports";
 const credential = {
   fullName: ref(""),
@@ -38,15 +41,20 @@ export const use_auth_register = () => {
         sessionStorage.setItem('auth-payload', JSON.stringify(sessionPayload))
         router.push(`/verify-email?email=${credential.email.value}&referrer=signup`);
       } else {
-        useNuxtApp().$toast.error(res.data.error, {
-          autoClose: 5000,
-          dangerouslyHTMLString: true,
+        showToast({
+          title: "Error",
+          message: res.data.error,
+          toastType: "error",
+          duration: 3000
         });
       }
     } catch (error) {
       loading.value = false;
-      useNuxtApp().$toast.error("Registration failed. Please try again.", {
-        autoClose: 5000,
+      showToast({
+        title: "Error",
+        message: 'Registration failed. Please try again',
+        toastType: "error",
+        duration: 3000
       });
     }
   };

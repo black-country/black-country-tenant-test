@@ -1,5 +1,5 @@
  <template>
-    <div id="parent" class="relative flex justify-center items-center w-full h-full">
+    <div class="relative flex justify-center items-center w-full h-full">
       <!-- Carousel Images -->
       <img
         :src="dynamicImage(currentImage)"
@@ -8,12 +8,13 @@
       />
   
       <!-- Text Overlay -->
-      <div class="absolute -bottom-10 left-8 text-white text-left w-full">
+      <div class="absolute -bottom-10  text-white text-left w-full">
         <div class="flex justify-center items-center flex-col">
           <h2 class="text-3xl font-semibold text-center">{{ currentText.title }}</h2>
           <p class="mt-2 text-center max-w-lg mx-auto">{{ currentText.description }}</p>
         </div>
       </div>
+      
   
       <!-- Carousel Navigation Buttons -->
       <div class="absolute -bottom-20 left-1/2 border rounded-full p-1.5 text-xs bg-white transform -translate-x-1/2 flex space-x-2">

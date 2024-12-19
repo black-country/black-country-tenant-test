@@ -6,7 +6,7 @@
             <div class="animate-pulse flex space-x-4 h-44 bg-slate-200 rounded"></div>
              </section>
              <div v-else-if="!loading && upcomingActivitiesList?.length">
-              <div @click="handleActivity(activity)" v-for="activity in upcomingActivitiesList" :key="activity.id"
+              <div @click="router.push(`/dashboard/transaction/${activity.id}`)" v-for="activity in upcomingActivitiesList" :key="activity.id"
                 class="flex justify-between cursor-pointer items-center bg-white p-4 rounded-lg mb-2">
                 <div class="flex items-center gap-x-3">
                   <div class="flex items-center gap-x-3">
@@ -55,4 +55,6 @@ const { loading, upcomingActivitiesList } = useFetchUpcomingActivities()
 const handleActivity = (data: any) => {
    console.log(data, 'here')
 }
+
+const router = useRouter()
 </script>

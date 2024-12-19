@@ -25,7 +25,7 @@
       </div>
 
 
-    <HomeActionButtons @moveout="handleMoveOut" />
+    <HomeActionButtons  />
 
 
     <!-- <section class="mt-6 space-y-4">
@@ -195,7 +195,7 @@
             <div class="animate-pulse flex space-x-4 h-20 bg-slate-200 rounded"></div>
             </section>
             <div v-else>
-              <div v-for="transaction in paymentList" :key="transaction.id"
+              <div @click="handleTransaction" v-for="transaction in paymentList" :key="transaction.id"
                 class="flex justify-between items-center bg-white p-4 rounded-lg mb-2">
                 <div class="flex items-center gap-x-3">
                   <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -296,6 +296,10 @@ const filteredRequestsByStatus = (date: string) => {
 }
 
 
+const handleTransaction = (transaction: any) => {
+  router.push({ path: '/dashboard/transaction', query: { id: transaction.id}})
+}
+
 
   // Format date to a readable format
 const formatDate = (date: string) =>
@@ -310,7 +314,7 @@ const requestDates = computed(() =>
   [...new Set(requests.value.map((req) => req.date))].sort()
 )
 
-const handleMoveOut = () => {
-  router.push('/dashboard/home/move-out-check')
-}
+// const handleMoveOut = () => {
+//   router.push('/dashboard/home/move-out-check')
+// }
 </script>

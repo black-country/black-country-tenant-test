@@ -52,7 +52,7 @@
       const router = useRouter()
       const setupActions = ref([
         { checked: false, title: 'Notice of intent to move - out', description: 'Send a move-out notice to prepare for inspection.', path: '/dashboard/home/move-out-notice' },
-        { checked: false, title: 'Move - out checklist', description: 'Complete the move-out checklist to facilitate the inspection.', path: '/dashboard/home/move-out-checklist' }
+        { checked: false, title: 'Move - out checklist', description: 'Complete the move-out checklist to facilitate the inspection.', path: '/dashboard/home/move-out-check' }
       ]);
 
       </script>
