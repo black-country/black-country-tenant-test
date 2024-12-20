@@ -79,7 +79,7 @@ const signatureObj = ref({}) as any
 const emit = defineEmits(["close", "agreementData"]);
 
 const handleUploadedSignature = (data: any) => {
-  console.log(data.secure_url, 'uploaded sign data')
+  console.log(data, 'uploaded sign data')
   signatureObj.value = data
 };
 
@@ -100,7 +100,7 @@ const submitSignature = async () => {
     // Create the payload object with optional signee name and signature URL
     const payloadObj = {
       signeeName: tenantName.value || '', // Ensure a fallback if tenantName is null
-      signatureUrl: signatureObj?.value?.secure_url || '' // Provide a fallback if secureUrl is null
+      signatureUrl: signatureObj?.value?.secure_url ?? '' // Provide a fallback if secureUrl is null
     };
 
     // Check if the signature URL is valid before proceeding
@@ -124,11 +124,13 @@ const submitSignature = async () => {
 				});
     }
 
+    console.log(rentalLeaseAgreementId, payloadObj, )
+
     // Perform the API call to sign the lease agreement
     await signLeaseAgreement(rentalLeaseAgreementId, payloadObj);
 
     // Emit the 'close' event after a successful submission
-    emit('close');
+    // emit('close');
   } catch (error) {
     showToast({
 					title: "Error",

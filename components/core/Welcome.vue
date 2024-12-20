@@ -28,7 +28,7 @@
           <!-- <button @click="emit('start')" class="flex-1 bg-[#292929] text-white py-3.5 px-4 rounded-lg hover:bg-gray-900">
             Continue
           </button> -->
-          <button @click="router.push('/dashboard/listings')" class="flex-1 bg-[#292929] text-white py-3.5 px-4 rounded-lg hover:bg-gray-900">
+          <button @click="emit('start')" class="flex-1 bg-[#292929] text-white py-3.5 px-4 rounded-lg hover:bg-gray-900">
             Continue
           </button>
         </div>

@@ -2,6 +2,8 @@ import { property_api } from "@/api_factory/modules/property";
 import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
 
+const isSearchSuccessful = ref(false)
+
 const searchPayload = ref({
     searchTerm: "black",
     imageUrl: "",
@@ -26,6 +28,7 @@ export const useSaveSearch = () => {
                 toastType: "success",
                 duration: 3000
               });
+              isSearchSuccessful.value= true
         } else {
             showToast({
                 title: "Error",
@@ -35,6 +38,7 @@ export const useSaveSearch = () => {
               });
         }
         loading.value = false
+        isSearchSuccessful.value= true
 	}
 
     const setPayload = (data: any) => {
@@ -48,5 +52,5 @@ export const useSaveSearch = () => {
         ]
     }
 
-	return { saveSearch, loading, setPayload }
+	return { saveSearch, loading, setPayload, isSearchSuccessful }
 }

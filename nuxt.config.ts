@@ -26,14 +26,13 @@ export default {
   },
 
   modules: ["@nuxtjs/tailwindcss"],
-  css: ["/assets/css/main.css", 'vue-tour/dist/vue-tour.css'],
+  css: ["/assets/css/main.css",  'intro.js/minified/introjs.min.css'],
 
   tailwindcss: {
     cssPath: "@/assets/css/main.css",
   },
-  // css: ['vue-tour/dist/vue-tour.css'],
   build: {
-    transpile: ['vue-tour']
+    transpile: []
   },
 
   axios: {
@@ -41,7 +40,7 @@ export default {
     timeout: 10000, // Example: set timeout to 10 seconds
   },
 
-  plugins: ['~/plugins/vue-tour.ts', '~/plugins/vue-tour.client.ts', '~/plugins/dayjs.ts', '~/plugins/google-maps.client.ts'],
+  plugins: ['~/plugins/intro.client.ts', '~/plugins/dayjs.ts', '~/plugins/google-maps.client.ts'],
 
   vite: {
     optimizeDeps: {

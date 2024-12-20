@@ -8,7 +8,7 @@ export const useInitializeRentPayment = () => {
   const { user } = useUser();
   const { showToast } = useCustomToast();
   const loading = ref(false);
-  const router = useRouter()
+const router = useRouter()
   const route = useRoute()
   const payload = ref({
     rentalApplicationId: "",
@@ -51,20 +51,18 @@ export const useInitializeRentPayment = () => {
 
         console.log(res?.data, "Transaction initialized successfully");
 
-        // Show success toast
-        // showToast({
-        //   title: "Success",
-        //   message: "Rent payment was successfully initialized",
-        //   toastType: "success",
-        //   duration: 3000,
-        // });
-
         // Proceed to checkout
-        await checkout();
+       const response =  await checkout() as any
+       console.log(response, 'res from checkout')
 
         // Update the response object for further use
         responseObj.value = res.data;
-        router.push(`/dashboard/listings/${route.query.rentalId}/rental-applications/payment-success`);
+        // console.log(res, 'paymewnr res')
+        if(res?.status == 201){
+          router.push(`/dashboard/listings/${route?.query?.rentalId}/rental-applications/payment-success`);
+          window.location.href = `/dashboard/listings/${route?.query?.rentalId}/rental-applications/payment-success`
+        }
+        // 
 
         // Uncomment if redirection is required
       } else {
@@ -85,7 +83,7 @@ export const useInitializeRentPayment = () => {
       // Show generic error toast
       showToast({
         title: "Error",
-        message: "Something went wrong. Please try again.",
+        message: "Payment process was terminated",
         toastType: "error",
         duration: 3000,
       });

@@ -2,8 +2,8 @@
 <template>
   <main>
     <TopNavBar />
-    <div class="container mx-auto p-4">
-    <HomeEmptyState class="lg:w-6/12 mx-auto" />
+    <div class="max-w-2xl mx-auto p-4">
+    <HomeEmptyState  />
     </div>
   </main>
 </template>

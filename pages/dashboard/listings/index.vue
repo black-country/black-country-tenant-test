@@ -1,5 +1,6 @@
 <template>
   <main class="">
+    <!-- {{ profileObj }} -->
     <section class="sticky top-0 z-50">
       <nav class="bg-[#292929] text-white py-3 z-10">
         <div class="container mx-auto flex justify-between items-center px-4">
@@ -80,7 +81,7 @@
                </div>
               <div ref="listingsRef">
                 <NuxtLink
-                data-v-tour="listings"
+                data-intro="Listings"
                 :class="[
                   route.path === '/dashboard/listings' ? 'bg-[#1D1D1D]' : '',
                 ]"
@@ -124,6 +125,7 @@
               </div>
                <div ref="myHomeRef">
                 <NuxtLink
+                data-intro="My Home"
                 to="/dashboard/home"
                 class="flex items-center py-2.5 space-x-1 text-gray-300 hover:text-white"
               >
@@ -181,6 +183,7 @@
             <div class="flex items-center">
               <div  ref="propertyViewRef" class="flex items-center">
                 <button
+                  data-intro="Map View"
                   v-if="viewType === 'grid'"
                   @click="toggleView('map')"
                   type="button"
@@ -223,6 +226,7 @@
                   <span>Map View</span>
                 </button>
                 <button
+                  data-intro="List View"
                   v-if="viewType === 'map'"
                   @click="toggleView('grid')"
                   type="button"
@@ -628,7 +632,7 @@
           v-if="!loadingProperties && computedPropertiesList.length"
           v-for="(property, index) in computedPropertiesList"
           :key="index"
-          class="relative cursor-pointer min-w-[100px] w-full lg:max-w-[350px] bg-white"
+          class="relative p-3 lg:p-0 cursor-pointer min-w-[100px] w-full lg:max-w-[350px] bg-white"
         >
           <button
             @click="toggleLike(index, property)"
@@ -1024,9 +1028,12 @@
 </template>
 
 <script setup lang="ts">
+  const { $introJs } = useNuxtApp()
+  import { use_tenant_profile } from '@/composables/auth/fetchProfile'
+  const { loading: fetchingProfile, profileObj } = use_tenant_profile()
 import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
-import { useShepherd } from "vue-shepherd";
-import "shepherd.js/dist/css/shepherd.css";
+// import { useShepherd } from "vue-shepherd";
+// import "shepherd.js/dist/css/shepherd.css";
 import moment from "moment";
 import { useGetProperties } from "@/composables/modules/property/fetchProperties";
 import { useBookmarkProperty } from "@/composables/modules/property/bookmark";
@@ -1045,10 +1052,6 @@ const successModal = ref(false);
 // const searchQuery = ref("");
 const propertySearch = ref("");
 
-// Shepherd tour setup
-const tour = useShepherd({
-  useModalOverlay: true,
-});
 
 const showFilterDrawer = ref(false)
 
@@ -1056,6 +1059,19 @@ const handleFilterClick = () => {
   showFilterDrawer.value = true
   // alert('Handle Filter Click')
 }
+
+const showWelcomeModal = ref(false)
+
+onMounted(() => {
+  // Check if the welcome modal has already been shown
+  const welcomeShown = localStorage.getItem('welcome-modal-shown');
+
+  // If the modal has not been shown, run the modal
+  if (!welcomeShown) {
+    showWelcomeModal.value = true;
+    localStorage.setItem('welcome-modal-shown', 'true'); // Corrected the key here
+  }
+});
 
 const dashboardRef = ref(null);
 const listingsRef = ref(null);
@@ -1275,6 +1291,84 @@ const selectOption = (option: any) => {
   }
   closeDropdown();
 };
+
+
+const startTour = () => {
+  const tourSteps = [
+    {
+      title: 'Welcome to BlackCountry! 🥳 🥳🥳',
+      intro: `Welcome to your all-in-one shared-living platform. Search for your ideal home and manage it effortlessly, all within our user-friendly app. Click 'Continue' to embark on your personalized tour of the platform!`,
+      tooltipClass: 'custom-width-tooltip'
+    },
+    {
+      element: '[data-intro="Listings"]',
+      intro: 'Explore available properties, filter by preferences, and find your perfect home.'
+    },
+    {
+      element: '[data-intro="My Home"]',
+      intro: 'Manage your rented space, pay rent, request maintenance, and more—all from one place.'
+    },
+    {
+      element: '[data-intro="Map View"]',
+      intro: 'Get a visual overview of available properties in your desired area, making it easier to find your next home.',
+      viewType: 'map'
+    },
+    {
+      element: '[data-intro="List View"]',
+      intro: 'When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!',
+      viewType: 'grid'
+    }
+  ]
+
+  // Filter out the first step
+  const filteredSteps = tourSteps.slice(1)
+
+  const intro = $introJs()
+
+  // Handle step changes
+  intro.onbeforechange((element) => {
+    const currentStep = intro._currentStep // Get current step index
+    const stepConfig = filteredSteps[currentStep]
+
+    // Update URL parameter if the step has a viewType
+    if (stepConfig?.viewType) {
+      const currentQuery = { ...route.query }
+      router.push({
+        query: {
+          ...currentQuery,
+          viewType: stepConfig.viewType
+        }
+      })
+    }
+  })
+
+  intro.setOptions({
+    steps: filteredSteps,
+    showProgress: true,
+    showBullets: true,
+    exitOnOverlayClick: false,
+    showStepNumbers: true,
+    tooltipClass: 'global-tooltip-class',
+    width: 400
+  })
+  .start()
+}
+
+// Watch for route changes to ensure UI updates accordingly
+watch(
+  () => route.query.viewType,
+  (newViewType) => {
+    console.log('View type changed to:', newViewType)
+    // Add any additional handling needed when viewType changes
+  }
+)
+
+onMounted(() => {
+  if(!profileObj?.value?.hasTakenTour && showWelcomeModal.value){
+    startTour()
+  }
+})
+
 </script>
 
 <style scoped>
@@ -1286,28 +1380,70 @@ const selectOption = (option: any) => {
   display: none;
 }
 
-/* Shepherd step element background color */
-.shepherd-element {
-  background-color: red !important; /* Set the background to red */
-  border-radius: 8px; /* Optional: Add border-radius for rounded corners */
-  color: white; /* Set the text color to white to contrast with red */
+
+/* Custom styles for the tour */
+.custom-width-tooltip {
+  min-width: 300px !important;
+  max-width: 400px !important;
 }
 
-/* Customize the text inside the step */
-.shepherd-content {
-  color: white !important; /* Ensure text is readable on a red background */
+.global-tooltip-class {
+  padding: 20px !important;
+  background-color: #4CAF50 !important; /* Green background */
+  color: white !important; /* White text for better contrast */
 }
 
-/* Customize the button styles (e.g., Next, Finish) */
-.shepherd-button {
-  background-color: white; /* White background for buttons */
-  color: red; /* Red text color for buttons */
-  border: 1px solid red; /* Optional: Red border for buttons */
+/* Style the tooltip buttons */
+.introjs-button {
+  background-color: white !important;
+  color: #4CAF50 !important;
+  border: 1px solid white !important;
 }
 
-/* Customize button hover state */
-.shepherd-button:hover {
-  background-color: red; /* Red background on hover */
-  color: white; /* White text on hover */
+.introjs-button:hover {
+  background-color: #f0f0f0 !important;
+}
+
+/* Style the progress bar */
+.introjs-progressbar {
+  background-color: #81C784 !important; /* Lighter green for progress bar */
+}
+
+/* Style the bullets */
+.introjs-bullets ul li a {
+  background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.introjs-bullets ul li a.active {
+  background-color: white !important;
+}
+
+/* Style the tooltip arrow */
+.introjs-arrow {
+  border-color: #4CAF50 !important;
+}
+
+.introjs-arrow.top, .introjs-arrow.top-middle, .introjs-arrow.top-right {
+  border-bottom-color: #4CAF50 !important;
+}
+
+.introjs-arrow.right, .introjs-arrow.right-bottom {
+  border-left-color: #4CAF50 !important;
+}
+
+.introjs-arrow.bottom, .introjs-arrow.bottom-middle, .introjs-arrow.bottom-right {
+  border-top-color: #4CAF50 !important;
+}
+
+.introjs-arrow.left, .introjs-arrow.left-bottom {
+  border-right-color: #4CAF50 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .custom-width-tooltip {
+    min-width: 280px !important;
+    max-width: 90vw !important;
+  }
 }
 </style>

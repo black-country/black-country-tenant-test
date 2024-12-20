@@ -6,6 +6,7 @@
   
   <script setup lang="ts">
   import ResetPasswordForm from '@/components/ResetPasswordForm.vue';
+  const router = useRouter()
 //   definePageMeta({
 //   middleware: "auth",
 // });

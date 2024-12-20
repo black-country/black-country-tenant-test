@@ -1,7 +1,7 @@
 <template>
 <main>
   <TopNavBar />
-  <section class="space-y-6 max-w-3xl mx-auto mt-6">
+  <section class="space-y-6 max-w-3xl mx-auto mt-6 p-6 lg:p-0">
     <div class="flex items-center space-x-4">
             <svg @click="router.back()" class="cursor-pointer"  width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
@@ -20,7 +20,7 @@
       <h2 class="bg-white py-3.5 rounded-lg px-6 border-[0.5px] border-gray-50 text-sm text-gray-600">{{ formatDate(date) }}</h2>
       
       <div class="bg-white rounded-lg divide-y">
-        <div v-for="transaction in group" :key="transaction.id" @click="router.push({ path: '/dashboard/transaction', query: { id: transaction.id}})"
+        <div v-for="transaction in group" :key="transaction.id" @click="router.push(`/dashboard/transaction/${transaction.id}/payment`)"
                 class="flex justify-between items-center border-[0.5px] border-gray-50 bg-white p-4 rounded-lg mb-2">
                 <div class="flex items-center gap-x-3">
                   <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,95 +72,8 @@
       </div>
     </div>
   </section>
- <!-- <section class="space-y-6">
-    <div class="flex items-center border-b border-gray-50 pb-4">
-        <button class="flex items-center gap-x-3 bg-gray-25 rounded-lg px-5 py-3.5">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12.5 5C12.5 5 7.50001 8.68242 7.5 10C7.49999 11.3177 12.5 15 12.5 15" stroke="#292929" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span class="font-semibold">Back</span>            
-        </button>
-        <p class="font-bold text-xl">Upcoming (Due) payments</p>
-    </div>
-    <div class="px-4 sm:px-6 lg:px-8 border border-gray-25 rounded-xl bg-white max-w-4xl mx-auto">
-        <div class="mt-8 flow-root">
-          <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="inline-block min-w-full py-2 align-middle">
-                <table class="min-w-full divide-y divide-gray-50">
-                    <thead>
-                      <tr>
-                        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-medium text-gray-900 sm:pl-6 lg:pl-8">Tenant name</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-medium text-gray-900">Property</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-medium text-gray-900">Payment frequency</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-medium text-gray-900">Payment count</th>
-                        <th scope="col" class="px-3 py-3.5 text-left text-sm font-medium text-gray-900">Expiry date</th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-50 bg-white">
-                      <tr class="h-16" v-for="(item, idx) in expiringLeases" :key="idx">
-                        <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-500 sm:pl-6 lg:pl-8">{{ item.tenant_name ?? 'Nil'}}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.property ?? 'Nil'}}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.payment_frequency ?? 'Nil'}}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ item.payment_count ?? 'Nil'}}</td>
-                        <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {{ item.expiry_date ?? 'Nil' }}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-            </div>
-          </div>
-        </div>
-      </div>
- </section> -->
 </main>
 </template>
-
-<!-- <script setup lang="ts">
-definePageMeta({
-  middleware: "auth",
-});
-
-const expiringLeases = ref([
-  {
-    tenant_name: 'Gary Schimmel',
-    property: 'Morar - Parisian',
-    payment_frequency: 'Yearly',
-    payment_count: '1/1',
-    expiry_date: '22/03/2024'
-  },
-  {
-    tenant_name: 'Gary Schimmel',
-    property: 'Morar - Parisian',
-    payment_frequency: 'Yearly',
-    payment_count: '1/1',
-    expiry_date: '22/03/2024'
-  },
-  {
-    tenant_name: 'Gary Schimmel',
-    property: 'Morar - Parisian',
-    payment_frequency: 'Yearly',
-    payment_count: '1/1',
-    expiry_date: '22/03/2024'
-  },
-  {
-    tenant_name: 'Gary Schimmel',
-    property: 'Morar - Parisian',
-    payment_frequency: 'Yearly',
-    payment_count: '1/1',
-    expiry_date: '22/03/2024'
-  },
-  {
-    tenant_name: 'Gary Schimmel',
-    property: 'Morar - Parisian',
-    payment_frequency: 'Yearly',
-    payment_count: '1/1',
-    expiry_date: '22/03/2024'
-  }
-])
-
-</script> -->
-
 
 <script setup lang="ts">
 import moment from "moment";
@@ -253,6 +166,8 @@ const getTransactionTitle = (transaction: Transaction) => {
   }
   return transaction.narration || 'Transaction';
 };
+
+const router = useRouter()
 
 // Fetch transactions on mount
 // onMounted(async () => {

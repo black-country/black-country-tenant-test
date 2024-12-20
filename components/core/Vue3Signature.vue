@@ -49,7 +49,6 @@
           ref="signaturePad"
           class="bg-[#F0F2F5]"
           :sigOption="{ ...state.option, penColor: selectedColor }"
-          :w="'600px'"
           :h="'100px'"
         />
         <div class="flex space-x-4 mt-2 p-3">
@@ -111,125 +110,6 @@
     </div>
   </template>
   
-  <!-- <script setup lang="ts">
-  import { ref, reactive } from 'vue'
-  import Vue3Signature from 'vue3-signature'
-  
-  const mode = ref('type') // Default mode
-  const typedSignature = ref('')
-  const savedSignature = ref<string | null>(null)
-  const uploadedSignature = ref<File | null>(null)
-  const previewImage = ref<string | null>(null) // Holds the preview image for uploaded signatures
-  const selectedColor = ref('#0000FF') // Default signature color (blue)
-  const colors = ['#000000', '#0000FF', '#FF0000'] // Available colors for signature
-  
-  const state = reactive({
-    option: {
-      backgroundColor: "rgb(255,255,255)"
-    }
-  })
-  const signaturePad = ref(null)
-  const canvas = ref<HTMLCanvasElement | null>(null)
-  
-  const setMode = (newMode: string) => {
-    mode.value = newMode
-  }
-  
-  const emit = defineEmits(['signature'])
-  
-  // Save the drawn signature
-  const saveSignature = (type: string) => {
-    if (signaturePad.value) {
-      const signatureData = signaturePad.value.save(type)
-      console.log(signatureData, 'signature data')
-      savedSignature.value = signatureData
-      emit('signature', savedSignature.value)
-    }
-  }
-
-
-//   const onFileSelected = async (event: Event) => {
-//   const file = (event.target as HTMLInputElement).files?.[0];
-//   if (file) {
-//     // Preview the image locally
-//     const reader = new FileReader();
-//     reader.onload = () => {
-//       profileImage.value = reader.result as string;
-//     };
-//     reader.readAsDataURL(file);
-
-//     // Upload the file using the composable
-//     await uploadFile(file);
-
-//     if (uploadResponse.value?.secure_url) {
-//       // Update profile with the secure URL after upload
-//       const uploadPayload = { profilePicture: uploadResponse.value.secure_url }
-//       await updateProfile(uploadPayload);
-//     }
-//   }
-// };
-  
-  // Clear the drawn signature
-  const clearSignature = () => {
-    signaturePad.value?.clear()
-  }
-  
-  // Undo the last action in the drawn signature
-  const undoSignature = () => {
-    signaturePad.value?.undo()
-  }
-  
-  // Save the typed signature as an image using canvas
-  const saveTypedSignatureAsImage = () => {
-    if (!typedSignature.value || !canvas.value) return
-  
-    const ctx = canvas.value.getContext('2d')
-    if (ctx) {
-      canvas.value.width = 600
-      canvas.value.height = 100
-  
-      ctx.fillStyle = 'rgb(255, 255, 255)' // Background color
-      ctx.fillRect(0, 0, canvas.value.width, canvas.value.height)
-      ctx.font = '24px Cursive'
-      ctx.fillStyle = selectedColor.value
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.fillText(typedSignature.value, canvas.value.width / 2, canvas.value.height / 2)
-  
-      savedSignature.value = canvas.value.toDataURL('image/png')
-      emit('signature', savedSignature.value)
-    }
-  }
-  
-  // Handle file upload for signature and preview it
-  const handleFileUpload = (event: Event) => {
-    const file = (event.target as HTMLInputElement).files?.[0] || null
-    uploadedSignature.value = file
-  
-    // Generate preview image
-    if (file) {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        previewImage.value = e.target?.result as string
-      }
-      reader.readAsDataURL(file)
-    }
-  }
-  
-  // Save the uploaded signature (same as preview image)
-  const saveUploadedSignature = () => {
-    if (previewImage.value) {
-      savedSignature.value = previewImage.value
-      emit('signature', savedSignature.value)
-    }
-  }
-  
-  // Change the signature color
-  const selectColor = (color: string) => {
-    selectedColor.value = color
-  }
-  </script>
-   -->
 
    <script setup lang="ts">
 import { ref, reactive } from 'vue'
@@ -361,6 +241,7 @@ const uploadSignatureFile = async (file: File) => {
     // Call the composable to upload the file (implement the logic here)
     await uploadFile(file)
     emit('savedSignature', uploadResponse.value) 
+    console.log(uploadResponse.value, 'here')
     showToast({
           title: "Success",
           message: 'Signature was uploaded successfully!',

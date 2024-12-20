@@ -297,7 +297,7 @@ const filteredRequestsByStatus = (date: string) => {
 
 
 const handleTransaction = (transaction: any) => {
-  router.push({ path: '/dashboard/transaction', query: { id: transaction.id}})
+  router.push(`/dashboard/transaction/${transaction.id}/payment`)
 }
 
 

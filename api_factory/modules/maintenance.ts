@@ -41,5 +41,9 @@ export const maintenance_api = {
 	$_get_my_home: () => {
         let url = '/my-home'
         return GATEWAY_ENDPOINT.get(url);
+      },
+      $_get_maintenence_by_id: (id: string | any) => {
+        let url = `/maintenance-requests/${id}`
+        return GATEWAY_ENDPOINT.get(url);
       }
 }

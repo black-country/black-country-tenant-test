@@ -172,9 +172,7 @@
                   <div
                     :class="[
                       'w-8 h-8 flex items-center justify-center rounded-full border-2',
-                      step.progressKey === currentProgress
-                        ? 'bg-[#5B8469] border-[#5B8469] text-white'
-                        : '',
+                      step.progressKey === currentProgress ? 'bg-[#5B8469] border-[#5B8469] text-white' : '',
                       steps.findIndex(
                         (s) => s.progressKey === currentProgress
                       ) >= index
@@ -185,13 +183,11 @@
                     <span>{{ index + 1 }}</span>
                   </div>
                   <p
-                      class="text-center text-xs lg:text-base"
+                      class="text-center text-xs"
                     :class="{
-                      'text-[#5B8469]':
-                        steps.findIndex(
-                          (s) => s.progressKey === currentProgress
-                        ) >= index,
-                      'text-sm': true,
+                      'text-[#5B8469] text-xs': steps.findIndex((s) => s.progressKey === currentProgress) >= index,
+                      'text-xs': true,
+                      'text-[#5B8469]': currentProgress === 'agreement-assigned'
                     }"
                   >
                     {{ step.label }}
@@ -352,22 +348,8 @@
             <div class="flex justify-around mt-8 gap-x-2 lg:px-20">
               <div class="flex flex-col items-center">
                 <button
-                  class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50':
-                      steps.findIndex(
-                        (s) => s.progressKey === 'application-sent'
-                      ) <=
-                      steps.findIndex((s) => s.progressKey === currentProgress),
-                    'bg-gray-500': currentProgress !== 'application-sent',
-                    'bg-[#5B8469]': currentProgress === 'application-sent',
-                  }"
-                  :disabled="
-                    steps.findIndex(
-                      (s) => s.progressKey === 'application-sent'
-                    ) <=
-                    steps.findIndex((s) => s.progressKey === currentProgress)
-                  "
+                  class="rounded-lg disabled:opacity-25 disabled:cursor-not-allowed transition"
+                  :disabled="isScheduleTourDisabled"
                   @click="rescheduleTour"
                 >
                   <svg
@@ -420,30 +402,8 @@
 
               <div class="flex flex-col items-center">
                 <button
-                  class="rounded-lg transition bg-red-500 text-white"
-                  :class="{
-                    'cursor-not-allowed opacity-50':
-                      steps.findIndex(
-                        (s) => s.progressKey === 'application-sent'
-                      ) <=
-                        steps.findIndex(
-                          (s) => s.progressKey === currentProgress
-                        ) || !propertyObj?.rentalApplication,
-                    'bg-[#5B8469]':
-                      currentProgress === 'application-sent' &&
-                      propertyObj?.rentalApplication,
-                    'bg-gray-500':
-                      currentProgress !== 'application-sent' ||
-                      !propertyObj?.rentalApplication,
-                  }"
-                  :disabled="
-                    steps.findIndex(
-                      (s) => s.progressKey === 'application-sent'
-                    ) <=
-                      steps.findIndex(
-                        (s) => s.progressKey === currentProgress
-                      ) || !propertyObj?.rentalApplication
-                  "
+                  class="rounded-lg transition disabled:cursor-not-allowed disabled:opacity-25 bg-red-500 text-white"
+                  :disabled="isCancelApplicationDisabled"
                   @click="showCancelModal = true"
                 >
                   <svg
@@ -465,70 +425,10 @@
                 </button>
                 <p class="text-red-600 mt-2 text-xs text-center">Cancel application</p>
               </div>
-<!-- {{ rentalObj.rentalLeaseAgreement }} -->
-<!-- :class="{
-                    'cursor-not-allowed opacity-50': steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress),
-                    'bg-[#5B8469]': currentProgress === 'agreement-signed',
-                    'bg-gray-500': currentProgress !== 'agreement-signed'
-                  }"
-                  :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress)" -->
               <div class="flex flex-col items-center">
-                <!-- <button
-                  class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50':
-                      steps.findIndex(
-                        (s) => s.progressKey === 'agreement-signed'
-                      ) <=
-                        steps.findIndex(
-                          (s) => s.progressKey === currentProgress
-                        ) || !propertyObj?.rentalApplication?.leaseAgreement,
-                    'bg-[#5B8469]':
-                      currentProgress === 'agreement-signed' &&
-                      propertyObj?.rentalApplication?.leaseAgreement,
-                    'bg-gray-500':
-                      currentProgress !== 'agreement-signed' ||
-                      !propertyObj?.rentalApplication?.leaseAgreement,
-                  }"
-                  :disabled="
-                    steps.findIndex(
-                      (s) => s.progressKey === 'agreement-signed'
-                    ) <=
-                      steps.findIndex(
-                        (s) => s.progressKey === currentProgress
-                      ) || !propertyObj?.rentalApplication?.leaseAgreement
-                  "
-                  @click="
-                    router.push(
-                      `/dashboard/listings/${route.params.id}/rental-applications/lease-agreement`
-                    )
-                  "
-                >
-                  <svg
-                    width="40"
-                    height="40"
-                    viewBox="0 0 40 40"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect width="40" height="40" rx="8" fill="#292929" />
-                    <path
-                      d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z"
-                      stroke="white"
-                      stroke-width="1.5"
-                    />
-                    <path
-                      d="M19.666 20.3333L21.9993 18"
-                      stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-                </button> -->
                 <button 
                   class="rounded-lg transition disabled:cursor-not-allowed disabled:opacity-25"
-                  :disabled="propertyObj?.rentalApplication?.progress === 'application-sent' || propertyObj?.rentalApplication?.status === 'PENDING'"
+                  :disabled="propertyObj?.rentalApplication?.progress === 'application-sent' || propertyObj?.rentalApplication?.status === 'PENDING' || !isSignBtnEnabled"
                   @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement`)">
                   <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <rect width="40" height="40" rx="8" fill="#292929"/>
@@ -562,7 +462,7 @@
                 </button> -->
                 <button
                   class="rounded-lg transition disabled:cursor-not-allowed disabled:opacity-25"
-                   :disabled="propertyObj?.rentalApplication?.progress === 'agreement-pending-signage'"
+                   :disabled="propertyObj?.rentalApplication?.progress === 'agreement-pending-signage' || isMakePaymentDisabled"
                   @click="proceed"
                 >
                   <svg
@@ -1052,6 +952,7 @@
 
 <script setup lang="ts">
 import { useInitializeRentPayment } from "@/composables/modules/rentals/useInitializeRentPayment";
+import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
 import { useGetRental } from "@/composables/modules/rentals/useFetchRental";
 // import { useCheckout } from "@/composables/modules/banks/useCheckout";
 import { useCancelRental } from "@/composables/modules/rentals/cancelRentals";
@@ -1065,6 +966,7 @@ const { propertyList, loading: loadingSimilarProperties } =
   const { propertyObj, loading } = useFetchProperty();
 const { cancelRental, loading: cancelling } = useCancelRental();
 const { loadingRental, rentalObj } = useGetRental();
+const { rentalObj: rental, loading: fetching } = useFetchRental()
 const {
   initializeRentPayment,
   loading: initializing,
@@ -1162,34 +1064,6 @@ const proceed = async () => {
     
     setPayloadObj(payloadObj);
     await initializeRentPayment();
-
-  // if(selectedOption.value === 'transfer'){
-  //   const payloadObj = {
-  //     rentalApplicationId: propertyObj.value.rentalApplication?.id,
-  //     rentAmount: propertyObj.value.rentalApplication?.room?.rentAmount
-  //   };
-    
-  //   setPayloadObj(payloadObj);
-  //   showPaymentModal.value = false
-  //   await initializeRentPayment();
-  //   // if(responseObj.value){
-  //   //   handleCheckout()
-  //   // }
-  // }
-
-  // if(selectedOption.value === 'bank'){
-  //   router.push('/profile/linked-account')
-  //   handleCheckout()
-  //   await initializeRentPayment();
-  // }
-
-  // if (selectedOption.value === 'card' || selectedOption.value === 'bank') {
-  //   router.push(
-  //     `/dashboard/listings/${route.params.id}/rental-applications/payment?method=${selectedOption.value}`
-  //   );
-  // }
-
-  // showPaymentModal.value = false
 };
 
 const cancel = () => {
@@ -1253,7 +1127,7 @@ const steps = ref([
   {
     label: "Agreement Signed",
     status: "pending",
-    progressKey: "agreement-pending-signed",
+    progressKey: "agreement-signed",
   },
   { label: "Payment Made", status: "pending", progressKey: "payment-made" },
 ]);
@@ -1266,6 +1140,28 @@ const currentProgress = computed(
 const isCancelEnabled = computed(
   () => currentProgress.value === "application-sent"
 );
+
+
+const isScheduleTourCancelApplicationDisabled = computed(
+  () => currentProgress.value === "agreement-pending-signage" || propertyObj?.value?.rentalLeaseAgreement?.status === 'PENDING_SIGNAGE'
+);
+
+const isScheduleTourDisabled = computed(() => {
+  return currentProgress.value === "agreement-pending-signage" || propertyObj?.value?.rentalLeaseAgreement?.status === 'PENDING_SIGNAGE' ||  currentProgress.value === "agreement-signed" ||  currentProgress.value === "application-sent"
+})
+
+const isCancelApplicationDisabled = computed(() => {
+  return currentProgress.value === "agreement-pending-signage" || propertyObj?.value?.rentalLeaseAgreement?.status === 'PENDING_SIGNAGE' ||  currentProgress.value === "agreement-signed" ||  currentProgress.value === "application-sent"
+})
+
+const isMakePaymentDisabled = computed(() => {
+  return currentProgress.value === "agreement-pending-signage" || propertyObj?.value?.rentalLeaseAgreement?.status === 'PENDING_SIGNAGE' || currentProgress.value === "application-sent"
+})
+
+const isSignBtnEnabled = computed(() => {
+  return currentProgress.value === "agreement-pending-signage" || propertyObj?.value?.rentalLeaseAgreement?.status === 'PENDING_SIGNAGE' ||  currentProgress.value !== "agreement-signed" ||  currentProgress.value === "application-sent"
+})
+
 const isRescheduleEnabled = computed(
   () => currentProgress.value === "application-sent"
 );
@@ -1275,6 +1171,7 @@ const isSignAgreementEnabled = computed(
 const isMakePaymentEnabled = computed(
   () => currentProgress.value === "payment-made"
 );
+
 
 // const cancelApplication = () => {
 //   console.log('Cancel application clicked');

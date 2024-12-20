@@ -6,6 +6,7 @@
         <h1 class="text-lg text-[#1D2739] font-medium mb-6">{{ greeting ?? 'Hello' }}, {{ user.firstName ?? 'Nil' }}
           {{ user.lastName ?? 'Nil' }}</h1>
 
+
         <!-- Setup Actions Section -->
         <div class="space-y-2 mb-8">
           <div v-for="action in setupActions" :key="action.title" @click="router.push(action.path)"
@@ -103,7 +104,7 @@
             <div class="animate-pulse flex space-x-4 h-20 bg-slate-200 rounded"></div>
             </section>
             <div v-else>
-              <div @click="router.push(`/dashboard/transaction/${transaction.id}`)" v-for="transaction in paymentList" :key="transaction.id"
+              <div @click="router.push(`/dashboard/transaction/${transaction.id}/maintenance-request`)" v-for="transaction in paymentList" :key="transaction.id"
                 class="flex justify-between items-center bg-white p-4 rounded-lg mb-2">
                 <div class="flex items-center gap-x-3">
                   <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,15 +139,16 @@
         </section>
       </div>
     </div>
-
-    <CoreModal :isOpen="showWelcomeModal" @close="showWelcomeModal = false">
-      <CoreWelcome @close="showWelcomeModal = false" @start="router.push('/dashboard/listings?view=grid')" class="" />
+    <CoreModal :isOpen="showWelcomeModal" @close="closeWelcomeModal">
+      <CoreWelcome @close="closeWelcomeModal" @start="router.push('/dashboard/listings')" class="" />
     </CoreModal>
   </main>
 </template>
 
 <script setup lang="ts">
 import moment from "moment";
+import { use_tenant_profile } from '@/composables/auth/fetchProfile'
+const { loading: fetchong, profileObj } = use_tenant_profile()
 import { useFetchUpcomingActivities } from '@/composables/modules/settings/useFetchUpcomingActivities'
 import { useFetchMaintenanceRequests } from '@/composables/modules/maintenance/useFetchMaintenanceRequests'
 const { maintenanceRequests, loading: fetchingRequests } = useFetchMaintenanceRequests()
@@ -172,6 +174,18 @@ const {
   responseObj,
   setPayloadObj
 } = useInitializeRentPayment();
+
+
+onMounted(() => {
+   if(!profileObj?.hasTakenTour){
+    showWelcomeModal.value = true
+   }
+  })
+
+  const closeWelcomeModal = () => {
+    showWelcomeModal.value = false
+  }
+
 
 const statusClasses = (status: string) => {
   // Convert status to lowercase to handle inconsistent casing
@@ -266,7 +280,7 @@ definePageMeta({
 });
 const setupActions = ref([
   { checked: isComplete, title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.', path: '/profile' },
-  { checked: false, title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.', path: '/dashboard/listings' },
+  { checked: profileObj?.value?.hasExploredListing, title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.', path: '/dashboard/listings' },
   { checked: isAccountSetupComplete.value, title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '/profile/payment-information' }
 ]);
 

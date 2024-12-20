@@ -1,11 +1,30 @@
 <template>
   <main>
     <TopNavBar />
+  
     <div
       v-if="!loading"
       id="leaseAgreementDocument"
       class="min-h-screen max-w-4xl mx-auto mb-44"
     >
+    <svg
+            @click="router.back()"
+            class="cursor-pointer"
+            width="36"
+            height="36"
+            viewBox="0 0 36 36"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect width="36" height="36" rx="18" fill="#EAEAEA" />
+            <path
+              d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23"
+              stroke="#1D2739"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
       <div class="py-3 px-10 lg:px-0">
       <section class="flex justify-between">
         <div>
@@ -68,8 +87,8 @@
               <h3 class="text-sm font-medium mb-2">
                 Landlord/Property Manager:
               </h3>
-              <label class="block text-sm text-gray-500 mb-1">Signature</label>
-              <div class="border-b-2 border-dotted h-20 flex mb-4">
+              <label v-if="containsHttps(lease?.leaseAgreementContent)" class="block text-sm text-gray-500 mb-1">Signaturessssss</label>
+              <div v-if="containsHttps(lease?.leaseAgreementContent)" class="border-b-2 border-dotted h-20 flex mb-4">
                 <img
                   :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.houseOwnerSignatureUrl"
                   alt="Signature"
@@ -80,8 +99,8 @@
               <div class="border-b-2 border-dotted text-gray-800 py-2 mb-4">
                 {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.houseOwnerSigneeName}}
               </div>
-              <label class="block text-sm text-gray-500 mb-1">Date</label>
-              <div class="border-b-2 border-dotted text-gray-800 py-2 mb-8">
+              <label v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signedAt !== null" class="block text-sm text-gray-500 mb-1">Date</label>
+              <div v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signedAt !== null" class="border-b-2 border-dotted text-gray-800 py-2 mb-8">
                 {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.signedAt ?? 'Nil'}}
               </div>
             </div>
@@ -100,9 +119,10 @@
               <img
                 :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl"
                 alt="Signature"
-                class="w-full border-b-2 border-dotted py-2 mb-4 bg-transparent outline-none placeholder-gray-400"
+                class=" h-32 w-96  py-2 mb-4 bg-transparent outline-none placeholder-gray-400"
               />
-              <label class="block text-sm text-gray-500 mb-1">Date</label>
+              <p class=" border-b-2 border-dotted"></p>
+              <label class="block text-sm text-gray-500 mb-1 pt-4">Date</label>
               <input
                 type="text"
                 diabled
@@ -145,6 +165,7 @@
       </div>
     </section>
     <footer
+      v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.status !== 'SIGNED'"
       class="fixed bottom-0 inset-x-0 bg-white p-4 flex justify-between space-x-4 lg:w-1/2 mx-auto"
     >
       <button
@@ -171,7 +192,6 @@
         Reject Agreement
       </button>
       <button
-        v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.status !== 'SIGNED'"
         @click="openModal"
         class="text-xs gap-y-2 flex text-[#171717] justify-center items-center flex-col"
       >

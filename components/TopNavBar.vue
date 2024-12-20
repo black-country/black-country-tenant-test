@@ -262,13 +262,14 @@
   </div>
 </div>
   </CoreModalWithoutCloseBtn>
+
  </main>
   </template>
   
   <script setup lang="ts">
-   import { use_tenant_profile } from '@/composables/auth/fetchProfile.ts'
+   import { use_tenant_profile } from '@/composables/auth/fetchProfile'
     const { loading, profileObj } = use_tenant_profile()
-  import { useShepherd } from "vue-shepherd";
+
 import "shepherd.js/dist/css/shepherd.css";
   import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
@@ -276,58 +277,17 @@ import "shepherd.js/dist/css/shepherd.css";
   const router = useRouter()
   const route = useRoute()
 
-//   // Shepherd tour setup
-// const tour = useShepherd({
-//   useModalOverlay: true,
-// });
+  const showWelcomeModal = ref(false)
 
-// const dashboardRef = ref(null);
-// const listingsRef = ref(null);
-// const myHomeRef = ref(null);
-// const messagesRef = ref(null);
-// const mapViewRef = ref(null);
-// const favoritesRef = ref(null);
-// const notificationsRef = ref(null);
-// const profileRef = ref(null);
+  // onMounted(() => {
+  //  if(!profileObj?.hasTakenTour){
+  //   showWelcomeModal.value = true
+  //  }
+  // })
 
-// onMounted(() => {
-//   // Add tour steps
-//   tour.addSteps([
-//     {
-//       attachTo: { element: dashboardRef.value, on: "right" },
-//       text: "This is the greeting. It displays your name based on the user data.",
-//     },
-//     {
-//       attachTo: { element: listingsRef.value, on: "left" },
-//       text: "These are the setup actions. You can complete these to enhance your experience.",
-//     },
-//     {
-//       attachTo: { element: myHomeRef.value, on: "top" },
-//       text: "Here you can manage your payment actions such as paying rent or utility bills.",
-//     },
-//     {
-//       attachTo: { element: mapViewRef.value, on: "top" },
-//       text: "This section shows your recent applications.",
-//     },
-//     {
-//       attachTo: { element: favoritesRef.value, on: "top" },
-//       text: "Manage your rental applications from here.",
-//     },
-//     {
-//       attachTo: { element: notificationsRef.value, on: "top" },
-//       text: "Manage your upcoming activities from here.",
-//     },
-//     {
-//       attachTo: { element: profileRef.value, on: "top" },
-//       text: "Manage your recent transactions from here.",
-//     },
-//   ]);
-
-//   // Start the tour
-//   tour.start();
-// });
-
-
+  // const closeWelcomeModal = () => {
+  //   showWelcomeModal.value = false
+  // }
 
   const showBLogoutModal = ref(false);
 

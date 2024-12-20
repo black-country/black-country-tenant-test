@@ -81,8 +81,8 @@ onMounted(() => {
 
     console.log( payloadObj, 'here', propertyObj.value)
     
-    // setPayloadObj(payloadObj);
-    // await initializeRentPayment();
+    setPayloadObj(payloadObj);
+    await initializeRentPayment();
 };
   </script>
   
