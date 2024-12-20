@@ -9026,6 +9026,11 @@ vue-devtools-stub@^0.1.0:
   resolved "https://registry.yarnpkg.com/vue-devtools-stub/-/vue-devtools-stub-0.1.0.tgz#a65b9485edecd4273cedcb8102c739b83add2c81"
   integrity sha512-RutnB7X8c5hjq39NceArgXg28WZtZpGc3+J16ljMiYnFhKvd8hITxSWQSQ5bvldxMDU6gG5mkxl1MTQLXckVSQ==
 
+vue-files-preview@^1.0.37:
+  version "1.0.37"
+  resolved "https://registry.yarnpkg.com/vue-files-preview/-/vue-files-preview-1.0.37.tgz#5e08a00afca3bd20befe7d782503187e4dd05034"
+  integrity sha512-Op8FUs5XtObmqVRFbXS0IvZTqgC0TQtrFpm2iK77wHOr+PzgLsaT67pRpgROjdOYPsFAwtrkVlkaSERHiiuY7A==
+
 vue-google-maps-community-fork@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/vue-google-maps-community-fork/-/vue-google-maps-community-fork-0.3.1.tgz#444ae284c2d18f5dc855b8d03a4246592bde6006"

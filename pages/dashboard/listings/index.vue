@@ -1363,8 +1363,14 @@ watch(
   }
 )
 
+// onMounted(() => {
+//   if(!profileObj?.value?.hasTakenTour && showWelcomeModal.value){
+//     startTour()
+//   }
+// })
+
 onMounted(() => {
-  if(!profileObj?.value?.hasTakenTour && showWelcomeModal.value){
+  if(!profileObj?.value?.hasTakenTour){
     startTour()
   }
 })

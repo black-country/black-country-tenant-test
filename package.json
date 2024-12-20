@@ -53,6 +53,7 @@
     "socket.io-client": "^4.8.0",
     "use-nigeria-location": "^1.0.0",
     "v-onboarding": "^2.8.2",
+    "vue-files-preview": "^1.0.37",
     "vue-google-maps-community-fork": "^0.3.1",
     "vue-pdf": "^4.3.0",
     "vue-shepherd": "^4.1.0",
