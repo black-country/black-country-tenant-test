@@ -20,22 +20,22 @@
           </select>
         </div>
     
-        <div>
+        <div v-if="credential.employmentStatus !== 'unemployed'">
           <label class="text-[#1D2739] text-sm">Employer's Full Name <span class="text-red-500">*</span></label>
           <input v-model="credential.employerName" type="text" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4" placeholder="Enter employer's name" />
         </div>
     
-        <div>
+        <div v-if="credential.employmentStatus !== 'unemployed'">
           <label class="text-[#1D2739] text-sm">Organization Address</label>
           <input v-model="credential.employerAddress" type="text" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4" placeholder="Enter organization's address" />
         </div>
     
-        <div>
+        <div v-if="credential.employmentStatus !== 'unemployed'">
           <label class="text-[#1D2739] text-sm">Occupation</label>
           <input v-model="credential.occupation" type="text" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4" placeholder="Enter your job role" />
         </div>
     
-        <div>
+        <div v-if="credential.employmentStatus !== 'unemployed'">
           <label class="text-[#1D2739] text-sm">Monthly Net Salary <span class="text-red-500">*</span></label>
           <input v-model="credential.monthlyNetSalary" type="tel" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4" placeholder="Enter your monthly net salary" />
         </div>

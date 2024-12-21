@@ -215,6 +215,25 @@
                   />
                   Logout
                 </a>
+                <NuxtLink
+                  to="/profile"
+                  @click="showBLogoutModal = true"
+                  class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
+                >
+                  <img
+                    :src="user?.profilePicture"
+                    alt="logout"
+                    class="h-6 w-6 rounded-full bg-gray-800"
+                  />
+                  <span aria-hidden="true">{{user?.firstName}} {{user?.lastName}}</span>
+                </NuxtLink>
+                <!-- <NuxtLink  @click.native="isOpen = false" to="/profile" class="mr-32 mt-auto">
+                <a href="#" class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800">
+                  <img class="h-8 w-8 rounded-full bg-gray-800" :src="user?.profilePicture" alt="">
+                  <span class="sr-only">Your profile</span>
+                  <span aria-hidden="true">{{user?.firstName}} {{user?.lastName}}</span>
+                </a>
+              </NuxtLink>  -->
               </li>
             </ul>
           </nav>

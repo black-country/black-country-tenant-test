@@ -23,12 +23,19 @@
   
             <span class="ml-2 text-[#667185]">My Home | <span class="text-[#1D2739] font-medium">Pay bills</span></span>
     </div>
-    <HomeElectricityBillForm v-if="route.query.billType === 'electricity-bill'" />
-    <HomeCableBillForm v-if="route.query.billType === 'cable-bills'" />
+    {{ billersList }}
+    <HomeElectricityBillForm :billersList="billersList"  />
+    <!-- <HomeCableBillForm  /> -->
 </section>
 </template>
 
 <script setup lang="ts">
+ import { useFetchBillersByCategories } from '@/composables/modules/home/useGetBillersByCategories'
+ const { billersList,
+  fetchBillersByCategories, loading, } = useFetchBillersByCategories()
+  import { ref, defineProps, defineEmits } from 'vue'
+  import { useRouter } from 'vue-router'
+  
 const router = useRouter()
 const route = useRoute()
 </script>

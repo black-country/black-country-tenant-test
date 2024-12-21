@@ -1,0 +1,4 @@
+<template>
+      <CoreWebViewer />
+  </template>
+  

@@ -51,7 +51,7 @@
 
         <div class="">
           <h2 class="text-base font-medium text-[#171717]">Recent applications</h2>
-          <RecentApplications />
+          <RecentApplications :hideRejected="true" />
         </div>
 
 
@@ -147,6 +147,7 @@
 
 <script setup lang="ts">
 import moment from "moment";
+import { dynamicIcons } from '@/utils/assets'
 import { use_tenant_profile } from '@/composables/auth/fetchProfile'
 const { loading: fetchong, profileObj } = use_tenant_profile()
 import { useFetchUpcomingActivities } from '@/composables/modules/settings/useFetchUpcomingActivities'
@@ -174,15 +175,27 @@ const {
   responseObj,
   setPayloadObj
 } = useInitializeRentPayment();
+const { greeting } = useGreeting()
+const { bankAccounts } = useFetchBankAccounts()
 
+const showWelcomeModal = ref(false)
+
+const modalValue = localStorage.getItem('welcome-modal-shown');
 
 onMounted(() => {
    if(!profileObj?.hasTakenTour){
     showWelcomeModal.value = true
    }
+
+
+   if(modalValue){
+    showWelcomeModal.value = false
+  }
+   
   })
 
   const closeWelcomeModal = () => {
+    localStorage.setItem('welcome-modal-shown', 'true');
     showWelcomeModal.value = false
   }
 
@@ -236,16 +249,12 @@ const filteredRequestsByStatus = (date: string) => {
   )
 }
 
-const { greeting } = useGreeting()
-const { bankAccounts } = useFetchBankAccounts()
-import { dynamicIcons } from '@/utils/assets'
 // const router = useRouter()
 
 const isAccountSetupComplete = computed(() => {
   return bankAccounts.value.length ? true : false
 })
 
-const showWelcomeModal = ref(false)
 
 const isComplete = checkObjectCompletion(user.value);
 

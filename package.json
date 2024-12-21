@@ -27,6 +27,7 @@
     "@heroicons/vue": "v1",
     "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/tailwindcss": "^6.12.1",
+    "@pdftron/webviewer": "^11.1.1",
     "@types/intro.js": "^5.1.5",
     "@vueuse/core": "^11.0.3",
     "@vueuse/head": "^2.0.0",

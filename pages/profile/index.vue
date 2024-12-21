@@ -388,11 +388,11 @@ const helpSettings = ref([
     icon: "faq",
     path: "/profile/faq",
   },
-  {
-    label: "Rate this Application",
-    icon: "rate-us",
-    path: "/profile/rate-us",
-  },
+  // {
+  //   label: "Rate this Application",
+  //   icon: "rate-us",
+  //   path: "/profile/rate-us",
+  // },
 ]);
 
 // Define the percentage of profile completion

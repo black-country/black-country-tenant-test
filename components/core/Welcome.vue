@@ -15,7 +15,7 @@
   
         <!-- Description -->
         <p class="text-[#667185] mb-6 leading-snug">
-          Welcome to your all-in-one shared-living platform. Search for your ideal
+          Welcome to your all-in-one shared-living platform. Search for your ideal  
           home and manage it effortlessly, all within our user-friendly app. Click
           <span class="text-[#1D2739] font-semibold">'Continue'</span> to embark on your personalized <span class="font-semibold text-[#1D2739]">tour</span> of the platform!
         </p>

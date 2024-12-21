@@ -1,7 +1,13 @@
 <template>
   <main>
     <TopNavBar />
+    <!-- {{isUrl}} -->
+     <!-- {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName }} -->
+<!-- {{ extractUrl(propertyObj?.rentalApplication?.leaseAgreement) }} -->
+    <CoreWebViewer :documentName="propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName" v-if="isUrl" />
   
+ 
+   <section v-else>
     <div
       v-if="!loading"
       id="leaseAgreementDocument"
@@ -63,11 +69,6 @@
         <div class="mt-6 space-y-6">
           <div v-if="!containsHttps(lease?.leaseAgreementContent)" v-html="propertyObj?.rentalApplication?.leaseAgreement"></div>
         <div v-else>
-          <!-- <iframe
-            :src="`https://docs.google.com/viewer?url=${encodeURIComponent(extractUrl(propertyObj?.rentalApplication?.leaseAgreement))}&embedded=true`"
-            class="w-full h-96"
-            frameborder="0"
-           ></iframe> -->
            <iframe
             :src="`https://docs.google.com/viewer?url=${encodeURIComponent(propertyObj?.rentalApplication?.leaseAgreement)}&embedded=true`"
             class="w-full h-96"
@@ -135,13 +136,11 @@
         </div>
       </div>
 
-      <!-- Display Signed Signature -->
       <div v-if="signedSignature" class="mt-6">
         <h4 class="font-bold">Signature:</h4>
         <img :src="signedSignature" alt="Signature" class="mt-2 h-16 border" />
       </div>
 
-      <!-- Signature Modal -->
       <SignatureModal
         v-if="isModalOpen"
         @close="closeModal"
@@ -165,7 +164,7 @@
       </div>
     </section>
     <footer
-      v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.status !== 'SIGNED'"
+      v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.status !== 'SIGNED' && !loading"
       class="fixed bottom-0 inset-x-0 bg-white p-4 flex justify-between space-x-4 lg:w-1/2 mx-auto"
     >
       <button
@@ -220,16 +219,9 @@
 
         Accept & Sign
       </button>
-      <!-- <div>
-        <button
-          :disabled="!Object.keys(emittedAgreementData).length || signing"
-          class="bg-black disabled:cursor-not-allowed disabled:opacity-25 text-white px-6 py-3 rounded-md text-sm"
-          @click="submitLeaseAgreement"
-        >
-          {{ signing ? "processing..." : "Submit" }}
-        </button>
-      </div> -->
     </footer>
+   </section>
+
     <CoreModal :isOpen="isModalOpen" @close="isModalOpen = false">
       <SignatureComponent
         :property="propertyObj"
@@ -369,6 +361,9 @@ const { containsHttps } = useHttpsDetector();
 const { extractUrl } = useUrlExtractor();
 const route = useRoute();
 const router = useRouter();
+const isUrl = computed(() => {
+  return !!extractUrl(propertyObj?.value?.rentalApplication?.leaseAgreement)
+})
 const {
   signLeaseAgreement,
   loading: signing,

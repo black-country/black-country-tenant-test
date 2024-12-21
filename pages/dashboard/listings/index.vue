@@ -1,6 +1,7 @@
 <template>
   <main class="">
     <!-- {{ profileObj }} -->
+      <!-- {{ filteredProperties }} -->
     <section class="sticky top-0 z-50">
       <nav class="bg-[#292929] text-white py-3 z-10">
         <div class="container mx-auto flex justify-between items-center px-4">
@@ -341,6 +342,7 @@
     </section>
     <!-- {{ computedPropertiesList.length }} -->
       <!-- {{ computedPropertiesList.length }} -->
+        <!-- {{ filteredProperties }} -->
 
     <section v-if="viewType === 'grid'">
       <div
@@ -1110,17 +1112,31 @@ const toggleView = (newViewType: string) => {
 };
 
 // Computed property to handle filtered properties or default to propertiesList
+// const computedPropertiesList = computed(() => {
+//   // If there are filtered properties, use them
+//   if (filteredProperties.value.length) {
+//     return filteredProperties.value;
+//   }
+//   // If no filter, show the full properties list
+//   if (propertiesList.value.length) {
+//     return propertiesList.value;
+//   }
+//   // Fallback when no properties are available
+//   return [];
+// });
+
+// Computed property to handle filtered properties or default to propertiesList
 const computedPropertiesList = computed(() => {
-  // If there are filtered properties, use them
-  if (filteredProperties.value.length) {
+  // Check if there are filtered properties
+  if (filteredProperties.value.length > 0) {
     return filteredProperties.value;
   }
-  // If no filter, show the full properties list
-  if (propertiesList.value.length) {
+  // Check if there are any properties to show by default
+  if (propertiesList.value.length > 0) {
     return propertiesList.value;
   }
-  // Fallback when no properties are available
-  return [];
+  // If no properties exist or filtered results are empty, return an empty state indicator
+  return []
 });
 
 // Watch for query parameter changes to update the view
@@ -1369,9 +1385,19 @@ watch(
 //   }
 // })
 
+const modalValue = localStorage.getItem('welcome-modal-shown');
+
 onMounted(() => {
-  if(!profileObj?.value?.hasTakenTour){
+  // if(!profileObj?.value?.hasTakenTour){
+  //   startTour()
+  // }
+
+  if(!modalValue || !profileObj?.value?.hasTakenTour){
     startTour()
+  }
+
+  if(modalValue){
+    return
   }
 })
 

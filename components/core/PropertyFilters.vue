@@ -8,27 +8,19 @@
 
     <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 px-4">
       <div
-        v-for="option in sortOptions"
-        :key="option.id"
-        class="flex justify-between items-center py-1 cursor-pointer"
-        @click="handleSortChange(option)"
-      >
-        <label :for="option.id" class="text-sm text-gray-700 cursor-pointer">
-          {{ option.label }}
-        </label>
-        
-        <div class="relative flex items-center">
-          <input
-            :id="option.id"
-            type="radio"
-            :name="sortGroup"
-            :value="option.id"
-            :checked="selectedSort === option.id"
-            class="h-4 w-4 border-gray-300 text-green-600 focus:ring-green-500 focus:ring-offset-0"
-            @change="handleSortChange(option)"
-          >
-        </div>
-      </div>
+    v-for="option in sortOptions"
+    :key="option.id"
+    class="flex justify-between items-center py-1"
+  >
+    <label :for="'sort-' + option.id" class="ml-3 text-sm text-gray-700">
+      {{ option.label }}
+    </label>
+    <CoreCustomCheckbox
+      :id="'sort-' + option.id"
+      :checkbox-id="option.id"
+      v-model="selectedSortOptions"
+    />
+  </div>
     </div>
    </section>
 
@@ -68,16 +60,6 @@
       v-model="selectedPropertyTypes"
     />
   </div>
-      <!-- <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <div v-for="type in propertyTypesList" :key="type.id"
-             class="flex justify-between items-center">
-          <label :for="'property-' + type.id" class="ml-3 text-sm text-gray-700">{{ type.name }}</label>
-          <CoreCustomCheckbox
-             :id="'property-' + type.id"
-             v-model="selectedPropertyTypes"
-          />
-        </div>
-      </div> -->
     </section>
 
 
@@ -96,6 +78,20 @@
         </div>
       </div>
     </section>
+
+    <!-- <div class="slider-container">
+    <label for="slider">Slide Range Selector</label>
+    <input
+      id="slider"
+      type="range"
+      :min="minValue"
+      :max="computedMax"
+      v-model="sliderValue"
+    />
+    <p>Current Value: {{ sliderValue }}</p>
+  </div> -->
+
+  <!-- {{ getFilterPayload() }} -->
 
 
     <FiltersRangeSlider
@@ -181,13 +177,6 @@
             :checkbox-id="pet.name"
             v-model="selectedPets"
           />
-        <!-- <input
-          :id="'pet-' + pet.id"
-          type="checkbox"
-          :checked="selectedPets.has(pet.id)"
-          @change="togglePetSelection(pet.id)"
-          class="h-5 w-5 rounded border-gray-300 text-green-600 focus:ring-0 focus:ring-offset-0"
-        > -->
       </div>
     </div>
   </div>
@@ -247,12 +236,12 @@ interface FilterPayload {
   order: Array<{ field: string; value: string }>;
   sharedCount: number;
   houseTypeIds: string[];
-  priceMin: number;
-  priceMax: number;
+  // priceMin: number;
+  // priceMax: number;
   bedroomsCount: number[];
   bathroomsCount: number[];
-  roomSizeMin: number;
-  roomSizeMax: number;
+  // roomSizeMin: number;
+  // roomSizeMax: number;
   roomSizeUnit: string;
   amenities: string[];
   pets: string[];
@@ -301,8 +290,8 @@ const priceRange = reactive({
   max: 3000000
 })
 const roomSize = reactive({
-  min: 1000,
-  max: 3000
+  min: 200,
+  max: 6000
 })
 const selectedBedrooms = ref<number[]>([])
 const bathroomCount = ref('')
@@ -335,31 +324,40 @@ const toggleOption = (set: Set<string>, id: string) => {
 
 
 const getFilterPayload = (): FilterPayload => {
-    const selectedOption = sortOptions.value.find(option => option.id === selectedSort.value)
-  const orderConfig = selectedOption?.sortConfig || {
-    field: SortField.PRICE,
-    value: SortValue.DESC
-  }
+  // Convert selected sort options to order array
+  const orderArray = Array.from(selectedSortOptions.value)
+    .map(sortId => {
+      const option = sortOptions.value.find(opt => opt.id === sortId)
+      return option?.sortConfig ? {
+        field: option.sortConfig.field,
+        value: option.sortConfig.value
+      } : null
+    })
+    .filter((config): config is SortConfig => config !== null)
+
+  // If no sort options selected, use default sorting
+  // const order = orderArray.length > 0 ? orderArray : [{
+  //   field: SortField.PRICE,
+  //   value: SortValue.DESC
+  // }]
+  const order = orderArray.length > 0 ? orderArray : []
 
   return {
-    order: [{
-      field: orderConfig.field,
-      value: orderConfig.value
-    }],
+    order,
     sharedCount: sharedCount.value,
     houseTypeIds: Array.from(selectedPropertyTypes.value),
-    priceMin:filters.priceRange[0],
-    priceMax: filters.priceRange[1],
+    priceMin: priceRange.min,
+    priceMax: priceRange.max,
     bedroomsCount: selectedBedrooms.value,
     bathroomsCount: bathroomCount.value ? [parseInt(bathroomCount.value)] : [],
-    roomSizeMin: filters.roomSizeRange[0],
-    roomSizeMax: filters.roomSizeRange[1],
+    roomSizeMin: roomSize.min,
+    roomSizeMax: roomSize.max,
     availabilityFrom: filters.availabilityFrom,
     availableNow: filters.availableNow,
     isFurnished: filters.isFurnished,
     roomSizeUnit: filterPayload?.value?.roomSizeUnit,
     amenities: Array.from(selectedAmenities.value),
-    pets: Array.from(selectedPets.value) // Add selected pets
+    pets: Array.from(selectedPets.value)
   }
 }
 
@@ -371,6 +369,13 @@ watch([selectedSortOptions, selectedPropertyTypes, selectedAmenities, selectedFe
     console.log('Filter payload:', payload)
   }
 )
+
+// Watch for changes in selectedSortOptions
+watch(selectedSortOptions, (newSelections) => {
+  const payload = getFilterPayload()
+  // setPayload(payload)
+  // filterProperty()
+}, { deep: true })
 
 enum SortField {
   CREATED_AT = 'createdAt',
@@ -397,6 +402,9 @@ interface SortOption {
   sortConfig: SortConfig | null
 }
 
+// Changed from single selection to multiple selections
+// const selectedSortOptions = ref<Set<string>>(new Set())
+
 // Reactive state
 const selectedSort = ref<string>('all')
 const sortGroup = ref<string>('sortOptions')
@@ -404,11 +412,11 @@ const currentSortConfig = ref<SortPayload | null>(null)
 
 // Sort options with corresponding configurations
 const sortOptions = ref<SortOption[]>([
-  {
-    id: 'all',
-    label: 'All',
-    sortConfig: null
-  },
+  // {
+  //   id: 'all',
+  //   label: 'All',
+  //   sortConfig: null
+  // },
   {
     id: 'newest',
     label: 'Newest Listings',
@@ -443,27 +451,41 @@ const sortOptions = ref<SortOption[]>([
   }
 ])
 
+// Updated handler for checkbox changes
 const handleSortChange = (option: SortOption) => {
-  selectedSort.value = option.id
-  
-  // Update the main filter payload
-  const payload = getFilterPayload()
-  if (option.sortConfig) {
-    payload.order = [{
-      field: option.sortConfig.field,
-      value: option.sortConfig.value
-    }]
+  if (selectedSortOptions.value.has(option.id)) {
+    selectedSortOptions.value.delete(option.id)
   } else {
-    // Default sorting when 'All' is selected
-    payload.order = [{
-      field: SortField.PRICE,
-      value: SortValue.DESC
-    }]
+    selectedSortOptions.value.add(option.id)
   }
   
+  const payload = getFilterPayload()
   // setPayload(payload)
   // filterProperty()
 }
+
+
+// const handleSortChange = (option: SortOption) => {
+//   selectedSort.value = option.id
+  
+//   // Update the main filter payload
+//   const payload = getFilterPayload()
+//   if (option.sortConfig) {
+//     payload.order = [{
+//       field: option.sortConfig.field,
+//       value: option.sortConfig.value
+//     }]
+//   } else {
+//     // Default sorting when 'All' is selected
+//     payload.order = [{
+//       field: SortField.PRICE,
+//       value: SortValue.DESC
+//     }]
+//   }
+  
+//   // setPayload(payload)
+//   // filterProperty()
+// }
 
 // Watch for sort changes
 watch(selectedSort, (newSort) => {
@@ -505,7 +527,11 @@ const togglePetSelection = (petId: string) => {
 watch(
   () => filters.priceRange,
   (newVal) => {
+    // const payload = getFilterPayload()
+    // setPayload(payload)
     console.log('Parent priceRange updated:', newVal);
+    priceRange.min = newVal[0]
+    priceRange.max = newVal[1]
   },
   { immediate: true }
 );
@@ -513,15 +539,50 @@ watch(
 watch(
   () => filters.roomSizeRange,
   (newVal) => {
+    roomSize.min = newVal[0]
+    roomSize.max = newVal[1]
     console.log('Parent roomSizeRange updated:', newVal);
   },
   { immediate: true }
 );
 
+
+// Minimum and maximum values
+const minValue = ref(0);
+const maxValue = ref(Infinity);
+
+// Current slider value
+const sliderValue = ref(0);
+
+// Computed value for max, as HTML input cannot handle Infinity directly
+const computedMax = computed(() => (maxValue.value === Infinity ? 1000000 : maxValue.value));
+
+// Watcher for value changes
+watch(sliderValue, (newValue, oldValue) => {
+  console.log(`Slider value changed from ${oldValue} to ${newValue}`);
+});
+
+// Adjust slider value if it exceeds new maximum
+watch(maxValue, (newMax) => {
+  if (sliderValue.value > newMax) {
+    sliderValue.value = newMax;
+  }
+});
+
 </script>
 
 
 <style scoped>
+.slider-container {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+input[type="range"] {
+  width: 100%;
+  margin: 10px 0;
+}
 /* Custom checkbox styles */
 input[type="checkbox"] {
   appearance: none;

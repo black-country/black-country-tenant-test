@@ -7,10 +7,10 @@ export function useUrlExtractor() {
      */
     const extractUrl = (content: string): string | null => {
       // Remove HTML tags from the content
-      const strippedContent = content.replace(/<\/?[^>]+(>|$)/g, '');
+      const strippedContent = content?.replace(/<\/?[^>]+(>|$)/g, '');
       // Match the URL pattern
       const urlPattern = /https?:\/\/[^\s]+/;
-      const match = strippedContent.match(urlPattern);
+      const match = strippedContent?.match(urlPattern);
       // Return the URL or null if not found
       return match ? match[0] : null;
     };
