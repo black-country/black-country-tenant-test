@@ -8,7 +8,6 @@
       </div>
     </section>
       <div v-else-if="images && !loading" class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-6 p-6 lg:p-0">
-        <!-- Main Image -->
         <div>
         <CoreImageZoom
         :class="'cursor-pointer w-full object-cover'"
@@ -17,9 +16,7 @@
       />
         </div>
     
-        <!-- Smaller Images on the right -->
         <div class="grid grid-cols-2 space-y-2 gap-4 gap-y-0 gap-x-2">
-          <!-- Display the first 4 images from the array -->
           <CoreImageZoom
           v-for="(image, index) in rightImages"
           :key="index"
@@ -29,8 +26,6 @@
           class="rounded-lg w-full h-[200px] object-cover"
         />
     
-          <!-- 'View all' overlay for the last image if there are more than 5 images -->
-          <!-- @click="navigateToAllImages" -->
           <div v-if="remainingImagesCount > 0" class="relative cursor-pointer"  @click="openCarousel">
                 <CoreImageZoom
                 :src="images[4]"

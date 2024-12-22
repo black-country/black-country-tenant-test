@@ -80,6 +80,40 @@
   const nextImage = () => {
     currentImage.value = (currentImage.value === propertyImages.value.length - 1) ? 0 : currentImage.value + 1;
   };
+
+
+  // Keyboard navigation handler
+const handleKeydown = (event: KeyboardEvent) => {
+  switch (event.key) {
+    case 'ArrowRight': // Next image
+    case 'ArrowUp': // Next image
+      nextImage();
+      break;
+    case 'ArrowLeft': // Previous image
+    case 'ArrowDown': // Previous image
+      prevImage();
+      break;
+    case 'Escape': // Close modal
+      closeModal();
+      break;
+  }
+};
+
+// Add event listener for keyboard navigation when modal is open
+watch(showModal, (value) => {
+  console.log('hjkl')
+  if (value) {
+    window.addEventListener('keydown', handleKeydown);
+  } else {
+    window.removeEventListener('keydown', handleKeydown);
+  }
+}, { immediate: true});
+
+// Clean up on component unmount
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown);
+});
+
   </script>
   
   <style scoped>

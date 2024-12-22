@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
   <div>
     <div class="bg-gray-100">
       <div class="flex flex-wrap justify-between items-center bg-white border shadow px-3 lg:px-10">
@@ -49,7 +49,8 @@ const {
 
 
 // Constants
-const PDF_URL = 'https://devstoripodbucket.blob.core.windows.net/dev-storipod-assets/images/1734706135403-edited-lease.pdf'; // Replace with your hardcoded PDF URL
+const PDFS_URL = 'https://devstoripodbucket.blob.core.windows.net/dev-storipod-assets/images/1734706135403-edited-lease.pdf'; // Replace with your hardcoded PDF URL
+ const PDF_URL = `https://docs.google.com/viewer?url=${encodeURIComponent(PDFS_URL)}&embedded=true`
 // const documentName = ref('Sample Document');
 
 const props = defineProps({
@@ -181,5 +182,84 @@ p {
   margin-top: 10px;
   font-size: 14px;
   color: green;
+}
+</style> -->
+
+<script setup lang="ts">
+import { ref, onMounted } from "vue";
+import WebViewer from "@pdftron/webviewer";
+
+// Constants
+const PDF_URL = 'https://devstoripodbucket.blob.core.windows.net/dev-storipod-assets/images/1734706135403-edited-lease.pdf'; // Hardcoded PDF URL
+
+// Refs
+const viewerDiv = ref<HTMLElement | null>(null);
+const instance = ref<any>(null);
+const isDocumentEdited = ref(false);
+const submissionMessage = ref('');
+const loading = ref(false);
+
+// Initialize WebViewer
+onMounted(async () => {
+  if (!viewerDiv.value) return;
+
+  try {
+    loading.value = true;
+
+    const webViewerInstance = await WebViewer(
+      {
+        path: '/webviewer', // Adjust to your WebViewer's static asset path
+        initialDoc: PDF_URL, // Use the hardcoded PDF URL
+        licenseKey: 'your-pdftron-license-key', // Add your PDFTron license key if required
+      },
+      viewerDiv.value
+    );
+
+    instance.value = webViewerInstance.Core.documentViewer;
+
+    // Listen for annotation changes
+    const annotManager = webViewerInstance.Core.annotationManager;
+    annotManager.addEventListener('annotationChanged', () => {
+      isDocumentEdited.value = true;
+    });
+
+    // Additional viewer configurations
+    webViewerInstance.UI.loadDocument(PDF_URL, { filename: 'Sample Document.pdf' });
+    webViewerInstance.UI.iframeWindow?.addEventListener('documentLoaded', () => {
+      console.log('Document loaded successfully');
+    });
+  } catch (error) {
+    console.error('Error initializing WebViewer:', error);
+    submissionMessage.value = 'Error loading document';
+  } finally {
+    loading.value = false;
+  }
+});
+</script>
+
+<template>
+  <div>
+    <div class="bg-gray-100">
+      <div class="flex flex-wrap justify-between items-center bg-white border shadow px-3 lg:px-10">
+        <div class="flex items-center space-x-4 py-3">
+          <button @click="router.back()"
+            class="flex items-center text-gray-600 bg-gray-100 text-xs py-3 font-semibold px-4 rounded-md hover:bg-gray-200 hover:text-black">
+            <span>&larr;</span>
+            <span class="ml-2">Back</span>
+          </button>
+          <h1 class="text text-base pt-3 font-semibold">Sample Document</h1>
+        </div>
+      </div>
+    </div>
+    <div id="webViewer" ref="viewerDiv"></div>
+    <p v-if="submissionMessage">{{ submissionMessage }}</p>
+    <CoreFullScreenLoader :visible="loading" text="Loading PDF document" logo="/path-to-your-logo.png" />
+  </div>
+</template>
+
+<style scoped>
+#webViewer {
+  height: 100vh;
+  width: 100%;
 }
 </style>
