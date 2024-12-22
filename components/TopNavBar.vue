@@ -192,7 +192,7 @@
                 </a>
               </NuxtLink> -->
               <li class="mt-auto">
-                <a
+                <!-- <a
                   href="#"
                   class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                 >
@@ -202,7 +202,7 @@
                     class="h-6 w-6"
                   />
                   Settings
-                </a>
+                </a> -->
                 <a
                   href="#"
                   @click="showBLogoutModal = true"

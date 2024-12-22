@@ -4,12 +4,14 @@
         <!-- Request Details Card -->
         <div class="space-y-6">
             <!-- Header Section -->
+             <!-- {{ maintenanceDetails.isConfirmedCompleted }} -->
             <div class="flex justify-between items-center border-[0.5px] border-gray-50 bg-white p-3 rounded-md">
                 <h4 class="text-sm font-medium text-[#1D2739]">Request Details</h4>
                 <span class="px-3 py-1 text-sm font-medium bg-[#E7F6EC] text-[#099137] rounded-full">{{ maintenanceDetails.status ?? 'Nil' }}</span>
             </div>
 
-            <div
+          <div v-if="!maintenanceDetails?.isConfirmedCompleted">
+            <div v-if="maintenanceDetails.status === 'completed'"
                 class="flex justify-between items-center border-[0.5px] border-gray-50 bg-white p-3 rounded-md">
                 <div class="space-y-2">
                     <!-- <h4 class="text-sm font-medium text-[#1D2739]">Confirm Completed Work</h4> -->
@@ -24,6 +26,7 @@
                     Confirm
                 </button>
             </div>
+          </div>
 
          <section class="border-[0.5px] border-gray-50 bg-white p-3 rounded-md space-y-4">
                <!-- Details Section -->

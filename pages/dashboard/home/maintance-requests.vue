@@ -131,7 +131,7 @@
 import { useFetchMaintenanceRequest } from '@/composables/modules/maintenance/useFetchMaintenenceRequest'
 import { useFetchMaintenanceRequests } from '@/composables/modules/maintenance/useFetchMaintenanceRequests'
 import { ref, computed } from 'vue'
-const { maintenanceRequests, loading } = useFetchMaintenanceRequests()
+const { maintenanceRequests, loading, status } = useFetchMaintenanceRequests()
 const { handleMaintenanceRequest,
   maintenanceRequest } = useFetchMaintenanceRequest()
 const router = useRouter()
@@ -146,7 +146,8 @@ const requests = computed(() =>
     id: req.id,
     type: req.type,
     date: new Date(req.createdAt).toISOString().split('T')[0],
-    status: req.status.charAt(0).toUpperCase() + req.status.slice(1), // Capitalize status
+    status: req.status
+    // status: req.status.charAt(0).toUpperCase() + req.status.slice(1), // Capitalize status
   }))
 )
 
@@ -181,16 +182,20 @@ const formatDate = (date: string) =>
 const statusClasses = (status: string) => {
   // Convert status to lowercase to handle inconsistent casing
   switch (status.toLowerCase()) {
-    case 'upcoming':
+    case 'in_progress':
       return 'bg-[#FEF6E7] text-[#DD900D]'
-    case 'pending':
+    case 'assigned':
       return 'bg-[#E8EDFB] text-[#1D4ED8]'
+    case 'pending':
+      return 'bg-[#FEF6E7] text-[#DD900D]'
     case 'cancelled':
       return 'bg-[#F9FAFB] text-[#1D2739]'
     case 'completed':
       return 'bg-[#E7F6EC] text-[#099137]'
     case 'declined':
       return 'bg-[#FBEAE9] text-[#BA110B]'
+    case 'accepted':
+      return 'bg-[#E8EDFB] text-[#1D4ED8]'
     default:
       return ''
   }
@@ -198,8 +203,10 @@ const statusClasses = (status: string) => {
 
 
 // Handle status filter selection
-const handleSelected = (status: string) => {
-  selectedStatus.value = status
+const handleSelected = (statusKey: string) => {
+  console.log(status, 'herro')
+  status.value = statusKey
+  selectedStatus.value = statusKey
 }
 </script>
 

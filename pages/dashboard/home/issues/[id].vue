@@ -28,22 +28,29 @@
               <span class="ml-2  text-[#667185]"
                 >Maintenance requests | </span
               ><span class="text-[#1D2739] font-medium"
-                >{{ maintenanceRequest?.type ?? 'Nil' }}</span
+                >{{ maintenanceInfo?.type ?? 'Nil' }}</span
               ></span
             >
           </div>
           <!-- Upcoming Activities Section -->
            <!-- {{ maintenanceRequest }} -->
-          <HomeMaintenanceRequestDetails :maintenanceDetails="maintenanceRequest" />
+             <!-- {{maintenanceInfo}} -->
+          <div v-if="loading && !Object.keys(maintenanceInfo).length" class="animate-pulse flex space-x-4">
+           <div class="rounded-md bg-slate-100 h-96 w-full"></div>
+           </div>
+           <HomeMaintenanceRequestDetails v-else :maintenanceDetails="maintenanceInfo" />
         </div>
       </div>
     </main>
   </template>
   
   <script setup lang="ts">
+  import { useFetchMaintenanceDetails } from '@/composables/modules/maintenance/useFetchMainenenceById'
   import { useFetchMaintenanceRequest } from '@/composables/modules/maintenance/useFetchMaintenenceRequest'
   const {
     maintenanceRequest } = useFetchMaintenanceRequest()
+    const { loading,
+      maintenanceInfo } = useFetchMaintenanceDetails()
   const router = useRouter()
  
   </script>

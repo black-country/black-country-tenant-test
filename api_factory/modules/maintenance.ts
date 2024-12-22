@@ -4,9 +4,13 @@ export const maintenance_api = {
 		const url = `/houses/${houseId}/maintenance-requests`
 		return GATEWAY_ENDPOINT.post(url, payload)
 	},
-    $_fetch_maitenence_request: (page = 1, perPage = 20, status = 'pending', tenantId = '', houseId = '') => {
-        let url = `/maintenance-requests?page=${page}&perPage=${perPage}&status=${status}`
+    $_fetch_maitenence_request: (page = 1, perPage = 20, status = '', tenantId = '', houseId = '') => {
+        let url = `/maintenance-requests?page=${page}&perPage=${perPage}`
         
+
+        if (status) {
+          url += `&status=${status}`
+      }
     
            // Add search query to the URL if provided
            if (tenantId) {

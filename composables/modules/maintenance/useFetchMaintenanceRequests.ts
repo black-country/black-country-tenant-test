@@ -10,7 +10,7 @@ export const useFetchMaintenanceRequests = () => {
   const houseId = ref('')
   const page = ref(1)
   const perPage = ref(20)
-  const status = ref('pending') // To store the sort type
+  const status = ref('') // To store the sort type
 
   const fetchMaintenanceRequests = async () => {
     loading.value = true
@@ -26,7 +26,12 @@ export const useFetchMaintenanceRequests = () => {
       console.log(res, 'here')
 
       if (res.type !== 'ERROR') {
-        maintenanceRequests.value = res?.data?.result || []
+        // maintenanceRequests.value = res?.data?.result || []
+        maintenanceRequests.value = res?.data?.result ? (res?.data?.result || []).sort((a, b) => {
+          const dateA = new Date(a.createdAt);
+          const dateB = new Date(b.createdAt);
+          return dateB.getTime() - dateA.getTime(); // Sort descending by createdAt
+        }) : []
     }
     loading.value = false
 
@@ -44,6 +49,7 @@ export const useFetchMaintenanceRequests = () => {
   return {
     fetchMaintenanceRequests,
     loading,
-    maintenanceRequests
+    maintenanceRequests,
+    status
   }
 }
