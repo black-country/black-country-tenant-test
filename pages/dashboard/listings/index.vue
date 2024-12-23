@@ -1,7 +1,5 @@
 <template>
   <main class="">
-    <!-- {{ profileObj }} -->
-      <!-- {{ filteredProperties }} -->
     <section class="sticky top-0 z-50">
       <nav class="bg-[#292929] text-white py-3 z-10">
         <div class="container mx-auto flex justify-between items-center px-4">

@@ -215,8 +215,8 @@
 }
 
 .custom-marker img {
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: 50%;
   object-fit: cover;
 }
 </style>
@@ -419,14 +419,14 @@ const createPropertyMarkers = (
       div.className = "custom-marker";
       div.innerHTML = `
         <div class="relative group cursor-pointer">
-          <div class="w-12 h-12 rounded-lg overflow-hidden border-2 border-white shadow-lg transform transition-transform group-hover:scale-105">
+          <div class="w-10 h-10 rounded-lg overflow-hidden border-2 border-white shadow-lg transform transition-transform group-hover:scale-105">
             <img src="${property.images[0] || "/placeholder-property.jpg"}" 
                  alt="${property.name}"
-                 class="w-full h-full object-cover"
+                 class="w-10 h-10 object-cover"
             />
           </div>
-          <div class="absolute -bottom-4 left-1/2 transform -translate-x-1/2">
-            <svg viewBox="0 0 24 24" class="w-8 h-8 fill-emerald-700">
+          <div class="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 fill-emerald-700">
               <path d="M12 0C7.802 0 4 3.403 4 7.602C4 11.8 12 24 12 24S20 11.8 20 7.602C20 3.403 16.199 0 12 0Z"/>
             </svg>
           </div>
@@ -496,28 +496,169 @@ const createPropertyMarkers = (
   });
 };
 
-// Initialize map
+// // Initialize map
+// const initializeMap = async () => {
+//   try {
+//     await $loadGoogleMapsApi();
+
+//     // Get current position
+//     const position = await getCurrentPosition();
+//     const coordinates = {
+//       lat: position.coords.latitude,
+//       lng: position.coords.longitude,
+//     };
+
+//     currentPosition.value = coordinates;
+
+//     // Create map
+//     if (mapContainer.value) {
+//       map.value = new google.maps.Map(mapContainer.value, {
+//         center: coordinates,
+//         zoom: 16,
+//         mapTypeControl: true,
+//         streetViewControl: true,
+//         zoomControl: true,
+//         styles: [
+//           {
+//             featureType: "poi",
+//             elementType: "labels",
+//             stylers: [{ visibility: "off" }],
+//           },
+//         ],
+//       });
+
+//       // Smooth zoom animation
+//       const smoothZoom = (map: google.maps.Map, targetZoom: number) => {
+//         const currentZoom = map.getZoom() || 0;
+//         if (currentZoom !== targetZoom) {
+//           google.maps.event.addListenerOnce(map, "zoom_changed", () => {
+//             setTimeout(() => {
+//               smoothZoom(map, targetZoom);
+//             }, 80);
+//           });
+//           const nextZoom =
+//             currentZoom < targetZoom ? currentZoom + 1 : currentZoom - 1;
+//           map.setZoom(nextZoom);
+//         }
+//       };
+
+//       // Start with low zoom and animate to higher zoom
+//       map.value.setZoom(12);
+//       setTimeout(() => {
+//         smoothZoom(map.value!, 16);
+//       }, 1000);
+
+//       // Create property markers if properties are available
+//       if (filteredProperties.value?.length) {
+//         createPropertyMarkers(filteredProperties.value, map.value);
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Error initializing map:", error);
+//   }
+// };
+
+// const LAGOS_COORDINATES = {
+//   lat: 6.5244,
+//   lng: 3.3792
+// };
+
+// const initializeMap = async () => {
+//   try {
+//     await $loadGoogleMapsApi();
+
+//     let coordinates = LAGOS_COORDINATES; // Default to Lagos
+
+//     try {
+//       // Attempt to get current position, fallback to Lagos if fails
+//       const position = await getCurrentPosition();
+//       coordinates = {
+//         lat: position.coords.latitude,
+//         lng: position.coords.longitude,
+//       };
+//     } catch (locationError) {
+//       console.log("Using default Lagos location:", locationError);
+//     }
+
+//     currentPosition.value = coordinates;
+
+//     // Create map
+//     if (mapContainer.value) {
+//       map.value = new google.maps.Map(mapContainer.value, {
+//         center: coordinates,
+//         zoom: 12,
+//         mapTypeControl: true,
+//         streetViewControl: true,
+//         zoomControl: true,
+//         styles: [
+//           {
+//             featureType: "poi",
+//             elementType: "labels",
+//             stylers: [{ visibility: "off" }],
+//           },
+//         ],
+//       });
+
+//       // Smooth zoom animation
+//       const smoothZoom = (map: google.maps.Map, targetZoom: number) => {
+//         const currentZoom = map.getZoom() || 0;
+//         if (currentZoom !== targetZoom) {
+//           google.maps.event.addListenerOnce(map, "zoom_changed", () => {
+//             setTimeout(() => {
+//               smoothZoom(map, targetZoom);
+//             }, 80);
+//           });
+//           const nextZoom =
+//             currentZoom < targetZoom ? currentZoom + 1 : currentZoom - 1;
+//           map.setZoom(nextZoom);
+//         }
+//       };
+
+//       // Start with low zoom and animate to higher zoom
+//       map.value.setZoom(12);
+//       setTimeout(() => {
+//         smoothZoom(map.value!, 16);
+//       }, 1000);
+
+//       // Create property markers if properties are available
+//       if (filteredProperties.value?.length) {
+//         createPropertyMarkers(filteredProperties.value, map.value);
+//       }
+//     }
+//   } catch (error) {
+//     console.error("Error initializing map:", error);
+//   }
+// };
+
+// Define Lagos coordinates with camera settings
+const LAGOS_COORDINATES = {
+  lat: 6.5244,
+  lng: 3.3792
+};
+
+const LAGOS_CAMERA_POSITION = {
+  center: LAGOS_COORDINATES,
+  zoom: 12,
+  heading: 0,  // Camera heading in degrees (0 = north)
+  tilt: 45     // Camera tilt in degrees (45 for angled view)
+};
+
 const initializeMap = async () => {
   try {
     await $loadGoogleMapsApi();
 
-    // Get current position
-    const position = await getCurrentPosition();
-    const coordinates = {
-      lat: position.coords.latitude,
-      lng: position.coords.longitude,
-    };
-
+    // Set coordinates directly to Lagos
+    const coordinates = LAGOS_COORDINATES;
     currentPosition.value = coordinates;
 
-    // Create map
+    // Create map with camera position
     if (mapContainer.value) {
       map.value = new google.maps.Map(mapContainer.value, {
-        center: coordinates,
-        zoom: 16,
+        ...LAGOS_CAMERA_POSITION,
         mapTypeControl: true,
         streetViewControl: true,
         zoomControl: true,
+        mapTypeId: google.maps.MapTypeId.TERRAIN,  // Shows terrain features
         styles: [
           {
             featureType: "poi",
@@ -527,13 +668,34 @@ const initializeMap = async () => {
         ],
       });
 
-      // Smooth zoom animation
+      // Add a marker for Lagos center
+      new google.maps.Marker({
+        position: coordinates,
+        map: map.value,
+        title: "Lagos",
+        animation: google.maps.Animation.DROP
+      });
+
+      // Set initial camera view
+      const moveCamera = () => {
+        if (map.value) {
+          map.value.moveCamera({
+            center: coordinates,
+            zoom: 12,
+            heading: 0,
+            tilt: 45
+          });
+        }
+      };
+
+      // Smooth zoom animation with camera positioning
       const smoothZoom = (map: google.maps.Map, targetZoom: number) => {
         const currentZoom = map.getZoom() || 0;
         if (currentZoom !== targetZoom) {
           google.maps.event.addListenerOnce(map, "zoom_changed", () => {
             setTimeout(() => {
               smoothZoom(map, targetZoom);
+              moveCamera();  // Update camera position after each zoom
             }, 80);
           });
           const nextZoom =
@@ -542,10 +704,12 @@ const initializeMap = async () => {
         }
       };
 
-      // Start with low zoom and animate to higher zoom
-      map.value.setZoom(12);
+      // Initial camera setup
+      moveCamera();
+
+      // Start with low zoom and animate to a more appropriate zoom level
       setTimeout(() => {
-        smoothZoom(map.value!, 16);
+        smoothZoom(map.value!, 13);
       }, 1000);
 
       // Create property markers if properties are available
