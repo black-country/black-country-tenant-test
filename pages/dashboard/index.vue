@@ -3,12 +3,12 @@
     <TopNavBar class="" />
     <div class="bg-gray-25 min-h-screen p-6">
       <div class="max-w-4xl mx-auto">
-        <h1 class="text-lg text-[#1D2739] font-medium mb-6">{{ greeting ?? 'Hello' }}, {{ user.firstName ?? 'Nil' }}
-          {{ user.lastName ?? 'Nil' }}</h1>
+        <h1 class="text-lg text-[#1D2739] font-medium mb-6">{{ greeting ?? 'Hello' }}, {{ user?.firstName ?? 'Nil' }}
+          {{ user?.lastName ?? 'Nil' }}</h1>
 
 
         <!-- Setup Actions Section -->
-         {{  myHomeInfo }}
+         <!-- {{  myHomeInfo }} -->
         <div class="space-y-2 mb-8">
           <div v-for="action in setupActions" :key="action.title" @click="router.push(action.path)"
             class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
