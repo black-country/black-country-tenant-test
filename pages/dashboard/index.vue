@@ -140,7 +140,7 @@
       </div>
     </div>
     <CoreModal :isOpen="showWelcomeModal" @close="closeWelcomeModal">
-      <CoreWelcome @close="closeWelcomeModal" @start="router.push('/dashboard/listings')" class="" />
+      <CoreWelcome @close="closeWelcomeModal" @start="startTour" class="" />
     </CoreModal>
   </main>
 </template>
@@ -284,6 +284,7 @@ onMounted(() => {
 //   showWelcomeModal.value = true
 // })
 
+
 definePageMeta({
   middleware: "auth"
 });
@@ -329,6 +330,11 @@ const formatDate = (date: string) =>
 const requestDates = computed(() =>
   [...new Set(requests.value.map((req) => req.date))].sort()
 )
+
+const startTour = () => {
+  localStorage.setItem('welcome-modal-shown', 'false'); // Corrected the key here
+  router.push('/dashboard/listings')
+}
 
 </script>
 

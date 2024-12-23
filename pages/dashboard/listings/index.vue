@@ -1308,7 +1308,6 @@ const selectOption = (option: any) => {
   closeDropdown();
 };
 
-
 const startTour = () => {
   const tourSteps = [
     {
@@ -1334,29 +1333,32 @@ const startTour = () => {
       intro: 'When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!',
       viewType: 'grid'
     }
-  ]
+  ];
 
-  // Filter out the first step
-  const filteredSteps = tourSteps.slice(1)
-
-  const intro = $introJs()
+  const filteredSteps = tourSteps.slice(1); // Remove the first step
+  const intro = $introJs();
 
   // Handle step changes
   intro.onbeforechange((element) => {
-    const currentStep = intro._currentStep // Get current step index
-    const stepConfig = filteredSteps[currentStep]
+    const currentStep = intro._currentStep; // Get the current step index
+    const stepConfig = filteredSteps[currentStep];
+
+    // Check if the current step is the last step dynamically
+    if (currentStep === filteredSteps.length - 1) {
+      localStorage.setItem('welcome-modal-shown', 'true'); // Set local storage to true
+    }
 
     // Update URL parameter if the step has a viewType
     if (stepConfig?.viewType) {
-      const currentQuery = { ...route.query }
+      const currentQuery = { ...route.query };
       router.push({
         query: {
           ...currentQuery,
           viewType: stepConfig.viewType
         }
-      })
+      });
     }
-  })
+  });
 
   intro.setOptions({
     steps: filteredSteps,
@@ -1366,9 +1368,74 @@ const startTour = () => {
     showStepNumbers: true,
     tooltipClass: 'global-tooltip-class',
     width: 400
-  })
-  .start()
-}
+  }).start();
+};
+
+
+// const startTour = () => {
+//   const tourSteps = [
+//     {
+//       title: 'Welcome to BlackCountry! 🥳 🥳🥳',
+//       intro: `Welcome to your all-in-one shared-living platform. Search for your ideal home and manage it effortlessly, all within our user-friendly app. Click 'Continue' to embark on your personalized tour of the platform!`,
+//       tooltipClass: 'custom-width-tooltip'
+//     },
+//     {
+//       element: '[data-intro="Listings"]',
+//       intro: 'Explore available properties, filter by preferences, and find your perfect home.'
+//     },
+//     {
+//       element: '[data-intro="My Home"]',
+//       intro: 'Manage your rented space, pay rent, request maintenance, and more—all from one place.'
+//     },
+//     {
+//       element: '[data-intro="Map View"]',
+//       intro: 'Get a visual overview of available properties in your desired area, making it easier to find your next home.',
+//       viewType: 'map'
+//     },
+//     {
+//       element: '[data-intro="List View"]',
+//       intro: 'When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!',
+//       viewType: 'grid'
+//     }
+//   ]
+
+//   // Filter out the first step
+//   const filteredSteps = tourSteps.slice(1)
+
+//   const intro = $introJs()
+
+//   // Handle step changes
+//   intro.onbeforechange((element) => {
+//     const currentStep = intro._currentStep // Get current step index
+//     const stepConfig = filteredSteps[currentStep]
+
+//     if(currentStep === 5){
+//       localStorage.setItem('welcome-modal-shown', 'true'); // Corrected the key here
+//     }
+
+//     // Update URL parameter if the step has a viewType
+//     if (stepConfig?.viewType) {
+//       const currentQuery = { ...route.query }
+//       router.push({
+//         query: {
+//           ...currentQuery,
+//           viewType: stepConfig.viewType
+//         }
+//       })
+//     }
+//   })
+
+//   intro.setOptions({
+//     steps: filteredSteps,
+//     showProgress: true,
+//     showBullets: true,
+//     exitOnOverlayClick: false,
+//     showStepNumbers: true,
+//     tooltipClass: 'global-tooltip-class',
+//     width: 400
+//   })
+//   .start()
+// }
 
 // Watch for route changes to ensure UI updates accordingly
 watch(
@@ -1385,21 +1452,29 @@ watch(
 //   }
 // })
 
-const modalValue = localStorage.getItem('welcome-modal-shown');
+const modalValue = localStorage.getItem('welcome-modal-shown') === 'true'; // Explicitly check for 'true'
 
 onMounted(() => {
-  // if(!profileObj?.value?.hasTakenTour){
-  //   startTour()
-  // }
-
-  if(!modalValue || !profileObj?.value?.hasTakenTour){
-    startTour()
+  if (!modalValue && !profileObj?.value?.hasTakenTour) {
+    startTour();
   }
+});
 
-  if(modalValue){
-    return
-  }
-})
+// const modalValue = localStorage.getItem('welcome-modal-shown');
+
+// onMounted(() => {
+//   // if(!profileObj?.value?.hasTakenTour){
+//   //   startTour()
+//   // }
+
+//   if(!modalValue || !profileObj?.value?.hasTakenTour){
+//     startTour()
+//   }
+
+//   if(modalValue){
+//     return
+//   }
+// })
 
 </script>
 
