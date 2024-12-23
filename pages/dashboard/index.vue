@@ -8,6 +8,7 @@
 
 
         <!-- Setup Actions Section -->
+         {{  myHomeInfo }}
         <div class="space-y-2 mb-8">
           <div v-for="action in setupActions" :key="action.title" @click="router.push(action.path)"
             class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
@@ -30,11 +31,10 @@
         </div>
 
         <!-- Payment Actions -->
-        <div class="flex justify-between mb-8 rounded-lg">
-          <NuxtLink v-for="payment in paymentActions" :key="payment.title" :to="payment.link"
+        <!-- <div class="flex justify-between mb-8 rounded-lg">
+          <NuxtLink :class="[payment.isDisabled ? 'cursor-not-allowed opacity-25' : '']"  v-for="payment in paymentActions" :key="payment.title" :to="payment.link"
             class="w-1/3 block cursor-pointer bg-white p-6 text-center" @click.prevent="handleAction(payment)">
             <img :src="dynamicIcons(payment.icon)" alt="" class="h-10 w-10 mx-auto mb-2" />
-            <!-- <img v-else :src="dynamicIcons('tick')" alt="" class="h-9 w-9 mx-auto mb-2" /> -->
 
             <h3 class="text-xs font-medium text-[#1D2739]">
               {{ 
@@ -46,7 +46,38 @@
 
             </h3>
           </NuxtLink>
-        </div>
+        </div> -->
+
+        <div class="flex justify-between mb-8 rounded-lg">
+  <button
+    v-for="payment in paymentActions"
+    :key="payment.title"
+    :disabled="!Object.keys(myHomeInfo).length"
+    :class="[
+      'w-1/3 block bg-white p-6 text-center',
+      payment.isDisabled ? 'cursor-not-allowed opacity-25' : ''
+    ]"
+    @click.prevent="!Object.keys(myHomeInfo).length && handleAction(payment)"
+  >
+    <img
+      :src="dynamicIcons(payment.icon)"
+      alt=""
+      class="h-10 w-10 mx-auto mb-2"
+    />
+
+    <h3 class="text-xs font-medium text-[#1D2739]">
+      {{
+        payment.isPaid
+          ? payment.icon === 'pay-rent'
+            ? 'Rent Paid'
+            : payment.icon === 'utility-bills'
+            ? 'Utility Bill Paid'
+            : payment.title
+          : payment.title
+      }}
+    </h3>
+  </button>
+</div>
 
 
         <div class="">
@@ -168,6 +199,8 @@ const { user } = useUser()
 const { loading: fetchingMyHomeInfo, myHomeInfo } = useFetchMyHomeInfo()
 const { paymentList, loading } = useGetTransactionHistory()
 const { loading: fetchingUpcomingActivities, upcomingActivitiesList } = useFetchUpcomingActivities()
+  // import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
+  // const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
 const {
   initializeRentPayment,
   loading: initializing,
@@ -291,14 +324,14 @@ definePageMeta({
 const setupActions = ref([
   { checked: isComplete, title: 'Profile Information', description: 'Complete your profile for a better chance of approval when applying to rent a home.', path: '/profile' },
   { checked: profileObj?.value?.hasExploredListing, title: 'Explore Available Spaces', description: 'Explore a wide range of properties to find the perfect match for your lifestyle and budget.', path: '/dashboard/listings' },
-  { checked: isAccountSetupComplete.value, title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '/profile/payment-information' }
+  // { checked: isAccountSetupComplete.value, title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '/profile/payment-information' }
 ]);
 
 
 const paymentActions = ref([
-  { isPaid: myHomeInfo.value && myHomeInfo?.value?.status === 'RENT_ACTIVE', title: 'Pay Rent', icon: 'pay-rent', link: '#', action: 'pay-rent' },
-  { isPaid: true, title: 'Pay Utility Bills', icon: 'utility-bills', link: '#', action: 'pay-utility-bills' },
-  { isPaid: true, title: 'Request Maintenance', icon: 'request-maintance', link: '/dashboard/home/create' }
+  { isDisabled: myHomeInfo?.value?.movedIn, isPaid: myHomeInfo.value && myHomeInfo?.value?.status === 'RENT_ACTIVE', title: 'Pay Rent', icon: 'pay-rent', link: '#', action: 'pay-rent' },
+  { isDisabled: myHomeInfo?.value?.movedIn, isPaid: true, title: 'Pay Utility Bills', icon: 'utility-bills', link: '#', action: 'pay-utility-bills' },
+  { isDisabled: myHomeInfo?.value?.movedIn, isPaid: true, title: 'Request Maintenance', icon: 'request-maintance', link: '/dashboard/home/create' }
 ]);
 
 const proceed = async () => {
