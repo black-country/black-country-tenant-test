@@ -3,7 +3,7 @@
     <TopNavBar />
     <div class="p-8 bg-gray-25 min-h-screen flex flex-col justify-between">
       <div class="max-w-2xl mx-auto w-full">
-        <div class="max-w-3xl mx-auto p-6">
+        <div class="max-w-3xl mx-auto p-3 lg:p-6">
           <!-- Form Header -->
           <div class="text-gray-500 flex-col">
             <svg @click="router.back()" class="cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">

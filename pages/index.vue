@@ -1,5 +1,6 @@
 <template>
-  <div class="min-h-screen flex">
+<main>
+  <div class="min-h-screen hidden lg:flex">
     <div class="lg:w-1/2 w-full flex justify-center items-center bg-white">
       <div class="lg:w-2/4 flex flex-col justify-between h-full"> <!-- Added 'h-full' and 'justify-between' to distribute content properly -->
         <div>
@@ -57,6 +58,8 @@
       </div>
     </div>
   </div>
+  <AnimatedCarousel class="lg:hidden block" />
+</main>
 </template>
 
 <script setup lang="ts">

@@ -60,7 +60,7 @@
             />
           </div>
 
-          <div class="grid grid-cols-2 gap-4">
+          <div class="grid lg:grid-cols-2 gap-4">
             <AgeValidationDatePicker  v-model="credential.dateOfBirth"
             label="Date of Birth" />
             <div>

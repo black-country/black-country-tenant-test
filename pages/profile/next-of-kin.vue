@@ -1,7 +1,7 @@
 <template>
     <main>
       <TopNavBar />
-      <div v-if="!loading" class="max-w-2xl mx-auto bg-white p-6 w-full">
+      <div v-if="!loading" class="max-w-2xl mx-auto bg-white p-3 lg:p-6 w-full">
         <div class="text-gray-500 flex-col">
           <svg @click="router.back()" class="cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
@@ -14,7 +14,7 @@
         
         <form @submit.prevent="handleSave" class="mt-6 space-y-4">
           <section class="flex gap-x-6 justify-between items-center"></section>
-          <section class="flex justify-between items-center gap-x-6">
+          <section class="lg:flex space-y-6 lg:space-y-0 justify-between items-center gap-x-6">
             <div class="w-full">
               <label class="text-[#1D2739] text-sm">Full Name <span class="text-red-500">*</span></label>
               <input v-model="credential.nextOfKinName" type="text" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4" placeholder="Enter full name" />
@@ -55,7 +55,7 @@
             <input v-model="credential.nextOfKinOccupation" type="text" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4" placeholder="e.g. Accountant" />
           </div>
           
-          <section class="flex gap-x-6 justify-between items-center">
+          <section class="lg:flex space-y-6 lg:space-y-0 gap-x-6 justify-between items-center">
             <div class="w-full">
               <label class="text-[#1D2739] text-sm">Organization Name</label>
               <input v-model="credential.nextOfKinEmployer" type="text" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4" placeholder="Enter organization name" />
@@ -68,7 +68,7 @@
           </section>
         </form>
     
-        <div class="flex justify-between p-4 bg-white mt-6 max-w-2xl mx-auto  w-full">
+        <div class="flex justify-between lg:p-4 bg-white mt-6 max-w-2xl mx-auto  w-full">
           <button @click="router.back()" class="text-[#292929] border rounded-md px-4 py-3 hover:bg-gray-100">Cancel</button>
           <button :disabled="updating" @click="handleSave" class="text-white disabled:opacity-25 disabled: cursor-not-allowed font-medium rounded-md px-6 py-3 bg-[#292929]">{{updating ? 'Processing..' : 'Save'}}</button>
         </div>

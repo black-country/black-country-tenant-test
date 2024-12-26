@@ -2,7 +2,7 @@
 
 <template>
     <div class="flex justify-center items-center min-h-screen">
-      <div class="bg-white p-8  text-center max-w-md">
+      <div class="bg-white p-3 lg:p-8  text-center max-w-md">
         <!-- Success Icon -->
         <div class="flex justify-center">
           <div class="">

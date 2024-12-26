@@ -2,7 +2,7 @@
 <main>
   <TopNavBar />
   
-  <div class="p-8 bg-gray-25 min-h-screen">
+  <div class="lg:p-8 bg-gray-25 min-h-screen">
     <div class="max-w-3xl mx-auto">
       <svg
             @click="router.back()"

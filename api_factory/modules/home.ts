@@ -35,5 +35,9 @@ export const home_api = {
       $_get_payitem_for_billers: (id: any) => {
         let url =  `billers/${id}/pay-items`
         return GATEWAY_ENDPOINT.get(url);
+      },
+      $_get_lease_documents: (id: any) => {
+        let url =  `/tenants/${id}/lease-documents`
+        return GATEWAY_ENDPOINT.get(url);
       }
 }

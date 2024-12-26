@@ -1,14 +1,14 @@
 <template>
   <main>
     <TopNavBar />
-    <div class="min-h-screen bg-gray-25 pb-10">
+    <div class="min-h-screen bg-gray-25 pb-10 p-3">
       <div class="max-w-xl mx-auto space-y-4 pt-10">
-        <CoreGoBack />
+        <CoreGoBack class="ml-6" />
         <!-- {{user}} -->
           <h3 class="text-[#1D2739] text-lg font-semibold pl-10 lg:pl-0">Profile</h3>
         <div class="max-w-sm mx-auto px-6 pb-6 text-center space-y-4 relative">
           <!-- Profile Picture with Border-Based Circular Progress -->
-          <div class="relative inline-block">
+          <div v-if="completionPercentage !== 100" class="relative inline-block">
             <!-- Circular Progress Container -->
             <div
               class="w-24 h-24 rounded-full flex items-center justify-center"
@@ -27,10 +27,13 @@
                   <img v-else :src="user.profilePicture" class="h-20 rounded-full w-20" />
             </div>
           </div>
+         <div v-else class="flex justify-center items-center">
+          <img :src="user.profilePicture" class="h-20 rounded-full w-20" />
+         </div>
       
           <!-- User Info -->
           <div>
-             <div class="flex justify-center items-center">
+             <div  v-if="completionPercentage !== 100"  class="flex justify-center items-center">
               <span class="text-white rounded-full text-xs px-2 py-1 font-semibold bg-[#5B8469] absolute top-[81px]">{{ completionPercentage }}%</span> 
              </div>
             <p class="text-xl font-bold text-[#1D2739]">{{user.firstName ?? 'Nil'}} {{user.lastName ?? 'Nil'}}</p>

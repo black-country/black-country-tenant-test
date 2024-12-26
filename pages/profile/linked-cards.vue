@@ -1,7 +1,7 @@
 <template>
 <main>
   <TopNavBar />
-  <div v-if="bankAccounts?.length" class="p-8 bg-gray-25 min-h-screen">
+  <div v-if="bankAccounts?.length" class="lg:p-8 p-3 bg-gray-25 min-h-screen">
     <div class="max-w-xl mx-auto ">
       <!-- Breadcrumbs -->
      <div class="flex items-center gap-x-3">

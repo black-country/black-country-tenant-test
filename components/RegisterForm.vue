@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-lg mx-auto p-8 bg-white">
+  <div class="max-w-lg mx-auto p-3 lg:p-8 bg-white">
     <svg
             @click="router.back()"
             class="cursor-pointer"
@@ -293,7 +293,7 @@
       <button
         type="submit"
         :disabled="isFormDisabled || processing || emailExists"
-        class="w-full py-4 disabled:cursor-not-allowed disabled:opacity-25 px-4 bg-[#292929] mt-6 text-white rounded-md shadow-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2"
+        class="w-full py-3 disabled:cursor-not-allowed disabled:opacity-25 px-4 bg-[#292929] mt-6 text-white rounded-md shadow-sm font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2"
       >
         {{ loading ? "Processing..." : "Continue" }}
       </button>

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center ">
+    <div class="flex flex-col items-center justify-center m-2 lg:m-0">
       <div class="bg-white p-6 rounded-xl shadow-lg max-w-md w-full text-center space-y-6">
         <!-- Emoji icon -->
         <div class="text-4xl mb-4  flex justify-center items-center">

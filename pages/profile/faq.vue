@@ -1,7 +1,7 @@
 <template>
   <main>
     <TopNavBar />
-    <div class="p-6 bg-gray-25 min-h-screen">
+    <div class="lg:p-6 p-3 bg-gray-25 min-h-screen">
       <div class="max-w-xl mx-auto">
         <svg @click="router.back()" class="cursor-pointer mb-3" width="36" height="36" viewBox="0 0 36 36" fill="none"
           xmlns="http://www.w3.org/2000/svg">

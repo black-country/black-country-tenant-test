@@ -1,7 +1,7 @@
 <template>
   <main>
     <TopNavBar class="" />
-    <div class="bg-gray-25 min-h-screen p-6">
+    <div class="bg-gray-25 min-h-screen p-3 lg:p-6">
       <div class="max-w-4xl mx-auto">
         <h1 class="text-lg text-[#1D2739] font-medium mb-6">{{ greeting ?? 'Hello' }}, {{ user?.firstName ?? 'Nil' }}
           {{ user?.lastName ?? 'Nil' }}</h1>
@@ -71,7 +71,7 @@
           ? payment.icon === 'pay-rent'
             ? 'Rent Paid'
             : payment.icon === 'utility-bills'
-            ? 'Utility Bill Paid'
+            ? 'Utility Bill'
             : payment.title
           : payment.title
       }}

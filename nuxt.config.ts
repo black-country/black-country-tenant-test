@@ -34,6 +34,11 @@ export default {
   build: {
     transpile: []
   },
+  runtimeConfig: {
+    public: {
+      googleMapsApiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg'
+    }
+  },
 
   axios: {
     // Axios options here

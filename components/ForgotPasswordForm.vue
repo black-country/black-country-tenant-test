@@ -1,5 +1,5 @@
 <template>
-    <div class="max-w-lg w-full mx-auto p-8 bg-white">
+    <div class="max-w-lg w-full mx-auto p-3 lg:p-8 bg-white">
       <svg
             @click="router.back()"
             class="cursor-pointer"

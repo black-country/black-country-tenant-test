@@ -1,9 +1,9 @@
 <template>
 <main>
   <TopNavBar />
-  <div class="p-8 bg-gray-25 min-h-screen">
+  <div class="lg:p-8 p-3 bg-gray-25 min-h-screen">
     <div class="max-w-xl mx-auto">
-      <CoreGoBack />
+      <CoreGoBack class="mb-4" />
       <!-- Breadcrumbs -->
       <div class="text-sm text-gray-500 mb-4">
         <span>Profile</span>
@@ -54,8 +54,8 @@
       </div>
 
       <!-- Documents Grid -->
-      <div v-if="documentsList" class="grid grid-cols-3 gap-4">
-        <div v-for="itm in 2" :key="itm" class="">
+      <div v-if="leaseDocuments?.length && !loading" class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+        <div v-for="itm in leaseDocuments" :key="itm" class="">
           <div class="flex justify-center mb-4 border-[0.5px] border-gray-100 py-10 rounded-lg bg-[#F0F2F5]">
             <img
             src="@/assets/img/pdf.png"
@@ -64,12 +64,12 @@
             />
           </div>
      <div class="flex justify-between items-center w-full px-2">
-      <div class="text-center space-y-1">
-          <p class="text-gray-700 font-medium text-[10px]">Move-in Checklist.pdf</p>
-          <p class="text-gray-500 text-[10px]">12-05-2023 10:40 am</p>
+      <div class="lg:text-center space-y-1">
+          <p class="text-gray-700 font-medium text-sm">{{ `${itm?.agreementName?.length > 18 ? `${itm?.agreementName?.slice(0, 18)}...` : itm?.agreementName}` ?? 'Nil' }}</p>
+          <p class="text-gray-500 text-xs"> {{  moment(itm?.createdAt).format("MMM Do YYYY, HH:MM A") ?? 'Nil' }}</p>
         </div>
         <div class="flex justify-center mt-4">
-          <button class="text-gray-500 hover:text-gray-600">
+          <button @click="downloadAgreement(itm)" class="text-gray-500 hover:text-gray-600">
             <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.5026 9.66667V3M8.5026 9.66667C8.0358 9.66667 7.16362 8.33713 6.83594 8M8.5026 9.66667C8.9694 9.66667 9.8416 8.33713 10.1693 8" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M13.8307 11C13.8307 12.6547 13.4854 13 11.8307 13H5.16406C3.5094 13 3.16406 12.6547 3.16406 11" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -81,7 +81,9 @@
         </div>
       </div>
 
-
+      <section class="mb-6" v-else-if="!leaseDocuments?.length && loading">
+            <div class="animate-pulse flex space-x-4 h-96 bg-slate-200 rounded"></div>
+            </section>
       <section v-else class="flex justify-center items-center flex-col gap-y-2">
           <svg width="152" height="124" viewBox="0 0 152 124" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="76" cy="58" r="52" fill="#EAEAEA"/>
@@ -112,9 +114,32 @@
   </template>
   
   <script setup lang="ts">
+    import moment from "moment";
+    import { useDownloadPdf } from '@/composables/core/useDownloadPdf'; 
+    const { downloadPdf, isDownloading } = useDownloadPdf();
+  import { useFetchLeaseDocuments } from '@/composables/modules/home/useFetchLeaseDocuments'
+  const { leaseDocuments, loading } = useFetchLeaseDocuments()
+  import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
   const documentsList = ref([
     'Lease document', 'property document'
   ])
+
+  const selectedLease = ref({})
+
+
+  const downloadAgreement = async (item: any) => {
+  if (item) {
+    await downloadPdf(item?.leaseAgreementContent, `${item?.agreementName}-lease-agreement`); // Pass the ref element directly
+  } else {
+    showToast({
+          title: "Error",
+          message: "No lease agreement content available",
+          toastType: "error",
+          duration: 3000
+        });
+  }
+};
 
 
   definePageMeta({

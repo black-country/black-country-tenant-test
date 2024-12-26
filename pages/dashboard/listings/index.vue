@@ -224,7 +224,49 @@
                   </svg>
                   <span>Map View</span>
                 </button>
-                <button
+                <!-- <button
+                  data-intro="List View"
+                  @click="toggleView('map')"
+                  type="button"
+                  class="flex cursor-pointer items-center space-x-1 bg-[#1D1D1D] px-3 py-3 rounded-md hover:bg-gray-700"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M18.3333 10.0738V7.69615C18.3333 6.07615 18.3333 5.26615 17.8452 4.76287C17.357 4.2596 16.5713 4.2596 15 4.2596H13.2678C12.5033 4.2596 12.497 4.25811 11.8096 3.91332L9.03324 2.52084C7.87402 1.93945 7.29442 1.64875 6.67697 1.66895C6.05951 1.68915 5.49896 2.01715 4.37786 2.67316L3.35464 3.2719C2.53115 3.75375 2.1194 3.99469 1.89302 4.3955C1.66666 4.7963 1.66666 5.28441 1.66666 6.26061V13.1236C1.66666 14.4063 1.66666 15.0476 1.95187 15.4046C2.14166 15.642 2.40762 15.8018 2.70166 15.8547C3.14354 15.9342 3.68456 15.6177 4.76655 14.9844C5.50129 14.5546 6.20842 14.1081 7.08738 14.2292C7.8239 14.3306 8.50832 14.7963 9.16666 15.1265"
+                      stroke="#EBE5E0"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M6.66666 1.66797V14.1963"
+                      stroke="#FDFCFC"
+                      stroke-width="1.5"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12.5 4.17383V9.18517"
+                      stroke="#FDFCFC"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M16.7558 16.8124L18.2934 18.3316M17.6409 14.698C17.6409 16.3369 16.3127 17.6655 14.6742 17.6655C13.0357 17.6655 11.7073 16.3369 11.7073 14.698C11.7073 13.0591 13.0357 11.7305 14.6742 11.7305C16.3127 11.7305 17.6409 13.0591 17.6409 14.698Z"
+                      stroke="#FDFCFC"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                    />
+                  </svg>
+                  <span>Map View</span>
+                </button> -->
+              <button
                   data-intro="List View"
                   v-if="viewType === 'map'"
                   @click="toggleView('grid')"
@@ -342,6 +384,7 @@
       <!-- {{ computedPropertiesList.length }} -->
         <!-- {{ filteredProperties }} -->
 
+    
     <section v-if="viewType === 'grid'">
       <div
         class="lg:flex items-center space-y-6 lg:space-y-0 lg:space-x-4 p-4 bg-white container mx-auto"
@@ -679,13 +722,14 @@
               />
             </svg>
           </button>
-          <img
+          <ImageCarousel v-if="property?.images?.length" :property="property"  />
+          <!-- <img
             @click="router.push(`/dashboard/listings/${property.id}/preview`)"
             v-if="property?.images?.length"
             :src="property?.images[0]"
             class="rounded-lg cursor-pointer object-cover h-56 w-full"
             alt="alt"
-          />
+          /> -->
           <img
             @click="router.push(`/dashboard/listings/${property.id}/preview`)"
             v-else
@@ -1341,6 +1385,12 @@ const startTour = () => {
     const currentStep = intro._currentStep; // Get the current step index
     const stepConfig = filteredSteps[currentStep];
 
+
+    if(currentStep == 3){
+      viewType.value = 'map'
+      console.log('hello', currentStep)
+    }
+
     // Check if the current step is the last step dynamically
     if (currentStep === filteredSteps.length - 1) {
       localStorage.setItem('welcome-modal-shown', 'true'); // Set local storage to true
@@ -1360,15 +1410,14 @@ const startTour = () => {
 
   intro.setOptions({
     steps: filteredSteps,
-    showProgress: true,
-    showBullets: true,
+    showProgress: false,  // Changed from true to false
+    showBullets: false,   // Changed from true to false
     exitOnOverlayClick: false,
-    showStepNumbers: true,
+    showStepNumbers: false,
     tooltipClass: 'global-tooltip-class',
     width: 400
   }).start();
 };
-
 
 // const startTour = () => {
 //   const tourSteps = [
@@ -1395,33 +1444,34 @@ const startTour = () => {
 //       intro: 'When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!',
 //       viewType: 'grid'
 //     }
-//   ]
+//   ];
 
-//   // Filter out the first step
-//   const filteredSteps = tourSteps.slice(1)
-
-//   const intro = $introJs()
+//   const filteredSteps = tourSteps.slice(1); // Remove the first step
+//   const intro = $introJs();
 
 //   // Handle step changes
 //   intro.onbeforechange((element) => {
-//     const currentStep = intro._currentStep // Get current step index
-//     const stepConfig = filteredSteps[currentStep]
+//     const currentStep = intro._currentStep; // Get the current step index
+//     const stepConfig = filteredSteps[currentStep];
 
-//     if(currentStep === 5){
-//       localStorage.setItem('welcome-modal-shown', 'true'); // Corrected the key here
+//     hideCarouselElements();
+
+//     // Check if the current step is the last step dynamically
+//     if (currentStep === filteredSteps.length - 1) {
+//       localStorage.setItem('welcome-modal-shown', 'true'); // Set local storage to true
 //     }
 
 //     // Update URL parameter if the step has a viewType
 //     if (stepConfig?.viewType) {
-//       const currentQuery = { ...route.query }
+//       const currentQuery = { ...route.query };
 //       router.push({
 //         query: {
 //           ...currentQuery,
 //           viewType: stepConfig.viewType
 //         }
-//       })
+//       });
 //     }
-//   })
+//   });
 
 //   intro.setOptions({
 //     steps: filteredSteps,
@@ -1431,9 +1481,9 @@ const startTour = () => {
 //     showStepNumbers: true,
 //     tooltipClass: 'global-tooltip-class',
 //     width: 400
-//   })
-//   .start()
-// }
+//   }).start();
+// };
+
 
 // Watch for route changes to ensure UI updates accordingly
 watch(
