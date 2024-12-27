@@ -24,7 +24,6 @@ export default {
       ]
     },
   },
-
   modules: ["@nuxtjs/tailwindcss"],
   css: ["/assets/css/main.css",  'intro.js/minified/introjs.min.css'],
 
@@ -36,7 +35,7 @@ export default {
   },
   runtimeConfig: {
     public: {
-      googleMapsApiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg'
+      googleMapsApiKey: 'AIzaSyCBguFgxPOH6AuAiz0ZXXoo_fJAp4AR8WE'
     }
   },
 
@@ -45,7 +44,7 @@ export default {
     timeout: 10000, // Example: set timeout to 10 seconds
   },
 
-  plugins: ['~/plugins/intro.client.ts', '~/plugins/dayjs.ts', '~/plugins/google-maps.client.ts'],
+  plugins: ['~/plugins/google-maps.client.ts', '~/plugins/intro.client.ts', '~/plugins/dayjs.ts'],
 
   vite: {
     optimizeDeps: {

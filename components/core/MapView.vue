@@ -1,6 +1,7 @@
 <template>
   <div class="relative w-screen h-screen">
-    <div
+    <!-- {{ searchResults }} -->
+   <div
       class="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-xl px-4"
     >
       <div class="relative flex">
@@ -9,7 +10,7 @@
             v-model="searchQuery"
             type="text"
             placeholder="Search properties by name..."
-            class="w-full px-4 py-3 shadow-lg pl-10 text-sm rounded-lg border border-gray-100"
+            class="w-full px-4 py-3 shadow-lg outline-none pl-10 text-sm rounded-lg border border-gray-100"
           />
           <svg
             class="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
@@ -143,6 +144,12 @@
     <div ref="mapContainer" class="w-full h-full"></div>
   </div>
 
+  <!-- <CoreFullScreenLoader
+      :visible="loadingSearch"
+      text="Searching properties..."
+      logo=""
+  /> -->
+
   <CoreModal :isOpen="isSearchSuccessful" @close="successModal = false">
     <div class="p-6 rounded-lg w-5/12 relative" @click.stop>
       <div
@@ -223,6 +230,7 @@
 
 <script setup lang="ts">
 import moment from "moment";
+import { useGoogleMaps } from '@/composables/core/useGoogleMaps'
 import { ref, computed, watch, onMounted } from "vue";
 import { useGetProperties } from "@/composables/modules/property/fetchProperties";
 import { useSaveSearch } from "@/composables/modules/property/useSaveSearch";
@@ -235,6 +243,7 @@ const activeProperty = ref<Property | null>(null);
 const activeInfoWindow = ref<google.maps.InfoWindow | null>(null);
 const router = useRouter();
 const openFilter = ref(false);
+const { loadGoogleMapsApi } = useGoogleMaps()
 
 const {
   propertiesList,
@@ -512,6 +521,11 @@ const LAGOS_CAMERA_POSITION = {
 const initializeMap = async () => {
   try {
     await $loadGoogleMapsApi();
+    // await loadGoogleMapsApi()
+
+    if (!window.google?.maps) {
+      throw new Error('Google Maps failed to load');
+    }
 
     // Set coordinates directly to Lagos
     const coordinates = LAGOS_COORDINATES;

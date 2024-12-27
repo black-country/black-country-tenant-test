@@ -10,7 +10,7 @@
       <path d="M10.3337 7.33333C10.3337 8.622 9.28899 9.66667 8.00033 9.66667C6.71166 9.66667 5.66699 8.622 5.66699 7.33333C5.66699 6.04467 6.71166 5 8.00033 5C9.28899 5 10.3337 6.04467 10.3337 7.33333Z" fill="white" stroke="#5B8469"/>
       </svg>
 
-            {{ property?.description ?? 'Nil' }}</p>
+            {{ property?.address ?? 'Nil' }}</p>
       </div>
      <div class="flex flex-col lg:flex-row gap-6">
   

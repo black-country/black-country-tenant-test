@@ -14,12 +14,14 @@
           >
             <div class="h-full px-4 py-8 bg-[url('@/assets/img/authBg.png')] bg-black/90 bg-cover">
               <div class="flex flex-col h-full justify-between">
-                <div class="mt-8">
-                  <div v-if="index === 0" class="">
+                <div class="">
+                  <div v-if="index === 0" class="h-70">
                     <img :src="slide.propertyCard.image" alt="Property" class="" />
                   </div>
-                  <div v-else class="flex justify-center items-center flex-col mt-32">
-                    <img :src="slide.propertyCard.image" alt="Property" class="pb-3" />
+                  <div v-else class="flex justify-center items-center flex-col ">
+                    <div class="">
+                      <img :src="slide.propertyCard.image" alt="Property" class="pb-3" />
+                    </div>
                     <h2 v-if="slide?.text" class="text-xl font-semibold text-white mb-2">
                       {{ slide?.text }}
                     </h2>
@@ -45,15 +47,19 @@
   
                   <!-- Action Buttons -->
                   <div class="space-y-3 px-2 lg:px-4">
-                    <button @click="router.push('/login')" class="w-full py-4 text-white bg-[#292929] text-sm rounded-lg font-medium">
-                      Let's get you started
-                    </button>
-                    <button @click="router.push('/login')" class="w-full py-4 bg-[#EBE5E0] text-[#1D192B] text-sm rounded-lg font-medium">
-                      Login
-                    </button>
+                      <div>
+                        <button @click="router.push('/login')" class="w-full py-4 text-white bg-[#292929] text-sm rounded-lg font-medium">
+                              Let's get you started
+                            </button>
+                      </div>
+                    <div>
+                      <button @click="router.push('/login')" class="w-full py-4 bg-[#EBE5E0] text-[#1D192B] text-sm rounded-lg font-medium">
+                              Login
+                            </button>
+                    </div>
                     <div class="flex items-center justify-center gap-2 pt-4 text-sm">
                       <span class="text-white">Explore Listings without signing up</span>
-                      <NuxtLink to="/dashboard/listings" class="text-[#5B8469] font-semibold">Explore</NuxtLink>
+                      <button @click="router.push('/dashboard/listings')" class="text-[#5B8469] font-semibold">Explore</button>
                     </div>
                   </div>
                 </div>

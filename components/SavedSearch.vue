@@ -1,6 +1,6 @@
 <template>
        <div
-       class="container mx-auto pb-10 space-y-6 lg:space-y-0 lg:flex flex-wrap gap-7"
+       class="container mx-auto pb-10 space-y-6 p-4 lg:p-0 lg:space-y-0 lg:flex flex-wrap gap-7"
      >
        <div
          v-if="!loading && propertiesList.length"

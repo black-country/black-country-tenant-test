@@ -1,6 +1,8 @@
 import { ref, onMounted, watch } from 'vue'
 import { property_api } from '@/api_factory/modules/property'
 import { debounce } from 'lodash'
+import { useCustomToast } from '@/composables/core/useCustomToast'
+const { showToast } = useCustomToast();
 import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
 
 export const useGetProperties = () => {
@@ -53,11 +55,20 @@ export const useGetProperties = () => {
 
         // Perform search operation with the current search query
         const res = await $_fetch_properties(1, perPage.value, searchQuery.value) as any // Always start from page 1 for search
-
-        if (res.type !== 'ERROR') {
+        console.log(res, 'search results')
+        if (res.status == 200) {
             let results = res?.data?.result ?? [];
             searchResults.value = sortProperties(results); // Sort search results before setting them
+            // propertiesList.value = sortProperties(results);
             loadingSearch.value = false // Reset loading state
+            if(results.length == 0){
+                showToast({
+                    title: "Success",
+                    message: 'No search result found',
+                    toastType: "success",
+                    duration: 3000
+                  });
+            }
         }
         loadingSearch.value = false // Reset loading state
     }
