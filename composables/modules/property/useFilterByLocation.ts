@@ -3,7 +3,7 @@ import { property_api } from '@/api_factory/modules/property';
 
 export const useFetchPropertiesByLocation = () => {
     const loading = ref(false);
-    const propertiesList = ref([] as any);
+    const propertyLocation = ref([] as any);
     const error = ref(null) as Record<string, any>
     const userLocation = ref({
         latitude: null,
@@ -43,8 +43,10 @@ export const useFetchPropertiesByLocation = () => {
                 userLocation.value.latitude
             ) as any;
 
+            console.log(res, 'rse here')
+
             if (res.type !== 'ERROR') {
-                propertiesList.value = res?.data?.result ?? [];
+                propertyLocation.value = res?.data ?? [];
             } else {
                 error.value = 'Error fetching properties.';
             }
@@ -61,7 +63,7 @@ export const useFetchPropertiesByLocation = () => {
 
     return {
         loading,
-        propertiesList,
+        propertyLocation,
         fetchPropertiesByLocation,
         error,
         userLocation

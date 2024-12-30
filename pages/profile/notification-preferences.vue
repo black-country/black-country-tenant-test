@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-2xl mx-auto p-3 lg:p-4 space-y-6">
+  <div class="max-w-2xl mx-auto p-3 -mt-10 lg:p-4 space-y-6">
     <CoreGoBack />
     <h2 class="text font-medium text-gray-700">
       <NuxtLink to="/dashboard/profile" class="text-[#667185]">Profile </NuxtLink>|
@@ -9,7 +9,7 @@
       :label="formatLabel(key)" @change="handleToggle(key)" v-model="localNotificationSettings[key]"
       :loading="loading" />
     <section v-else="loading">
-      <div class="rounded-md p-4 w-full mx-auto mt-4">
+      <div class="rounded-md w-full mx-auto mt-4">
         <div class="animate-pulse h-60 bg-slate-200 flex space-x-4"></div>
       </div>
     </section>
@@ -20,9 +20,10 @@
 <script setup lang="ts">
 import { ref, onMounted, computed, watch } from 'vue'
 import { useFetchPreferences } from '@/composables/modules/settings/useGetPreferences'
-import { useSetPreferences } from '~/composables/modules/settings/useSetPreferences'
+import { useCreatePreferences } from '@/composables/modules/settings/useCreatePreference'
+// import { useCreatePreferences } from '@/composables/modules/settings/useCreatePreferences'
 
-const { setPreferences, loading, payload, setPayload } = useSetPreferences()
+const { createPreferences, loading, payload, setPayload } = useCreatePreferences()
 const { loading: fetchingPreferences, notificationOptions } = useFetchPreferences()
 
 definePageMeta({
@@ -59,7 +60,7 @@ const handleToggle = async (key: string) => {
     setPayload(updatedNotifications)
 
     // Call the API to save changes
-    await setPreferences()
+    await createPreferences()
   } catch (error) {
     // If the API call fails, revert the local state
     localNotificationSettings.value[key] = !localNotificationSettings.value[key]

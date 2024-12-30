@@ -668,7 +668,7 @@
         </div>
 
 
-        <div class="flex gap-x-4 relative overflow-x-auto pb-1 no-scrollbar">
+        <!-- <div class="flex gap-x-4 relative overflow-x-auto pb-1 no-scrollbar">
           <button
             v-for="tab in tabs"
             :key="tab.id"
@@ -697,86 +697,72 @@
               </svg>
             </span>
           </button>
-          <!-- <div
-                v-if="isDropdownOpen"
-                class="absolute mt-2 shadow-lg z-[999999] bg-white rounded-md w-full"
+        </div> -->
+        <!-- <div class="flex gap-x-4 relative overflow-x-auto pb-1 no-scrollbar">
+        <nav class="-mb-px flex space-x-8" aria-label="Property Locations">
+          <button
+            v-for="tab in computedTabs"
+            :key="tab.id"
+            :class="[
+              'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap',
+              activeTab === tab.id ? 'bg-[#5B8469] text-white' : 'text-gray-600',
+            ]"
+            @click="handleTabClick(tab.id)"
+          >
+          <span class="flex items-center gap-x-1">
+              {{ tab.name }}
+              <svg
+                v-if="tab.hasDropdown"
+                class="w-4 h-4"
+                viewBox="0 0 23 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <ul class="">
-                  <li
-                    v-for="option in sortOptions"
-                    :key="option.value"
-                    @click="selectOption(option)"
-                    class="px-3 py-3 cursor-pointer flex justify-between items-center"
-                  >
-                    <span class="text-sm text-[#1D2739]">{{
-                      option.label
-                    }}</span>
-                    <svg
-                      v-if="selectedOption.value === option.value"
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        x="0.5"
-                        y="0.5"
-                        width="19"
-                        height="19"
-                        rx="9.5"
-                        fill="#099137"
-                      />
-                      <rect
-                        x="0.5"
-                        y="0.5"
-                        width="19"
-                        height="19"
-                        rx="9.5"
-                        stroke="#099137"
-                      />
-                      <path
-                        d="M14.6663 6.5L8.24967 12.9167L5.33301 10"
-                        stroke="white"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
-                    <svg
-                      v-else
-                      width="20"
-                      height="20"
-                      viewBox="0 0 20 20"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <rect
-                        x="0.5"
-                        y="0.5"
-                        width="19"
-                        height="19"
-                        rx="9.5"
-                        fill="#F9FAFB"
-                      />
-                      <rect
-                        x="0.5"
-                        y="0.5"
-                        width="19"
-                        height="19"
-                        rx="9.5"
-                        stroke="#D0D5DD"
-                      />
-                    </svg>
-                  </li>
-                </ul>
-              </div>
-              <div
-                v-if="isDropdownOpen"
-                class="fixed inset-0 bg-black bg-opacity-50 z-[]"
-                @click="closeDropdown"
-              ></div> -->
-        </div>
+                <path
+                  d="M20.8158 2.17927C20.8158 2.17927 14.1183 11.2731 11.7219 11.2731C9.32531 11.2731 2.62793 2.1792 2.62793 2.1792"
+                  stroke="#1D2739"
+                  stroke-width="3.41022"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
+          </button>
+        </nav>
+      </div> -->
+      <div class="flex gap-x-4 relative overflow-x-auto pb-1 no-scrollbar">
+  <nav class="-mb-px flex space-x-8" aria-label="Property Locations">
+    <button
+      v-for="tab in computedTabs"
+      :key="tab.id"
+      :class="[
+        'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap',
+        activeTab === tab.id ? 'bg-[#5B8469] text-white' : 'text-gray-600',
+      ]"
+      @click="handleTabClick(tab.id)"
+    >
+      <span class="flex items-center gap-x-1">
+        {{ tab.name }}
+        <svg
+          v-if="tab.hasDropdown"
+          class="w-4 h-4"
+          viewBox="0 0 23 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M20.8158 2.17927C20.8158 2.17927 14.1183 11.2731 11.7219 11.2731C9.32531 11.2731 2.62793 2.1792 2.62793 2.1792"
+            stroke="#1D2739"
+            stroke-width="3.41022"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </button>
+  </nav>
+</div>
+
       </div>
 
     <section v-if="viewType === 'grid'">
@@ -1091,7 +1077,146 @@
       <div
         class="hidden lg:flex items-center space-y-6 lg:space-y-0 lg:space-x-4 p-4 bg-white container mx-auto"
       >
-        <div
+      <div
+  ref="navigationBarRef"
+  class="lg:flex space-y-4 lg:space-y-0 lg:space-x-2 justify-between lg:justify-start"
+>
+  <!-- Default "All" Tab -->
+  <button
+    @click="setLocationTab('all')"
+    :class="[
+      locationTab === 'all'
+        ? 'bg-[#5B8469] text-white'
+        : 'bg-[#F0F2F5] text-[#1A1A1A]',
+    ]"
+    class="text-sm w-full px-6 py-2.5 rounded-md"
+  >
+    All
+  </button>
+
+  <!-- Dynamically Generated Tabs -->
+  <button
+    v-for="location in propertyLocation"
+    :key="location.id"
+    @click="setLocationTab(location.id)"
+    :class="[
+      locationTab === location.id
+        ? 'bg-[#5B8469] text-white'
+        : 'bg-[#F0F2F5] text-[#1A1A1A]',
+    ]"
+    class="text-sm w-full px-4 py-2.5 rounded-md"
+  >
+    {{ location.name }}
+  </button>
+
+  <!-- Dropdown for Sorting Options -->
+  <div class="relative z-10 w-full">
+    <div class="relative inline-block z-50 w-full">
+      <button
+        @click="toggleDropdown"
+        class="px-4 py-2.5 bg-[#F0F2F5] text-gray-800 rounded-md flex items-center justify-between w-full lg:w-64"
+      >
+        <span class="text-sm">{{
+          selectedOption ? selectedOption.label : "Newest Listing"
+        }}</span>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          viewBox="0 0 20 20"
+          fill="currentColor"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 011.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+            clip-rule="evenodd"
+          />
+        </svg>
+      </button>
+
+      <div
+        v-if="isDropdownOpen"
+        class="absolute mt-2 shadow-lg bg-white rounded-md w-full z-10"
+      >
+        <ul>
+          <li
+            v-for="option in sortOptions"
+            :key="option.value"
+            @click="selectOption(option)"
+            class="px-3 py-3 cursor-pointer flex justify-between items-center"
+          >
+            <span class="text-sm text-[#1D2739]">{{
+              option.label
+            }}</span>
+            <svg
+              v-if="selectedOption.value === option.value"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.5"
+                y="0.5"
+                width="19"
+                height="19"
+                rx="9.5"
+                fill="#099137"
+              />
+              <rect
+                x="0.5"
+                y="0.5"
+                width="19"
+                height="19"
+                rx="9.5"
+                stroke="#099137"
+              />
+              <path
+                d="M14.6663 6.5L8.24967 12.9167L5.33301 10"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <svg
+              v-else
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.5"
+                y="0.5"
+                width="19"
+                height="19"
+                rx="9.5"
+                fill="#F9FAFB"
+              />
+              <rect
+                x="0.5"
+                y="0.5"
+                width="19"
+                height="19"
+                rx="9.5"
+                stroke="#D0D5DD"
+              />
+            </svg>
+          </li>
+        </ul>
+      </div>
+      <div
+        v-if="isDropdownOpen"
+        class="fixed inset-0 bg-black bg-opacity-50 z-0"
+        @click="closeDropdown"
+      ></div>
+    </div>
+  </div>
+</div>
+
+        <!-- <div
           ref="navigationBarRef"
           class="lg:flex space-y-4 lg:space-y-0 lg:space-x-2 justify-between lg:justify-start"
         >
@@ -1251,7 +1376,7 @@
               >
             </div>
           </div>
-        </div>
+        </div> -->
 
         <div class="flex-grow"></div>
         <div class="flex space-x-2 justify-between lg:justify-start">
@@ -2083,6 +2208,7 @@
 
 <script setup lang="ts">
   const { $introJs } = useNuxtApp()
+  import { useFetchPropertiesByLocation } from '@/composables/modules/property/useFilterByLocation'
   import { use_tenant_profile } from '@/composables/auth/fetchProfile'
   const { loading: fetchingProfile, profileObj } = use_tenant_profile()
 import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
@@ -2097,6 +2223,7 @@ import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
 import { useRouter, useRoute } from "vue-router";
 const { properties: filteredProperties, loading: filterProperties } = useFilterProperty()
+const { propertyLocation, loading: loadingPropertyLocation } = useFetchPropertiesByLocation()
 
 const router = useRouter();
 const isOpen = ref(false)
@@ -2112,15 +2239,96 @@ interface Tab {
   hasDropdown?: boolean;
 }
 
-const tabs: Tab[] = [
+// const tabs: Tab[] = [
+//   { id: "all", name: "All" },
+//   { id: "mainland", name: "Mainland" },
+//   { id: "ireland", name: "Ireland" },
+//   { id: "new", name: "New Listings", hasDropdown: true },
+// ];
+
+interface Tab {
+  id: string;
+  name: string;
+  hasDropdown?: boolean;
+}
+
+interface PropertyLocation {
+  id: string;
+  stateId: string;
+  name: string;
+  latitude: string;
+  longitude: string;
+}
+
+// Set default static tabs
+
+const staticTabs = ref([
   { id: "all", name: "All" },
-  { id: "mainland", name: "Mainland" },
-  { id: "ireland", name: "Ireland" },
   { id: "new", name: "New Listings", hasDropdown: true },
-];
+])
+
+// Compute final tabs array by combining static and dynamic tabs
+const computedTabs = computed(() => {
+  if (!propertyLocation.value || propertyLocation.value.length === 0) {
+    return staticTabs.value;
+  }
+
+  // Insert dynamic location tabs before the "New Listings" tab
+  const locationTabs = propertyLocation.value.map((location: PropertyLocation) => ({
+    id: location.id,
+    name: location.name
+  }));
+
+  return [
+    staticTabs.value[0],
+    ...locationTabs,
+    staticTabs.value[1]
+  ]
+});
+
+// // Get active tab from route query or default to 'all'
+// const activeTab = computed(() => route.query.tab as string || 'all');
+
+// // Handle tab click
+// const handleTabClick = async (tabId: string) => {
+//   // Check if tabId is not "new" or "all"
+//   if (tabId !== 'new' && tabId !== 'all') {
+//     await router.push({
+//       query: {
+//         ...route.query,
+//         segmentId: tabId
+//       }
+//     });
+//   }
+// };
+
+   // Get active tab from route query or default to 'all'
+   const activeTab = computed(() => {
+      return route.query.tab as string || 'all';
+    });
+
+    // Handle tab click
+    const handleTabClick = async (tabId: string) => {
+      // Check if tabId is not "new" or "all"
+      if (tabId !== 'new' && tabId !== 'all') {
+        await router.push({
+          query: {
+            ...route.query,
+            tab: tabId, // Update the tab query
+          },
+        });
+      } else {
+        // Remove the tab query if tabId is "new" or "all"
+        const { tab, ...remainingQuery } = route.query;
+        await router.push({
+          query: remainingQuery,
+        });
+      }
+    };
+
 
 // const searchQuery = ref("");
-const activeTab = ref("all");
+// const activeTab = ref("all");
 
 
 const showFilterDrawer = ref(false)
@@ -2170,6 +2378,22 @@ const {
 } = useGetProperties();
 
 const locationTab = ref("all");
+
+const setLocationTab = (locationId: string) => {
+  console.log(locationId, 'hgdfgf')
+  locationTab.value = locationId;
+  // sortBy.value
+  router.push({
+    query: {
+      ...router.currentRoute.value.query,
+      tab: locationId === 'all' ? undefined : locationId, // Pass locationId, or remove it if "all"
+    },
+  });
+};
+
+
+// const isDropdownOpen = ref(false);
+// const selectedOption = ref(null);
 
 // Set default view based on the query parameter ('grid' or 'map')
 const viewType = ref(route.query.view || "grid"); // default to 'grid' if no view query parameter
@@ -2333,11 +2557,15 @@ onMounted(() => {
 
 // Dropdown options
 const sortOptions = ref([
-  { value: "all", label: "All" },
-  { value: "newest", label: "New Listings" },
-  { value: "oldest", label: "Oldest Listings" },
-  { value: "low-to-high", label: "Lowest price to highest price" },
-  { value: "high-to-low", label: "Highest price to Lowest price" },
+  // { value: "all", label: "All" },
+  // { value: "newest", label: "New Listings" },
+  // { value: "oldest", label: "Oldest Listings" },
+  // { value: "low-to-high", label: "Lowest price to highest price" },
+  // { value: "high-to-low", label: "Highest price to Lowest price" },
+  { value: 'newest', label: 'Newest Listing' },
+  { value: 'oldest', label: 'Oldest Listing' },
+  { value: 'lowToHigh', label: 'Lowest price to highest price' },
+  { value: 'highToLow', label: 'Highest price to Lowest price' },
 ]);
 
 const isDropdownOpen = ref(false);
@@ -2352,30 +2580,37 @@ const closeDropdown = () => {
 };
 
 const selectOption = (option: any) => {
+  // console.log(option, 'fghjk')
+  sortBy.value = option
   selectedOption.value = option;
-  console.log(option.value, "selecetd option");
-
-  if (option.value === "all") {
-    sortBy.value = "all";
-  }
-
-  if (option.value === "newest") {
-    sortBy.value = "newest";
-  }
-
-  if (option.value === "oldest") {
-    sortBy.value = "oldest";
-  }
-
-  if (option.value === "low-to-high") {
-    sortBy.value = "lowToHigh";
-  }
-
-  if (option.value === "high-to-low") {
-    sortBy.value = "highToLow";
-  }
   closeDropdown();
 };
+
+// const selectOption = (option: any) => {
+//   selectedOption.value = option;
+//   console.log(option.value, "selecetd option");
+
+//   if (option.value === "all") {
+//     sortBy.value = "all";
+//   }
+
+//   if (option.value === "newest") {
+//     sortBy.value = "newest";
+//   }
+
+//   if (option.value === "oldest") {
+//     sortBy.value = "oldest";
+//   }
+
+//   if (option.value === "low-to-high") {
+//     sortBy.value = "lowToHigh";
+//   }
+
+//   if (option.value === "high-to-low") {
+//     sortBy.value = "highToLow";
+//   }
+//   closeDropdown();
+// };
 
 const startTour = () => {
   const tourSteps = [

@@ -31,6 +31,7 @@ export const useCreatePreferences = () => {
     }
 
     const setPayload = (data: any) => {
+        console.log(data, 'data here')
        payload.value.notifications = data.notifications
     }
 
