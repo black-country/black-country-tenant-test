@@ -10,7 +10,7 @@
             v-model="searchQuery"
             type="text"
             placeholder="Search properties by name..."
-            class="w-full px-4 py-3 shadow-lg outline-none pl-10 text-sm rounded-lg border border-gray-100"
+            class="w-full px-4 py-5 shadow-lg outline-none pl-10 text- rounded-lg border border-gray-100"
           />
           <svg
             class="absolute left-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-700"
@@ -46,7 +46,7 @@
         <div class="">
           <button
             @click="openFilter = true"
-            class="absolute shadow-lg right-6 text-[#1D2739] gapx-x-3 text-sm flex border-[0.5px] items-center bg-white top-1/2 px-6 rounded-lg py-3 text-white transform -translate-y-1/2 cursor-pointer"
+            class="absolute shadow-lg right-1 lg:right-6 text-[#1D2739] gapx-x-3 text-sm flex border-[0.5px] items-center bg-white top-1/2 px-6 rounded-lg py-6 text-white transform -translate-y-1/2 cursor-pointer"
           >
             <svg
               width="21"
@@ -120,7 +120,7 @@
               />
             </svg>
 
-            <span class="text-gray-800 font-semibold">Filter</span>
+            <span class="text-gray-800 font-semibol sr-only">Filter</span>
           </button>
         </div>
       </div>
@@ -209,6 +209,9 @@
 
   <CoreModal :isOpen="openFilter" @close="successModal = false">
     <section class="p-6 rounded-lg bg-white relative" @click.stop>
+      <div class="flex justify-end items-end mb-3">
+        <button type="button" @click="openFilter = false">X</button>
+      </div>
       <CoreFilterModal />
     </section>
   </CoreModal>

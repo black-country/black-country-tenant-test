@@ -1,13 +1,17 @@
 import { GATEWAY_ENDPOINT, GATEWAY_ENDPOINT_V2 } from "../axios.config";
 
 export const property_api = {
-$_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
+$_fetch_properties: (page = 1, perPage = 20, searchQuery = '', segmentId = '') => {
   let url = `/houses?page=${page}&perPage=${perPage}&status=published`
   
   // Add search query to the URL if provided
   if (searchQuery) {
       url += `&search=${searchQuery}`
   }
+
+  if (segmentId) {
+    url += `&segmentId=${segmentId}`
+}
 
   return GATEWAY_ENDPOINT.get(url)
 },
@@ -56,5 +60,13 @@ $_fetch_properties: (page = 1, perPage = 20, searchQuery = '') => {
     let url = '/saved-searches/clear'
     return GATEWAY_ENDPOINT.delete(url, payload)
   },
-  
+  //
+  $_mainlaind_island_property_filter: (originLongitude: string | any, originLatitude: string | any) => {
+    let url = `/utilities/location-segments?originLongitude=${originLongitude}&originLatitude=${originLatitude}`
+    return GATEWAY_ENDPOINT.get(url)
+  },
+  // $_fetch_properties_by_segment: (page = 1, perPage = 20, segmentId: string) => {
+  //   let url = `/houses?page=${page}&perPage=${perPage}&&segmentId=${segmentId}`
+  //   return GATEWAY_ENDPOINT.get(url)
+  // }
 };

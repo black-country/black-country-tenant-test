@@ -477,39 +477,28 @@
         </div>
 
         <div class="flex gap-x-2">
-          <div class="flex-1 relative">
+          <div class="relative w-full">
             <!-- <button @click="handleFilterClick">Click</button> -->
-            <input
-              v-model="searchQuery"
-              type="text"
-              placeholder="Search"
-              class="w-full pl-10 pr-4 py-4 bg-gray-100 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none"
-            />
-            <button @click="handleFilterClick">
-              <svg
-              class="absolute left-3 z-50 cursor-pointer top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500"
-              viewBox="0 0 37 37"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M26.5371 26.8794L33.3576 33.6998"
-                stroke="#667185"
-                stroke-width="3.41022"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-              <path
-                d="M30.3248 17.0281C30.3248 9.49445 24.2176 3.38721 16.6839 3.38721C9.15021 3.38721 3.04297 9.49445 3.04297 17.0281C3.04297 24.5618 9.15021 30.669 16.6839 30.669C24.2176 30.669 30.3248 24.5618 30.3248 17.0281Z"
-                stroke="#667185"
-                stroke-width="3.41022"
-                stroke-linejoin="round"
-              />
-            </svg>
-            </button>
-
-          </div>
-          <button class="p-2.5 bg-gray-100 rounded-lg">
+            <div class="mr-16 relative">
+              <input
+                  v-model="searchQuery"
+                  type="text"
+                  placeholder="Search"
+                  class="w-full pl-10 pr-4 py-4 bg-gray-50 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none"
+                />
+                <svg class="absolute left-3 top-5" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g clip-path="url(#clip0_5289_80284)">
+                  <path d="M14.582 14.584L18.332 18.334" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M16.668 9.16602C16.668 5.02388 13.3101 1.66602 9.16797 1.66602C5.02584 1.66602 1.66797 5.02388 1.66797 9.16602C1.66797 13.3082 5.02584 16.666 9.16797 16.666C13.3101 16.666 16.668 13.3082 16.668 9.16602Z" stroke="#1D2739" stroke-width="1.5" stroke-linejoin="round"/>
+                  </g>
+                  <defs>
+                  <clipPath id="clip0_5289_80284">
+                  <rect width="20" height="20" fill="white"/>
+                  </clipPath>
+                  </defs>
+                  </svg>
+            </div>
+            <button @click="showFilterDrawer = true" class="p-4 absolute right-1 top-0 bg-gray-100 rounded-md">
             <svg
               class="w-5 h-5 text-gray-700"
               viewBox="0 0 47 47"
@@ -580,7 +569,102 @@
                 stroke-linejoin="round"
               />
             </svg>
-          </button>
+            </button>
+            <!-- <button @click="showFilterDrawer = true">
+              <svg
+              class="absolute left-3 z-50 cursor-pointer top-1/2 -translate-y-1/2 w-5 h-5 text-gray-500"
+              viewBox="0 0 37 37"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M26.5371 26.8794L33.3576 33.6998"
+                stroke="#667185"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M30.3248 17.0281C30.3248 9.49445 24.2176 3.38721 16.6839 3.38721C9.15021 3.38721 3.04297 9.49445 3.04297 17.0281C3.04297 24.5618 9.15021 30.669 16.6839 30.669C24.2176 30.669 30.3248 24.5618 30.3248 17.0281Z"
+                stroke="#667185"
+                stroke-width="3.41022"
+                stroke-linejoin="round"
+              />
+            </svg>
+            </button> -->
+          </div>
+          <!-- <button class="p-2.5 bg-gray-100 rounded-lg">
+            <svg
+              class="w-5 h-5 text-gray-700"
+              viewBox="0 0 47 47"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M25.2406 8.38721H6.29492"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M21.4515 36.8057H6.29492"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M40.3976 36.8057H32.8193"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M40.3978 22.5967H21.4521"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M40.3966 8.38721H36.6074"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M10.0841 22.5967H6.29492"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M28.0821 4.59717C28.9648 4.59717 29.4062 4.59717 29.7544 4.74138C30.2186 4.93366 30.5875 5.3025 30.7798 5.76672C30.9239 6.11489 30.9239 6.55627 30.9239 7.43902V9.33359C30.9239 10.2163 30.9239 10.6577 30.7798 11.0059C30.5875 11.4701 30.2186 11.8389 29.7544 12.0312C29.4062 12.1754 28.9648 12.1754 28.0821 12.1754C27.1994 12.1754 26.758 12.1754 26.4098 12.0312C25.9456 11.8389 25.5767 11.4701 25.3844 11.0059C25.2402 10.6577 25.2402 10.2163 25.2402 9.33359V7.43902C25.2402 6.55627 25.2402 6.11489 25.3844 5.76672C25.5767 5.3025 25.9456 4.93366 26.4098 4.74138C26.758 4.59717 27.1994 4.59717 28.0821 4.59717Z"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M24.294 33.0161C25.1767 33.0161 25.6181 33.0161 25.9663 33.1603C26.4305 33.3526 26.7994 33.7215 26.9917 34.1856C27.1359 34.5339 27.1359 34.9753 27.1359 35.858V37.7525C27.1359 38.6352 27.1359 39.0766 26.9917 39.4249C26.7994 39.889 26.4305 40.2579 25.9663 40.4502C25.6181 40.5944 25.1767 40.5944 24.294 40.5944C23.4113 40.5944 22.9699 40.5944 22.6217 40.4502C22.1575 40.2579 21.7886 39.889 21.5963 39.4249C21.4521 39.0766 21.4521 38.6352 21.4521 37.7525V35.858C21.4521 34.9753 21.4521 34.5339 21.5963 34.1856C21.7886 33.7215 22.1575 33.3526 22.6217 33.1603C22.9699 33.0161 23.4113 33.0161 24.294 33.0161Z"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M18.6104 18.8066C19.4932 18.8066 19.9345 18.8066 20.2827 18.9509C20.7469 19.1431 21.1158 19.512 21.3081 19.9762C21.4523 20.3244 21.4523 20.7658 21.4523 21.6485V23.5431C21.4523 24.4257 21.4523 24.8672 21.3081 25.2154C21.1158 25.6796 20.7469 26.0484 20.2827 26.2407C19.9345 26.3849 19.4932 26.3849 18.6104 26.3849C17.7277 26.3849 17.2863 26.3849 16.9381 26.2407C16.4739 26.0484 16.105 25.6796 15.9128 25.2154C15.7686 24.8672 15.7686 24.4257 15.7686 23.5431V21.6485C15.7686 20.7658 15.7686 20.3244 15.9128 19.9762C16.105 19.512 16.4739 19.1431 16.9381 18.9509C17.2863 18.8066 17.7277 18.8066 18.6104 18.8066Z"
+                stroke="#1D2739"
+                stroke-width="3.41022"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button> -->
         </div>
 
 
@@ -613,7 +697,6 @@
               </svg>
             </span>
           </button>
-
           <!-- <div
                 v-if="isDropdownOpen"
                 class="absolute mt-2 shadow-lg z-[999999] bg-white rounded-md w-full"

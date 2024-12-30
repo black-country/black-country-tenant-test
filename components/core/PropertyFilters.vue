@@ -196,7 +196,7 @@
       </div>
     </div>
 
-    <section class="fixed w-[440px] bottom-0 bg-white right-0 flex justify-center items-center  z-[999999] px-4 py-3 border-t border-gray-100">
+    <section class="fixed w-full lg:w-[440px] bottom-0 bg-white right-0 flex justify-center items-center  z-[999999] px-4 py-3 border-t border-gray-100">
   <div id="footer" class="flex justify-between items-center items-center gap-x-6 mx-auto w-full">
     <button 
       @click="resetFilterOptions" 

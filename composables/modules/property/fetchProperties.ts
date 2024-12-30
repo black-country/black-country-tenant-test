@@ -11,6 +11,7 @@ export const useGetProperties = () => {
     const propertiesList = ref([] as any) // Array to hold all properties
     const searchResults = ref([] as any) // Array to hold search results
     const searchQuery = ref('')
+    const segmentId = ref('')
     const currentPage = ref(1)
     const perPage = ref(10000000)
     const totalPages = ref(1) // To store total pages
@@ -39,7 +40,7 @@ export const useGetProperties = () => {
         loadingProperties.value = true
 
         // Pass page, perPage, and searchQuery to the API factory
-        const res = await $_fetch_properties(currentPage.value, perPage.value, searchQuery.value) as any
+        const res = await $_fetch_properties(currentPage.value, perPage.value, searchQuery.value, segmentId.value) as any
 
         if (res.type !== 'ERROR') {
             let properties = res?.data?.result ?? [];
@@ -82,6 +83,11 @@ export const useGetProperties = () => {
         debouncedSearchProperties() // Call the debounced version
     })
 
+    watch(segmentId, () => {
+        currentPage.value = 1 // Reset to page 1 for new search
+        debouncedSearchProperties() // Call the debounced version
+    })
+
     watch(properties, (oldVal, newVal) => {
         propertiesList.value = newVal
     })
@@ -120,6 +126,7 @@ export const useGetProperties = () => {
         propertiesList,
         searchResults, // Expose search results
         searchQuery,
+        segmentId,
         currentPage,
         perPage,
         totalPages,
