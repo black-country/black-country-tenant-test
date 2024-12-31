@@ -1,6 +1,8 @@
 <template>
  <main>
-  <TopNavBar />
+  <div class="-ml-10">
+    <TopNavBar />
+  </div>
   <div  v-if="!loading && Object.keys(policiesList)?.length" class="lg:px-8 -mt-10 p-3 bg-gray-25 min-h-screen">
     <div class="max-w-3xl mx-auto">
       <svg

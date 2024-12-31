@@ -9,15 +9,15 @@
   
       <!-- Text Overlay -->
       <div class="absolute -bottom-10  text-white text-left w-full">
-        <div class="flex justify-center items-center flex-col">
-          <h2 class="text-3xl font-semibold text-center">{{ currentText.title }}</h2>
-          <p class="mt-2 text-center max-w-lg mx-auto">{{ currentText.description }}</p>
+        <div class="flex justify-center items-center flex-col -mt-32">
+          <h2 class="text-xl font-semibold text-center">{{ currentText.title }}</h2>
+          <p class="mt-2 text-center max-w-lg text-sm mx-auto">{{ currentText.description }}</p>
         </div>
       </div>
       
   
       <!-- Carousel Navigation Buttons -->
-      <div class="absolute -bottom-20 left-1/2 border rounded-full p-1.5 text-xs bg-white transform -translate-x-1/2 flex space-x-2">
+      <div class="absolute -bottom-8 left-1/2 border rounded-full p-1.5 text-xs bg-white transform -translate-x-1/2 flex space-x-2">
         <button
           v-for="(image, index) in images"
           :key="index"

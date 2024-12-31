@@ -141,7 +141,15 @@
       <span class="text-sm">Searching properties... {{ loadingSearch }}</span>
     </div>
 
-    <div ref="mapContainer" class="w-full h-full"></div>
+       <!-- No results message -->
+       <div v-if="showNoResults" class="absolute inset-0 flex items-center justify-center bg-gray-50">
+      <div class="text-center">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">No Properties Found</h3>
+        <p class="text-gray-600">Try adjusting your search criteria</p>
+      </div>
+    </div>
+
+    <div v-show="!showNoResults" ref="mapContainer" class="w-full h-full"></div>
   </div>
 
   <!-- <CoreFullScreenLoader
@@ -275,11 +283,22 @@ const filteredProperties = computed(() => {
 
 const saving = ref(false);
 
-// Handle clear search
+// // Handle clear search
+// const handleClearSearch = () => {
+//   clearSearch();
+//   if (map.value && propertiesList.value?.length) {
+//     createPropertyMarkers(propertiesList.value, map.value);
+//   }
+// };
+
+// Update handleClearSearch
 const handleClearSearch = () => {
   clearSearch();
   if (map.value && propertiesList.value?.length) {
     createPropertyMarkers(propertiesList.value, map.value);
+    // Reset to default Lagos view
+    map.value.setCenter(LAGOS_COORDINATES);
+    map.value.setZoom(12);
   }
 };
 
@@ -605,15 +624,29 @@ const initializeMap = async () => {
   }
 };
 
-// Watch for changes in search results
+// // Watch for changes in search results
+// watch(
+//   [searchResults, loadingSearch],
+//   ([newResults, isLoading], [oldResults, wasLoading]) => {
+//     if (!isLoading && wasLoading && map.value && newResults?.length) {
+//       createPropertyMarkers(newResults, map.value);
+//     }
+//   }
+// );
+
+// Update the watch for search results
 watch(
   [searchResults, loadingSearch],
   ([newResults, isLoading], [oldResults, wasLoading]) => {
-    if (!isLoading && wasLoading && map.value && newResults?.length) {
-      createPropertyMarkers(newResults, map.value);
+    if (!isLoading && wasLoading && map.value) {
+      if (newResults?.length) {
+        createPropertyMarkers(newResults, map.value);
+        fitMapToSearchResults(newResults);
+      }
     }
   }
 );
+
 
 // Watch for changes in filtered properties
 watch(
@@ -634,6 +667,46 @@ watch(saving, (newValue) => {
     );
   }
 });
+
+
+const showNoResults = computed(() => {
+  return searchQuery.value && searchResults.value && searchResults.value.length === 0;
+});
+
+// Update map bounds to fit search results
+const fitMapToSearchResults = (properties: Property[]) => {
+  if (!map.value || !properties.length) return;
+
+  const bounds = new google.maps.LatLngBounds();
+  properties.forEach(property => {
+    bounds.extend({
+      lat: property.coordinates.latitude,
+      lng: property.coordinates.longitude
+    });
+  });
+
+  map.value.fitBounds(bounds);
+
+  // Add some padding
+  const padded = new google.maps.LatLngBounds(
+    new google.maps.LatLng(
+      bounds.getSouthWest().lat() - 0.01,
+      bounds.getSouthWest().lng() - 0.01
+    ),
+    new google.maps.LatLng(
+      bounds.getNorthEast().lat() + 0.01,
+      bounds.getNorthEast().lng() + 0.01
+    )
+  );
+  map.value.fitBounds(padded);
+
+  // Set minimum zoom level
+  const zoom = map.value.getZoom();
+  if (zoom && zoom > 16) {
+    map.value.setZoom(16);
+  }
+};
+
 
 // Mount hook
 onMounted(() => {
