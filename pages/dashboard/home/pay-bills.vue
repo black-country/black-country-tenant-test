@@ -23,7 +23,7 @@
   
             <span class="ml-2 text-[#667185]">My Home | <span class="text-[#1D2739] font-medium">Pay bills</span></span>
     </div>
-    {{ billersList }}
+    <!-- {{ billersList }} -->
     <HomeElectricityBillForm :billersList="billersList"  />
     <!-- <HomeCableBillForm  /> -->
 </section>
