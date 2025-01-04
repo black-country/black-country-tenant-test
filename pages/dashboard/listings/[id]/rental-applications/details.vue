@@ -1,11 +1,10 @@
 <template>
   <main>
     <TopNavBar />
-    <section v-if="!loading">
-      <!-- {{propertyObj}} -->
+    <RentalApplication  />
+    <!-- <section v-if="!loading">
       <section class="px-4 lg:px-0">
         <div class="flex justify-between max-w-7xl mx-auto items-center pt-6">
-          <!-- Breadcrumb -->
           <div class="flex items-center space-x-4">
             <svg
               @click="router.back()"
@@ -34,9 +33,7 @@
             </h1>
           </div>
 
-          <!-- Action Icons -->
           <div class="flex items-center space-x-3">
-            <!-- Share Icon -->
             <button @click="showShareModal = true" class=" ">
               <svg
                 width="36"
@@ -69,9 +66,6 @@
               </svg>
             </button>
 
-            <!-- Favorite Icon -->
-            <!-- {{propertyObj}} -->
-            <!-- <CoreBookmark :property="propertyObj" /> -->
             <button @click="toggleLike" class="">
               <svg
                 v-if="propertyObj?.bookmarked"
@@ -119,7 +113,6 @@
       </section>
       <div class="max-w-7xl mx-auto pb-8">
         <section v-if="!loading">
-          <!-- <PropertyImageGallery :property="propertyObj" :images="propertyObj.images" /> -->
 
           <div class="max-w-7xl mx-auto py-8 p-4 lg:p-0 mt-6">
             <div class="relative">
@@ -136,31 +129,6 @@
                 class="w-full h-[500px] rounded-lg object-cover"
               />
 
-              <!-- <div class="absolute inset-x-0 bottom-5 mx-auto w-full max-w-xl flex justify-between bg-black bg-opacity-50 py-2 px-4 rounded-lg text-white">
-                <div v-for="(step, index) in steps" :key="index" class="flex flex-col items-center space-y-1">
-                  <div :class="[
-                    'w-8 h-8 flex items-center justify-center rounded-full border-2',
-                    step.status === 'completed' ? 'bg-[#5B8469] border-[#5B8469] text-white' : 'bg-[#D0D5DD] text-[#1D2739]',
-                    step.status === 'active' ? 'border-[#5B8469] bg-[#5B8469] text-white' : 'text-[#1D2739]'
-                  ]">
-                    <span>{{ index + 1 }}</span>
-                  </div>
-                  <p class="text-sm">{{ step.label }}</p>
-                </div>
-              </div> -->
-              <!-- <div class="absolute inset-x-0 bottom-5 mx-auto w-full max-w-xl flex justify-between bg-black bg-opacity-50 py-2 px-4 rounded-lg text-white">
-                <div v-for="(step, index) in steps" :key="index" class="flex flex-col items-center space-y-1">
-                  <div :class="[
-                    'w-8 h-8 flex items-center justify-center rounded-full border-2',
-                    step.progressKey === currentProgress ? 'bg-[#5B8469] border-[#5B8469] text-white' : 'bg-[#D0D5DD] text-[#1D2739]',
-                    step.status === 'completed' ? 'border-[#5B8469]' : '',
-                    step.status === 'active' ? 'border-[#5B8469]' : ''
-                  ]">
-                    <span>{{ index + 1 }}</span>
-                  </div>
-                  <p :class="{'text-[#5B8469]': step.progressKey === currentProgress, 'text-sm': true}">{{ step.label }}</p>
-                </div>
-              </div> -->
               <div
                 class="absolute inset-x-0 bottom-5 mx-auto w-full max-w-xl flex justify-between bg-black bg-opacity-50 py-2 px-4 rounded-lg text-white"
               >
@@ -194,157 +162,8 @@
                   </p>
                 </div>
               </div>
-
-              <!-- 
-              <div class="flex space-x-4 mt-4">
-                <button :disabled="!isCancelEnabled" class="bg-red-500 text-white px-4 py-2 rounded-lg" :class="{ 'opacity-50 cursor-not-allowed': !isCancelEnabled }">
-                  Cancel Application
-                </button>
-                <button :disabled="!isRescheduleEnabled" class="bg-blue-500 text-white px-4 py-2 rounded-lg" :class="{ 'opacity-50 cursor-not-allowed': !isRescheduleEnabled }">
-                  Reschedule
-                </button>
-                <button :disabled="!isSignAgreementEnabled" class="bg-green-500 text-white px-4 py-2 rounded-lg" :class="{ 'opacity-50 cursor-not-allowed': !isSignAgreementEnabled }">
-                  Sign Agreement
-                </button>
-                <button :disabled="!isMakePaymentEnabled" class="bg-purple-500 text-white px-4 py-2 rounded-lg" :class="{ 'opacity-50 cursor-not-allowed': !isMakePaymentEnabled }">
-                  Make Payment
-                </button>
-              </div> -->
             </div>
 
-            <!-- <div class="flex justify-around mt-8 px-20">
-              <div class="flex flex-col items-center">
-                <button class="p-4 rounded-lg  transition cursor-not-allowed">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="40" height="40" rx="8" fill="#292929"/>
-                      <path d="M13.668 20.1626C13.668 17.2578 13.668 15.8053 14.5027 14.9029C15.3375 14.0005 16.681 14.0005 19.368 14.0005H20.6346C23.3216 14.0005 24.6652 14.0005 25.4999 14.9029C26.3346 15.8053 26.3346 17.2578 26.3346 20.1626V20.505C26.3346 23.4099 26.3346 24.8623 25.4999 25.7648C24.6652 26.6672 23.3216 26.6672 20.6346 26.6672H19.368C16.681 26.6672 15.3375 26.6672 14.5027 25.7648C13.668 24.8623 13.668 23.4099 13.668 20.505V20.1626Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M14 17.3335H26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M14.3359 17.3335H25.6693" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M19.9957 20.667H20.0017M19.9957 23.3337H20.0017M22.6594 20.667H22.6654M17.332 20.667H17.338M17.332 23.3337H17.338" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M24 13.333V14.6663M16 13.333V14.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      
-                </button>
-                <p class="text-gray-500 mt-2 text-xs">Reschedule Tour</p>
-              </div>
-              <div v-if="route.query.type !== 'scheduled'" class="flex flex-col items-center">
-                <button class="p-4 rounded-lg  transition" @click="cancelApplication">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="40" height="40" rx="8" fill="#FBEAE9"/>
-                      <path d="M24.6654 15.3335L15.332 24.6668M15.332 15.3335L24.6654 24.6668" stroke="#BA110B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      </svg>
-                      
-                </button>
-                <p class="text-red-600 mt-2 text-xs">Cancel application</p>
-              </div>
-              <div v-else class="flex flex-col items-center">
-                <button class="p-4 rounded-lg  transition" @click="cancelApplication">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#292929"/>
-                    <path d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z" stroke="white" stroke-width="1.5"/>
-                    <path d="M19.666 20.3333L21.9993 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>  
-                </button>
-                <p class="text-[#1D2739] mt-2 text-xs">Apply</p>
-              </div>
-              <div class="flex flex-col items-center">
-                <button @click="router.push(`/dashboard/listings/${route.params.id}/rental-applications/lease-agreement`)" class="p-4 rounded-lg  transition">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="40" height="40" rx="8" fill="#292929"/>
-                      <path d="M22.8081 15.3221L23.7426 14.3876C24.2587 13.8715 25.0955 13.8715 25.6116 14.3876C26.1277 14.9037 26.1277 15.7405 25.6116 16.2566L24.6771 17.1911M22.8081 15.3221L19.3188 18.8114C18.622 19.5082 18.2735 19.8566 18.0363 20.2812C17.799 20.7058 17.5603 21.7084 17.332 22.6672C18.2908 22.4389 19.2934 22.2002 19.718 21.9629C20.1426 21.7256 20.491 21.3772 21.1878 20.6804L24.6771 17.1911M22.8081 15.3221L24.6771 17.1911" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M26 20.0005C26 22.8289 26 24.2432 25.1213 25.1218C24.2427 26.0005 22.8284 26.0005 20 26.0005C17.1716 26.0005 15.7574 26.0005 14.8787 25.1218C14 24.2432 14 22.8289 14 20.0005C14 17.1721 14 15.7578 14.8787 14.8792C15.7574 14.0005 17.1716 14.0005 20 14.0005" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
-                      </svg>
-                      
-                </button>
-                <p class="text-gray-500 mt-2 text-xs">Sign agreement</p>
-              </div>
-              <div class="flex flex-col items-center">
-                <button @click="showPaymentModal = true" class="p-4 rounded-lg  transition cursor-not-allowed">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <rect width="40" height="40" rx="8" fill="#292929"/>
-                      <path d="M21.6693 20.0002C21.6693 20.9206 20.9231 21.6668 20.0026 21.6668C19.0821 21.6668 18.3359 20.9206 18.3359 20.0002C18.3359 19.0797 19.0821 18.3335 20.0026 18.3335C20.9231 18.3335 21.6693 19.0797 21.6693 20.0002Z" stroke="white" stroke-width="1.5"/>
-                      <path d="M24.6654 19.4281C24.4486 19.3967 24.226 19.3729 23.9987 19.3569M15.9987 20.644C15.7713 20.6281 15.5488 20.6042 15.332 20.5728" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                      <path d="M19.9987 25.0002C19.1104 25.4151 17.9434 25.6668 16.6654 25.6668C15.9548 25.6668 15.2785 25.589 14.6654 25.4486C13.6651 25.2194 13.332 24.6178 13.332 23.5908V16.4095C13.332 15.7529 14.0254 15.302 14.6654 15.4486C15.2785 15.589 15.9548 15.6668 16.6654 15.6668C17.9434 15.6668 19.1104 15.4151 19.9987 15.0002C20.887 14.5853 22.054 14.3335 23.332 14.3335C24.0426 14.3335 24.7189 14.4113 25.332 14.5518C26.3865 14.7933 26.6654 15.4137 26.6654 16.4095V23.5908C26.6654 24.2474 25.972 24.6984 25.332 24.5518C24.7189 24.4113 24.0426 24.3335 23.332 24.3335C22.054 24.3335 20.887 24.5852 19.9987 25.0002Z" stroke="white" stroke-width="1.5"/>
-                      </svg>
-                      
-                </button>
-                <p class="text-gray-500 mt-2 text-xs">Make payment</p>
-              </div>
-            </div> -->
-            <!-- <div class="flex justify-around mt-8 px-20">
-              <div class="flex flex-col items-center">
-                <button 
-                  class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50': currentProgress !== 'application-sent',
-                    'bg-gray-500': currentProgress !== 'application-sent',
-                    'bg-[#5B8469]': currentProgress === 'application-sent'
-                  }"
-                  :disabled="currentProgress !== 'application-sent'"
-                  @click="rescheduleTour">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#292929"/>
-                    <path d="M13.668 20.1626C13.668 17.2578 13.668 15.8053 14.5027 14.9029C15.3375 14.0005 16.681 14.0005 19.368 14.0005H20.6346C23.3216 14.0005 24.6652 14.0005 25.4999 14.9029C26.3346 15.8053 26.3346 17.2578 26.3346 20.1626V20.505C26.3346 23.4099 26.3346 24.8623 25.4999 25.7648C24.6652 26.6672 23.3216 26.6672 20.6346 26.6672H19.368C16.681 26.6672 15.3375 26.6672 14.5027 25.7648C13.668 24.8623 13.668 23.4099 13.668 20.505V20.1626Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M14 17.3335H26" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M14.3359 17.3335H25.6693" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M19.9957 20.667H20.0017M19.9957 23.3337H20.0017M22.6594 20.667H22.6654M17.332 20.667H17.338M17.332 23.3337H17.338" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M24 13.333V14.6663M16 13.333V14.6663" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <p class="text-gray-500 mt-2 text-xs">Reschedule Tour</p>
-              </div>
-              
-              <div v-if="currentProgress === 'application-sent'" class="flex flex-col items-center">
-                <button 
-                  class="rounded-lg transition bg-red-500 text-white"
-                  @click="cancelApplication">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#FBEAE9"/>
-                    <path d="M24.6654 15.3335L15.332 24.6668M15.332 15.3335L24.6654 24.6668" stroke="#BA110B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-                <p class="text-red-600 mt-2 text-xs">Cancel application</p>
-              </div>
-              
-              <div class="flex flex-col items-center">
-                <button 
-                  class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50': currentProgress !== 'agreement-signed',
-                    'bg-[#5B8469]': currentProgress === 'agreement-signed',
-                    'bg-gray-500': currentProgress !== 'agreement-signed'
-                  }"
-                  :disabled="currentProgress !== 'agreement-signed'"
-                  @click="signAgreement">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#292929"/>
-                    <path d="M26.0311 14.0356C24.5791 12.4719 13.657 16.3025 13.666 17.701C13.6762 19.2869 17.9314 19.7748 19.1108 20.1057C19.8201 20.3047 20.01 20.5087 20.1735 21.2524C20.9142 24.6207 21.2861 26.296 22.1336 26.3334C23.4845 26.3931 27.4482 15.5617 26.0311 14.0356Z" stroke="white" stroke-width="1.5"/>
-                    <path d="M19.666 20.3333L21.9993 18" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>  
-                </button>
-                <p class="text-gray-500 mt-2 text-xs">Sign Agreement</p>
-              </div>
-              
-              <div class="flex flex-col items-center">
-                <button 
-                  class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50': currentProgress !== 'payment-made',
-                    'bg-[#5B8469]': currentProgress === 'payment-made',
-                    'bg-gray-500': currentProgress !== 'payment-made'
-                  }"
-                  :disabled="currentProgress !== 'payment-made'"
-                  @click="showPaymentModal = true">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#292929"/>
-                    <path d="M21.6693 20.0002C21.6693 20.9206 20.9231 21.6668 20.0026 21.6668C19.0821 21.6668 18.3359 20.9206 18.3359 20.0002C18.3359 19.0797 19.0821 18.3335 20.0026 18.3335C20.9231 18.3335 21.6693 19.0797 21.6693 20.0002Z" stroke="white" stroke-width="1.5"/>
-                    <path d="M24.6654 19.4281C24.4486 19.3967 24.226 19.3729 23.9987 19.3569M15.9987 20.644C15.7713 20.6281 15.5488 20.6042 15.332 20.5728" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M19.9987 25.0002C19.1104 25.4151 17.9434 25.6668 16.6654 25.6668C15.9548 25.6668 15.2785 25.589 14.6654 25.4486C13.6651 25.2194 13.332 24.6178 13.332 23.5908V16.4095C13.332 15.7529 14.0254 15.302 14.6654 15.4486C15.2785 15.589 15.9548 15.6668 16.6654 15.6668C17.9434 15.6668 19.1104 15.4151 19.9987 15.0002C20.887 14.5853 22.054 14.3335 23.332 14.3335C24.0426 14.3335 24.7189 14.4113 25.332 14.5518C26.3865 14.7933 26.6654 15.4137 26.6654 16.4095V23.5908C26.6654 24.2474 25.972 24.6984 25.332 24.5518C24.7189 24.4113 24.0426 24.3335 23.332 24.3335C22.054 24.3335 20.887 24.5852 19.9987 25.0002Z" stroke="white" stroke-width="1.5"/>
-                    </svg>
-                </button>
-                <p class="text-gray-500 mt-2 text-xs">Make Payment</p>
-              </div>
-            </div> -->
             <div class="flex justify-around mt-8 gap-x-2 lg:px-20">
               <div class="flex flex-col items-center">
                 <button
@@ -440,26 +259,7 @@
               </div>
 
               <div class="flex flex-col items-center">
-                <!-- <button 
-                  class="rounded-lg transition"
-                  :class="{
-                    'cursor-not-allowed opacity-50': 
-                      steps.findIndex(s => s.progressKey === 'payment-made') <= steps.findIndex(s => s.progressKey === currentProgress) || 
-                      !propertyObj?.rentalApplication?.leaseAgreement,
-                    'bg-[#5B8469]': currentProgress === 'payment-made' && propertyObj?.rentalApplication?.leaseAgreement,
-                    'bg-gray-500': currentProgress !== 'payment-made' || !propertyObj?.rentalApplication?.leaseAgreement
-                  }"
-                  :disabled="steps.findIndex(s => s.progressKey === 'agreement-signed') <= steps.findIndex(s => s.progressKey === currentProgress) || 
-                    !propertyObj?.rentalApplication?.leaseAgreement"
-                  @click="showPaymentModal = true">
-                  <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect width="40" height="40" rx="8" fill="#292929"/>
-                    <path d="M21.6693 20.0002C21.6693 20.9206 20.9231 21.6668 20.0026 21.6668C19.0821 21.6668 18.3359 20.9206 18.3359 20.0002C18.3359 19.0797 19.0821 18.3335 20.0026 18.3335C20.9231 18.3335 21.6693 19.0797 21.6693 20.0002Z" stroke="white" stroke-width="1.5"/>
-                    <path d="M24.6654 19.4281C24.4486 19.3967 24.226 19.3729 23.9987 19.3569M15.9987 20.644C15.7713 20.6281 15.5488 20.6042 15.332 20.5728" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    <path d="M19.9987 25.0002C19.1104 25.4151 17.9434 25.6668 16.6654 25.6668C15.9548 25.6668 15.2785 25.589 14.6654 25.4486C13.6651 25.2194 13.332 24.6178 13.332 23.5908V16.4095C13.332 15.7529 14.0254 15.302 14.6654 15.4486C15.2785 15.589 15.9548 15.6668 16.6654 15.6668C17.9434 15.6668 19.1104 15.4151 19.9987 15.0002C20.887 14.5853 22.054 14.3335 23.332 14.3335C24.0426 14.3335 24.7189 14.4113 25.332 14.5518C26.3865 14.7933 26.6654 15.4137 26.6654 16.4095V23.5908C26.6654 24.2474 25.972 24.6984 25.332 24.5518C24.7189 24.4113 24.0426 24.3335 23.332 24.3335C22.054 24.3335 20.887 24.5852 19.9987 25.0002Z" stroke="white" stroke-width="1.5"/>
-                    </svg>
-                    @click="handleCheckout"
-                </button> -->
+
                 <button
                   class="rounded-lg transition disabled:cursor-not-allowed disabled:opacity-25"
                    :disabled="propertyObj?.rentalApplication?.progress === 'agreement-pending-signage' || isMakePaymentDisabled"
@@ -506,7 +306,6 @@
         <section v-else>
           <div class="rounded-md p-4 w-full mx-auto mt-10">
             <div class="animate-pulse flex space-x-4">
-              <!-- <div class="rounded-md bg-slate-200 h-44 w-44"></div> -->
               <div class="flex-1 space-y-6 py-1">
                 <div class="h-32 bg-slate-200 rounded"></div>
                 <div class="space-y-3">
@@ -555,7 +354,6 @@
     <section v-else>
       <div class="rounded-md p-4 max-w-7xl mx-auto w-full mx-auto mt-10">
         <div class="animate-pulse flex space-x-4">
-          <!-- <div class="rounded-md bg-slate-200 h-44 w-44"></div> -->
           <div class="flex-1 space-y-6 py-1">
             <div class="h-32 bg-slate-200 rounded"></div>
             <div class="space-y-3">
@@ -582,7 +380,6 @@
                 Share using
               </h2>
             </div>
-            <!-- Close Button -->
             <div>
               <button class="" @click="showShareModal = false">
                 <svga
@@ -604,13 +401,11 @@
               </button>
             </div>
 
-            <!-- Modal Content -->
+  
           </div>
 
           <div class="flex justify-between mb-6">
-            <!-- Instagram -->
             <div class="flex flex-col items-center space-y-2">
-              <!-- <img src="/instagram-icon.svg" alt="Instagram" class="w-12 h-12 mb-2" /> -->
               <svg
                 width="61"
                 height="60"
@@ -702,9 +497,7 @@
 
               <span class="text-sm text-[#1D2739]">Instagram</span>
             </div>
-            <!-- X (Twitter) -->
             <div class="flex flex-col items-center space-y-2">
-              <!-- <img src="/twitter-icon.svg" alt="Twitter" class="w-12 h-12 mb-2" /> -->
               <svg
                 width="61"
                 height="60"
@@ -729,9 +522,7 @@
 
               <span class="text-sm text-[#1D2739]">Twitter</span>
             </div>
-            <!-- WhatsApp -->
             <div class="flex flex-col items-center space-y-2">
-              <!-- <img src="/whatsapp-icon.svg" alt="WhatsApp" class="w-12 h-12 mb-2" /> -->
               <svg
                 width="61"
                 height="60"
@@ -756,9 +547,7 @@
 
               <span class="text-sm text-[#1D2739]">WhatsApp</span>
             </div>
-            <!-- Facebook -->
             <div class="flex flex-col items-center space-y-2">
-              <!-- <img src="/facebook-icon.svg" alt="Facebook" class="w-12 h-12 mb-2" /> -->
               <svg
                 width="61"
                 height="60"
@@ -786,7 +575,6 @@
           </div>
         </div>
 
-        <!-- Copy Link -->
         <div class="pt-4">
           <h3 class="font-medium mb-2 text-[#1D2739]">Copy Link</h3>
           <div class="relative">
@@ -946,7 +734,7 @@
     </CoreModalWithoutCloseBtn>
 
     <CoreLoadingScreen :loading="initializing" />
-    <CoreFullScreenLoader :visible="loading" text="Fetching rental details..." />
+    <CoreFullScreenLoader :visible="loading" text="Fetching rental details..." /> -->
   </main>
 </template>
 
@@ -976,62 +764,10 @@ const {
 } = useInitializeRentPayment();
 const router = useRouter()
 
-// const cust_id = ref(rentalObj.value?.tenant?.email || '');
-// const amount = ref(rentalObj.value?.room?.rentAmount || 0);
-// const currency = ref('566');
-
-// const { checkout, paymentResponse } = useCheckout({
-//   amount: computed(() => amount.value),
-//   cust_id: computed(() => cust_id.value),
-//   currency: computed(() => currency.value),
-// });
-
-// Update cust_id and amount when rentalObj changes, but don't call checkout automatically
-// watch(
-//   () => rentalObj.value,
-//   (newValue) => {
-//     if (newValue) {
-//       cust_id.value = newValue.tenant?.email || '';
-//       amount.value = newValue.room?.rentAmount || 0;
-//     }
-//   },
-//   { immediate: true, deep: true }
-// );
-
-// Define a function to handle checkout on button click
-// const handleCheckout = () => {
-//   if (cust_id.value && amount.value) {
-//     checkout();
-//   } else {
-//     console.warn("Required data is missing for checkout.");
-//   }
-// }
-
-
 const route = useRoute();
 const { showToast } = useCustomToast();
 
 const showCancelModal = ref(false);
-
-// watch(paymentResponse, async (data) => {
-//   if (data && data.amount) {
-//     const payloadObj = {
-//       rentalApplicationId: propertyObj.value.rentalApplication?.id,
-//       rentAmount: propertyObj.value.rentalApplication?.room?.rentalAmount,
-//     };
-    
-//     setPayloadObj(payloadObj);
-
-//     try {
-//       await initializeRentPayment();
-//       // router.push(`/dashboard/listings/${rentalObj.value.id}/rental-applications/payment-success`);
-//     } catch (error) {
-//       console.error("Error during rent payment initialization:", error);
-//     }
-//   } else {
-//     console.error("Payment response is missing or amount is undefined");
-//   }
-// });
 
 
 const onCancel = () => {
