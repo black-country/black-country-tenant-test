@@ -12,7 +12,7 @@
     </div>
   </template>
   
-  <script lang="ts" setup>
+  <script lang="ts" setup> 
   defineProps<{
     to: string;
     text: string;

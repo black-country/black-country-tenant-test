@@ -1,6 +1,6 @@
 <template>
   <div class="relative w-screen h-screen">
-    {{ searchResults }}
+    <!-- {{ searchResults }} -->
    <div
       class="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-xl px-4"
     >

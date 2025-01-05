@@ -50,7 +50,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
     return new Promise((resolve, reject) => {
       try {
         const script = document.createElement('script');
-        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCBguFgxPOH6AuAiz0ZXXoo_fJAp4AR8WE&libraries=places`;
+        script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg&libraries=places`;
         script.async = true;
         script.defer = true;
         

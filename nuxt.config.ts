@@ -35,7 +35,7 @@ export default {
   },
   runtimeConfig: {
     public: {
-      googleMapsApiKey: 'AIzaSyCBguFgxPOH6AuAiz0ZXXoo_fJAp4AR8WE'
+      googleMapsApiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg'
     }
   },
 

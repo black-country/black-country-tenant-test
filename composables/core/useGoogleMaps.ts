@@ -25,7 +25,7 @@ export const useGoogleMaps = () => {
     }
 
     const options: LoaderOptions = {
-      apiKey: 'AIzaSyCBguFgxPOH6AuAiz0ZXXoo_fJAp4AR8WE',
+      apiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg',
       version: "weekly",
       libraries: ["places", "marker"],
     }
