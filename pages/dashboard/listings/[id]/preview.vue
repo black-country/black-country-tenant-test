@@ -221,7 +221,8 @@
       </section>
       <div class="max-w-7xl mx-auto pt-4 pb-8">
         <section v-if="!loading">
-        <PropertyImageGallery :loading="loading" :property="propertyObj" :images="allImages" />
+          <ImageGallery :loading="loading" :property="propertyObj" :images="allImages" />
+        <!-- <PropertyImageGallery :loading="loading" :property="propertyObj" :images="allImages" /> -->
 
         <PropertyDetails class="mt-10" :property="propertyObj" />
         </section>
