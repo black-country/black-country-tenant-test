@@ -1,7 +1,8 @@
 <template>
+  <MessagingView>
     <main>
       <div class="flex h-screen">
-        <aside
+        <!-- <aside
           class="w-16 bg-[#292929] shadow-md flex flex-col items-center py-4"
         >
           <nav class="space-y-6 mt-10">
@@ -208,7 +209,7 @@
               />
             </svg>
           </div>
-        </aside>
+        </aside> -->
         <div class="flex-1 lg:flex flex-col">
           <header
             class="bg-white shadow-sm hidden lg:flex justify-between items-center p-4"
@@ -633,9 +634,11 @@
         </div>
       </CoreModalWithoutCloseBtn>
     </main>
+  </MessagingView>
   </template>
   
   <script lang="ts" setup>
+  import MessagingView from "@/layouts/MessagingView.vue";
   import { useFormatNotifications } from '@/composables/core/useFormatNotifications';
   import { useUserInitials } from "@/composables/core/useUserInitials";
   import { useUser } from "@/composables/auth/user";

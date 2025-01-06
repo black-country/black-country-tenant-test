@@ -3,6 +3,8 @@ import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
 
 const loading = ref(false)
+const router = useRouter()
+const route = useRoute()
 
 export const useCancelRental = () => {
 	const cancelRental = async (id: string | number) => {
@@ -16,6 +18,7 @@ export const useCancelRental = () => {
 				toastType: "success",
 				duration: 3000
 			  });
+			  router.push(`/dashboard/listings/${route.params.id}/rental-applications/cancellation-success`)
         } else {
 			showToast({
 				title: "Error",

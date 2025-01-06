@@ -323,7 +323,7 @@
                   <span>List View</span>
                 </button>
               </div>
-              <div class="space-x-1 px-2 flex">
+              <div data-intro="Saved Properties" class="space-x-1 px-2 flex">
                 <NuxtLink to="/dashboard/listings/bookmarked" ref="favoritesRef" class="">
                   <svg
                     width="40"
@@ -2620,23 +2620,31 @@ const startTour = () => {
       tooltipClass: 'custom-width-tooltip'
     },
     {
+      element: '[data-intro="Dashboard"]',
+      intro: 'Stay organized with your dashboard: track your applications, view saved properties, manage upcoming tours, and keep up with updates—all in one place.'
+    },
+    {
       element: '[data-intro="Listings"]',
       intro: 'Explore available properties, filter by preferences, and find your perfect home.'
     },
     {
+      element: '[data-intro="Saved Properties"]',
+      intro: 'Easily revisit properties you love and keep track of potential homes as you explore more options.'
+    },
+    {
       element: '[data-intro="My Home"]',
-      intro: 'Manage your rented space, pay rent, request maintenance, and more—all from one place.'
+      intro: 'manage your living space, view lease details, and access exclusive features. Unlock more once you’ve applied for a room, signed the agreement, and made your first payment.'
     },
-    {
-      element: '[data-intro="Map View"]',
-      intro: 'Get a visual overview of available properties in your desired area, making it easier to find your next home.',
-      viewType: 'map'
-    },
-    {
-      element: '[data-intro="List View"]',
-      intro: 'When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!',
-      viewType: 'grid'
-    }
+    // {
+    //   element: '[data-intro="Map View"]',
+    //   intro: 'Get a visual overview of available properties in your desired area, making it easier to find your next home.',
+    //   viewType: 'map'
+    // },
+    // {
+    //   element: '[data-intro="List View"]',
+    //   intro: 'When in the map view, click to browse properties in a convenient list format, complete with essential details for each listing. Start your search hassle-free!',
+    //   viewType: 'grid'
+    // }
   ];
 
   const filteredSteps = tourSteps.slice(1); // Remove the first step

@@ -293,12 +293,12 @@ const handleFrontIdUpload = async (event: Event) => {
     await uploadFile(file);
 
     if (uploadResponse.value) {
-      frontIdPreview.value = uploadResponse.value.secure_url;
+      frontIdPreview.value = uploadResponse.value.url;
       isFrontImage.value = uploadResponse.value.type?.startsWith('image');
       isFrontPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
 
       // Push the uploaded file URL to the fileUrls array
-      documentData.value.fileUrls[0] = uploadResponse.value.secure_url;
+      documentData.value.fileUrls[0] = uploadResponse.value.url;
       documentData.value.type = idType.value;
       saveData('uploaded-document', documentData.value);
     }
@@ -322,12 +322,12 @@ const handleBackIdUpload = async (event: Event) => {
     await uploadFile(file);
 
     if (uploadResponse.value) {
-      backIdPreview.value = uploadResponse.value.secure_url;
+      backIdPreview.value = uploadResponse.value.url;
       isBackImage.value = uploadResponse.value.type?.startsWith('image');
       isBackPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
 
       // Push the uploaded file URL to the fileUrls array
-      documentData.value.fileUrls[1] = uploadResponse.value.secure_url;
+      documentData.value.fileUrls[1] = uploadResponse.value.url;
       documentData.value.type = idType.value;
       saveData('uploaded-document', documentData.value);
     }

@@ -18,7 +18,7 @@
        <div class="mb-6 ">
          <h3 class="text-[#1D2739] rounded-xl font-medium mb-3 border-[0.5px] border-gray-25 bg-white py-4 p-3">Chat</h3>
          <div class="space-y-2 bg-white border-[0.5px] border-gray-25">
-           <div v-for="item in contactsInfo?.chat" class="flex justify-between items-center p-4">
+           <a v-for="item in contactsInfo?.chat" :href="`https://wa.me/${item?.contacts[0]}`" class="flex block justify-between items-center p-4">
              <div>
                <p class="text-gray-700">{{ item?.name ?? 'Nil' }}</p>
                <p class="text-sm text-gray-500">{{ item?.description ?? 'Nil' }}</p>
@@ -37,27 +37,7 @@
                  d="M9 5l7 7-7 7"
                />
              </svg>
-           </div>
-           <!-- <div class="flex justify-between items-center p-4">
-             <div>
-               <p class="text-gray-700">WhatsApp</p>
-               <p class="text-sm text-gray-500">Start a conversation on WhatsApp</p>
-             </div>
-             <svg
-               xmlns="http://www.w3.org/2000/svg"
-               class="h-5 w-5 text-gray-400"
-               fill="none"
-               viewBox="0 0 24 24"
-               stroke="currentColor"
-             >
-               <path
-                 stroke-linecap="round"
-                 stroke-linejoin="round"
-                 stroke-width="2"
-                 d="M9 5l7 7-7 7"
-               />
-             </svg>
-           </div> -->
+           </a>
          </div>
        </div>
  

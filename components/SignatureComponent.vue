@@ -100,7 +100,7 @@ const submitSignature = async () => {
     // Create the payload object with optional signee name and signature URL
     const payloadObj = {
       signeeName: tenantName.value || '', // Ensure a fallback if tenantName is null
-      signatureUrl: signatureObj?.value?.secure_url ?? '' // Provide a fallback if secureUrl is null
+      signatureUrl: signatureObj?.value?.url ?? '' // Provide a fallback if secureUrl is null
     };
 
     // Check if the signature URL is valid before proceeding

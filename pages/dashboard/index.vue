@@ -707,7 +707,7 @@ const requestDates = computed(() =>
 
 const startTour = () => {
   localStorage.setItem("welcome-modal-shown", "false"); // Corrected the key here
-  router.push("/dashboard/listings");
+  // router.push("/dashboard/listings");
 };
 </script>
 

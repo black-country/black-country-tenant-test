@@ -291,9 +291,9 @@
   
   <script setup lang="ts">
    import { use_tenant_profile } from '@/composables/auth/fetchProfile'
+   const { $introJs } = useNuxtApp()
     const { loading, profileObj } = use_tenant_profile()
 
-import "shepherd.js/dist/css/shepherd.css";
   import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
   const isOpen = ref(false)
@@ -332,6 +332,83 @@ const onConfirm = () => {
   }), 3000
   console.log("Logging out...");
 };
+
+
+const startTour = () => {
+  const tourSteps = [
+    {
+      title: 'Welcome to BlackCountry! 🥳 🥳🥳',
+      intro: `Welcome to your all-in-one shared-living platform. Search for your ideal home and manage it effortlessly, all within our user-friendly app. Click 'Continue' to embark on your personalized tour of the platform!`,
+      tooltipClass: 'custom-width-tooltip'
+    },
+    {
+      element: '[data-intro="Dashboard"]',
+      intro: 'Stay organized with your dashboard: track your applications, view saved properties, manage upcoming tours, and keep up with updates—all in one place.'
+    },
+    {
+      element: '[data-intro="Listings"]',
+      intro: 'Explore available properties, filter by preferences, and find your perfect home.'
+    },
+    {
+      element: '[data-intro="Saved Properties"]',
+      intro: 'Easily revisit properties you love and keep track of potential homes as you explore more options.'
+    },
+    {
+      element: '[data-intro="My Home"]',
+      intro: 'manage your living space, view lease details, and access exclusive features. Unlock more once you’ve applied for a room, signed the agreement, and made your first payment.'
+    },
+  ];
+
+  const filteredSteps = tourSteps.slice(1); // Remove the first step
+  const intro = $introJs();
+
+  // Handle step changes
+  intro.onbeforechange((element) => {
+    const currentStep = intro._currentStep; // Get the current step index
+    const stepConfig = filteredSteps[currentStep];
+
+
+    // if(currentStep == 3){
+    //   viewType.value = 'map'
+    //   console.log('hello', currentStep)
+    // }
+
+    // Check if the current step is the last step dynamically
+    if (currentStep === filteredSteps.length - 1) {
+      localStorage.setItem('welcome-modal-shown', 'true'); // Set local storage to true
+    }
+
+    // Update URL parameter if the step has a viewType
+    if (stepConfig?.viewType) {
+      const currentQuery = { ...route.query };
+      router.push({
+        query: {
+          ...currentQuery,
+          viewType: stepConfig.viewType
+        }
+      });
+    }
+  });
+
+  intro.setOptions({
+    steps: filteredSteps,
+    showProgress: false,  // Changed from true to false
+    showBullets: false,   // Changed from true to false
+    exitOnOverlayClick: false,
+    showStepNumbers: false,
+    tooltipClass: 'global-tooltip-class',
+    width: 400
+  }).start();
+};
+
+const modalValue = localStorage.getItem('welcome-modal-shown') === 'true'; // Explicitly check for 'true'
+
+onMounted(() => {
+  if (!modalValue && !profileObj?.value?.hasTakenTour) {
+    startTour();
+  }
+});
+
   </script>
   
   <style scoped>

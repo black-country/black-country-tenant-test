@@ -1,6 +1,6 @@
 <template>
   <main>
-      <div>
+      <div class="px-6 lg:px-0">
         <h3 class="text-[#1D2739] text-lg pb-3">
             {{ property?.name ?? 'Nil' }}
           </h3>

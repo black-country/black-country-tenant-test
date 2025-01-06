@@ -13,9 +13,10 @@
       id="leaseAgreementDocument"
       class="min-h-screen max-w-4xl mx-auto mb-44"
     >
+  <div class="pl-10 mt-6 lg:mt-0 lg:pl-0">
     <svg
             @click="router.back()"
-            class="cursor-pointer"
+            class="cursor-pointer "
             width="36"
             height="36"
             viewBox="0 0 36 36"
@@ -31,6 +32,7 @@
               stroke-linejoin="round"
             />
           </svg>
+  </div>
       <div class="py-3 px-10 lg:px-0">
       <section class="flex justify-between">
         <div>
