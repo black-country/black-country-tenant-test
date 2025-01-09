@@ -30,5 +30,13 @@ export const settings_api = {
         const url = '/preferences/users';
         return GATEWAY_ENDPOINT.post(url, payload);
       },
+      $_initiate_delete_account: (payload: any) => {
+        const url = '/tenants/delete-requests/initiate';
+        return GATEWAY_ENDPOINT.post(url, payload);
+      },
+      $_validate_delete_request: (payload: any) => {
+        const url = '/tenants/delete-requests/validate';
+        return GATEWAY_ENDPOINT.post(url, payload);
+      },
 
 };

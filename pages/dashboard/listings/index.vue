@@ -1505,6 +1505,7 @@
           class="relative p-3 lg:p-0 cursor-pointer min-w-[100px] w-full lg:max-w-[350px] bg-white"
         >
           <button
+            data-intro="Save property"
             @click="toggleLike(index, property)"
             class="absolute top-6 right-6 text-white hover:text-red-500 focus:outline-none"
           >
@@ -2621,7 +2622,7 @@ const startTour = () => {
       tooltipClass: 'custom-width-tooltip'
     },
     {
-      element: '[data-intro="Dashboard"]',
+      element: '[data-intro="Save property"]',
       intro: 'Stay organized with your dashboard: track your applications, view saved properties, manage upcoming tours, and keep up with updates—all in one place.'
     },
     {
