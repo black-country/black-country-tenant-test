@@ -22,7 +22,7 @@
         <div class="flex items-center space-x-6">
           <!-- Links -->
           <div class="flex space-x-6">
-            <NuxtLink ref="dashboardRef"  :class="[route.path === '/dashboard' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard" class="flex items-center space-x-1 text-gray-300 px-3 rounded-md hover:text-white ">
+            <NuxtLink data-intro="Dashboard" ref="dashboardRef"  :class="[route.path === '/dashboard' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard" class="flex items-center space-x-1 text-gray-300 px-3 rounded-md hover:text-white ">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2.08331 9.99967C2.08331 6.26772 2.08331 4.40175 3.24268 3.24237C4.40205 2.08301 6.26803 2.08301 9.99998 2.08301C13.7319 2.08301 15.5979 2.08301 16.7573 3.24237C17.9166 4.40175 17.9166 6.26772 17.9166 9.99967C17.9166 13.7316 17.9166 15.5976 16.7573 16.757C15.5979 17.9163 13.7319 17.9163 9.99998 17.9163C6.26803 17.9163 4.40205 17.9163 3.24268 16.757C2.08331 15.5976 2.08331 13.7316 2.08331 9.99967Z" stroke="#D0D5DD" stroke-width="1.5" stroke-linejoin="round"/>
                 <path d="M5 7.50033H7.91667M14.1667 7.50033H15M10 6.66699V8.33366M12.0833 6.66699V8.33366" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -30,7 +30,7 @@
               </svg>
               <span class="text-sm">Dashboard</span>
             </NuxtLink>
-            <NuxtLink ref="listingsRef" :class="[route.path === '/dashboard/listings' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard/listings" class="flex items-center space-x-1 text-white px-3 py-3 rounded-md">
+            <NuxtLink data-intro="Listings" ref="listingsRef" :class="[route.path === '/dashboard/listings' ? 'bg-[#1D1D1D]' : '' ]" to="/dashboard/listings" class="flex items-center space-x-1 text-white px-3 py-3 rounded-md">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.66669 15.0003C1.66669 13.7167 1.66669 13.0747 1.95563 12.6032C2.1173 12.3394 2.33913 12.1176 2.60296 11.9559C3.07447 11.667 3.71632 11.667 5.00002 11.667C6.28372 11.667 6.92557 11.667 7.39708 11.9559C7.66091 12.1176 7.88274 12.3394 8.04441 12.6032C8.33335 13.0747 8.33335 13.7167 8.33335 15.0003C8.33335 16.284 8.33335 16.9259 8.04441 17.3974C7.88274 17.6612 7.66091 17.8831 7.39708 18.0447C6.92557 18.3337 6.28372 18.3337 5.00002 18.3337C3.71632 18.3337 3.07447 18.3337 2.60296 18.0447C2.33913 17.8831 2.1173 17.6612 1.95563 17.3974C1.66669 16.9259 1.66669 16.284 1.66669 15.0003Z" fill="#EBE5E0" stroke="#EBE5E0" stroke-width="1.5"/>
                 <path d="M11.6667 15.0003C11.6667 13.7167 11.6667 13.0747 11.9556 12.6032C12.1173 12.3394 12.3391 12.1176 12.6029 11.9559C13.0744 11.667 13.7164 11.667 15 11.667C16.2837 11.667 16.9256 11.667 17.3971 11.9559C17.6609 12.1176 17.8828 12.3394 18.0444 12.6032C18.3334 13.0747 18.3334 13.7167 18.3334 15.0003C18.3334 16.284 18.3334 16.9259 18.0444 17.3974C17.8828 17.6612 17.6609 17.8831 17.3971 18.0447C16.9256 18.3337 16.2837 18.3337 15 18.3337C13.7164 18.3337 13.0744 18.3337 12.6029 18.0447C12.3391 17.8831 12.1173 17.6612 11.9556 17.3974C11.6667 16.9259 11.6667 16.284 11.6667 15.0003Z" fill="#EBE5E0" stroke="#EBE5E0" stroke-width="1.5"/>
@@ -39,14 +39,14 @@
                 </svg>
               <span class="text-sm">Listings</span>
             </NuxtLink>
-            <NuxtLink to="/dashboard/home/details" class="flex items-center space-x-1 px-3 rounded-lg text-gray-300 hover:text-white">
+            <NuxtLink data-intro="My Home" to="/dashboard/home/details" class="flex items-center space-x-1 px-3 rounded-lg text-gray-300 hover:text-white">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M1.95951 11.0113C1.66533 9.09692 1.51824 8.13977 1.88016 7.29123C2.24208 6.44268 3.04505 5.86211 4.65097 4.70096L5.85085 3.83341C7.8486 2.38897 8.84744 1.66675 10 1.66675C11.1526 1.66675 12.1514 2.38897 14.1492 3.83341L15.3491 4.70096C16.955 5.86211 17.7579 6.44268 18.1199 7.29123C18.4818 8.13977 18.3347 9.09692 18.0405 11.0113L17.7897 12.6437C17.3726 15.3575 17.1641 16.7144 16.1909 17.5239C15.2176 18.3334 13.7948 18.3334 10.949 18.3334H9.05102C6.2053 18.3334 4.78245 18.3334 3.80919 17.5239C2.83593 16.7144 2.62741 15.3575 2.21038 12.6437L1.95951 11.0113Z" stroke="#D0D5DD" stroke-width="1.5" stroke-linejoin="round"/>
                 </svg>
                 
               <span class="text-sm">My home</span>
             </NuxtLink>
-            <NuxtLink to="/dashboard/messages" class="flex items-center space-x-1 text-gray-300 hover:text-white">
+            <NuxtLink data-intro="Messages" to="/dashboard/messages" class="flex items-center space-x-1 text-gray-300 hover:text-white">
               <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M11.8089 17.4084C15.2947 17.1768 18.0714 14.3607 18.2999 10.8254C18.3445 10.1336 18.3445 9.41709 18.2999 8.72526C18.0714 5.18999 15.2947 2.37395 11.8089 2.14223C10.6196 2.06318 9.37802 2.06335 8.19118 2.14223C4.70534 2.37395 1.92869 5.18999 1.70022 8.72526C1.65551 9.41709 1.65551 10.1336 1.70022 10.8254C1.78343 12.113 2.35288 13.3052 3.02328 14.3118C3.41253 15.0166 3.15563 15.8962 2.75019 16.6645C2.45786 17.2185 2.31169 17.4955 2.42905 17.6956C2.54642 17.8957 2.80857 17.9021 3.33288 17.9148C4.36974 17.9401 5.06892 17.6461 5.62392 17.2368C5.93869 17.0048 6.09608 16.8887 6.20455 16.8753C6.31302 16.862 6.52649 16.9499 6.95336 17.1258C7.33702 17.2838 7.78248 17.3813 8.19118 17.4084C9.37802 17.4873 10.6196 17.4875 11.8089 17.4084Z" stroke="#D0D5DD" stroke-width="1.5" stroke-linejoin="round"/>
                 <path d="M9.99606 10H10.0035M13.3256 10H13.3331M6.66644 10H6.67392" stroke="#D0D5DD" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -60,13 +60,13 @@
         <div class="flex items-center">
           <slot name="extra" />
          <div class="space-x-1 px-2 flex">
-          <NuxtLink to="/dashboard/listings/bookmarked" class="">
+          <NuxtLink data-intro="Saved Properties" to="/dashboard/listings/bookmarked" class="">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="40" height="40" rx="6" fill="#1D1D1D"/>
               <path d="M26.2187 13.3285C23.9839 11.9577 22.0335 12.5101 20.8618 13.39C20.3813 13.7508 20.1412 13.9312 19.9998 13.9312C19.8585 13.9312 19.6183 13.7508 19.1378 13.39C17.9662 12.5101 16.0157 11.9577 13.781 13.3285C10.8482 15.1275 10.1846 21.0624 16.9494 26.0695C18.2379 27.0232 18.8822 27.5 19.9998 27.5C21.1175 27.5 21.7618 27.0232 23.0503 26.0695C29.8151 21.0624 29.1514 15.1275 26.2187 13.3285Z" stroke="#EBE5E0" stroke-width="1.5" stroke-linecap="round"/>
               </svg>
           </NuxtLink>
-          <NuxtLink to="/dashboard/notifications" class="">
+          <NuxtLink data-intro="Notifications" to="/dashboard/notifications" class="">
             <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="40" height="40" rx="6" fill="#1D1D1D"/>
               <path d="M21.4417 27.4998C21.2952 27.7524 21.0849 27.962 20.8319 28.1078C20.5788 28.2535 20.292 28.3302 20 28.3302C19.708 28.3302 19.4212 28.2535 19.1681 28.1078C18.9151 27.962 18.7048 27.7524 18.5583 27.4998M25 16.6665C25 15.3404 24.4732 14.0687 23.5355 13.131C22.5979 12.1933 21.3261 11.6665 20 11.6665C18.6739 11.6665 17.4021 12.1933 16.4645 13.131C15.5268 14.0687 15 15.3404 15 16.6665C15 22.4998 12.5 24.1665 12.5 24.1665H27.5C27.5 24.1665 25 22.4998 25 16.6665Z" stroke="#EBE5E0" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -300,6 +300,12 @@
   const router = useRouter()
   const route = useRoute()
 
+  const props = defineProps({
+    tourStatus: {
+      type: Boolean
+    }
+  })
+
   const showWelcomeModal = ref(false)
 
   // onMounted(() => {
@@ -393,7 +399,7 @@ const startTour = () => {
   intro.setOptions({
     steps: filteredSteps,
     showProgress: false,  // Changed from true to false
-    showBullets: false,   // Changed from true to false
+    showBullets: true,   // Changed from true to false
     exitOnOverlayClick: false,
     showStepNumbers: false,
     tooltipClass: 'global-tooltip-class',
@@ -403,11 +409,27 @@ const startTour = () => {
 
 const modalValue = localStorage.getItem('welcome-modal-shown') === 'true'; // Explicitly check for 'true'
 
-onMounted(() => {
-  if (!modalValue && !profileObj?.value?.hasTakenTour) {
-    startTour();
-  }
-});
+// onMounted(() => {
+//   if (!modalValue && !profileObj?.value?.hasTakenTour) {
+//     startTour();
+//   }
+// });
+
+// Watcher for the tourStatus prop
+watch(
+  () => props.tourStatus,
+  (newVal, oldVal) => {
+    console.log(`Tour status changed from ${oldVal} to ${newVal}`);
+    // Add your logic here
+    // startTour();
+    if (newVal) {
+      startTour();
+      console.log('Tour is now active.');
+    } else {
+      console.log('Tour is now inactive.');
+    }
+  }, { immediate: true }
+);
 
   </script>
   

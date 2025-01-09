@@ -12,7 +12,7 @@ export const useFetchRental = () => {
     const { $_fetch_single_rental } = rental_api
 
     // Get the property ID from the route parameter
-    const queryId = ref(route.params.id as string || '')
+    const queryId = ref(route.query.rentalId as string || '')
 
     const getRental = async () => {
         if (!queryId.value) {

@@ -1,6 +1,6 @@
 <template>
   <main>
-    <TopNavBar class="" />
+    <TopNavBar :tourStatus="tourStatus" class="" />
     <div class="bg-gray-25 min-h-screen p-3 lg:p-6">
       <div class="max-w-4xl mx-auto">
         <h1 class="text-lg text-[#1D2739] font-medium mb-6">
@@ -518,16 +518,35 @@ const { bankAccounts } = useFetchBankAccounts();
 
 const showWelcomeModal = ref(false);
 
-const modalValue = localStorage.getItem("welcome-modal-shown");
+// const modalValue = localStorage.getItem("welcome-modal-shown");
+  const welcomeShown = localStorage.getItem("welcome-modal-shown");
 
 onMounted(() => {
-  if (!profileObj?.hasTakenTour) {
-    showWelcomeModal.value = true;
-  }
+  // console.log(typeof Boolean(welcomeShown), 'welcome seen')
+  // showWelcomeModal.value = true;
+    // localStorage.setItem("welcome-modal-shown", "true"); // 
+  // // Check if the welcome modal has already been shown
+  // const welcomeShown = localStorage.getItem("welcome-modal-shown");
+  // console.log(welcomeShown, 'welcome seen')
 
-  if (modalValue) {
+  // If the modal has not been shown, run the modal
+  if (welcomeShown === 'true') {
     showWelcomeModal.value = false;
+    localStorage.setItem("welcome-modal-shown", "false"); // Corrected the key here
+  } else {
+    showWelcomeModal.value = true;
+    localStorage.setItem("welcome-modal-shown", "true"); // Corrected the key here
   }
+});
+
+onMounted(() => {
+  // if (!profileObj?.hasTakenTour) {
+  //   showWelcomeModal.value = true;
+  // }
+
+  // if (modalValue) {
+  //   showWelcomeModal.value = false;
+  // }
 });
 
 const closeWelcomeModal = () => {
@@ -595,16 +614,6 @@ const isAccountSetupComplete = computed(() => {
 
 const isComplete = checkObjectCompletion(user.value);
 
-onMounted(() => {
-  // Check if the welcome modal has already been shown
-  const welcomeShown = localStorage.getItem("welcome-modal-shown");
-
-  // If the modal has not been shown, run the modal
-  if (!welcomeShown) {
-    showWelcomeModal.value = true;
-    localStorage.setItem("welcome-modal-shown", "true"); // Corrected the key here
-  }
-});
 
 const handleSelectedRental = (item) => {
    if(item.status === 'Scheduled visitation'){
@@ -705,8 +714,14 @@ const requestDates = computed(() =>
   [...new Set(requests.value.map((req) => req.date))].sort()
 );
 
+// const emit = defineEmits(['start'])
+const tourStatus = ref(false)
+
 const startTour = () => {
   localStorage.setItem("welcome-modal-shown", "false"); // Corrected the key here
+  tourStatus.value = true
+  closeWelcomeModal()
+  // emit('start')
   // router.push("/dashboard/listings");
 };
 </script>

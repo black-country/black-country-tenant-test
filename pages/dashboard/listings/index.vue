@@ -2200,9 +2200,9 @@
   />
   <CoreTourGuide />
 
-  <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
+  <!-- <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
     <CorePropertyFilters @close="showFilterDrawer = false" />
-  </CoreDrawer>
+  </CoreDrawer> -->
   </main>
 </template>
 
@@ -2339,16 +2339,17 @@ const handleFilterClick = () => {
   // alert('Handle Filter Click')
 }
 
-const showWelcomeModal = ref(false)
+// const showWelcomeModal = ref(false)
+const tourShown = localStorage.setItem('listings-tour-shown', 'false')
 
 onMounted(() => {
   // Check if the welcome modal has already been shown
-  const welcomeShown = localStorage.getItem('welcome-modal-shown');
+  const tourShown = localStorage.getItem('listings-tour-shown');
 
   // If the modal has not been shown, run the modal
-  if (!welcomeShown) {
-    showWelcomeModal.value = true;
-    localStorage.setItem('welcome-modal-shown', 'true'); // Corrected the key here
+  if (tourShown === 'false') {
+    startTour()
+    // localStorage.setItem('welcome-modal-shown', 'true'); // Corrected the key here
   }
 });
 
@@ -2772,11 +2773,11 @@ watch(
 
 const modalValue = localStorage.getItem('welcome-modal-shown') === 'true'; // Explicitly check for 'true'
 
-onMounted(() => {
-  if (!modalValue && !profileObj?.value?.hasTakenTour) {
-    startTour();
-  }
-});
+// onMounted(() => {
+//   if (!modalValue && !profileObj?.value?.hasTakenTour) {
+//     startTour();
+//   }
+// });
 
 // const modalValue = localStorage.getItem('welcome-modal-shown');
 

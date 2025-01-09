@@ -67,9 +67,9 @@
       </section>
       </div>
       <div class="bg-white rounded-lg border-[0.5px] border-gray-100 p-8">
-
         <div class="mt-6 space-y-6">
-          <div v-if="!containsHttps(lease?.leaseAgreementContent)" v-html="propertyObj?.rentalApplication?.leaseAgreement"></div>
+          <!-- <div v-if="!containsHttps(lease?.leaseAgreementContent)" v-html="propertyObj?.rentalApplication?.leaseAgreement"></div> -->
+        <div v-if="!containsHttps(propertyObj?.rentalApplication?.rentalLeaseAgreement?.leaseAgreementContent)" v-html="propertyObj?.rentalApplication?.rentalLeaseAgreement?.leaseAgreementContent" class=""></div>
         <div v-else>
            <iframe
             :src="`https://docs.google.com/viewer?url=${encodeURIComponent(propertyObj?.rentalApplication?.leaseAgreement)}&embedded=true`"
