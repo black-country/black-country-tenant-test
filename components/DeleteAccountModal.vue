@@ -2,7 +2,7 @@
     <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
       <div class="bg-white rounded-lg w-full max-w-md">
         <!-- Step 1 -->
-        <div v-if="currentStep === 1" class="p-6">
+        <div @click="router.back()" class="p-6">
           <div class="flex justify-center mb-4">
             <div class="w-12 h-12 rounded-full bg-amber-400 flex items-center justify-center">
                 <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,12 +26,18 @@
             >
               Cancel
             </button>
-            <button
+            <!-- <button
               @click="currentStep++"
               class="flex-1 text-xs py-3.5 px-4 bg-[#292929] text-white rounded-lg font-medium"
             >
               Request account deletion
-            </button>
+            </button> -->
+            <NuxtLink
+              to="/profile/account-deletion-confirmation"
+              class="flex-1 text-xs py-3.5 px-4 bg-[#292929] text-white rounded-lg font-medium"
+            >
+              Request account deletion
+            </NuxtLink>
           </div>
         </div>
   
@@ -127,6 +133,7 @@
   </template>
   
   <script setup lang="ts">
+    const router = useRouter()
   import { useDeleteAccount } from '@/composables/auth/useDeleteAccount'
   const deleteReasons = ref(
     [

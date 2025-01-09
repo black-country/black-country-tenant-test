@@ -39,8 +39,8 @@
                   activity.status }}</span>
               </div>
             </div>
-            <div v-else class="text-center text-gray-500 py-12">
-              <img src="@/assets/icons/event-illustrations.svg" alt="No events" class="h-12 w-12 mx-auto mb-2" />
+            <div v-else class="text-center text-gray-500 py-12 bg-white rounded-lg">
+              <img src="@/assets/icons/event-illustrations.svg" alt="No events" class="mx-auto mb-2" />
               <p>No Upcoming activities found</p>
             </div>
           </div>

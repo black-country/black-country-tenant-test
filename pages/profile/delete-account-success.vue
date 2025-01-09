@@ -33,10 +33,12 @@
   </template>
   
   <script setup lang="ts">
+  import { useUser } from '@/composables/auth/user'
+  const { logOut } = useUser()
 const router = useRouter();
 
 const handleSuccess = () => {
-  router.push("/dashboard/");
+  logOut()
 };
 
 

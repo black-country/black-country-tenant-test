@@ -248,7 +248,7 @@
         class="border-[0.5px] border-gray-25 rounded-md bg-white text-sm font- text-[#BA110B] p-4 flex justify-between items-center"
       >
   <div @click="deleteAccountModal = true" class="flex  cursor-pointer items-center gap-x-3">
-      <img :src="dynamicIcons('logout-icon')" alt="" />
+      <img :src="dynamicIcons('delete-user-icon')" alt="" />
       <p>Delete my account</p>
   </div>
   
@@ -322,7 +322,59 @@
   </div>
     </CoreModal>
 
-    <DeleteAccountModal v-if="deleteAccountModal" @close="deleteAccountModal = false" />
+    <CoreModal
+    :isOpen="deleteAccountModal"
+    @close="deleteAccountModal = false"
+    >
+    <div
+    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    @click.self="deleteAccountModal = false"
+  >
+    <div class="bg-white rounded-xl p-6 max-w-md w-full text-center shadow-lg">
+      <!-- Icon -->
+      <div class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4">
+        <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="0.921875" width="63.1513" height="64" rx="31.5756" fill="#F3A218"/>
+          <path d="M42.2031 32.375C42.2031 26.8521 37.7259 22.375 32.2031 22.375C26.6803 22.375 22.2031 26.8521 22.2031 32.375C22.2031 37.8978 26.6803 42.375 32.2031 42.375C37.7259 42.375 42.2031 37.8978 42.2031 32.375Z" stroke="white" stroke-width="1.5"/>
+          <path d="M32.4453 37.375V32.375C32.4453 31.9036 32.4453 31.6679 32.2988 31.5214C32.1524 31.375 31.9167 31.375 31.4453 31.375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M32.1953 28.377H32.2043" stroke="white" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          
+      </div>
+      
+      <!-- Title -->
+      <h2 class="text-lg text-center font-semibold text-gray-700 mb-2">Delete account</h2>
+
+      <!-- Message -->
+      <p class="text-gray-600 text-center font-light mb-6">
+            You are about to request the deletion of your BlackCountry account. Once your account is deleted, all
+            <span class="font-semibold">personal information, rental history, employment details</span>, and
+            <span class="font-semibold">next of kin information</span> will be permanently erased after 30 days.
+          </p>
+
+      <!-- Buttons -->
+      <div class="flex items-center gap-x-5 pt-3">
+        <button
+        type="button"
+          class="w-full bg-[#EBE5E0] text-gray-700 text-xs py-3.5 rounded-md font-semibold"
+          @click="deleteAccountModal = false"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          class="w-full disabled:cursor-not-allowed text-xs disabled:opacity-25 bg-[#292929] text-white py-3.5 rounded-md font-semibold"
+          @click="router.push('/profile/account-deletion-confirmation')"
+          :disabled="false"
+        >
+        Request account deletion
+        </button>
+      </div>
+    </div>
+  </div>
+    </CoreModal>
+
+    <!-- <DeleteAccountModal v-if="deleteAccountModal" @close="deleteAccountModal = false" /> -->
 
     <!-- <CoreModal
     :isOpen="deleteAccountModal"

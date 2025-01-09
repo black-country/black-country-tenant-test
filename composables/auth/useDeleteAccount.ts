@@ -1,41 +1,50 @@
 // composables/useDeleteAccount.ts
-import { ref } from 'vue'
-import { auth_api } from '@/api_factory/modules/auth'
-import { useUser } from '@/composables/auth/user'
-const router = useRouter()
+import { ref } from 'vue';
+import { auth_api } from '@/api_factory/modules/auth';
+import { useUser } from '@/composables/auth/user';
+import { useInitiateDeleteAccount } from '@/composables/modules/settings/useInitiateDeleteAccount';
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 export const useDeleteAccount = () => {
-  const currentStep = ref<number>(1)
-  const { user } = useUser()
-  const isLoading = ref<boolean>(false)
-  const userEmail = ref<string>('')
-  const deleteReason = ref<string>('')
-  const isEmailValid = ref<boolean>(false)
+  const currentStep = ref<number>(1);
+  const { user } = useUser();
+  const isLoading = ref<boolean>(false);
+  const userEmail = ref<string>('');
+  const deleteReason = ref<string>('');
+  const isEmailValid = ref<boolean>(false);
+  const { initiateDeleteAccount, loading, payload, setPayload } = useInitiateDeleteAccount();
 
   const validateEmail = (email: string) => {
-    // const storedUser = localStorage.getItem('user')
-    // if (!storedUser) return false
-    
-    // const user = JSON.parse(storedUser) as User
-    return user.value.email === email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-  }
+    return user.value.email === email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
 
   const handleEmailChange = (email: string) => {
-    userEmail.value = email
-    isEmailValid.value = validateEmail(email)
-  }
+    userEmail.value = email;
+    isEmailValid.value = validateEmail(email);
+
+    // Update payload value with the email
+    payload.value.email = email;
+  };
 
   const submitDeletion = async () => {
-    isLoading.value = true
-    const res = await auth_api.$_delete_account({
+    isLoading.value = true;
+    try {
+      const res = await auth_api.$_delete_account({
         email: userEmail.value,
         reason: deleteReason.value,
-      }) as any
+      });
 
-      if(res.type !== 'ERROR') {
-        router.push('/delete-account-success')
+      if (res.type !== 'ERROR') {
+        router.push('/delete-account-success');
       }
-  }
+    } catch (error) {
+      console.error('Error deleting account:', error);
+    } finally {
+      isLoading.value = false;
+    }
+  };
 
   return {
     currentStep,
@@ -45,5 +54,7 @@ export const useDeleteAccount = () => {
     isEmailValid,
     handleEmailChange,
     submitDeletion,
-  }
-}
+    initiateDeleteAccount,
+    loading,
+  };
+};
