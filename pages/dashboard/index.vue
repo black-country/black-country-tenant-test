@@ -177,7 +177,7 @@
           </svg>
         </div>
         <div class="">
-          <h2 class="text-base font-medium text-[#171717] pb-2 text-[#171717]">
+          <h2 class="text-base font-medium text-[#171717]  text-[#171717] bg-white rounded-md py-5 px-4">
             Recent applications
           </h2>
           <div v-if="!loadingRentals && rentalsList.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -313,7 +313,7 @@
             
           </div>
       </section>
-      <div v-else class="text-center text-gray-500 py-12">
+      <div v-else class="text-center text-gray-500 py-12 bg-white rounded-md py-5 px-4 mt-3">
               <img src="@/assets/icons/event-illustrations.svg" alt="No events" class="mx-auto mb-2" />
               <p>No Recent Rentals Available</p>
             </div>
@@ -350,7 +350,7 @@
           <div class="pt-3 rounded-lg">
             <div
               v-if="!paymentList?.length && !loading"
-              class="text-center text-gray-500 py-12"
+              class="text-center text-gray-500 py-12 bg-white rounded-md py-5 px-4"
             >
               <img
                 src="@/assets/icons/transaction-illustration.svg"

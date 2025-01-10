@@ -47,7 +47,7 @@
              <button
              @click="emit('proceedToDeleteAccount', deleteReason)"
              :disabled="!deleteReason || loading"
-             class="w-full py-3.5 px-4 bg-[#292929] text-white rounded-lg text-xs font-medium disabled:opacity-50 flex items-center justify-center"
+             class="w-full py-3.5 px-4 bg-[#292929] text-white rounded-lg text-sm font-medium disabled:opacity-50 flex items-center justify-center"
            >
              <span v-if="isLoading" class="mr-2">
                <icon-loader class="w-5 h-5 text-sm animate-spin" />

@@ -217,10 +217,10 @@
           </div>
         </div>
   
-        <div
-        class="border-[0.5px] border-gray-25 rounded-md bg-white text-sm font- text-[#BA110B] p-4 flex justify-between items-center"
+        <div @click="showBLogoutModal = true"
+        class="border-[0.5px] border-gray-25 cursor-pointer rounded-md bg-white text-sm font- text-[#BA110B] p-4 flex justify-between items-center"
       >
-  <div @click="showBLogoutModal = true" class="flex  cursor-pointer items-center gap-x-3">
+  <div  class="flex  cursor-pointer items-center gap-x-3">
       <img :src="dynamicIcons('logout-icon')" alt="" />
       <p>Log out</p>
   </div>
@@ -242,17 +242,16 @@
             />
           </svg>
         </div>
-      </div>
+        </div>
 
-      <div
-        class="border-[0.5px] border-gray-25 rounded-md bg-white text-sm font- text-[#BA110B] p-4 flex justify-between items-center"
+      <div @click="deleteAccountModal = true"
+        class="border-[0.5px] border-gray-25 cursor-pointer rounded-md bg-white text-sm font- text-[#BA110B] p-4 flex justify-between items-center"
       >
-  <div @click="deleteAccountModal = true" class="flex  cursor-pointer items-center gap-x-3">
-      <img :src="dynamicIcons('delete-user-icon')" alt="" />
-      <p>Delete my account</p>
-  </div>
-  
-      <div>
+        <div class="flex  cursor-pointer items-center gap-x-3">
+          <img :src="dynamicIcons('delete-user-icon')" alt="" />
+          <p>Delete my account</p>
+        </div>
+        <div>
           <svg
             width="16"
             height="16"
@@ -330,7 +329,7 @@
     class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
     @click.self="deleteAccountModal = false"
   >
-    <div class="bg-white rounded-xl p-6 max-w-md w-full text-center shadow-lg">
+    <div class="bg-white rounded-xl p-6 max-w-md w-full text-center shadow-lg m-3 lg:m-0">
       <!-- Icon -->
       <div class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4">
         <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
