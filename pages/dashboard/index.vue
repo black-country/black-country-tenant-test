@@ -5,7 +5,9 @@
       <div class="max-w-4xl mx-auto">
         <h1 class="text-lg text-[#1D2739] font-medium mb-6">
           {{ greeting ?? "Hello" }}, {{ user?.firstName ?? "Nil" }}
-          {{ user?.lastName ?? "Nil" }}
+          {{ user?.lastName ?? "Nil" }}    
+           <!-- {{ isMobileView }}  -->
+          <!-- {{ checkMobileView() }} -->
         </h1>
 
         <!-- Setup Actions Section -->
@@ -458,9 +460,15 @@
         </section>
       </div>
     </div>
-    <CoreModal :isOpen="showWelcomeModal" @close="closeWelcomeModal">
+    <CoreModal v-if="!isMobileView" :isOpen="showWelcomeModal" @close="closeWelcomeModal">
       <CoreWelcome @close="closeWelcomeModal" @start="startTour" class="" />
     </CoreModal>
+
+    <!-- <CoreModal v-if="isMobileView" :isOpen="showWelcomeModal" @close="closeWelcomeModal">
+      <CoreWelcome @close="closeWelcomeModal" @start="handleStartAction" class="" />
+    </CoreModal> -->
+    <CoreTourGuide ref="tourGuide" :pageName="'home-page'" />
+    <TourWelcomeModal />
   </main>
 </template>
 
@@ -486,13 +494,34 @@ const { isObjectComplete, checkObjectCompletion } = useObjectCompletionCheck();
 const { loadingRentals, rentalsList } = useGetRentals();
 import { useGreeting } from "@/composables/core/useGreeting";
 import { useUser } from "@/composables/auth/user";
+import { useTourGuide } from '@/composables/core/useTourGuide'
+import TourWelcomeModal from '../../components/TourWelcomeModal.vue'
+const { isMobileView, startTourGuide } = useTourGuide()
+// import TourGuide from "../../components/core/TourGuide.vue";
 const { user } = useUser();
+
 const { loading: fetchingMyHomeInfo, myHomeInfo } = useFetchMyHomeInfo();
 const { paymentList, loading } = useGetTransactionHistory();
 const { loading: fetchingUpcomingActivities, upcomingActivitiesList } =
   useFetchUpcomingActivities();
 // import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
 // const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
+const tourGuide = ref(null) as any
+
+const handleStartAction = () => {
+  console.log('start tour')
+  showWelcomeModal.value = false
+  // startTourGuide('home-page')
+  if (tourGuide.value) {
+    tourGuide.value.startTourGuide('home-page');
+  } else {
+    console.error('TourGuide component is not available');
+  }
+}
+
+onMounted(() => {
+  startTourGuide('home-page')
+})
 
 const filteredRentalApplications = computed(() => {
   return rentalsList.value.filter(
@@ -721,8 +750,6 @@ const startTour = () => {
   localStorage.setItem("welcome-modal-shown", "false"); // Corrected the key here
   tourStatus.value = true
   closeWelcomeModal()
-  // emit('start')
-  // router.push("/dashboard/listings");
 };
 </script>
 

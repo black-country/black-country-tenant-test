@@ -1497,7 +1497,7 @@
       </div>
       <div ref="propertyCardsRef"
         v-if="computedPropertiesList.length"
-        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-6 lg:grid-cols-4 container mx-auto gap-6"
+        class="grid px-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mt-6 lg:grid-cols-4 container mx-auto gap-6"
       >
         <div
           v-if="!loadingProperties && computedPropertiesList.length"
@@ -2352,7 +2352,7 @@
       text="Fetching properties..."
       logo=""
   />
-  <CoreTourGuide />
+  <CoreTourGuide :pageName="'list-page'" />
 
   <!-- <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
     <CorePropertyFilters @close="showFilterDrawer = false" />
@@ -2364,6 +2364,7 @@
   const { $introJs } = useNuxtApp()
   import { useFetchPropertiesByLocation } from '@/composables/modules/property/useFilterByLocation'
   import { use_tenant_profile } from '@/composables/auth/fetchProfile'
+  import { useTourGuide } from '@/composables/core/useTourGuide'
   const { loading: fetchingProfile, profileObj } = use_tenant_profile()
 import { useFilterProperty } from '@/composables/modules/property/useFilterListings'
 // import { useShepherd } from "vue-shepherd";
@@ -2378,6 +2379,7 @@ import { useUser } from '@/composables/auth/user'
 import { useRouter, useRoute } from "vue-router";
 const { properties: filteredProperties, loading: filterProperties } = useFilterProperty()
 const { propertyLocation, loading: loadingPropertyLocation } = useFetchPropertiesByLocation()
+const { startTourGuide  } = useTourGuide()
 
 const router = useRouter();
 const isOpen = ref(false)
@@ -2414,6 +2416,12 @@ interface PropertyLocation {
   latitude: string;
   longitude: string;
 }
+
+startTourGuide('list-page')
+
+onMounted(() => {
+  startTourGuide('list-page')
+})
 
 // Set default static tabs
 
@@ -2654,9 +2662,9 @@ const handleSearchInput = () => {
   console.log("Searching:", searchQuery.value);
 };
 
-definePageMeta({
-  middleware: "auth",
-});
+// definePageMeta({
+//   middleware: "auth",
+// });
 
 const handleButtonClick = () => {
   console.log("ok");

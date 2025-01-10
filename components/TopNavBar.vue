@@ -280,6 +280,8 @@
   
   <script setup lang="ts">
    import { use_tenant_profile } from '@/composables/auth/fetchProfile'
+   import { useTourGuide } from '@/composables/core/useTourGuide'
+const { isMobileView, startTourGuide  } = useTourGuide()
    const { $introJs } = useNuxtApp()
     const { loading, profileObj } = use_tenant_profile()
 
@@ -412,11 +414,13 @@ watch(
     console.log(`Tour status changed from ${oldVal} to ${newVal}`);
     // Add your logic here
     // startTour();
-    if (newVal) {
+    if(isMobileView){
+      if (newVal) {
       startTour();
       console.log('Tour is now active.');
     } else {
       console.log('Tour is now inactive.');
+    }
     }
   }, { immediate: true }
 );
