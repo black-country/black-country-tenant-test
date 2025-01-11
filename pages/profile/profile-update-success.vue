@@ -24,7 +24,7 @@
    <div class="pt-6">
     <button 
     class="bg-[#292929] text-white w-full text-sm py-4 rounded-lg font-semibold" 
-    @click="handleSuccess">
+    @click="router.back()">
     Continue
   </button>
    </div>
@@ -35,9 +35,9 @@
   <script setup lang="ts">
 const router = useRouter();
 
-const handleSuccess = () => {
-  router.push("/profile/profile-settings");
-};
+// const handleSuccess = () => {
+//   router.push("/profile/profile-settings");
+// };
 
 // definePageMeta({
 //   middleware: "auth",
