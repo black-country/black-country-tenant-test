@@ -468,7 +468,7 @@
       <CoreWelcome @close="closeWelcomeModal" @start="handleStartAction" class="" />
     </CoreModal> -->
     <CoreTourGuide ref="tourGuide" :pageName="'home-page'" />
-    <TourWelcomeModal />
+    <TourWelcomeModal v-if="isMobileView" />
   </main>
 </template>
 
@@ -519,9 +519,9 @@ const handleStartAction = () => {
   }
 }
 
-onMounted(() => {
-  startTourGuide('home-page')
-})
+// onMounted(() => {
+//   startTourGuide('home-page')
+// })
 
 const filteredRentalApplications = computed(() => {
   return rentalsList.value.filter(

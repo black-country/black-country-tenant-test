@@ -150,11 +150,11 @@ onMounted(() => {
   }
 
   // Start the tour if not already active
-  if (!isTourActive.value) {
-    startTourGuide(props.pageName);
-  } else {
-    console.warn('Tour already active. Skipping redundant startTourGuide call.');
-  }
+  // if (!isTourActive.value) {
+  //   startTourGuide(props.pageName);
+  // } else {
+  //   console.warn('Tour already active. Skipping redundant startTourGuide call.');
+  // }
 });
 
 defineExpose({
