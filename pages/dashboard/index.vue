@@ -460,15 +460,15 @@
         </section>
       </div>
     </div>
-    <CoreModal v-if="!isMobileView" :isOpen="showWelcomeModal" @close="closeWelcomeModal">
+    <!-- <CoreModal v-if="!isMobileView" :isOpen="showWelcomeModal" @close="closeWelcomeModal">
       <CoreWelcome @close="closeWelcomeModal" @start="startTour" class="" />
-    </CoreModal>
+    </CoreModal> -->
 
     <!-- <CoreModal v-if="isMobileView" :isOpen="showWelcomeModal" @close="closeWelcomeModal">
       <CoreWelcome @close="closeWelcomeModal" @start="handleStartAction" class="" />
     </CoreModal> -->
     <CoreTourGuide ref="tourGuide" :pageName="'home-page'" />
-    <TourWelcomeModal v-if="isMobileView" />
+    <TourWelcomeModal />
   </main>
 </template>
 
