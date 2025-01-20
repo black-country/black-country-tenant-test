@@ -4,13 +4,13 @@ import { getAuth } from 'firebase/auth';
 
 // Your Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyDVXairsksut9n2JfhqyL7vMMFqcvn5GIk",
-    authDomain: "black-country-homes.firebaseapp.com",
-    projectId: "black-country-homes",
-    storageBucket: "black-country-homes.appspot.com",
-    messagingSenderId: "44936017272",
-    appId: "1:44936017272:web:5b6953bf15d0ccbe51448d",
-    measurementId: "G-LVGZV8WK6Z"
+  apiKey: "AIzaSyBrIudzjFc5R6oQMgq8FOxdhxj0isybBDI",
+  authDomain: "blackcountry-576e3.firebaseapp.com",
+  projectId: "blackcountry-576e3",
+  storageBucket: "blackcountry-576e3.firebasestorage.app",
+  messagingSenderId: "67001512640",
+  appId: "1:67001512640:web:8be16baaea30c284bb3325",
+  measurementId: "G-RFZD5YV4EB"
 };
 
 export default defineNuxtPlugin(() => {
