@@ -29,15 +29,15 @@ export const useGetRental = () => {
   watch(
     () => route,
     (newId, oldId) => {
-        console.log(newId.params.id, 'updated route here 00000000', propertyObj)
+        console.log(route?.query?.rentalId, 'updated route here 00000000', propertyObj)
         // fetchPolicyById();
         getRental();
     },
     { immediate: true } // Ensures the watcher runs immediately
 );
-  // onMounted(() => {
-  //   getRental();
-  // });
+  onMounted(() => {
+    getRental();
+  });
 
   return {
     getRental,

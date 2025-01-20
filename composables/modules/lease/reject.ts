@@ -22,6 +22,7 @@ export const useRejectLease = () => {
 					duration: 3000
 				});
 				router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-signed-success`)
+				window.location.href = `/dashboard/listings/${route?.params?.id}/rental-applications/lease-signed-success`
 				return res;  // Fix: The return statement was incomplete.
 			} else {
 				showToast({

@@ -36,6 +36,7 @@ export function useCreateRentalApplication() {
 
     try {
       const res = await rental_api.$_create(id, payload) as any;
+      console.log(res, 'res here ooo')
       if (res.type !== 'ERROR') {
         showToast({
           title: "Success",
@@ -44,7 +45,7 @@ export function useCreateRentalApplication() {
           duration: 3000
         });
         clearLocalStorageExceptUserAndToken();
-        router.push(`/dashboard/listings/${route.params.id}/rental-applications/details`)
+        router.push({ path: `/dashboard/listings/${route.params.id}/rental-applications/details`, query: { rentalId: res?.data?.id }})
   
       } else {
         showToast({
