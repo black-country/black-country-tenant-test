@@ -8,6 +8,8 @@ import image5 from '@/assets/img/my-home.png'
 import image6 from '@/assets/img/save.png'
 import image7 from '@/assets/img/map-view.png'
 import image8 from '@/assets/img/list-view.png'
+import { use_update_profile } from '@/composables/auth/updateProfile'
+const {  updateProfile, credential, } = use_update_profile()
 
 const isTourActive = ref(false)
 const currentStep = ref(0)
@@ -92,11 +94,40 @@ export const useTourGuide = () => {
     }
   }
 
-  const endTour = () => {
+  const endTour = async () => {
     const currentConfig = getCurrentTourConfig()
     if (currentConfig) {
       localStorage.setItem(currentConfig.storageKey, 'true')
     }
+
+       // API call to update profile
+      //  try {
+      //   await updateProfile({
+      //     hasTakenTour: true
+      //   })
+      //   console.log('Profile updated successfully');
+      // } catch (error) {
+      //   console.error('Error updating profile:', error);
+      // }
+
+      try {
+        // Check if the user is on the specific URL path
+        const currentUrl = window.location.pathname + window.location.search
+        if (currentUrl === '/dashboard/listings?view=grid') {
+          await updateProfile({
+            hasExploredListings: true
+          })
+          console.log('Profile updated with hasExploredListings: true')
+        } else {
+          await updateProfile({
+            hasTakenTour: true
+          })
+          console.log('Profile updated with hasTakenTour: true')
+        }
+      } catch (error) {
+        console.error('Error updating profile:', error)
+      }
+
     isTourActive.value = false
   }
 

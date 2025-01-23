@@ -1,7 +1,7 @@
 <!-- components/RentalApplication.vue -->
 <template>
    <main>
-    <!-- {{ rentalObj }} -->
+    <!-- {{ !!rentalObj?.rentalLeaseAgreement }} -->
      <!-- <div v-if="!loading && Object.keys(propertyObj?.rentalApplication).length" class="max-w-3xl mx-auto p-4"> -->
       <div v-if="!loading && propertyObj?.rentalApplication && Object.keys(propertyObj.rentalApplication).length" class="max-w-3xl mx-auto p-4">
       <!-- Navigation -->
@@ -157,6 +157,7 @@
     </button>
 
     <!-- Sign Agreement Button -->
+     <!-- {{ rentalObj }} -->
     <button
       :disabled="!isSignAgreementEnabled"
       @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement`)"

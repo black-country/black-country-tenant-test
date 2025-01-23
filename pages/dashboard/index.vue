@@ -1,6 +1,7 @@
 <template>
   <main>
     <TopNavBar :tourStatus="tourStatus" class="" />
+     <!-- {{ user }} -->
     <div class="bg-gray-25 min-h-screen p-3 lg:p-6">
       <div class="max-w-4xl mx-auto">
         <h1 class="text-lg text-[#1D2739] font-medium mb-6">
@@ -199,7 +200,9 @@
                 alt="Living Room"
                 class="object-cover"
               /> -->
-              <img class='h-72 object-cover rounded-xl' src="@/assets/img/home-Image.png" />
+              <!-- {{ rental.house.images[0] }} -->
+              <img v-if="!rental?.house?.images[0]?.length" class='h-72 object-cover rounded-xl' src="@/assets/img/home-Image.png" />
+              <img v-else class='h-72 object-cover rounded-xl' :src="rental?.house?.images[0]" />
 
               <!-- Text Overlay with Transparent Background -->
               <div
@@ -460,6 +463,7 @@
         </section>
       </div>
     </div>
+    <!-- {{ user }} -->
     <!-- <CoreModal v-if="!isMobileView" :isOpen="showWelcomeModal" @close="closeWelcomeModal">
       <CoreWelcome @close="closeWelcomeModal" @start="startTour" class="" />
     </CoreModal> -->
@@ -467,8 +471,9 @@
     <!-- <CoreModal v-if="isMobileView" :isOpen="showWelcomeModal" @close="closeWelcomeModal">
       <CoreWelcome @close="closeWelcomeModal" @start="handleStartAction" class="" />
     </CoreModal> -->
-    <CoreTourGuide ref="tourGuide" :pageName="'home-page'" />
-    <TourWelcomeModal />
+    <!-- {{ user }} -->
+    <CoreTourGuide v-if="!user.hasTakenTour" ref="tourGuide" :pageName="'home-page'" />
+    <TourWelcomeModal  v-if="!user.hasTakenTour" />
   </main>
 </template>
 

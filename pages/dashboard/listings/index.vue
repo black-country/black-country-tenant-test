@@ -2352,7 +2352,7 @@
       text="Fetching properties..."
       logo=""
   />
-  <CoreTourGuide :pageName="'list-page'" />
+  <CoreTourGuide v-ii="!user.hasExploredListing" :pageName="'list-page'" />
 
   <!-- <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
     <CorePropertyFilters @close="showFilterDrawer = false" />

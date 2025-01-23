@@ -4,9 +4,10 @@ import { ref, watch, onMounted } from "vue";
 import { useUser } from '@/composables/auth/user'
 import { useCustomToast } from '@/composables/core/useCustomToast'
 import { use_tenant_profile } from "@/composables/auth/fetchProfile";
+const router = useRouter();
 
 export const use_update_profile = () => {
-  const Router = useRouter();
+  const router = useRouter();
   const { updateUser } = useUser();
   const { showToast } = useCustomToast();
   const { profileObj } = use_tenant_profile();
@@ -20,6 +21,8 @@ export const use_update_profile = () => {
     firstName: string;
     lastName: string;
     email: string;
+    hasExploredListings: boolean;
+    hasTakenTour: boolean;
     isEmailVerified: boolean;
     isActive: boolean;
     phoneNumber: string;
@@ -55,8 +58,10 @@ export const use_update_profile = () => {
     isEmailVerified: false,
     isActive: false,
     phoneNumber: "",
+    hasExploredListings: false,
     dateOfBirth: "",
     gender: "",
+    hasTakenTour: false,
     maritalStatus: "",
     profilePicture: null,
     currentLandlord: null,
@@ -134,6 +139,7 @@ export const use_update_profile = () => {
   const updateProfile = async (profilePayload: Partial<ProfileCredential>) => {
     loading.value = true;
     error.value = null;
+    const router = useRouter();
 
     try {
       // Process the payload to ensure string types
@@ -164,7 +170,7 @@ export const use_update_profile = () => {
           duration: 3000
         });
 
-        Router.push('/profile/profile-update-success');
+        router.push('/profile/profile-update-success');
         
         return res;
       } else {
@@ -173,12 +179,12 @@ export const use_update_profile = () => {
     } catch (err: any) {
       error.value = err.message || "An unexpected error occurred while updating the profile.";
       
-      showToast({
-        title: "Error",
-        message: error.value,
-        toastType: "error",
-        duration: 3000
-      });
+      // showToast({
+      //   title: "Error",
+      //   message: error.value,
+      //   toastType: "error",
+      //   duration: 3000
+      // });
 
       return Promise.reject(error.value);
     } finally {
