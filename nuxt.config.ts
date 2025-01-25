@@ -31,7 +31,7 @@ export default {
     cssPath: "@/assets/css/main.css",
   },
   build: {
-    transpile: []
+    transpile: ["@pdftron/webviewer"],
   },
   runtimeConfig: {
     public: {
@@ -49,7 +49,12 @@ export default {
   vite: {
     optimizeDeps: {
       include: ['fast-deep-equal']
-    }
+    },
+    server: {
+      fs: {
+        allow: ["public/lib"],
+      },
+    },
   },
 
   compatibilityDate: "2024-09-30"

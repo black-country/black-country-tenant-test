@@ -25,7 +25,7 @@
       </div>
 
 
-    <HomeActionButtons  />
+    <HomeActionButtons :myHomeInfo="myHomeInfo"  />
 
 
     <!-- <section class="mt-6 space-y-4">
@@ -275,7 +275,7 @@ const { maintenanceRequests, loading: fetchingRequests } = useFetchMaintenanceRe
 
   const handleClick = () => {
     if(!user.value.hasMoveInChecklist){
-      router.push('/dashboard/home/move-in-checklist')
+      router.push({ path: '/dashboard/home/move-in-checklist', query: { rentalId: myHomeInfo?.value?.id }})
     }
   }
 

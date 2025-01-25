@@ -675,6 +675,11 @@ const handleSelectedRental = (item) => {
 definePageMeta({
   middleware: "auth",
 });
+
+const hasExploredListings = computed(() => {
+  return profileObj?.value?.hasExploredListing
+})
+
 const setupActions = ref([
   {
     checked: isComplete,
@@ -684,7 +689,7 @@ const setupActions = ref([
     path: "/profile",
   },
   {
-    checked: profileObj?.value?.hasExploredListing,
+    checked: hasExploredListings.value,
     title: "Explore Available Spaces",
     description:
       "Explore a wide range of properties to find the perfect match for your lifestyle and budget.",
@@ -692,6 +697,7 @@ const setupActions = ref([
   },
   // { checked: isAccountSetupComplete.value, title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '/profile/payment-information' }
 ]);
+
 
 const paymentActions = ref([
   {

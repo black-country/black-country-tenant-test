@@ -62,8 +62,10 @@
         </svg>
       </div>
     </button>
+    <!-- {{ myHomeInfo.rentPayment }} -->
     <button
-      class="bg-[#EBF0EC] text-[#1D2739] p-4 rounded-lg flex items-center justify-between"
+     :disabled="myHomeInfo.rentPayment"
+      class="bg-[#EBF0EC] text-[#1D2739] disabled:cursor-not-allowed disabled:opacity-50 p-4 rounded-lg flex items-center justify-between"
     >
       <p class="-mb-14">Pay Rent</p>
       <div class="mb-10">
@@ -141,6 +143,14 @@
 import { ref } from 'vue'
 
 const router = useRouter()
+
+const props = defineProps({
+  myHomeInfo: {
+    type: Object,
+    required: true,
+    default: () => {}
+  }
+})
 
 // Modal visibility state
 const isModalOpen = ref(false)

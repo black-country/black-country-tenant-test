@@ -90,7 +90,7 @@
               <h3 class="text-sm font-medium mb-2">
                 Landlord/Property Manager:
               </h3>
-              <label v-if="containsHttps(lease?.leaseAgreementContent)" class="block text-sm text-gray-500 mb-1">Signaturessssss</label>
+              <label v-if="containsHttps(lease?.leaseAgreementContent)" class="block text-sm text-gray-500 mb-1">Signature</label>
               <div v-if="containsHttps(lease?.leaseAgreementContent)" class="border-b-2 border-dotted h-20 flex mb-4">
                 <img
                   :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.houseOwnerSignatureUrl"

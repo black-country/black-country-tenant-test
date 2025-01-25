@@ -43,7 +43,7 @@
                 text="Fetching checklist...."
                 logo=""
             />
-       <section v-else class="flex flex-col justify-between items-center space-y-2 mt-10">
+       <section v-else class="flex flex-col justify-between border-[0.5px] border-gray-100 rounded-lg py-10 items-center space-y-2 mt-10">
              <svg width="152" height="124" viewBox="0 0 152 124" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="76" cy="58" r="52" fill="#EAEAEA"/>
             <circle cx="21" cy="25" r="5" fill="#BDBDBD"/>
@@ -70,7 +70,7 @@
         </div>
       </div>
   
-      <div class="flex justify-between items-center max-w-3xl mx-auto px-4 py-10">
+      <div v-if="Object.keys(checklist)?.length" class="flex justify-between items-center max-w-3xl mx-auto px-4 py-10">
         <button
           class="rouned-lg text-sm px-6 py-3 text-[#292929] rounded-lg border-[0.5px] border-gray-100"
         >
