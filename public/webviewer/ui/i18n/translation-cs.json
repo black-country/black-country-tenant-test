@@ -37,6 +37,7 @@
     "fitToWidth": "Přizpůsobit na šířku",
     "more": "Více",
     "openFile": "Otevřít soubor",
+    "showMoreFiles": "Zobrazit více souborů",
     "page": "Strana",
     "of": "z",
     "pagePrev": "Předchozí stránka",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Kopírovat vybranou barvu",
     "showMoreColors": "Zobrazit více barev",
     "showLessColors": "Zobrazit méně barev",
-    "fromCustomColorPicker": "z Custom Color Picker"
+    "fromCustomColorPicker": "z Custom Color Picker",
+    "newSheetDocument": "Nová tabulka"
   },
   "annotation": {
     "areaMeasurement": "Plocha",
@@ -268,7 +270,8 @@
       "close": "Zavřít všechny anotace"
     },
     "comparePanel": "Panel porovnání",
-    "watermarkPanel": "Panel vodoznaku"
+    "watermarkPanel": "Panel vodoznaku",
+    "mainMenu": "Hlavní menu"
   },
   "message": {
     "showMore": "Zobrazit více",
@@ -1263,6 +1266,7 @@
     "numberList": "Číslovaný seznam",
     "decreaseIndent": "Zmenšit odsazení",
     "increaseIndent": "Zvětšit odsazení",
+    "nonPrintingCharacters": "Netisknutelné znaky",
     "insertLink": "Vložit odkaz",
     "insertImage": "Vložit obrázek",
     "image": "Obraz",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Výběr barvy"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Horní záhlaví",
+      "leftHeader": "Levé záhlaví",
+      "rightHeader": "Pravé záhlaví",
+      "bottomHeader": "Spodní záhlaví",
+      "documentContent": "Obsah dokumentu"
+    }
   }
 }

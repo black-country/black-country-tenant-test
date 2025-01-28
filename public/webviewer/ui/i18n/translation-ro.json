@@ -37,6 +37,7 @@
     "fitToWidth": "Se potrivește la lățime",
     "more": "Mai mult",
     "openFile": "Deschide fișierul",
+    "showMoreFiles": "Afișați mai multe fișiere",
     "page": "Pagină",
     "of": "de",
     "pagePrev": "Pagina anterioară",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Copiați culoarea selectată",
     "showMoreColors": "Afișează mai multe culori",
     "showLessColors": "Afișați mai puține culori",
-    "fromCustomColorPicker": "din Custom Color Picker"
+    "fromCustomColorPicker": "din Custom Color Picker",
+    "newSheetDocument": "Noua foaie de calcul"
   },
   "annotation": {
     "areaMeasurement": "Zonă",
@@ -268,7 +270,8 @@
       "close": "Închideți toate adnotările"
     },
     "comparePanel": "Panoul de comparare",
-    "watermarkPanel": "Panoul filigran"
+    "watermarkPanel": "Panoul filigran",
+    "mainMenu": "Meniul principal"
   },
   "message": {
     "showMore": "Afișați mai multe",
@@ -1263,6 +1266,7 @@
     "numberList": "Lista numerotata",
     "decreaseIndent": "Reduceți indentarea",
     "increaseIndent": "Mareste indent-ul",
+    "nonPrintingCharacters": "Caractere care nu se imprimă",
     "insertLink": "Introduceți linkul",
     "insertImage": "Inserați imaginea",
     "image": "Imagine",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Selector de culoare"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Antet de sus",
+      "leftHeader": "Antet din stânga",
+      "rightHeader": "Antet dreapta",
+      "bottomHeader": "Antet de jos",
+      "documentContent": "Conținutul documentului"
+    }
   }
 }

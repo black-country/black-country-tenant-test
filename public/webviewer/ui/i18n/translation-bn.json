@@ -37,6 +37,7 @@
     "fitToWidth": "প্রস্থে মাপসই",
     "more": "আরও",
     "openFile": "খোলা ফাইল",
+    "showMoreFiles": "আরও ফাইল দেখান",
     "page": "পাতা",
     "of": "এর",
     "pagePrev": "আগের পৃষ্ঠা",
@@ -142,7 +143,8 @@
     "copySelectedColor": "নির্বাচিত রঙ অনুলিপি করুন",
     "showMoreColors": "আরো রং দেখান",
     "showLessColors": "কম রং দেখান",
-    "fromCustomColorPicker": "কাস্টম কালার পিকার থেকে"
+    "fromCustomColorPicker": "কাস্টম কালার পিকার থেকে",
+    "newSheetDocument": "নতুন স্প্রেডশীট"
   },
   "annotation": {
     "areaMeasurement": "এলাকা",
@@ -268,7 +270,8 @@
       "close": "সমস্ত টীকা বন্ধ করুন"
     },
     "comparePanel": "প্যানেল তুলনা করুন",
-    "watermarkPanel": "ওয়াটারমার্ক প্যানেল"
+    "watermarkPanel": "ওয়াটারমার্ক প্যানেল",
+    "mainMenu": "প্রধান মেনু"
   },
   "message": {
     "showMore": "আরো দেখুন",
@@ -1263,6 +1266,7 @@
     "numberList": "সংখ্যাযুক্ত তালিকা",
     "decreaseIndent": "ঘটণা হ্রাস",
     "increaseIndent": "ইন্ডেন্ট বাড়ান",
+    "nonPrintingCharacters": "অ মুদ্রণ অক্ষর",
     "insertLink": "লিঙ্ক ঢোকান",
     "insertImage": "ছবি ঢোকান",
     "image": "ছবি",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "কালার পিকার"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "শীর্ষ শিরোনাম",
+      "leftHeader": "বাম হেডার",
+      "rightHeader": "ডান হেডার",
+      "bottomHeader": "নীচের শিরোনাম",
+      "documentContent": "নথি বিষয়বস্তু"
+    }
   }
 }

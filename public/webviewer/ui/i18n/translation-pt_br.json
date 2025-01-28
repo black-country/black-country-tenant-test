@@ -37,6 +37,7 @@
     "fitToWidth": "Ajustar à largura",
     "more": "Mais",
     "openFile": "Abrir arquivo",
+    "showMoreFiles": "Mostrar mais arquivos",
     "page": "Página",
     "of": "de",
     "pagePrev": "Página anterior",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Copiar cor selecionada",
     "showMoreColors": "Mostrar mais cores",
     "showLessColors": "Mostrar menos cores",
-    "fromCustomColorPicker": "do seletor de cores personalizado"
+    "fromCustomColorPicker": "do seletor de cores personalizado",
+    "newSheetDocument": "Nova Planilha"
   },
   "annotation": {
     "areaMeasurement": "Medição de área",
@@ -268,7 +270,8 @@
       "close": "Fechar todas as anotações"
     },
     "comparePanel": "Painel de comparação",
-    "watermarkPanel": "Painel de marca d'água"
+    "watermarkPanel": "Painel de marca d'água",
+    "mainMenu": "Menu Principal"
   },
   "message": {
     "showMore": "Mostre mais",
@@ -1263,6 +1266,7 @@
     "numberList": "Lista numerada",
     "decreaseIndent": "Recuar devagar",
     "increaseIndent": "Aumentar recuo",
+    "nonPrintingCharacters": "Caracteres não imprimíveis",
     "insertLink": "Inserir link",
     "insertImage": "Inserir Imagem",
     "image": "Imagem",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Seletor de cores"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Cabeçalho superior",
+      "leftHeader": "Cabeçalho Esquerdo",
+      "rightHeader": "Cabeçalho direito",
+      "bottomHeader": "Cabeçalho inferior",
+      "documentContent": "Conteúdo do documento"
+    }
   }
 }

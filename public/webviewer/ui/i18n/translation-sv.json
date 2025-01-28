@@ -37,6 +37,7 @@
     "fitToWidth": "Passar till bredden",
     "more": "Mer",
     "openFile": "Öppna fil",
+    "showMoreFiles": "Visa fler filer",
     "page": "Sida",
     "of": "av",
     "pagePrev": "Föregående sida",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Kopiera vald färg",
     "showMoreColors": "Visa fler färger",
     "showLessColors": "Visa färre färger",
-    "fromCustomColorPicker": "från Custom Color Picker"
+    "fromCustomColorPicker": "från Custom Color Picker",
+    "newSheetDocument": "Nytt kalkylblad"
   },
   "annotation": {
     "areaMeasurement": "Område",
@@ -268,7 +270,8 @@
       "close": "Stäng alla anteckningar"
     },
     "comparePanel": "Jämför panel",
-    "watermarkPanel": "Vattenstämpelpanel"
+    "watermarkPanel": "Vattenstämpelpanel",
+    "mainMenu": "Huvudmeny"
   },
   "message": {
     "showMore": "Visa mer",
@@ -1263,6 +1266,7 @@
     "numberList": "Numrerad lista",
     "decreaseIndent": "Minska indraget",
     "increaseIndent": "Öka indrag",
+    "nonPrintingCharacters": "Tecken som inte skrivs ut",
     "insertLink": "Infoga länk",
     "insertImage": "Infoga bild",
     "image": "Bild",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Färgväljare"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Topphuvud",
+      "leftHeader": "Vänster rubrik",
+      "rightHeader": "Höger rubrik",
+      "bottomHeader": "Nedre rubrik",
+      "documentContent": "Dokumentinnehåll"
+    }
   }
 }

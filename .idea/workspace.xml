@@ -5,7 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2c1c9f7e-816b-42d2-a1dd-6d96d4bab59d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/components/RentalApplications/AmountCard.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/RentalApplications/AmountCard.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/WebViewer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/WebViewer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/core/WebViewer.vue" beforeDir="false" afterPath="$PROJECT_DIR$/components/core/WebViewer.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,7 +42,7 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "yarn",
-    "ts.external.directory.path": "/Users/mac/projects/blackCountry/black-country-tenant/node_modules/typescript/lib",
+    "ts.external.directory.path": "/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -58,6 +63,7 @@
       <updated>1732423706905</updated>
       <workItem from="1732423708124" duration="706000" />
       <workItem from="1732617855406" duration="3806000" />
+      <workItem from="1737905565557" duration="2310000" />
     </task>
     <servers />
   </component>

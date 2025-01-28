@@ -37,6 +37,7 @@
     "fitToWidth": "너비에 맞추기",
     "more": "더보기",
     "openFile": "파일열기",
+    "showMoreFiles": "더 많은 파일 표시",
     "page": "페이지",
     "of": "~의",
     "pagePrev": "이전페이지",
@@ -142,7 +143,8 @@
     "copySelectedColor": "선택한 색상 복사",
     "showMoreColors": "더 많은 색상 표시",
     "showLessColors": "색상 줄이기",
-    "fromCustomColorPicker": "사용자 정의 색상 선택기에서"
+    "fromCustomColorPicker": "사용자 정의 색상 선택기에서",
+    "newSheetDocument": "새로운 스프레드시트"
   },
   "annotation": {
     "areaMeasurement": "면적측정",
@@ -268,7 +270,8 @@
       "close": "모든 주석 닫기"
     },
     "comparePanel": "비교 패널",
-    "watermarkPanel": "워터마크 패널"
+    "watermarkPanel": "워터마크 패널",
+    "mainMenu": "메인 메뉴"
   },
   "message": {
     "showMore": "자세히보기",
@@ -1263,6 +1266,7 @@
     "numberList": "번호가 매겨진 목록",
     "decreaseIndent": "들여쓰기 줄이기",
     "increaseIndent": "들여쓰기 증가",
+    "nonPrintingCharacters": "인쇄할 수 없는 문자",
     "insertLink": "링크 삽입",
     "insertImage": "이미지 삽입",
     "image": "영상",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "색상 선택기"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "상단 헤더",
+      "leftHeader": "왼쪽 헤더",
+      "rightHeader": "오른쪽 헤더",
+      "bottomHeader": "하단 헤더",
+      "documentContent": "문서 내용"
+    }
   }
 }

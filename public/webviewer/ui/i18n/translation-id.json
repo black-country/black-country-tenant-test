@@ -37,6 +37,7 @@
     "fitToWidth": "Sesuai dengan lebar",
     "more": "Lagi",
     "openFile": "Membuka file",
+    "showMoreFiles": "Tampilkan Lebih Banyak File",
     "page": "Halaman",
     "of": "dari",
     "pagePrev": "Halaman sebelumnya",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Salin Warna yang Dipilih",
     "showMoreColors": "Tampilkan Lebih Banyak Warna",
     "showLessColors": "Tampilkan Lebih Sedikit Warna",
-    "fromCustomColorPicker": "dari Pemilih Warna Kustom"
+    "fromCustomColorPicker": "dari Pemilih Warna Kustom",
+    "newSheetDocument": "Lembar Kerja Baru"
   },
   "annotation": {
     "areaMeasurement": "Daerah",
@@ -268,7 +270,8 @@
       "close": "Tutup Semua Anotasi"
     },
     "comparePanel": "Bandingkan Panel",
-    "watermarkPanel": "Panel Tanda Air"
+    "watermarkPanel": "Panel Tanda Air",
+    "mainMenu": "Main Menu"
   },
   "message": {
     "showMore": "Menampilkan lebih banyak",
@@ -1263,6 +1266,7 @@
     "numberList": "Daftar bernomor",
     "decreaseIndent": "Kurangi indentasi",
     "increaseIndent": "Tingkatkan indentasi",
+    "nonPrintingCharacters": "Karakter non-cetak",
     "insertLink": "Sisipkan tautan",
     "insertImage": "Sisipkan gambar",
     "image": "Gambar",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Pemilih Warna"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Judul Atas",
+      "leftHeader": "Header Kiri",
+      "rightHeader": "Header Kanan",
+      "bottomHeader": "Header Bawah",
+      "documentContent": "Konten Dokumen"
+    }
   }
 }

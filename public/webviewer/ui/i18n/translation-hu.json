@@ -37,6 +37,7 @@
     "fitToWidth": "A szélességhez illeszkedik",
     "more": "Több",
     "openFile": "Fájl megnyitása",
+    "showMoreFiles": "További fájlok megjelenítése",
     "page": "oldal",
     "of": "a",
     "pagePrev": "Előző oldal",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Másolja a kiválasztott színt",
     "showMoreColors": "További színek megjelenítése",
     "showLessColors": "Kevesebb szín megjelenítése",
-    "fromCustomColorPicker": "Egyedi színválasztóból"
+    "fromCustomColorPicker": "Egyedi színválasztóból",
+    "newSheetDocument": "Új táblázat"
   },
   "annotation": {
     "areaMeasurement": "Terület",
@@ -268,7 +270,8 @@
       "close": "Zárja be az összes megjegyzést"
     },
     "comparePanel": "Panel összehasonlítása",
-    "watermarkPanel": "Vízjel panel"
+    "watermarkPanel": "Vízjel panel",
+    "mainMenu": "Főmenü"
   },
   "message": {
     "showMore": "Mutass többet",
@@ -1263,6 +1266,7 @@
     "numberList": "Számozott lista",
     "decreaseIndent": "Behúzás csökkentése",
     "increaseIndent": "Behúzás növelése",
+    "nonPrintingCharacters": "Nem nyomtatható karakterek",
     "insertLink": "Link beszúrása",
     "insertImage": "Kép beszúrása",
     "image": "Kép",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Színválasztó"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Felső fejléc",
+      "leftHeader": "Bal fejléc",
+      "rightHeader": "Jobb fejléc",
+      "bottomHeader": "Alsó fejléc",
+      "documentContent": "Dokumentumtartalom"
+    }
   }
 }

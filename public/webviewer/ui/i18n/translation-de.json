@@ -37,6 +37,7 @@
     "fitToWidth": "An Breite anpassen",
     "more": "Mehr",
     "openFile": "Datei öffnen",
+    "showMoreFiles": "Weitere Dateien anzeigen",
     "page": "Seite",
     "of": "von",
     "pagePrev": "Vorherige Seite",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Ausgewählte Farbe kopieren",
     "showMoreColors": "Weitere Farben anzeigen",
     "showLessColors": "Weniger Farben anzeigen",
-    "fromCustomColorPicker": "aus dem benutzerdefinierten Farbwähler"
+    "fromCustomColorPicker": "aus dem benutzerdefinierten Farbwähler",
+    "newSheetDocument": "Neue Tabelle"
   },
   "annotation": {
     "areaMeasurement": "Flächenmessung",
@@ -268,7 +270,8 @@
       "close": "Alle Anmerkungen schließen"
     },
     "comparePanel": "Panel vergleichen",
-    "watermarkPanel": "Wasserzeichen-Panel"
+    "watermarkPanel": "Wasserzeichen-Panel",
+    "mainMenu": "Hauptmenü"
   },
   "message": {
     "showMore": "Zeig mehr",
@@ -1263,6 +1266,7 @@
     "numberList": "Nummerierte Liste",
     "decreaseIndent": "Einzug verkleinern",
     "increaseIndent": "Einzug vergrößern",
+    "nonPrintingCharacters": "Nicht druckbare Zeichen",
     "insertLink": "Verknüpfung einfügen",
     "insertImage": "Bild einfügen",
     "image": "Bild",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Farbwähler"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Obere Kopfzeile",
+      "leftHeader": "Linke Kopfzeile",
+      "rightHeader": "Rechte Kopfzeile",
+      "bottomHeader": "Untere Kopfzeile",
+      "documentContent": "Dokumentinhalt"
+    }
   }
 }

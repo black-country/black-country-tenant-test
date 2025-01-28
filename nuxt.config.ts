@@ -1,7 +1,6 @@
 export default {
   ssr: false,
   target: "static",
-
   app: {
     head: {
       title: "Black Country",
@@ -16,11 +15,13 @@ export default {
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css' }
       ],
       script: [
+        // { src: '/webviewer/ui/webviewer-ui.min.js' },
         // { src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js", defer: true }
         {
           src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js",
           defer: true,
         },
+
       ]
     },
   },
@@ -31,7 +32,7 @@ export default {
     cssPath: "@/assets/css/main.css",
   },
   build: {
-    transpile: ["@pdftron/webviewer"],
+    transpile: ["@pdftron/webviewer", 'vee-validate'],
   },
   runtimeConfig: {
     public: {
@@ -44,17 +45,29 @@ export default {
     timeout: 10000, // Example: set timeout to 10 seconds
   },
 
-  plugins: ['~/plugins/google-maps.client.ts', '~/plugins/intro.client.ts', '~/plugins/dayjs.ts'],
+  plugins: ['~/plugins/google-maps.client.ts', '~/plugins/intro.client.ts', '~/plugins/dayjs.ts', '~/plugins/vee-validate.ts'],
 
   vite: {
     optimizeDeps: {
       include: ['fast-deep-equal']
     },
-    server: {
-      fs: {
-        allow: ["public/lib"],
+    build: {
+      // transpile: ['@vueup/vue-quill'],
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes("pdfjs-dist")) {
+              return "pdfjs";
+            }
+          },
+        },
       },
     },
+    // server: {
+    //   fs: {
+    //     allow: ["public/lib"],
+    //   },
+    // },
   },
 
   compatibilityDate: "2024-09-30"

@@ -3,10 +3,3 @@
       <TronViewer />
     </div>
   </template>
-
-  <style>
-  .container {
-    @apply w-full h-screen;
-  }
-  </style>
-  

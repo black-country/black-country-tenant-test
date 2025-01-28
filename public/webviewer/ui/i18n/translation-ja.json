@@ -37,6 +37,7 @@
     "fitToWidth": "幅に合わせる",
     "more": "さらに表示",
     "openFile": "ファイルを開く",
+    "showMoreFiles": "その他のファイルを表示",
     "page": "ページ",
     "of": "の",
     "pagePrev": "前のページ",
@@ -142,7 +143,8 @@
     "copySelectedColor": "選択したカラーをコピー",
     "showMoreColors": "その他の色を表示",
     "showLessColors": "色を少なく表示",
-    "fromCustomColorPicker": "カスタムカラーピッカーから"
+    "fromCustomColorPicker": "カスタムカラーピッカーから",
+    "newSheetDocument": "新しいスプレッドシート"
   },
   "annotation": {
     "areaMeasurement": "面積測定",
@@ -268,7 +270,8 @@
       "close": "すべての注釈を閉じる"
     },
     "comparePanel": "比較パネル",
-    "watermarkPanel": "透かしパネル"
+    "watermarkPanel": "透かしパネル",
+    "mainMenu": "メインメニュー"
   },
   "message": {
     "showMore": "もっと見せる",
@@ -1263,6 +1266,7 @@
     "numberList": "番号付きリスト",
     "decreaseIndent": "インデントを減らす",
     "increaseIndent": "インデントを増やします",
+    "nonPrintingCharacters": "印刷されない文字",
     "insertLink": "リンクを挿入",
     "insertImage": "画像を挿入",
     "image": "画像",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "カラーピッカー"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "トップヘッダー",
+      "leftHeader": "左ヘッダー",
+      "rightHeader": "右ヘッダー",
+      "bottomHeader": "下部ヘッダー",
+      "documentContent": "文書の内容"
+    }
   }
 }

@@ -37,6 +37,7 @@
     "fitToWidth": "พอดีกับความกว้าง",
     "more": "มากกว่า",
     "openFile": "เปิดไฟล์",
+    "showMoreFiles": "แสดงไฟล์เพิ่มเติม",
     "page": "หน้าหนังสือ",
     "of": "ของ",
     "pagePrev": "หน้าก่อน",
@@ -142,7 +143,8 @@
     "copySelectedColor": "คัดลอกสีที่เลือก",
     "showMoreColors": "แสดงสีเพิ่มเติม",
     "showLessColors": "แสดงสีน้อยลง",
-    "fromCustomColorPicker": "จากเครื่องมือเลือกสีที่กำหนดเอง"
+    "fromCustomColorPicker": "จากเครื่องมือเลือกสีที่กำหนดเอง",
+    "newSheetDocument": "สเปรดชีตใหม่"
   },
   "annotation": {
     "areaMeasurement": "พื้นที่",
@@ -268,7 +270,8 @@
       "close": "ปิดคำอธิบายประกอบทั้งหมด"
     },
     "comparePanel": "เปรียบเทียบแผง",
-    "watermarkPanel": "แผงลายน้ำ"
+    "watermarkPanel": "แผงลายน้ำ",
+    "mainMenu": "เมนูหลัก"
   },
   "message": {
     "showMore": "แสดงมากขึ้น",
@@ -1263,6 +1266,7 @@
     "numberList": "รายการหมายเลข",
     "decreaseIndent": "ลดการเยื้อง",
     "increaseIndent": "เพิ่มการเยื้อง",
+    "nonPrintingCharacters": "ตัวอักษรไม่พิมพ์",
     "insertLink": "ใส่ลิงค์",
     "insertImage": "แทรกรูปภาพ",
     "image": "ภาพ",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "เครื่องมือเลือกสี"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "ส่วนหัวด้านบน",
+      "leftHeader": "ส่วนหัวด้านซ้าย",
+      "rightHeader": "ส่วนหัวด้านขวา",
+      "bottomHeader": "ส่วนหัวด้านล่าง",
+      "documentContent": "เนื้อหาเอกสาร"
+    }
   }
 }

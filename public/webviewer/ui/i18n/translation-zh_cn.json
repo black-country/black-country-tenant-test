@@ -37,6 +37,7 @@
     "fitToWidth": "自身尺寸",
     "more": "更多",
     "openFile": "打开文件",
+    "showMoreFiles": "显示更多文件",
     "page": "页",
     "of": "的",
     "pagePrev": "上一页",
@@ -142,7 +143,8 @@
     "copySelectedColor": "复制选定的颜色",
     "showMoreColors": "显示更多颜色",
     "showLessColors": "显示较少颜色",
-    "fromCustomColorPicker": "来自自定义颜色选择器"
+    "fromCustomColorPicker": "来自自定义颜色选择器",
+    "newSheetDocument": "新建电子表格"
   },
   "annotation": {
     "areaMeasurement": "面积测量",
@@ -268,7 +270,8 @@
       "close": "关闭所有注释"
     },
     "comparePanel": "比较面板",
-    "watermarkPanel": "水印面板"
+    "watermarkPanel": "水印面板",
+    "mainMenu": "主菜单"
   },
   "message": {
     "showMore": "展示更多",
@@ -1263,6 +1266,7 @@
     "numberList": "编号列表",
     "decreaseIndent": "减少缩进",
     "increaseIndent": "增加缩进",
+    "nonPrintingCharacters": "非打印字符",
     "insertLink": "插入链接",
     "insertImage": "插入图片",
     "image": "图像",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "颜色选择器"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "顶部标题",
+      "leftHeader": "左标题",
+      "rightHeader": "右标题",
+      "bottomHeader": "底部标题",
+      "documentContent": "文档内容"
+    }
   }
 }

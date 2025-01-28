@@ -37,6 +37,7 @@
     "fitToWidth": "चौड़ाई में फ़िट करें",
     "more": "अधिक",
     "openFile": "खुली फाइल",
+    "showMoreFiles": "अधिक फ़ाइलें दिखाएं",
     "page": "पृष्ठ",
     "of": "का",
     "pagePrev": "पिछला पृष्ठ",
@@ -142,7 +143,8 @@
     "copySelectedColor": "चयनित रंग कॉपी करें",
     "showMoreColors": "और अधिक रंग दिखाएं",
     "showLessColors": "कम रंग दिखाएं",
-    "fromCustomColorPicker": "कस्टम कलर पिकर से"
+    "fromCustomColorPicker": "कस्टम कलर पिकर से",
+    "newSheetDocument": "नई स्प्रेडशीट"
   },
   "annotation": {
     "areaMeasurement": "क्षेत्र",
@@ -268,7 +270,8 @@
       "close": "सभी टिप्पणियां बंद करें"
     },
     "comparePanel": "पैनल की तुलना करें",
-    "watermarkPanel": "वॉटरमार्क पैनल"
+    "watermarkPanel": "वॉटरमार्क पैनल",
+    "mainMenu": "मुख्य मेन्यू"
   },
   "message": {
     "showMore": "और दिखाओ",
@@ -1263,6 +1266,7 @@
     "numberList": "क्रमांकित सूची",
     "decreaseIndent": "समान का आर्डर कम करें",
     "increaseIndent": "बढ़ते हुए अंतर में",
+    "nonPrintingCharacters": "गैर-मुद्रण वर्ण",
     "insertLink": "लिंक डालें",
     "insertImage": "चित्र डालें",
     "image": "छवि",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "रंग चुनने वाली मशीन"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "शीर्ष हेडर",
+      "leftHeader": "बायां हेडर",
+      "rightHeader": "दायाँ हेडर",
+      "bottomHeader": "निचला हेडर",
+      "documentContent": "दस्तावेज़ सामग्री"
+    }
   }
 }

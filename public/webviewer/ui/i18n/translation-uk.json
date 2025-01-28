@@ -37,6 +37,7 @@
     "fitToWidth": "Підходить до ширини",
     "more": "Більше",
     "openFile": "Відкрити файл",
+    "showMoreFiles": "Показати більше файлів",
     "page": "Сторінка",
     "of": "з",
     "pagePrev": "Попередня сторінка",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Копіювати вибраний колір",
     "showMoreColors": "Показати більше кольорів",
     "showLessColors": "Показати менше кольорів",
-    "fromCustomColorPicker": "із спеціальної палітри кольорів"
+    "fromCustomColorPicker": "із спеціальної палітри кольорів",
+    "newSheetDocument": "Нова електронна таблиця"
   },
   "annotation": {
     "areaMeasurement": "Площа",
@@ -268,7 +270,8 @@
       "close": "Закрити всі анотації"
     },
     "comparePanel": "Панель порівняння",
-    "watermarkPanel": "Панель водяних знаків"
+    "watermarkPanel": "Панель водяних знаків",
+    "mainMenu": "Головне меню"
   },
   "message": {
     "showMore": "Показати більше",
@@ -1263,6 +1266,7 @@
     "numberList": "Нумерований список",
     "decreaseIndent": "Зменшити відступ",
     "increaseIndent": "Збільшити відступ",
+    "nonPrintingCharacters": "Недруковані символи",
     "insertLink": "Вставте посилання",
     "insertImage": "Вставте зображення",
     "image": "Зображення",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Палітра кольорів"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Верхній заголовок",
+      "leftHeader": "Лівий заголовок",
+      "rightHeader": "Правий заголовок",
+      "bottomHeader": "Нижній заголовок",
+      "documentContent": "Зміст документа"
+    }
   }
 }

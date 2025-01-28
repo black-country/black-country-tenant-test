@@ -16,3 +16,34 @@
 .dark .bg-custom {
   background-color: #1a202c; /* Dark mode background */
 }
+
+
+
+.form-input {
+  @apply w-full p-3 rounded-lg bg-gray-50 border border-gray-200;
+}
+
+.form-label {
+  @apply block text-sm font-medium mb-2;
+}
+
+.required::after {
+  content: "*";
+  @apply text-red-500 ml-1;
+}
+
+.btn {
+  @apply px-6 py-2 rounded-lg transition-colors duration-200;
+}
+
+.btn-primary {
+  @apply bg-black text-white hover:bg-gray-900;
+}
+
+.btn-secondary {
+  @apply bg-white border border-gray-200 hover:bg-gray-50;
+}
+
+.btn-disabled {
+  @apply bg-gray-200 text-gray-500 cursor-not-allowed;
+}

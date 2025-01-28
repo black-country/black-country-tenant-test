@@ -4,10 +4,10 @@
     <!-- {{isUrl}} -->
      <!-- {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName }} -->
 <!-- {{ extractUrl(propertyObj?.rentalApplication?.leaseAgreement) }} -->
-    <CoreWebViewer :documentName="propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName" v-if="isUrl" />
+    <!-- <CoreWebViewer :documentName="propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName" v-if="isUrl" /> -->
   
  
-   <section v-else>
+   <section>
     <div
       v-if="!loading"
       id="leaseAgreementDocument"

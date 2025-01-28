@@ -37,6 +37,7 @@
     "fitToWidth": "Sesuai dengan lebar",
     "more": "Lagi",
     "openFile": "Buka fail",
+    "showMoreFiles": "Tunjukkan Lagi Fail",
     "page": "Halaman",
     "of": "daripada",
     "pagePrev": "Halaman sebelumnya",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Salin Warna yang Dipilih",
     "showMoreColors": "Tunjukkan Lebih Banyak Warna",
     "showLessColors": "Tunjukkan Kurang Warna",
-    "fromCustomColorPicker": "daripada Pemilih Warna Tersuai"
+    "fromCustomColorPicker": "daripada Pemilih Warna Tersuai",
+    "newSheetDocument": "Hamparan Baharu"
   },
   "annotation": {
     "areaMeasurement": "kawasan",
@@ -268,7 +270,8 @@
       "close": "Tutup Semua Anotasi"
     },
     "comparePanel": "Bandingkan Panel",
-    "watermarkPanel": "Panel Tera Air"
+    "watermarkPanel": "Panel Tera Air",
+    "mainMenu": "Menu Utama"
   },
   "message": {
     "showMore": "Tunjukkan Lagi",
@@ -1263,6 +1266,7 @@
     "numberList": "Senarai bernombor",
     "decreaseIndent": "Kurangkan inden",
     "increaseIndent": "Tingkatkan inden",
+    "nonPrintingCharacters": "Aksara bukan cetakan",
     "insertLink": "Sisipkan pautan",
     "insertImage": "Sisipkan imej",
     "image": "Imej",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Pemilih Warna"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Tajuk Atas",
+      "leftHeader": "Tajuk Kiri",
+      "rightHeader": "Tajuk Kanan",
+      "bottomHeader": "Tajuk Bawah",
+      "documentContent": "Kandungan Dokumen"
+    }
   }
 }

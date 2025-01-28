@@ -63,6 +63,14 @@
         <div v-if="currentStepInt === 3">
           <RentalApplicationsUploadDocuments @submit="handleSubmit" @back="handleBack" />
         </div>
+
+        <div v-if="currentStepInt === 4">
+          <RentalApplicationsMaritalInformationForm @submit="handleSubmit" @back="handleBack" />
+        </div>
+
+        <div v-if="currentStepInt === 5">
+          <RentalApplicationsGuarantorInformationForm @submit="handleSubmit" @back="handleBack" />
+        </div>
   
       </div>
     </main>
@@ -91,6 +99,8 @@ const steps = [
   "Pre-Screening Questions",
   "Review Profile Details",
   "Upload Documents",
+  "Marital information",
+  "Guarantor’s information"
 ];
 
 // Compute current step from query params
@@ -133,4 +143,59 @@ const saveData = () => {
   //   query: { ...route.query, step: "2" }, // Update the query with the new step
   // });
 };
+
+
+
+type Step = 'marital' | 'guarantor'
+
+interface MaritalSubmission {
+  maritalStatus: string
+  spouseInfo: {
+    fullName: string
+    email: string
+    phone: string
+    idType: string
+    idImage: File | null
+  } | null
+}
+
+
+interface GuarantorSubmission {
+  fullName: string
+  relationship: string
+  email: string
+  phone: string
+  additionalPhone?: string
+  idImage: File | null
+  termsAccepted: boolean
+  verificationAccepted: boolean
+}
+
+// const currentStep = ref<Step>('marital')
+const formData = ref({
+  marital: null as MaritalSubmission | null,
+  guarantor: null as GuarantorSubmission | null
+})
+
+const handleMaritalSubmit = (data: MaritalSubmission) => {
+  formData.value.marital = data
+  currentStep.value = 'guarantor'
+}
+
+const handleGuarantorSubmit = (data: GuarantorSubmission) => {
+  formData.value.guarantor = data
+  // Here you would typically submit the complete form data to your backend
+  console.log('Complete form submission:', formData.value)
+}
+
+// const handleBack = () => {
+//   if (currentStep.value === 'guarantor') {
+//     currentStep.value = 'marital'
+//   }
+// }
+
 </script>
+
+<style>
+
+</style>

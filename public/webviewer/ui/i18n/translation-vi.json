@@ -37,6 +37,7 @@
     "fitToWidth": "Làm vừa theo chiều rộng",
     "more": "Thêm",
     "openFile": "Mở tệp",
+    "showMoreFiles": "Hiển thị thêm tập tin",
     "page": "Trang",
     "of": "của",
     "pagePrev": "Trang trước",
@@ -142,7 +143,8 @@
     "copySelectedColor": "Sao chép màu đã chọn",
     "showMoreColors": "Hiển thị thêm màu sắc",
     "showLessColors": "Hiển thị ít màu sắc hơn",
-    "fromCustomColorPicker": "từ Bộ chọn màu tùy chỉnh"
+    "fromCustomColorPicker": "từ Bộ chọn màu tùy chỉnh",
+    "newSheetDocument": "Bảng tính mới"
   },
   "annotation": {
     "areaMeasurement": "Diện tích",
@@ -268,7 +270,8 @@
       "close": "Đóng tất cả các chú thích"
     },
     "comparePanel": "So sánh bảng điều khiển",
-    "watermarkPanel": "Bảng điều khiển hình mờ"
+    "watermarkPanel": "Bảng điều khiển hình mờ",
+    "mainMenu": "Thực đơn chính"
   },
   "message": {
     "showMore": "Cho xem nhiều hơn",
@@ -1263,6 +1266,7 @@
     "numberList": "Danh sách được đánh số",
     "decreaseIndent": "Giảm thụt lề",
     "increaseIndent": "Tăng thụt lề",
+    "nonPrintingCharacters": "Ký tự không in",
     "insertLink": "Chèn đường dẫn",
     "insertImage": "Chèn hình ảnh",
     "image": "Hình ảnh",
@@ -1468,5 +1472,14 @@
   },
   "colorPickerModal": {
     "modalTitle": "Bộ chọn màu"
+  },
+  "accessibility": {
+    "landmarks": {
+      "topHeader": "Tiêu đề trên cùng",
+      "leftHeader": "Tiêu đề bên trái",
+      "rightHeader": "Tiêu đề bên phải",
+      "bottomHeader": "Tiêu đề dưới cùng",
+      "documentContent": "Nội dung tài liệu"
+    }
   }
 }
