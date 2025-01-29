@@ -2,10 +2,10 @@
   <main>
     <TopNavBar />
     <!-- {{ propertyObj?.rentalApplication }} -->
-      <!-- {{ rentalObj.leaseAgreementContent.leaseAgreementContent }} -->
-    <CoreWebViewer :documentName="propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName" v-if="isUrl" />
+      <!-- {{ rentalObj?.rentalLeaseAgreement?.leaseAgreementContent }} -->
+    <CoreWebViewer :pdfUrl="rentalObj?.rentalLeaseAgreement?.leaseAgreementContent"  v-if="isUrl" />
 
-   <section>
+   <section v-else>
     <div
       v-if="!loading"
       id="leaseAgreementDocument"
@@ -364,7 +364,7 @@ const { extractUrl } = useUrlExtractor();
 const route = useRoute();
 const router = useRouter();
 const isUrl = computed(() => {
-  return !!extractUrl(rentalObj?.value?.leaseAgreementContent?.leaseAgreementContent)
+  return !!extractUrl(rentalObj?.value?.rentalLeaseAgreement?.leaseAgreementContent)
 })
 const {
   signLeaseAgreement,
