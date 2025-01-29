@@ -106,8 +106,9 @@
       
             <!-- Property Visitation -->
          <!-- <section v-if="property?.rentalApplication"> -->
+          <HousingFees />
           <section class="mt-10">
-          <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-50">Property visitation</h2>
+          <!-- <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-50">Property visitation</h2> -->
           <!-- {{ availabilityList }} -->
           <VisitationScheduler v-if="availabilityList?.length" @schedule="showBookingModal = true" :intervals="availabilityList" />
              <div
@@ -629,6 +630,7 @@ const { loading: fetchingAvailabilities, availabilityList } = useFetchHouseAvail
 const propertyManagerImage = ref("shape.png");
 import { useRooms } from '@/composables/modules/rentals/useFormatRoomsByAvailability';
 import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
+// import HousingFees from './HousingFees.vue';
 const { formatCurrency } = useCurrencyFormatter('en-NG', 'NGN');
 const activeTab = ref('property-overview')
 const { getVisitations, loading, visitations } = useFetchVisitations()

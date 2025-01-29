@@ -179,7 +179,7 @@ const formData = ref({
 
 const handleMaritalSubmit = (data: MaritalSubmission) => {
   formData.value.marital = data
-  currentStep.value = 'guarantor'
+  // currentStep.value = 'guarantor'
 }
 
 const handleGuarantorSubmit = (data: GuarantorSubmission) => {
