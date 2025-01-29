@@ -288,7 +288,7 @@ export default defineComponent({
 
 
 
-<template>
+<!-- <template>
   <div id="webviewer" ref="viewer"></div>
 </template>
 
@@ -354,4 +354,8 @@ export default defineComponent({
   height: 100vh;
   border: 1px solid #ccc;
 }
-</style>
+</style> -->
+
+<template>
+  <h1>Hello</h1>
+</template>
