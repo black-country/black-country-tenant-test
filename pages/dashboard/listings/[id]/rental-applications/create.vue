@@ -104,7 +104,7 @@ const steps = [
 ];
 
 // Compute current step from query params
-const currentStep = computed(() => route.query.step || "1");
+const currentStep = computed(() => route.query.step || "4");
 const currentStepInt = computed(() => parseInt(currentStep.value));
 
 // Navigation handlers
