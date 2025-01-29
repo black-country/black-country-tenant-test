@@ -279,15 +279,25 @@ const submitLeaseDocument = async (item: string) => {
     });
 
     // Upload the file
+    // await uploadFile(pdfFile);
+    // const payload = {
+    //   leaseAgreement: uploadResponse.value.url, // optional
+    //   leaseAgreementSigneeName: user.value.name, // optional
+    //   leaseAgreementSignedAt: "", // optional,
+    //   status: "signed", // signed | cancelled
+    // }
+    // setPayload( payload)
+    // await signLeaseAgreement(route?.query?.rentalId)
     await uploadFile(pdfFile);
+   const currentDate = new Date().toISOString().split('T')[0]; // Format: "YYYY-MM-DD"
     const payload = {
       leaseAgreement: uploadResponse.value.url, // optional
       leaseAgreementSigneeName: user.value.name, // optional
-      leaseAgreementSignedAt: "", // optional,
+      leaseAgreementSignedAt: currentDate, // Current date in "YYYY-MM-DD" format
       status: "signed", // signed | cancelled
-    }
-    setPayload( payload)
-    await signLeaseAgreement(route?.query?.rentalId)
+    };
+    setPayload(payload);
+    await signLeaseAgreement(route?.query?.rentalId);
     console.log('File uploaded successfully.');
   } catch (error) {
     console.error('Error processing document:', error);
