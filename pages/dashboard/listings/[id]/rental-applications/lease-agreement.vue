@@ -1,12 +1,10 @@
 <template>
   <main>
     <TopNavBar />
-    <!-- {{isUrl}} -->
-     <!-- {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName }} -->
-<!-- {{ extractUrl(propertyObj?.rentalApplication?.leaseAgreement) }} -->
-    <!-- <CoreWebViewer :documentName="propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName" v-if="isUrl" /> -->
-  
- 
+    <!-- {{ propertyObj?.rentalApplication }} -->
+      <!-- {{ rentalObj.leaseAgreementContent.leaseAgreementContent }} -->
+    <CoreWebViewer :documentName="propertyObj?.rentalApplication?.rentalLeaseAgreement?.agreementName" v-if="isUrl" />
+
    <section>
     <div
       v-if="!loading"
@@ -356,6 +354,8 @@ import { useRejectLease } from '@/composables/modules/lease/reject'
 import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 import { useCustomToast } from "@/composables/core/useCustomToast";
 import { useSignLeaseAgreement } from "@/composables/modules/rentals/signLeaseAgreement";
+import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
+const { rentalObj, loading: fetching } = useFetchRental()
 const { propertyObj, loading } = useFetchProperty();
 const { rejectLeaseAgreement, loading: rejecting } = useRejectLease()
 const { showToast } = useCustomToast();
@@ -364,7 +364,7 @@ const { extractUrl } = useUrlExtractor();
 const route = useRoute();
 const router = useRouter();
 const isUrl = computed(() => {
-  return !!extractUrl(propertyObj?.value?.rentalApplication?.leaseAgreement)
+  return !!extractUrl(rentalObj?.value?.leaseAgreementContent?.leaseAgreementContent)
 })
 const {
   signLeaseAgreement,

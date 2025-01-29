@@ -160,7 +160,7 @@
      <!-- {{ rentalObj }} -->
     <button
       :disabled="!isSignAgreementEnabled"
-      @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement`)"
+      @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement?rentalId=${route?.query?.rentalId}`)"
       class="flex-1 flex justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4 text-gray-400 rounded-lg disabled:opacity-25 disabled:cursor-not-allowed"
     >
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -756,11 +756,11 @@
   </template>
   
   <script setup lang="ts">
-  import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
   import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
   import { useInitializeRentPayment } from "@/composables/modules/rentals/useInitializeRentPayment";
   import { useCurrencyFormatter} from "@/composables/core/useCurrencyFormatter";
   import { useCancelRental } from "@/composables/modules/rentals/cancelRentals";
+    import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
   const { rentalObj, loading: fetching } = useFetchRental()
   const { propertyObj, loading } = useFetchProperty();
   const { formatCurrency } = useCurrencyFormatter()

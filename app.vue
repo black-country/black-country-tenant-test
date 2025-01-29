@@ -23,6 +23,12 @@ provide('toastData', toastData);
     script.src = "https://newwebpay.qa.interswitchng.com/inline-checkout.js";
     document.head.appendChild(script);
   }
+
+  if (process.client) {
+    const script = document.createElement('script');
+    script.src = '/webviewer/webviewer.min.js';
+    document.head.appendChild(script);
+  }
 </script>
 
 
