@@ -152,9 +152,9 @@
                     </p>
                   </div>
                 </div> -->
-
+<!-- {{ roomChatsList }} -->
                 <ChatWindow v-if="roomChatsList?.length && !loadingRoomChats" class="z-10" :roomChats="roomChatsList" :messages="messages" :selectedUser="selectedUser" />
-                <section v-if="loading && !roomChatsList?.length">
+                <section v-else-if="loading && !roomChatsList?.length">
                 <div class="rounded-md p-4 w-full mx-auto">
                   <div class="animate-pulse flex space-x-4">
                     <div class="h-44 w-full bg-slate-200 rounded col-span-1"></div>
