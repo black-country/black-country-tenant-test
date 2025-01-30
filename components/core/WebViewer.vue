@@ -176,11 +176,10 @@ const submitLeaseDocument = async (item: string) => {
 </style>
  -->
 
- <template>
+ <!-- <template>
   <div id="pdf-viewer-container">
-    <!-- Viewer container -->
    <div class="ml-3">
-    <button @click="submitLeaseDocument('save-and-send')" class="submit-btn bg-black text-white rounded-lg text-sm ">Submit Lease Document</button>
+    <button v-if="isDocumentEdited" @click="submitLeaseDocument('save-and-send')" class=" bg-black p-3 text-white rounded-lg text-xs">Submit Document</button>
    </div>
     <div id="viewer" style="height: 100vh; width: 100%;"></div>
   </div>
@@ -190,14 +189,16 @@ const submitLeaseDocument = async (item: string) => {
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useUser } from '@/composables/auth/user';
-import { useSignLeaseAgreement } from '@/composables/core/pdfLeaseSign';
+import { useSignLease } from '@/composables/modules/lease/sign';
 import { useUploadFile } from '@/composables/core/upload';
 const { user } = useUser()
 const route = useRoute()
 
 // Composables
 const { uploadFile, uploadResponse, loading: uploading } = useUploadFile();
-const { signLeaseAgreement, loading, payload, setPayload } = useSignLeaseAgreement();
+const { signLeaseAgreement, loading } = useSignLease();
+
+const isDocumentEdited = ref(false);
 
 // Props
 const props = defineProps({
@@ -205,6 +206,10 @@ const props = defineProps({
     type: String,
     required: true,
   },
+  rentalObj : {
+    type: Object,
+    default: () => {}
+  }
 });
 
 // Extract the PDF URL by removing the <html> wrapper
@@ -247,6 +252,11 @@ function initializeWebViewer() {
       .then((webViewerInstance: any) => {
         console.log('WebViewer instance loaded successfully:', webViewerInstance);
         instance.value = webViewerInstance;
+
+        const annotManager = webViewerInstance.Core.annotationManager;
+        annotManager.addEventListener("annotationChanged", () => {
+          isDocumentEdited.value = true; // Enable the submit button when edits are detected
+        });
       })
       .catch((err: any) => {
         console.error('Error initializing WebViewer:', err);
@@ -278,26 +288,14 @@ const submitLeaseDocument = async (item: string) => {
       lastModified: Date.now(),
     });
 
-    // Upload the file
-    // await uploadFile(pdfFile);
-    // const payload = {
-    //   leaseAgreement: uploadResponse.value.url, // optional
-    //   leaseAgreementSigneeName: user.value.name, // optional
-    //   leaseAgreementSignedAt: "", // optional,
-    //   status: "signed", // signed | cancelled
-    // }
-    // setPayload( payload)
-    // await signLeaseAgreement(route?.query?.rentalId)
     await uploadFile(pdfFile);
    const currentDate = new Date().toISOString().split('T')[0]; // Format: "YYYY-MM-DD"
-    const payload = {
-      leaseAgreement: uploadResponse.value.url, // optional
-      leaseAgreementSigneeName: user.value.name, // optional
-      leaseAgreementSignedAt: currentDate, // Current date in "YYYY-MM-DD" format
-      status: "signed", // signed | cancelled
-    };
-    setPayload(payload);
-    await signLeaseAgreement(route?.query?.rentalId);
+    const payloadObj = {
+    "signeeName": `${user.value.firstName} ${user.value.lastName}`, // optional
+    // "signatureUrl": "", // optional
+    "leaseAgreement": uploadResponse.value.url
+}
+    await signLeaseAgreement(props?.rentalObj?.rentalLeaseAgreement?.id, payloadObj)
     console.log('File uploaded successfully.');
   } catch (error) {
     console.error('Error processing document:', error);
@@ -317,5 +315,153 @@ const submitLeaseDocument = async (item: string) => {
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
+}
+</style> -->
+
+
+<template>
+  <div id="pdf-viewer-container">
+    <!-- Viewer container -->
+    <div class="ml-3">
+      <button 
+        :disabled="!isDocumentEdited || !isSigned" 
+        @click="submitLeaseDocument('save-and-send')" 
+        class="bg-black p-3 text-white rounded-lg text-xs"
+        :class="{ 'opacity-50 cursor-not-allowed': !isDocumentEdited || !isSigned }"
+      >
+        Submit Document
+      </button>
+    </div>
+    <div id="viewer" style="height: 100vh; width: 100%;"></div>
+  </div>
+  <CoreFullScreenLoader :visible="uploading" text="Uploading Agreement.." />
+</template>
+
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue';
+import { useUser } from '@/composables/auth/user';
+import { useSignLease } from '@/composables/modules/lease/sign';
+import { useUploadFile } from '@/composables/core/upload';
+
+const { user } = useUser();
+const route = useRoute();
+
+// Composables
+const { uploadFile, uploadResponse, loading: uploading } = useUploadFile();
+const { signLeaseAgreement, loading } = useSignLease();
+
+const isDocumentEdited = ref(false);
+const isSigned = ref(false); // Track if the user has signed the document
+
+// Props
+const props = defineProps({
+  pdfUrl: {
+    type: String,
+    required: true,
+  },
+  rentalObj: {
+    type: Object,
+    default: () => ({}),
+  },
+});
+
+const cleanedPdfUrl = computed(() => {
+  if (props.pdfUrl.startsWith('<html>') && props.pdfUrl.endsWith('</html>')) {
+    return props.pdfUrl.replace('<html>', '').replace('</html>', '');
+  }
+  return props.pdfUrl;
+});
+
+console.log('Cleaned PDF URL:', cleanedPdfUrl.value);
+
+const instance = ref<any>(null);
+const uploadError = ref<string | null>(null);
+
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    const script = document.createElement('script');
+    script.src = '/webviewer/webviewer.min.js';
+    script.onload = () => initializeWebViewer();
+    document.head.appendChild(script);
+  }
+});
+
+function initializeWebViewer() {
+  const viewerElement = document.getElementById('viewer');
+
+  if (viewerElement) {
+    WebViewer(
+      {
+        path: '/webviewer',
+        initialDoc: cleanedPdfUrl.value,
+      },
+      viewerElement
+    )
+      .then((webViewerInstance: any) => {
+        console.log('WebViewer instance loaded successfully:', webViewerInstance);
+        instance.value = webViewerInstance;
+
+        const annotManager = webViewerInstance.Core.annotationManager;
+        annotManager.addEventListener("annotationChanged", () => {
+          isDocumentEdited.value = true;
+
+          // Check if a signature annotation exists
+          const annotations = annotManager.getAnnotationsList();
+          isSigned.value = annotations.some(annot => annot.Subject === 'Signature');
+        });
+      })
+      .catch((err: any) => {
+        console.error('Error initializing WebViewer:', err);
+      });
+  } else {
+    console.error('Viewer element not found');
+  }
+}
+
+const submitLeaseDocument = async (item: string) => {
+  if (!instance.value) return;
+
+  try {
+    const docViewer = instance.value.Core.documentViewer;
+    const annotManager = instance.value.Core.annotationManager;
+
+    const xfdfString = await annotManager.exportAnnotations();
+
+    const fileData = await docViewer.getDocument().getFileData({
+      xfdfString,
+      downloadType: 'pdf',
+    });
+
+    const pdfBlob = new Blob([fileData], { type: 'application/pdf' });
+    const pdfFile = new File([pdfBlob], 'edited-lease.pdf', {
+      type: 'application/pdf',
+      lastModified: Date.now(),
+    });
+
+    await uploadFile(pdfFile);
+    
+    const payloadObj = {
+      signeeName: `${user.value.firstName} ${user.value.lastName}`,
+      leaseAgreement: uploadResponse.value.url,
+    };
+
+    await signLeaseAgreement(props?.rentalObj?.rentalLeaseAgreement?.id, payloadObj);
+    console.log('File uploaded successfully.');
+  } catch (error) {
+    console.error('Error processing document:', error);
+    uploadError.value = error instanceof Error ? error.message : 'An unexpected error occurred';
+  }
+};
+</script>
+
+<style scoped>
+#pdf-viewer-container {
+  height: 100vh;
+  width: 100%;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 </style>

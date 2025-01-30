@@ -29,21 +29,6 @@ export const useSignLease = () => {
 			});
 		}
 		loading.value = false;
-		// try {
-		// 	const res = await lease_api.$_sign_lease_agreement(id, payload) as any;
-       
-		
-		// } catch (error) {
-		// 	// Catch and handle any unexpected errors
-		// 	showToast({
-		// 		title: "Error",
-		// 		message: 'An unexpected error occurred while signing the lease agreement.',
-		// 		toastType: "error",
-		// 		duration: 3000
-		// 	});
-		// } finally {
-		// 	loading.value = false;  // Ensure loading is set to false after the operation
-		// }
 	};
 
 	return { signLeaseAgreement, loading };

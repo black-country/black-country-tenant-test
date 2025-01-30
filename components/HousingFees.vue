@@ -75,7 +75,7 @@ function closeModal() {
 
 <template>
     <div class="mx-auto bg-white rounded-xl ">
-        <h2 class="text- font-medium mb-4 pl-6 border-[0.5px] border-gray-100 my-6 py-4 rounded-lg">Rental Fees Breakdown</h2>
+        <h2 class="text-base font-medium mb-4 pl-6 border-[0.5px] border-gray-100 my-6 py-4 rounded-lg">Rental Fees Breakdown</h2>
        <div class="rounded-xl bg-white border-[0.5px] border-gray-50">
         <div v-for="fee in fees" :key="fee.name"
             class="flex justify-between px-6 border-[0.5px] space-y-6 items-center border-gray-50  py-2">
@@ -84,7 +84,7 @@ function closeModal() {
                 <span class="text-[#475367] text-sm">{{ fee.name }}</span>
                 <div>
                     <span class="text-[#1D2739] font-semibold">{{ fee.amount }}</span>
-                    <span class="text-sm text-[#475367]"> {{ fee.frequency }}</span>
+                    <span class="text-sm text-[#475367] pl-2"> {{ fee.frequency }}</span>
                 </div>
                </div>
                 <div>

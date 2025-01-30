@@ -310,7 +310,7 @@
             </div>
           </div>
           <div class="ml-auto flex space-x-2">
-            <button class="p-2 rounded-full">
+            <button :disabled="!property?.agent?.phoneNumber" @click="copyToClipboard(property?.agent?.phoneNumber)" class="p-2 disabled:cursor-not-allowed disabled:opacity-50 rounded-full">
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="44" height="44" rx="22" fill="#EBE5E0"/>
                 <path d="M15.1483 21.9523C14.3583 20.5747 13.9769 19.4499 13.7469 18.3097C13.4067 16.6233 14.1852 14.976 15.4748 13.9249C16.0199 13.4806 16.6447 13.6324 16.967 14.2107L17.6946 15.5161C18.2714 16.5508 18.5598 17.0682 18.5026 17.6167C18.4454 18.1652 18.0565 18.6119 17.2786 19.5053L15.1483 21.9523ZM15.1483 21.9523C16.7474 24.7406 19.2569 27.2514 22.0483 28.8523M22.0483 28.8523C23.4259 29.6423 24.5507 30.0238 25.691 30.2538C27.3773 30.594 29.0247 29.8155 30.0757 28.5258C30.52 27.9808 30.3682 27.356 29.79 27.0337L28.4846 26.306C27.4498 25.7292 26.9325 25.4409 26.384 25.4981C25.8355 25.5552 25.3887 25.9442 24.4953 26.722L22.0483 28.8523Z" stroke="#1D2739" stroke-width="1.5" stroke-linejoin="round"/>
@@ -634,6 +634,8 @@ import { useCurrencyFormatter } from '@/composables/core/useCurrencyFormatter';
 const { formatCurrency } = useCurrencyFormatter('en-NG', 'NGN');
 const activeTab = ref('property-overview')
 const { getVisitations, loading, visitations } = useFetchVisitations()
+import { useClipboard } from '@/composables/core/useCopyToClipboard'
+const { copied, copyToClipboard } = useClipboard();
 const { user } = useUser()
 const router = useRouter()
 

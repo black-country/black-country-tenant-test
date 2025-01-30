@@ -3,7 +3,7 @@
     <TopNavBar />
     <!-- {{ propertyObj?.rentalApplication }} -->
       <!-- {{ rentalObj?.rentalLeaseAgreement?.leaseAgreementContent }} -->
-    <CoreWebViewer :pdfUrl="rentalObj?.rentalLeaseAgreement?.leaseAgreementContent"  v-if="isUrl" />
+    <CoreWebViewer :rentalObj="rentalObj" :pdfUrl="rentalObj?.rentalLeaseAgreement?.leaseAgreementContent"  v-if="isUrl" />
 
    <section v-else>
     <div

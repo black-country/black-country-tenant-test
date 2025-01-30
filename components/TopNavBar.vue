@@ -158,7 +158,7 @@
                       Listings
                       </NuxtLink>
                   </li>
-                  <li>
+                  <li v-if="user?.hasHome">
                     <NuxtLink @click.native="isOpen = false" to="/dashboard/home" class="group flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:text-white">
                       <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M1.95951 11.0113C1.66533 9.09692 1.51824 8.13977 1.88016 7.29123C2.24208 6.44268 3.04505 5.86211 4.65097 4.70096L5.85085 3.83341C7.8486 2.38897 8.84744 1.66675 10 1.66675C11.1526 1.66675 12.1514 2.38897 14.1492 3.83341L15.3491 4.70096C16.955 5.86211 17.7579 6.44268 18.1199 7.29123C18.4818 8.13977 18.3347 9.09692 18.0405 11.0113L17.7897 12.6437C17.3726 15.3575 17.1641 16.7144 16.1909 17.5239C15.2176 18.3334 13.7948 18.3334 10.949 18.3334H9.05102C6.2053 18.3334 4.78245 18.3334 3.80919 17.5239C2.83593 16.7144 2.62741 15.3575 2.21038 12.6437L1.95951 11.0113Z" stroke="#D0D5DD" stroke-width="1.5" stroke-linejoin="round"/>
@@ -284,7 +284,6 @@
 const { isMobileView, startTourGuide  } = useTourGuide()
    const { $introJs } = useNuxtApp()
     const { loading, profileObj } = use_tenant_profile()
-
   import { useUser } from '@/composables/auth/user'
   const { user } = useUser()
   const isOpen = ref(false)

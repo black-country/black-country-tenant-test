@@ -41,6 +41,10 @@ export const rental_api = {
     const url = `/rental-applications/${id}/lease-agreements`;
     return GATEWAY_ENDPOINT.patch(url, payload);
   },
+  $_sign_lease: (id: string | number, payload: any) => {
+    const url = `/lease-agreements/${id}/signed`;
+    return GATEWAY_ENDPOINT.patch(url, payload);
+  },
   $_initialize_rent_payment: (payload: any) => {
 		const url = '/payments/rentals/initialize'
 		return GATEWAY_ENDPOINT.post(url, payload)

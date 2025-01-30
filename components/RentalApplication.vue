@@ -375,12 +375,12 @@
             <img class="" src="@/assets/icons/event-illustrations.svg" />
             No rental application available
 
-            <div class="px-6 pt-6 w-full">
-    <button 
-    class="bg-[#292929] text-white w-full text-sm py-4 rounded-lg font-semibold" 
-    @click="handleSuccess">
-    Okay
-  </button>
+    <div class="px-6 pt-6 w-full flex justify-center items-center">
+            <button 
+            class="bg-[#292929] text-white max-w-xl w-full text-sm py-4 rounded-lg font-semibold" 
+            @click="handleSuccess">
+            Okay
+          </button>
    </div>
       </div>
 
