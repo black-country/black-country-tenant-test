@@ -2354,9 +2354,9 @@
   />
   <CoreTourGuide v-ii="!user.hasExploredListing" :pageName="'list-page'" />
 
-  <!-- <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
+  <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
     <CorePropertyFilters @close="showFilterDrawer = false" />
-  </CoreDrawer> -->
+  </CoreDrawer>
   </main>
 </template>
 
