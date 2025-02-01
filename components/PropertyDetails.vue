@@ -106,7 +106,7 @@
       
             <!-- Property Visitation -->
          <!-- <section v-if="property?.rentalApplication"> -->
-          <HousingFees />
+          <!-- <HousingFees /> -->
           <section class="mt-10">
           <!-- <h2 class="text-sm font-medium text-[#667185] mt-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-50">Property visitation</h2> -->
           <!-- {{ availabilityList }} -->
@@ -224,12 +224,14 @@
               <p class="text-[#1D2739] text-sm font-medium">Available <span class="text-[#326543]">{{selectedRoomObj?.availability === 'available_now' ? 'Now' : selectedRoomObj?.availability === 'unavailable' ? 'Unavailable' : selectedRoomObj?.availability === 'available_from_date' ? 'Not Available For Now' : ''}}</span></p>
               <p class="text-gray-900 font-medium text-lg">{{ formatCurrency(selectedRoomObj?.rentAmount)}} <span class="text-[#667185] text-sm font-normal">{{selectedRoomObj?.rentFrequency}}</span></p>
             </div>
-        
 
+
+            <HousingFees class="mb-8" />
+        
             <div class="mb-6 space-y-3">
               <h3 class="text- pl-4 font-medium text-[#1D2739] bg-white border-[0.5px] py-4 rounded-md border-gray-50">Interior Features</h3>
               
-       <section class="font-medium bg-white border-[0.5px] py-4 border-gray-50 rounded-md">
+            <section class="font-medium bg-white border-[0.5px] py-4 border-gray-50 rounded-md">
 
                <p class="text-gray-700 mb-2 pl-4"><span class="font-medium">Furnished:</span> {{selectedRoomObj?.isFurnished ? 'Yes' : 'No'}}</p>
         
@@ -251,47 +253,7 @@
                 <button @click="viewMore" class="text-blue-500 text-sm font-medium hover:underline">View more</button>
               </div>
             </div>
-          </div>
-    
-          <!-- <div v-if="activeTab !== 'property-overview' && activeTab !== 'common-areas'" class="mt-4">
-            <div class="flex cursor-pointer items-center border-[0.5px] border-gray-50 space-x-4 bg-white p-4 rounded-lg">
-              <img :src="dynamicImage('placeholder.png')" alt="Gallery" class="w-12 h-12 rounded-full">
-              <div class="flex-1">
-                <h3 class="text-lg font-medium">Gallery</h3>
-                <p class="text-gray-500 text-sm">Click to view photos of all common areas</p>
-              </div>
-              <button class="text-gray-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                </svg>
-              </button>
             </div>
-            <div class="space-y-3">
-              <div 
-                v-for="(value, key) in selectedRoomObj" 
-                :key="key" 
-                class="flex justify-between border-[0.5px] p-3 rounded-md items-center gap-x-2 bg-white"
-              >
-                <p>{{ key }}</p>
-                <div v-if="key === 'features'" class="features-container space-y-4">
-                  <div v-for="feature in value" :key="feature.name" class="feature-item">
-                    <h3 v-if="feature.name" class="feature-name text-sm">{{ feature.name }}</h3>
-                    <div v-if="feature.images.length > 0 && feature.name" class="images-container space-y-4">
-                      <div
-                        v-for="(image, index) in feature.images"
-                        :key="index"
-                        class="image-wrapper"
-                      >
-                        <img :src="image" :alt="`${feature.name} Image ${index + 1}`" class="feature-image h-20 w-full" />
-                        <span class="image-tag text-xs px-3 py-1 border rounded-lg ">{{ feature.name }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <p v-else>{{ value ?? 'Nil' }}</p>
-              </div>
-            </div>
-          </div> -->
           
         </div>
       </section>
