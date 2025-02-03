@@ -27,12 +27,12 @@ export const useWebSocket = () => {
 
     // Connection events
     socket.value.on("connect", () => {
-      // showToast({
-      //   title: "Success",
-      //   message: "Connection was successful",
-      //   toastType: "success",
-      //   duration: 3000
-      // });
+      showToast({
+        title: "Success",
+        message: "Connection was successful",
+        toastType: "success",
+        duration: 3000
+      });
       isConnected.value = true;
       fetchInitialMessages();
     });
@@ -68,8 +68,9 @@ export const useWebSocket = () => {
     //     }];
     //   }
     // });
-    socket.value.on("message.new", (message: any) => {
+    socket.value.on("message.new", async (message: any) => {
       console.log("New message receivedssssssss:", message.message);
+      await fetchInitialMessages();
       if (message && !messages.value.some(msg => msg.id === message?.message?.id)) {
         const newMessage = {
           ...message.message, // Use only the message object

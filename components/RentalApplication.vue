@@ -135,7 +135,7 @@
             </button>
           </div>
         </div>
-        {{ currentStage }}
+        <!-- {{ currentStage }} -->
         <div class="flex mt-8 p-0 m-0 w-full">
     <!-- Cancel Application Button -->
     <button

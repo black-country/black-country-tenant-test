@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center p-4 border-b border-gray-200">
+    <div class="flex items-center px-4 py-3 border-b-[0.5px] border-gray-100 w-full">
       <div class="flex items-center">
         <img
           v-if="selectedUser?.participant?.profilePicture"
@@ -13,8 +13,8 @@
         <h3 class="ml-1 font-semibold text-lg">{{selectedUser?.participant?.firstName}} {{selectedUser?.participant?.lastName}}</h3>
       </div>
       <div class="ml-auto flex items-center space-x-4">
-        <button
-          class="p-2 rounded-full transition-colors"
+        <button @click="copyToClipboard(selectedUser?.participant?.firstName)"
+          class="p-2 rounded-full transition-colors" 
         >
         <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="36" height="36" rx="18" fill="#5B8469"/>
@@ -46,6 +46,8 @@
   </template>
   
   <script setup lang="ts">
+  import { useClipboard } from '@/composables/core/useCopyToClipboard'
+  const { copied, copyToClipboard } = useClipboard();
   const props = defineProps({
     selectedUser: {
       type: Object
