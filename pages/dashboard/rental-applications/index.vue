@@ -166,7 +166,7 @@ const filters = ref([
 ]);
 
 import { computed } from 'vue';
-
+``
 // const filteredRentalApplications = computed(() => {
 //   return rentalsList.value.filter((application: any) => application.status !== 'RENT_ACTIVE');
 // });

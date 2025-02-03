@@ -283,9 +283,11 @@
           <h2 class="text-lg font-semibold text-gray-700 mb-2">
             Reject Lease Agreement
           </h2>
+          <!-- {{ rentalObj }} -->
+            <!-- {{ propertyObj }} -->
           <p class="text-gray-500 mb-6">
             You are confirming your decision to reject the agreement between
-            {Homeowner’s name} and yourself.
+            {{ rentalObj?.rentalLeaseAgreement?.houseOwnerSigneeName}} and yourself.
           </p>
           <div class="space-y-3">
             <button
@@ -311,7 +313,7 @@
       :isOpen="cancellationReasonModal"
       @close="cancellationReasonModal = false"
     >
-      <div class="bg-white rounded-lg p-6 w-4/12 mx-auto text-center">
+      <div class="bg-white rounded-lg p-6 max-w-2xl  mx-auto text-center">
         <!-- Header -->
         <h2 class="text-xl font-medium text-[#1D2739] mb-4 text-start">
           Reject Lease agreement
@@ -322,7 +324,7 @@
           What's your reason for rejecting the agreement
         </p>
         <textarea
-          v-model="reason"
+          v-model="payload.rejectionReason"
           placeholder="Enter your reason"
           class="w-full h-28 p-3 border bg-white border-gray-100 resize-none outline-none rounded-md text-sm text-gray-700"
         ></textarea>
@@ -331,15 +333,16 @@
         <div class="flex justify-between mt-10">
           <button
             @click="cancellationReasonModal = false"
-            class="w-full mr-2 py-3.5 border border-gray-100 font-medium rounded-md text-[#292929] text-sm"
+            class="w-full mr-2 py-3 border border-gray-100 font-medium rounded-md text-[#292929] text-sm"
           >
             Cancel
           </button>
           <button
+            :disabled="rejecting"
             @click="onContinue"
-            class="w-full ml-2 py-3.5 bg-[#292929] text-white rounded-md text-sm hover:bg-gray-800"
+            class="w-full ml-2 disabled:cursor-not-allowed disabled:opacity-25 py-3 bg-[#292929] text-white rounded-md text-sm hover:bg-gray-800"
           >
-            Continue
+             {{  rejecting ? 'processing...' : 'Continue' }}
           </button>
         </div>
       </div>
@@ -357,7 +360,7 @@ import { useSignLeaseAgreement } from "@/composables/modules/rentals/signLeaseAg
 import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
 const { rentalObj, loading: fetching } = useFetchRental()
 const { propertyObj, loading } = useFetchProperty();
-const { rejectLeaseAgreement, loading: rejecting } = useRejectLease()
+const { rejectLeaseAgreement, loading: rejecting, payload } = useRejectLease()
 const { showToast } = useCustomToast();
 const { containsHttps } = useHttpsDetector();
 const { extractUrl } = useUrlExtractor();
@@ -396,7 +399,7 @@ const closeModal = () => {
 };
 
 const onContinue = async () => {
-  await rejectLeaseAgreement(propertyObj.value.id)
+  await rejectLeaseAgreement(rentalObj?.value?.rentalLeaseAgreement?.id)
   cancellationReasonModal.value = false;
   // router.push(
   //   `/dashboard/listings/${route.params.id}/rental-applications/lease-signed-success?type=cancelled`
@@ -444,7 +447,7 @@ const submitLeaseAgreement = async () => {
 
   // Call the signLeaseAgreement function from your composable
   setPayload(payload);
-  await signLeaseAgreement(propertyObj.value.id);
+  await signLeaseAgreement(rentalObj?.value?.rentalLeaseAgreement?.id);
 };
 
 </script>

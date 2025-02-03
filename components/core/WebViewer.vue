@@ -1,347 +1,154 @@
-<!-- <template>
-  <div id="pdf-viewer-container">
-    <div id="viewer" style="height: 100vh; width: 100%;"></div>
-  </div>
-</template>
-
-<script>
-export default {
-  name: "PdfViewer",
-  mounted() {
-    // Ensure this only runs in the browser (not during server-side rendering)
-    if (process.client) {
-      // Dynamically load the WebViewer script
-      const script = document.createElement("script");
-      script.src = "/webviewer/webviewer.min.js";
-      script.onload = this.initializeWebViewer; // Initialize WebViewer after loading the script
-      document.head.appendChild(script);
-    }
-  },
-  methods: {
-    initializeWebViewer() {
-      const viewerElement = document.getElementById("viewer");
-
-      // Initialize WebViewer
-      WebViewer(
-        {
-          path: "/webviewer", // Path to the WebViewer library
-          initialDoc: "https://blackcountrystorage.blob.core.windows.net/blackcountry-dev/documents/1737747548792-edited-lease.pdf", // Static PDF file in the public directory
-        },
-        viewerElement
-      ).then((instance) => {
-        console.log("WebViewer instance loaded", instance);
-
-        // Optional: Access the WebViewer instance for further customization
-        const { documentViewer } = instance.Core;
-        console.log(documentViewer);
-      });
-    },
-  },
-};
-</script>
-
-<style scoped>
-/* Add any styles if necessary */
-#pdf-viewer-container {
-  height: 100vh;
-  width: 100%;
-}
-</style> -->
-
-<!-- <template>
-  <div id="pdf-viewer-container">
-    <div id="viewer" style="height: 100vh; width: 100%;"></div>
-    <button @click="submitLeaseDocument('save-and-send')" class="submit-btn">Submit Lease Document</button>
-  </div>
-</template>
-
-<script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
-import { useSignLeaseAgreement } from '@/composables/core/pdfLeaseSign'
-import { useUploadFile } from "@/composables/core/upload"
-// import { pdfUploadFile } from '@/composables/core/pdfUploader'; // Adjust the import path as necessary
-const { uploadFile, loading, uploadResponse  } = useUploadFile()
-const { signLeaseAgreement, loading: processing, payload, setPayload } = useSignLeaseAgreement()
-// Props
-defineProps({
-  pdfUrl: {
-    type: String,
-    required: true,
-  },
-});
-
-// Cleaned PDF URL
-const cleanedPdfUrl = computed(() => {
-  const htmlMatch = pdfUrl.match(/<html>(.*?)<\/html>/);
-  return htmlMatch ? htmlMatch[1] : pdfUrl;
-});
-
-// Refs for instance and error handling
-const instance = ref<any>(null);
-const uploadError = ref<string | null>(null);
-
-// Example payload values
-const user = ref({ firstName: 'John', lastName: 'Doe' });
-const leasePayload = ref({ documentName: 'Lease Agreement' });
-const payloadObj = ref({ startDate: '2025-01-01', endDate: '2025-12-31' });
-
-onMounted(() => {
-  // Ensure this only runs in the browser (not during server-side rendering)
-  if (typeof window !== 'undefined') {
-    const script = document.createElement('script');
-    script.src = '/webviewer/webviewer.min.js';
-    script.onload = () => initializeWebViewer();
-    document.head.appendChild(script);
-  }
-});
-
-function initializeWebViewer() {
-  const viewerElement = document.getElementById('viewer');
-
-  if (viewerElement) {
-    WebViewer(
-      {
-        path: '/webviewer', // Path to the WebViewer library
-        initialDoc: 'https://blackcountrystorage.blob.core.windows.net/blackcountry-dev/documents/1737735877992-edited-lease.pdf', // Use the cleaned PDF URL
-      },
-      viewerElement
-    ).then((webViewerInstance: any) => {
-      console.log('WebViewer instance loaded', webViewerInstance);
-      instance.value = webViewerInstance;
-    });
-  }
-}
-
-const submitLeaseDocument = async (item: string) => {
-  if (!instance.value) return;
-
-  try {
-    const docViewer = instance.value.Core.documentViewer;
-    const annotManager = instance.value.Core.annotationManager;
-
-    const xfdfString = await annotManager.exportAnnotations();
-
-    // Get the edited PDF file as Uint8Array with annotations
-    const fileData = await docViewer.getDocument().getFileData({
-      xfdfString,
-      downloadType: 'pdf',
-    });
-
-    // Convert Uint8Array to File object
-    const pdfBlob = new Blob([fileData], { type: 'application/pdf' });
-    const pdfFile = new File([pdfBlob], 'edited-lease.pdf', {
-      type: 'application/pdf',
-      lastModified: Date.now(),
-    });
-
-    const agreementObj = {
-      startDate: payloadObj.value.startDate,
-      endDate: payloadObj.value.endDate,
-      houseOwnerSigneeName: `${user.value.firstName} ${user.value.lastName}` || '',
-      agreementName: leasePayload.value.documentName,
-      isPublished: item === 'save-and-send',
-    };
-
-    // Upload the file using our composable
-    await uploadFile(pdfFile).then(() => {
-      // signLeaseAgreement()
-      // setPayload()
-    })
-    // const { url, error } = await pdfUploadFile(pdfFile, agreementObj);
-
-    // if (error) {
-    //   console.error('Upload failed:', error);
-    // } else if (url) {
-    //   console.log('File uploaded successfully:', url);
-    // }
-  } catch (error) {
-    console.error('Error processing document:', error);
-    uploadError.value = error instanceof Error ? error.message : 'An unexpected error occurred';
-  }
-};
-</script>
-
-<style scoped>
-#pdf-viewer-container {
-  height: 100vh;
-  width: 100%;
-}
-
-.submit-btn {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-</style>
- -->
-
- <!-- <template>
-  <div id="pdf-viewer-container">
-   <div class="ml-3">
-    <button v-if="isDocumentEdited" @click="submitLeaseDocument('save-and-send')" class=" bg-black p-3 text-white rounded-lg text-xs">Submit Document</button>
-   </div>
-    <div id="viewer" style="height: 100vh; width: 100%;"></div>
-  </div>
-  <CoreFullScreenLoader :visible="uploading" text="Upoading Agreement.." />
-</template>
-
-<script setup lang="ts">
-import { ref, onMounted, computed } from 'vue';
-import { useUser } from '@/composables/auth/user';
-import { useSignLease } from '@/composables/modules/lease/sign';
-import { useUploadFile } from '@/composables/core/upload';
-const { user } = useUser()
-const route = useRoute()
-
-// Composables
-const { uploadFile, uploadResponse, loading: uploading } = useUploadFile();
-const { signLeaseAgreement, loading } = useSignLease();
-
-const isDocumentEdited = ref(false);
-
-// Props
-const props = defineProps({
-  pdfUrl: {
-    type: String,
-    required: true,
-  },
-  rentalObj : {
-    type: Object,
-    default: () => {}
-  }
-});
-
-// Extract the PDF URL by removing the <html> wrapper
-const cleanedPdfUrl = computed(() => {
-  // Check if the URL has the <html> wrapper and extract the URL
-  if (props.pdfUrl.startsWith('<html>') && props.pdfUrl.endsWith('</html>')) {
-    return props.pdfUrl.replace('<html>', '').replace('</html>', '');
-  }
-  return props.pdfUrl; // Return as-is if no wrapper
-});
-
-// Debug: Log the cleaned URL
-console.log('Cleaned PDF URL:', cleanedPdfUrl.value);
-
-// Refs for WebViewer instance and error handling
-const instance = ref<any>(null);
-const uploadError = ref<string | null>(null);
-
-onMounted(() => {
-  // Ensure this only runs in the browser (not during server-side rendering)
-  if (typeof window !== 'undefined') {
-    const script = document.createElement('script');
-    script.src = '/webviewer/webviewer.min.js';
-    script.onload = () => initializeWebViewer();
-    document.head.appendChild(script);
-  }
-});
-
-function initializeWebViewer() {
-  const viewerElement = document.getElementById('viewer');
-
-  if (viewerElement) {
-    WebViewer(
-      {
-        path: '/webviewer', // Path to the WebViewer library
-        initialDoc: cleanedPdfUrl.value, // Use the cleaned PDF URL
-      },
-      viewerElement
-    )
-      .then((webViewerInstance: any) => {
-        console.log('WebViewer instance loaded successfully:', webViewerInstance);
-        instance.value = webViewerInstance;
-
-        const annotManager = webViewerInstance.Core.annotationManager;
-        annotManager.addEventListener("annotationChanged", () => {
-          isDocumentEdited.value = true; // Enable the submit button when edits are detected
-        });
-      })
-      .catch((err: any) => {
-        console.error('Error initializing WebViewer:', err);
-      });
-  } else {
-    console.error('Viewer element not found');
-  }
-}
-
-const submitLeaseDocument = async (item: string) => {
-  if (!instance.value) return;
-
-  try {
-    const docViewer = instance.value.Core.documentViewer;
-    const annotManager = instance.value.Core.annotationManager;
-
-    const xfdfString = await annotManager.exportAnnotations();
-
-    // Get the edited PDF file as Uint8Array with annotations
-    const fileData = await docViewer.getDocument().getFileData({
-      xfdfString,
-      downloadType: 'pdf',
-    });
-
-    // Convert Uint8Array to File object
-    const pdfBlob = new Blob([fileData], { type: 'application/pdf' });
-    const pdfFile = new File([pdfBlob], 'edited-lease.pdf', {
-      type: 'application/pdf',
-      lastModified: Date.now(),
-    });
-
-    await uploadFile(pdfFile);
-   const currentDate = new Date().toISOString().split('T')[0]; // Format: "YYYY-MM-DD"
-    const payloadObj = {
-    "signeeName": `${user.value.firstName} ${user.value.lastName}`, // optional
-    // "signatureUrl": "", // optional
-    "leaseAgreement": uploadResponse.value.url
-}
-    await signLeaseAgreement(props?.rentalObj?.rentalLeaseAgreement?.id, payloadObj)
-    console.log('File uploaded successfully.');
-  } catch (error) {
-    console.error('Error processing document:', error);
-    uploadError.value = error instanceof Error ? error.message : 'An unexpected error occurred';
-  }
-};
-</script>
-
-<style scoped>
-#pdf-viewer-container {
-  height: 100vh;
-  width: 100%;
-}
-
-.submit-btn {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-}
-</style> -->
-
-
 <template>
   <div id="pdf-viewer-container">
-    <!-- Viewer container -->
-    <div class="ml-3">
+    <div class="ml-3 space-x-4">
       <button 
         :disabled="!isDocumentEdited || !isSigned" 
         @click="submitLeaseDocument('save-and-send')" 
-        class="bg-black p-3 text-white rounded-lg text-xs"
+        class="bg-black p-3 text-white rounded-lg text-sm"
         :class="{ 'opacity-50 cursor-not-allowed': !isDocumentEdited || !isSigned }"
       >
-        Submit Document
+        Accept Agreement
+      </button>
+
+      <button 
+        @click="cancelModal = true" 
+        class="bg-red-500 p-3 text-white rounded-lg text-sm"
+      >
+        Reject Agreement
       </button>
     </div>
     <div id="viewer" style="height: 100vh; width: 100%;"></div>
   </div>
+
+  <CoreModalWithoutCloseBtn
+      :isOpen="cancelModal"
+      @close="cancelModal = false"
+    >
+      <div
+        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        @click.self="cancelModal = false"
+      >
+        <div
+          class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg"
+        >
+          <div
+            class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4"
+          >
+            <svg
+              width="65"
+              height="64"
+              viewBox="0 0 65 64"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <rect
+                x="0.921875"
+                width="63.1513"
+                height="64"
+                rx="31.5756"
+                fill="#F3A218"
+              />
+              <path
+                d="M42.2031 32.375C42.2031 26.8521 37.7259 22.375 32.2031 22.375C26.6803 22.375 22.2031 26.8521 22.2031 32.375C22.2031 37.8978 26.6803 42.375 32.2031 42.375C37.7259 42.375 42.2031 37.8978 42.2031 32.375Z"
+                stroke="white"
+                stroke-width="1.5"
+              />
+              <path
+                d="M32.4453 37.375V32.375C32.4453 31.9036 32.4453 31.6679 32.2988 31.5214C32.1524 31.375 31.9167 31.375 31.4453 31.375"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M32.1953 28.377H32.2043"
+                stroke="white"
+                stroke-width="3.25"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h2 class="text-lg font-semibold text-gray-700 mb-2">
+            Reject Lease Agreement
+          </h2>
+          <!-- {{ rentalObj }} -->
+            <!-- {{ propertyObj }} -->
+          <p class="text-gray-500 mb-6">
+            You are confirming your decision to reject the agreement between
+            {{ rentalObj?.rentalLeaseAgreement?.houseOwnerSigneeName}} and yourself.
+          </p>
+          <div class="space-y-3">
+            <button
+              type="button"
+              class="w-full disabled:cursor-not-allowed text-sm disabled:opacity-25 bg-[#292929] text-white py-3.5 rounded-md font-semibold"
+              @click="cancelModal = false"
+            >
+              No, Cancel
+            </button>
+            <button
+              type="button"
+              class="w-full bg-[#EBE5E0] text-gray-700 text-sm py-3.5 rounded-md font-semibold"
+              @click="onCancel"
+            >
+              Yes, Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </CoreModalWithoutCloseBtn>
+
+    <CoreModalWithoutCloseBtn
+      :isOpen="cancellationReasonModal"
+      @close="cancellationReasonModal = false"
+    >
+      <div class="bg-white rounded-lg p-6 max-w-2xl  mx-auto text-center">
+        <!-- Header -->
+        <h2 class="text-xl font-medium text-[#1D2739] mb-4 text-start">
+          Reject Lease agreement
+        </h2>
+
+        <!-- Input Section -->
+        <p class="text-sm text-[#1D2739] mb-2 text-start">
+          What's your reason for rejecting the agreement
+        </p>
+        <textarea
+          v-model="payload.rejectionReason"
+          placeholder="Enter your reason"
+          class="w-full h-28 p-3 border bg-white border-gray-100 resize-none outline-none rounded-md text-sm text-gray-700"
+        ></textarea>
+
+        <!-- Buttons -->
+        <div class="flex justify-between mt-10">
+          <button
+            @click="cancellationReasonModal = false"
+            class="w-full mr-2 py-3 border border-gray-100 font-medium rounded-md text-[#292929] text-sm"
+          >
+            Cancel
+          </button>
+          <button
+            :disabled="rejecting"
+            @click="onContinue"
+            class="w-full ml-2 disabled:cursor-not-allowed disabled:opacity-25 py-3 bg-[#292929] text-white rounded-md text-sm hover:bg-gray-800"
+          >
+             {{  rejecting ? 'processing...' : 'Continue' }}
+          </button>
+        </div>
+      </div>
+    </CoreModalWithoutCloseBtn>
+
   <CoreFullScreenLoader :visible="uploading" text="Uploading Agreement.." />
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted, computed } from 'vue';
 import { useUser } from '@/composables/auth/user';
+import { useRejectLease } from '@/composables/modules/lease/reject'
 import { useSignLease } from '@/composables/modules/lease/sign';
 import { useUploadFile } from '@/composables/core/upload';
+import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
+const { rentalObj, loading: fetching } = useFetchRental()
+const { rejectLeaseAgreement, loading: rejecting, payload } = useRejectLease()
 
 const { user } = useUser();
 const route = useRoute();
@@ -452,6 +259,24 @@ const submitLeaseDocument = async (item: string) => {
     uploadError.value = error instanceof Error ? error.message : 'An unexpected error occurred';
   }
 };
+
+const cancelModal = ref(false);
+const cancellationReasonModal = ref(false);
+
+
+const onCancel = () => {
+  cancelModal.value = false;
+  cancellationReasonModal.value = true;
+};
+
+const onContinue = async () => {
+  await rejectLeaseAgreement(rentalObj?.value?.rentalLeaseAgreement?.id)
+  cancellationReasonModal.value = false;
+  // router.push(
+  //   `/dashboard/listings/${route.params.id}/rental-applications/lease-signed-success?type=cancelled`
+  // );
+};
+
 </script>
 
 <style scoped>

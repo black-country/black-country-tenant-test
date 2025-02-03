@@ -1096,6 +1096,7 @@
   </button>
 
   <!-- Dynamically Generated Tabs -->
+   <!-- {{propertyLocation}} -->
   <button
     v-for="location in propertyLocation"
     :key="location.id"
