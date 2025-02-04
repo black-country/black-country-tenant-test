@@ -62,6 +62,8 @@
           <span class="text-gray-600 ml-2">{{rentalObj?.room?.rentFrequency ?? 'Nil'}}</span>
         </div>
       </div>
+<!-- {{ rentalObj }} -->
+      <HousingFees v-if="rentalObj?.additionalCharges" :roomObj="rentalObj" class="mb-8" />
   
       <!-- Room Type -->
       <div class="mb-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-100 flex justify-between items-center">
