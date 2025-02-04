@@ -3,6 +3,7 @@
     <TopNavBar />
     <!-- {{ propertyObj?.rentalApplication }} -->
       <!-- {{ rentalObj?.rentalLeaseAgreement?.leaseAgreementContent }} -->
+        <!-- {{ rentalObj.rentalLeaseAgreement.houseOwnerSignatureUrl }} -->
     <CoreWebViewer :rentalObj="rentalObj" :pdfUrl="rentalObj?.rentalLeaseAgreement?.leaseAgreementContent"  v-if="isUrl" />
 
    <section v-else>
@@ -85,19 +86,19 @@
             </p>
 
             <div class="mb-4">
-              <h3 class="text-sm font-medium mb-2">
+              <h3 class="text-lg font-medium mb-2 font-medium mb-2">
                 Landlord/Property Manager:
               </h3>
-              <label v-if="containsHttps(lease?.leaseAgreementContent)" class="block text-sm text-gray-500 mb-1">Signature</label>
-              <div v-if="containsHttps(lease?.leaseAgreementContent)" class="border-b-2 border-dotted h-20 flex mb-4">
+              <label class="block text-lg font-medium mb-2 text-gray-500 mb-1">Signature</label>
+              <div class="border-b-2 border-dotted h-20 flex mb-4">
                 <img
-                  :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.houseOwnerSignatureUrl"
+                  :src="rentalObj?.rentalLeaseAgreement?.houseOwnerSignatureUrl"
                   alt="Signature"
                   class="h-full object-contain"
                 />
               </div>
-              <label class="block text-sm text-gray-500 mb-1">Full Name</label>
-              <div class="border-b-2 border-dotted text-gray-800 py-2 mb-4">
+              <label class="block  text-sm font-medium mb-2 text-gray-500 mb-1">Full Name</label>
+              <div class="border-b-2 text-lg font-medium mb-2 border-dotted text-gray-800 py-2 mb-4">
                 {{ propertyObj?.rentalApplication?.rentalLeaseAgreement?.houseOwnerSigneeName}}
               </div>
               <label v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signedAt !== null" class="block text-sm text-gray-500 mb-1">Date</label>
@@ -107,30 +108,33 @@
             </div>
 
             <div class="mb-4">
-              <h3 class="text-base font-medium mb-2">Tenant:</h3>
-              <label class="block text-sm text-gray-500 mb-1">Full Name</label>
+              <h3 class="text-base text-lg font-medium mb-2 font-medium">Tenant:</h3>
+              <label class="block text-sm font-medium mb-2 text-gray-500 mb-1">Full Name</label>
               <input
                 type="text"
                 disabled
-                :value="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signeeName"
+                :value="`${user.firstName} ${user.lastName}`"
                 placeholder="Full name"
-                class="w-full border-b-2 border-dotted py-2 mb-4 bg-transparent outline-none placeholder-gray-400"
+                class="w-full border-b-2 border-dotted text-lg font-medium mb-2 py-2 mb-4 bg-transparent outline-none placeholder-gray-400"
               />
-              <label class="block text-sm text-gray-500 mb-1">Signature</label>
+              <label v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl" class="block  text-gray-500 mb-1">Signature</label>
               <img
+                v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl"
                 :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl"
                 alt="Signature"
                 class=" h-32 w-96  py-2 mb-4 bg-transparent outline-none placeholder-gray-400"
               />
-              <p class=" border-b-2 border-dotted"></p>
-              <label class="block text-sm text-gray-500 mb-1 pt-4">Date</label>
-              <input
+              <p v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl" class=" border-b-2 border-dotted"></p>
+              <label class="block  text-gray-500 mb-1 pt-4">Date</label>
+
+              <p> {{  moment(propertyObj?.rentalApplication?.rentalLeaseAgreement?.createdAt).format("MMMM Do YYYY, HH:MM A") ?? 'Nil' }}</p>
+              <!-- <input
                 type="text"
                 diabled
-                :value="propertyObj?.rentalApplication?.rentalLeaseAgreement?.createdAt"
+                :value="`${moment(propertyObj?.rentalApplication?.rentalLeaseAgreement?.createdAt).format('MMMM Do YYYY, HH:MM A')}`"
                 placeholder="Date"
-                class="w-full border-b-2 border-dotted py-2 mb-4 bg-transparent outline-none placeholder-gray-400"
-              />
+                class="w-full border-b-2 text-lg border-dotted py-2 mb-4 bg-transparent outline-none placeholder-gray-400"
+              /> -->
             </div>
           </div>
         </div>
@@ -351,6 +355,7 @@
 </template>
 
 <script setup lang="ts">
+import moment from "moment";
 import { useUrlExtractor } from '@/composables/core/useUrlExtractor';
 import { useHttpsDetector } from '@/composables/core/useUrlCheck'
 import { useRejectLease } from '@/composables/modules/lease/reject'
@@ -358,6 +363,7 @@ import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 import { useCustomToast } from "@/composables/core/useCustomToast";
 import { useSignLeaseAgreement } from "@/composables/modules/rentals/signLeaseAgreement";
 import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
+import { useUser } from '@/composables/auth/user';
 const { rentalObj, loading: fetching } = useFetchRental()
 const { propertyObj, loading } = useFetchProperty();
 const { rejectLeaseAgreement, loading: rejecting, payload } = useRejectLease()
@@ -366,6 +372,7 @@ const { containsHttps } = useHttpsDetector();
 const { extractUrl } = useUrlExtractor();
 const route = useRoute();
 const router = useRouter();
+const { user } = useUser()
 const isUrl = computed(() => {
   return !!extractUrl(rentalObj?.value?.rentalLeaseAgreement?.leaseAgreementContent)
 })
