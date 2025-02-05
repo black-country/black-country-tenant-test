@@ -219,6 +219,11 @@
   <script setup lang="ts">
   import { ref, computed } from 'vue'
   import { useFileUpload } from '@/composables/core/useFileUpload'
+  import { useFormPersistence } from "@/composables/core/useFormPersistence";
+import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
+
+const router = useRouter();
+const route = useRoute();
   
   interface GuarantorInfo {
     fullName: string
@@ -268,7 +273,75 @@
   
   const emit = defineEmits(['submit', 'back'])
   
-  const handleSubmit = () => {
+  // Fetch property data
+const { propertyObj, loading } = useFetchProperty();
+
+
+// Load existing data from localStorage or create structure from API response
+onMounted(() => {
+  // Load saved questions if they exist
+  const savedShouldContactReferenceOption = loadData("shouldContactReferences");
+  const savedReferenceContacts = loadData("referenceContacts");
+  if (savedShouldContactReferenceOption) {
+    guarantorInfo.value.termsAccepted =  savedShouldContactReferenceOption;
+  }
+  if (savedReferenceContacts && savedReferenceContacts.length) {
+    guarantorInfo.value =  savedReferenceContacts;
+  }
+});
+
+// Watch for changes in propertyObj.value and map preScreeningQuestions if available
+watch(
+  () => propertyObj.value,
+  (newVal) => {
+    if (newVal && newVal.shouldContactReferences) {
+      // Merge saved answers with API responses to ensure persisted answers are not lost
+      const savedMaritalStatus = loadData("shouldContactReferences") || "";
+      // Map preScreeningQuestions from propertyObj to match desired structure
+      guarantorInfo.value.termsAccepted = newVal.shouldContactReferences
+    }
+  },
+  { immediate: true } // Ensures watch is triggered immediately if data is already available
+);
+
+watch(
+  () => propertyObj.value,
+  (newVal) => {
+    if (newVal && newVal.referenceContacts) {
+      // Merge saved answers with API responses to ensure persisted answers are not lost
+      const savedMaritalContact = loadData("referenceContacts") || [];
+      // Map preScreeningQuestions from propertyObj to match desired structure
+      guarantorInfo.value = newVal.referenceContacts
+    }
+  },
+  { immediate: true } // Ensures watch is triggered immediately if data is already available
+);
+
+
+// Use 'prescreening' as the key to store the data
+const { saveData, loadData } = useFormPersistence();
+
+
+const goBack = () => {
+  router.push(`/dashboard/listings/${route.params.id}/preview`);
+  localStorage.removeItem("maritalStatus");
+  localStorage.removeItem("maritalContact");
+};
+
+
+const goNext = () => {
+  if (isFormValid.value) {
+    saveData("maritalStatus", maritalStatus.value); // Ensure the answers are persisted
+    saveData("maritalContact", spouseInfo.value); // Ensure the answers are persisted
+    router.push({ query: { step: "5" } });
+    // emit("submit", {
+    //   maritalStatus: maritalStatus.value,
+    //   spouseInfo: maritalStatus.value === "married" ? spouseInfo.value : null,
+    // });                              
+  }
+};
+
+const handleSubmit = () => {
     if (isFormValid.value) {
       emit('submit', {
         ...guarantorInfo.value,
@@ -276,4 +349,5 @@
       })
     }
   }
+
   </script>

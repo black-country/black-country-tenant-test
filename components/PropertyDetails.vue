@@ -504,56 +504,34 @@
     </div>
 
     <CoreModal :isOpen="openRentalApplicationModal">
-      <div class="p-6 max-w-xl mx-auto bg-white rounded-md">
+      <div class="max-w-xl mx-auto bg-white rounded-md">
        <div class="flex justify-between items-center pb-5">
         <h2 class="text-base font-medium">Select the room you're interested in</h2>
+        <!-- {{ rooms }} -->
         <button @click="openRentalApplicationModal = false" class="text-[#1D2739] font-semibold text-sm">Cancel</button>
        </div>
         <div class="grid grid-cols-3 gap-4 mb-6">
-          <!-- <button
-            v-for="(room, index) in rooms"
-            :key="room.id"
-            :disabled="!room.available"
-            :class="[
-              'p-4 rounded-lg transition cursor-pointer space-y-1',
-              selectedRoom === room.id ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#326543]',
-              !room.available && 'opacity-50 pointer-events-none'
-            ]"
-            @click="selectRoom(room.id)"
-          >
-            <h3 :class="['text-sm font-medium text-center', 
-                selectedRoom === room.id ? 'text-white' : 'text-[#344054]',
-                !room.available && 'opacity-50 pointer-events-none'
-                ]">{{ room.name }}</h3>
-
-            <p :class="['text-center text-xs', selectedRoom === room.id ? 'text-white' : 'text-[#326543]',
-            !room.available && 'opacity-50 pointer-events-none'
-            ]">
-              {{ room.price }}
-            </p>
-          </button> -->
-          <!-- {{ rooms }} -->
           <button
             v-for="(room, index) in rooms"
             :key="room.id"
-            :disabled="!room.available || room.rentalApplication"
+            :disabled="!room.available || !room.rentalApplication"
             :class="[
-              'p-4 rounded-lg transition cursor-pointer space-y-1',
+              'p-4 rounded-lg transition cursor-pointer w-full flex justify-center items-center flex-col space-y-1',
               selectedRoom === room.id ? 'bg-[#5B8469] text-white' : 'bg-[#F0F2F5] text-[#326543]',
               !room.available && 'opacity-50 pointer-events-none',
-              room.rentalApplication && 'opacity-50 pointer-events-none'
+              !room.rentalApplication && 'opacity-50 pointer-events-none'
             ]"
             @click="selectRoom(room.id)"
           >
             <h3 :class="['text-sm font-medium text-center', 
                 selectedRoom === room.id ? 'text-white' : 'text-[#344054]',
                 !room.available && 'opacity-50 pointer-events-none',
-                room.rentalApplication && 'opacity-50 pointer-events-none'
+                !room.rentalApplication && 'opacity-50 pointer-events-none'
                 ]">{{ room.name }}</h3>
 
             <p :class="['text-center text-xs', selectedRoom === room.id ? 'text-white' : 'text-[#326543]',
             !room.available && 'opacity-50 pointer-events-none',
-            room.rentalApplication && 'opacity-50 pointer-events-none'
+            !room.rentalApplication && 'opacity-50 pointer-events-none'
             ]">
               {{ room.price }}
             </p>
