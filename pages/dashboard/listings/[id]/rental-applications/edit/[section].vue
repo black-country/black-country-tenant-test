@@ -365,17 +365,17 @@ const sectionFields = {
         "relative",
       ],
     },
-    { label: "Next of kin email address", isCompulsory: true, value: "", type: "email" },
+    // { label: "Next of kin email address", isCompulsory: true, value: "", type: "email" },
+    { label: "Phone Number", isCompulsory: true, value: "", type: "number" },
     {
       label: "Residential address",
       isCompulsory: true,
       value: "",
       type: "text",
     },
-    { label: "Phone Number", isCompulsory: true, value: "", type: "number" },
-    { label: "Occupation", value: "", type: "text" },
-    { label: "Organization name", value: "", type: "text" },
-    { label: "Office address", value: "", type: "text" },
+    // { label: "Occupation", value: "", type: "text" },
+    // { label: "Organization name", value: "", type: "text" },
+    // { label: "Office address", value: "", type: "text" },
   ],
 };
 

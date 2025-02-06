@@ -99,8 +99,10 @@ import { useSignLease } from "@/composables/modules/lease/sign";
 import { useUploadFile } from "@/composables/core/upload";
 import { useUser } from "@/composables/auth/user";
 import { useCustomToast } from "@/composables/core/useCustomToast";
+import { useFetchRental } from '@/composables/modules/rentals/fetchRentalsById'
 
 const { showToast } = useCustomToast();
+const { rentalObj, loading: fetching } = useFetchRental()
 const { uploadFile, loading, uploadResponse } = useUploadFile();
 const { user } = useUser();
 const tenantName = ref(`${user.value.firstName} ${user.value.lastName}`);
@@ -120,6 +122,7 @@ const props = defineProps({
 
 const signatureObj = ref({}) as any;
 const currentStep = ref(1);
+const route = useRoute()
 
 const emit = defineEmits(["close", "agreementData"]);
 
@@ -145,7 +148,7 @@ const submitSignature = async () => {
       return;
     }
 
-    const rentalLeaseAgreementId = props.property?.rentalApplication?.rentalLeaseAgreement?.id;
+    const rentalLeaseAgreementId = props.property?.rentalApplication?.rentalLeaseAgreement?.id || rentalObj?.value?.rentalLeaseAgreement?.id;
     if (!rentalLeaseAgreementId) {
       showToast({
         title: "Error",

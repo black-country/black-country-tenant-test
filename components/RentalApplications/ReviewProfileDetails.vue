@@ -125,6 +125,40 @@
           </ul>
         </div>
 
+        <div class="">
+          <div
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <h3 class="text-base font-medium">Reference and Emergency Contacts</h3>
+            <button class="text-[#1D2739] cursor-pointer" @click="editSection('reference-and-emergency')">Edit</button>
+          </div>
+         <div v-if="profile?.referenceContacts?.length">
+          <ul  v-for="(item, idx) in profile?.referenceContacts" :key="idx" class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <p>{{idx + 1}} Emergency contact</p>
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Full Name*:
+              </strong>{{ item.fullName || '---' }}</li>
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Relationship*:
+              </strong>{{ item.relationship|| '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone number *
+              </strong>{{ item.phoneNumber || '---' }}</li>
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Residential address*
+              </strong>{{ item.residentialAddress|| '---' }}</li>
+          </ul>
+         </div>
+         <div class="py-6" v-else>
+          <p>1. Emergency contact</p>
+          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Full Name*:
+              </strong>---</li>
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Relationship*:
+              </strong>---</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone number*
+              </strong>---</li>
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Residential Address *:
+              </strong>---</li>
+          </ul>
+         </div>
+        </div>
+
 
         <!-- Uploaded Document Section -->
         <div v-if="route?.query?.step === 'preview'" class="">
@@ -487,6 +521,18 @@ const goNext = async () => {
 
 };
 
+
+// const editSection = (section: string) => {
+//   if (section === 'screening-questions') {
+//     router.push(`/dashboard/listings/${route.params.id}/rental-applications/create?step=1`)
+//   } else if (section === 'uploaded-document') {
+//     router.push(`/dashboard/listings/${route.params.id}/rental-applications/create?step=3`)
+//   } else if(section === 'reference-and-emergency'){
+//     router.push(`/dashboard/listings/${route.params.id}/rental-applications/create?step=4`)
+//   } else {
+//     router.push(`/dashboard/listings/${route.params.id}/rental-applications/edit/${section}`);
+//   }
+// };
 
 const editSection = (section: string) => {
   if (section === 'screening-questions') {
