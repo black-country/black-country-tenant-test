@@ -53,8 +53,10 @@
     <script setup lang="ts">
       import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
     import { useVerifyMoveInOTP } from '@/composables/modules/maintenance/useVerifyMoveIn'
+      import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
 const router = useRouter()
   const { intiateMoveIn, loading: processing } = useInitiateMoveIn()
+  const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
   const { loading,
     setCredential,
     credential,
@@ -88,8 +90,10 @@ const router = useRouter()
     if (newOtp.every((digit: any) => digit.length === 1)) {
   
       const payload = {
-        otp: otp.value
+        otp: otp.value, 
+        applicationId: myHomeInfo?.value?.rentPayment?.rentalApplicationId
       }
+      console.log('gere')
       // Trigger OTP verification
       setCredential(payload)
       verifyMoveIn().catch((error: any) => {
