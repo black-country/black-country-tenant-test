@@ -1,7 +1,9 @@
 import { ref } from "vue";
 import { maintenance_api } from "@/api_factory/modules/maintenance";
+import { useUser } from "@/composables/auth/user";
 import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
+const { user }  = useUser()
 
 const payload = ref({
   type: "", 
@@ -16,9 +18,9 @@ export const useCreateMaintenanceRequest = () => {
   const loading = ref(false);
   const router = useRouter()
   const createMaintenanceRequest = async () => {
-    const houseId = "01b4f4d4-3927-43e5-97de-8b1df3366a56"
+    // const houseId = "01b4f4d4-3927-43e5-97de-8b1df3366a56"
     loading.value = true;
-    const res = await maintenance_api.$_create_maintenence_request(houseId, payload.value) as any
+    const res = await maintenance_api.$_create_maintenence_request(user.value.house.id, payload.value) as any
      console.log(res, 'res')
      if(res.status == 201) {
         showToast({
