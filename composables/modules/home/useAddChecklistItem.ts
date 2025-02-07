@@ -3,15 +3,17 @@ import { useCustomToast } from '@/composables/core/useCustomToast'
 
 const loading = ref(false)
 const checklistPayload = ref({
-    list: []
+    list: [],
+    applicationId: ''
 })
 
 export const useAddChecklistItem = () => {
     const { showToast } = useCustomToast();
     const router = useRouter()
 	const addChecklistItem = async (id: string) => {
+        const applicationId = id || checklistPayload.value.applicationId
 		loading.value = true
-		const res = await home_api.$_add_checklist_item(id, checklistPayload.value) as any
+		const res = await home_api.$_add_checklist_item(applicationId, checklistPayload.value) as any
         if (res.type !== 'ERROR') {
             showToast({
                 title: "Success",
@@ -26,6 +28,7 @@ export const useAddChecklistItem = () => {
 
     const setPayload = (data: any) => {
         checklistPayload.value.list = data.list
+        checklistPayload.value.applicationId = data.applicationId
     }
 	return { loading, checklistPayload, addChecklistItem, setPayload }
 }

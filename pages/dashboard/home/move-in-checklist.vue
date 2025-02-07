@@ -90,9 +90,11 @@
   <script setup lang="ts">
   import { ref } from 'vue';
   import { useAddChecklistItem } from '@/composables/modules/home/useAddChecklistItem';
+    import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
   import { useFetchRentalChecklist } from '@/composables/modules/home/useFetchRentalCheckList'
   import { useFetchChecklist } from '@/composables/modules/home/useFetchChecklist';
   import { useUser } from '@/composables/auth/user';
+  const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
 //   const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
   import { useRouter } from 'vue-router';
   const { user } = useUser()
@@ -135,7 +137,7 @@ const submitChecklist = async () => {
         });
 
         // Prepare the payload object
-        const payloadObj = { list: formattedList };
+        const payloadObj = { list: formattedList, applicationId: myHomeInfo?.value?.rentPayment?.rentalApplicationId };
 
         // Debugging: Log the payload before submission
         console.log('Submitting checklist payload:', payloadObj);
