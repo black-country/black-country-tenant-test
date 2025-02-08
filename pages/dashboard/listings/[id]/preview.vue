@@ -267,7 +267,7 @@
 
     <CoreModal :isOpen="showShareModal" @close="showShareModal = false">
       <div
-        class="bg-white p-6 w-full m-14 lg:m-0 rounded-lg lg:w-4/12 relative space-y-10"
+        class="bg-white w-full m-14 lg:m-0 rounded-lg relative space-y-10"
         @click.stop
       >
         <div class="space-y-7">

@@ -552,8 +552,7 @@
     :isOpen="showBookingModal"
     @close="showBookingModal = false"
     >
-    <VisitationCalender @close="showBookingModal = false" class="lg:w-5/12  w-full m-6 lg:m-0" />
-      <!-- <BookingModal :property="property" class="lg:w-4/12 m-6 lg:m-0" /> -->
+    <VisitationCalender @close="showBookingModal = false" class="" />
     </CoreModal>
   </main>
   </template>
