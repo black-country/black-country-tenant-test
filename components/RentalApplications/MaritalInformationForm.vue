@@ -23,6 +23,7 @@
         <RentalApplicationsSpouseInfo
           v-if="maritalStatus === 'married'"
           v-model:spouse="spouseInfo"
+          :spouseInfo="spouseInfo"
           v-model:isValid="isSpouseInfoValid"
         />
 

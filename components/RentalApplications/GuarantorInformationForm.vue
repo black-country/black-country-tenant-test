@@ -333,11 +333,16 @@ const goNext = () => {
   if (isFormValid.value) {
     saveData("maritalStatus", maritalStatus.value); // Ensure the answers are persisted
     saveData("maritalContact", spouseInfo.value); // Ensure the answers are persisted
-    router.push({ query: { step: "5" } });
+    // router.push({ query: { step: "5" } });
     // emit("submit", {
     //   maritalStatus: maritalStatus.value,
     //   spouseInfo: maritalStatus.value === "married" ? spouseInfo.value : null,
-    // });                              
+    // });   
+    router.push({
+    path: route.path, // Keep the same path
+    query: { ...route.query, step: "preview" }, // Update the query with the new step
+    // query: { ...route.query, step: 4 }, // Update the query 
+  });                           
   }
 };
 

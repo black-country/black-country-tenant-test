@@ -102,7 +102,7 @@
         <div class="">
           <div
             class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
-            <h3 class="text-base font-medium">Next of Kin</h3>
+            <h3 class="text-base font-medium">Reference and Emergency Contacts</h3>
             <button class="text-[#1D2739] cursor-pointer" @click="editSection('next-of-kin')">Edit</button>
           </div>
           <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
@@ -110,27 +110,74 @@
               </strong>{{ profile.nextOfKin.fullName || '---' }}</li>
             <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Relationship:
               </strong>{{ profile.nextOfKin.relationship || '---' }}</li>
-            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email address:
-              </strong>{{ profile.nextOfKin.email || '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone number:
+              </strong>{{ profile.nextOfKin.phone || '---' }}</li>
             <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Residential Address:
               </strong>{{ profile.nextOfKin.address || '---' }}</li>
-            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone number:
-              </strong>{{ profile.nextOfKin.phone || '---' }}</li>
-            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Occupation:
+            <!-- <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email address:
+              </strong>{{ profile.nextOfKin.email || '---' }}</li> -->
+            <!-- <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Occupation:
               </strong>{{ profile.nextOfKin.occupation || '---' }}</li>
             <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Organization Name:
               </strong>{{ profile.nextOfKin.organizationName || '---' }}</li>
             <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Office Address:
-              </strong>{{ profile.nextOfKin.officeAddress || '---' }}</li>
+              </strong>{{ profile.nextOfKin.officeAddress || '---' }}</li> -->
           </ul>
         </div>
 
         <div class="">
+  <div class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+    <h3 class="text-base font-medium">Reference and Emergency Contacts</h3>
+    <button class="text-[#1D2739] cursor-pointer" @click="editSection('reference-and-emergency')">Edit</button>
+  </div>
+
+  <!-- ✅ Fix: Check if referenceContacts exists -->
+  <div v-if="profile?.referenceContacts?.length">
+    <ul v-for="(item, idx) in profile?.referenceContacts" :key="idx" class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+      <p>{{ idx + 1 }}. Emergency contact</p>
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Full Name: *</strong> {{ item.fullName || '---' }}
+      </li>
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Relationship: *</strong> {{ item.relationship || '---' }}
+      </li>
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Phone number: *</strong> {{ item.phoneNumber || '---' }}
+      </li>
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Residential Address: *</strong> {{ item.residentialAddress || '---' }}
+      </li>
+    </ul>
+  </div>
+
+  <!-- ✅ Fix: Default empty reference contacts display -->
+  <div class="py-6" v-else>
+    <p>1. Emergency contact</p>
+    <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Full Name: *</strong> ---
+      </li>
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Relationship: *</strong> ---
+      </li>
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Phone number: *</strong> ---
+      </li>
+      <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+        <strong>Residential Address: *</strong> ---
+      </li>
+    </ul>
+  </div>
+</div>
+
+
+        <!-- <div class="">
           <div
             class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <h3 class="text-base font-medium">Reference and Emergency Contacts</h3>
             <button class="text-[#1D2739] cursor-pointer" @click="editSection('reference-and-emergency')">Edit</button>
           </div>
+          {{ profile }}
          <div v-if="profile?.referenceContacts?.length">
           <ul  v-for="(item, idx) in profile?.referenceContacts" :key="idx" class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <p>{{idx + 1}} Emergency contact</p>
@@ -157,7 +204,7 @@
               </strong>---</li>
           </ul>
          </div>
-        </div>
+        </div> -->
 
 
         <!-- Uploaded Document Section -->
@@ -254,12 +301,12 @@ const profile = ref({
   nextOfKin: {
     fullName: '',
     relationship: '',
-    email: '',
+    // email: '',
     address: '',
     phone: '',
-    occupation: '',
-    organizationName: '',
-    officeAddress: ''
+    // occupation: '',
+    // organizationName: '',
+    // officeAddress: ''
   },
   document: {
     type: '',
@@ -306,15 +353,23 @@ const populateProfile = () => {
 
   profile.value.nextOfKin.fullName = profileObj?.value?.nextOfKinName || '';
   profile.value.nextOfKin.relationship = profileObj?.value?.nextOfKinRelationship || '';
-  profile.value.nextOfKin.email = profileObj?.value?.nextOfKinEmail || '';
+  // profile.value.nextOfKin.email = profileObj?.value?.nextOfKinEmail || '';
   profile.value.nextOfKin.address = profileObj?.value?.nextOfKinAddress || '';
   profile.value.nextOfKin.phone = profileObj?.value?.nextOfKinPhone || '';
-  profile.value.nextOfKin.occupation = profileObj?.value?.nextOfKinOccupation || '';
-  profile.value.nextOfKin.organizationName = profileObj?.value?.nextOfKinEmployer || '';
-  profile.value.nextOfKin.officeAddress = profileObj?.value?.nextOfKinEmployerAddress || '';
+  // profile.value.nextOfKin.occupation = profileObj?.value?.nextOfKinOccupation || '';
+  // profile.value.nextOfKin.organizationName = profileObj?.value?.nextOfKinEmployer || '';
+  // profile.value.nextOfKin.officeAddress = profileObj?.value?.nextOfKinEmployerAddress || '';
 
   profile.value.document.type = documents?.type || ''; // Handle this based on how documents are retrieved
   profile.value.document.fileUrls = documents?.fileUrls || []; // Handle this if document URLs are provided
+
+    // ✅ **Fix: Map Reference Contacts Properly**
+    profile.value.referenceContacts = profileObj?.value?.referenceContacts?.map(contact => ({
+    fullName: contact.fullName || '',
+    relationship: contact.relationship || '',
+    phoneNumber: contact.phoneNumber || '',
+    residentialAddress: contact.residentialAddress || '',
+  })) || [];
 };
 
 onMounted(() => {
