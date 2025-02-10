@@ -65,7 +65,7 @@
         </div>
 
         <div v-if="currentStepInt === 4">
-          <RentalApplicationsMaritalInformationForm @submit="handleSubmit" @back="handleBack" />
+          <RentalApplicationsMaritalInformationForm @submit="handleNext" @back="handleBack" />
         </div>
 
         <div v-if="currentStepInt === 5">
@@ -119,7 +119,12 @@ const handleBack = () => {
 };
 
 const handleSubmit = () => {
-  router.push("/success");
+  router.push(`/dashboard/listings/${route?.params?.id}/preview`); 
+    // router.push({
+  //   path: route.path, // Keep the same path
+  //   query: { ...route.query, step: "2" }, // Update the query with the new step
+  // });
+  // router.push("/success");
 };
 
 const goBack = () => {
@@ -138,10 +143,6 @@ const saveData = () => {
     toastType: "success",
     duration: 3000,
   });
-  // router.push({
-  //   path: route.path, // Keep the same path
-  //   query: { ...route.query, step: "2" }, // Update the query with the new step
-  // });
 };
 
 
@@ -195,7 +196,3 @@ const handleGuarantorSubmit = (data: GuarantorSubmission) => {
 // }
 
 </script>
-
-<style>
-
-</style>

@@ -16,6 +16,8 @@ const rentalApplicationPayload = ref({
     fileUrls: [],
   },
   questionAnswers: [],
+  guarantorData: {},
+  maritalData: {}
 });
 
 export function useCreateRentalApplication() {
@@ -31,7 +33,9 @@ export function useCreateRentalApplication() {
       houseId: rentalApplicationPayload.value.houseId,
       roomId: rentalApplicationPayload.value.roomId,
       idDocument: rentalApplicationPayload.value.idDocument,
-      questionAnswers: rentalApplicationPayload.value.questionAnswers
+      questionAnswers: rentalApplicationPayload.value.questionAnswers,
+      guarantorData: rentalApplicationPayload.value.guarantorData,
+      maritalData: rentalApplicationPayload.value.maritalData
     };
 
     try {
@@ -72,6 +76,8 @@ export function useCreateRentalApplication() {
     rentalApplicationPayload.value.roomId = data.roomId;
     rentalApplicationPayload.value.idDocument = data.idDocument;
     rentalApplicationPayload.value.questionAnswers = data.questionAnswers;
+    rentalApplicationPayload.value.maritalData = data.maritalData;
+    rentalApplicationPayload.value.guarantorData = data.guarantorData;
   };
 
   return {

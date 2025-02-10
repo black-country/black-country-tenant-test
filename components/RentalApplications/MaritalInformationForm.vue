@@ -11,7 +11,7 @@
           </label>
           <select
             v-model="maritalStatus"
-            class="w-full p-3.5 text-sm text-[#98A2B3] outline-none rounded-lg bg-[#F0F2F5] border border-[0.5px] border-gray-100"
+            class="w-full p-3.5 text-sm text-gray-900 outline-none rounded-lg bg-[#F0F2F5] border border-[0.5px] border-gray-100"
           >
             <option value="">Select marital status</option>
             <option value="married">Married</option>
@@ -33,6 +33,7 @@
         >
           <div class="max-w-2xl w-full flex justify-between">
             <button
+              type="button"
               class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]"
               @click="goBack"
             >
@@ -58,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import { useFormPersistence } from "@/composables/core/useFormPersistence";
 import { useFetchProperty } from "@/composables/modules/property/fetchProperty";
 
@@ -68,72 +69,66 @@ const route = useRoute();
 interface SpouseInfo {
   fullName: string;
   email: string;
-  phone: string;
-  idType: string;
-  idImage: File | null;
+  phoneNumber: string;
+  idDocs: {
+    type: string;
+    fileUrls: string[];
+  };
 }
 
+// Define state variables
 const maritalStatus = ref("");
 const spouseInfo = ref<SpouseInfo>({
   fullName: "",
   email: "",
-  phone: "",
-  idType: "",
-  idImage: null,
+  phoneNumber: "",
+  idDocs: {
+    type: "",
+    fileUrls: [],
+  },
 });
 const isSpouseInfoValid = ref(false);
-
 
 // Fetch property data
 const { propertyObj, loading } = useFetchProperty();
 
+// Use persistence for saving form progress
+const { saveData, loadData } = useFormPersistence();
 
-// Load existing data from localStorage or create structure from API response
+// Load existing data on mount
 onMounted(() => {
-  // Load saved questions if they exist
   const savedMaritalStatus = loadData("maritalStatus");
-  const savedMaritalContact = loadData("maritalContact");
-  if (savedMaritalStatus && savedMaritalStatus.length) {
-    maritalStatus.value =  savedMaritalStatus;
+  const savedMaritalContact = loadData("maritalData");
+
+  if (savedMaritalStatus) {
+    maritalStatus.value = savedMaritalStatus;
   }
-  if (savedMaritalContact && Object.keys(savedMaritalContact).length) {
-    spouseInfo.value =  savedMaritalStatus;
+
+  if (savedMaritalContact) {
+    spouseInfo.value = savedMaritalContact;
   }
 });
 
-// Watch for changes in propertyObj.value and map preScreeningQuestions if available
+// Watch for changes in property API response
 watch(
   () => propertyObj.value,
   (newVal) => {
-    if (newVal && newVal.maritalStatus) {
-      // Merge saved answers with API responses to ensure persisted answers are not lost
-      const savedMaritalStatus = loadData("maritalStatus") || "";
-      // Map preScreeningQuestions from propertyObj to match desired structure
-      maritalStatus.value = newVal.maritalStatus
-
+    if (newVal?.maritalStatus) {
+      maritalStatus.value = newVal.maritalStatus || "";
+    }
+    if (newVal?.maritalData) {
+      spouseInfo.value = newVal.maritalData || {
+        fullName: "",
+        email: "",
+        phoneNumber: "",
+        idDocs: { type: "", fileUrls: [] },
+      };
     }
   },
-  { immediate: true } // Ensures watch is triggered immediately if data is already available
+  { immediate: true }
 );
 
-watch(
-  () => propertyObj.value,
-  (newVal) => {
-    if (newVal && newVal.maritalContact) {
-      // Merge saved answers with API responses to ensure persisted answers are not lost
-      const savedMaritalContact = loadData("maritalContact") || "";
-      // Map preScreeningQuestions from propertyObj to match desired structure
-      spouseInfo.value = newVal.maritalContact
-
-    }
-  },
-  { immediate: true } // Ensures watch is triggered immediately if data is already available
-);
-
-
-// Use 'prescreening' as the key to store the data
-const { saveData, loadData } = useFormPersistence();
-
+// **Fix:** Ensure `isFormValid` updates correctly
 const isFormValid = computed(() => {
   if (maritalStatus.value === "married") {
     return isSpouseInfoValid.value;
@@ -141,30 +136,32 @@ const isFormValid = computed(() => {
   return maritalStatus.value !== "";
 });
 
-const emit = defineEmits(["submit", "back"]);
+// **Fix:** Ensure data updates properly when spouseInfo is changed
+watch(spouseInfo, (newValue) => {
+  saveData("maritalData", newValue);
+});
 
-// Save the answers and go to the next step
-// const goNext = () => {
-//   saveData("prescreening", questions.value); // Ensure the answers are persisted
-//   router.push({ query: { step: "2" } });
-// };
+// **Fix:** Ensure `isSpouseInfoValid` updates correctly when the child emits changes
+watch(isSpouseInfoValid, (newValue) => {
+  console.log("isSpouseInfoValid Updated:", newValue);
+});
 
+// Proceed to next step
 const goNext = () => {
   if (isFormValid.value) {
-    saveData("maritalStatus", maritalStatus.value); // Ensure the answers are persisted
-    saveData("maritalContact", spouseInfo.value); // Ensure the answers are persisted
+    saveData("maritalStatus", maritalStatus.value);
+    saveData("maritalData", spouseInfo.value);
     router.push({ query: { step: "5" } });
-    // emit("submit", {
-    //   maritalStatus: maritalStatus.value,
-    //   spouseInfo: maritalStatus.value === "married" ? spouseInfo.value : null,
-    // });                              
   }
 };
 
+const emit = defineEmits(['back'])
 
+// Go back to the previous step
 const goBack = () => {
-  router.push(`/dashboard/listings/${route.params.id}/preview`);
+  emit('back')
+  // router.push(`/dashboard/listings/${route.params.id}/preview`);
   localStorage.removeItem("maritalStatus");
-  localStorage.removeItem("maritalContact");
+  localStorage.removeItem("maritalData");
 };
 </script>

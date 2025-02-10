@@ -129,8 +129,9 @@
 
     <!-- Footer with Back and Continue Buttons -->
     <div class="fixed bottom-0 left-0 right-0 bg-white py-4 px-6 border-t border-gray-200">
-      <div class="flex justify-between max-w-lg mx-auto">
+      <div class="flex justify-between max-w-xl mx-auto">
         <button
+          type="button"
           class="px-6 py-3 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none"
           @click="goBack"
         >
@@ -242,7 +243,7 @@ const getMappedId = (item) => {
   return idType[item] || '';
 };
 
-
+const emit = defineEmits(['back'])
 // Check if the user can proceed to the next step
 const canProceed = computed(() => idType.value && isItemSelected.value && authorizationChecked.value);
 
@@ -251,7 +252,8 @@ const goBack = () => {
   if (uploadStep.value) {
     uploadStep.value = false;
   } else {
-    router.go(-1);
+    emit('back')
+    // router.go(-1);
   }
 };
 
