@@ -3,14 +3,14 @@
     <section v-if="loading">
       <div class="rounded-md p-4 w-full mx-auto">
         <div class="animate-pulse flex space-x-4">
-          <div class="h-44 w-full bg-slate-200 rounded col-span-1"></div>
+          <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
         </div>
       </div>
     </section>
     <div v-else-if="images && !loading" class="container mx-auto p-4">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <!-- Main large image on the left -->
-            <div class="relative h-[600px] overflow-hidden rounded-lg cursor-pointer" @click="openCarousel(0)">
+            <div class="relative h-[400px] overflow-hidden rounded-lg cursor-pointer" @click="openCarousel(0)">
                 <img :src="images[0]" alt="Property Image"
                     class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
             </div>
@@ -18,14 +18,14 @@
             <!-- Right side 2x2 grid -->
             <div class="grid grid-cols-2 gap-4">
                 <div v-for="(image, index) in displayedImages" :key="index" @click="openCarousel(index + 1)"
-                    class="relative h-[290px] overflow-hidden rounded-lg cursor-pointer">
+                    class="relative h-[190px] overflow-hidden rounded-lg cursor-pointer">
                     <img :src="image" :alt="`Property Image ${index + 1}`"
                         class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
                 </div>
 
                 <!-- View All button with blurred background -->
                 <div @click="openCarousel(0)"
-                    class="relative h-[290px] overflow-hidden rounded-lg cursor-pointer group">
+                    class="relative h-[190px] overflow-hidden rounded-lg cursor-pointer group">
                     <!-- Blurred background image -->
                     <img :src="lastDisplayedImage" alt="Background"
                         class="absolute inset-0 w-full h-full object-cover blur-sm brightness-50 group-hover:scale-105 transition-transform duration-300" />
@@ -150,89 +150,6 @@
     </div>
 </main>
 </template>
-
-<!-- <script setup lang="ts">
-const props = defineProps({
-    property: {
-      type: Object
-    },
-    images: {
-      type: Array
-    },
-    loading: {
-      type: Boolean
-    }
-  })
-
-
-const displayedImages = computed(() => {
-    return props?.images?.slice(1, 4) // Show only 3 images in grid
-})
-
-const lastDisplayedImage = computed(() => {
-    return props?.images[props?.images?.length - 1] // Use last image for View All background
-})
-
-const totalRemainingImages = computed(() => {
-    return props?.images?.length - displayedImages?.value?.length - 1 // -1 for main image
-})
-
-const isCarouselOpen = ref(false)
-const currentImageIndex = ref(0)
-
-const openCarousel = (index: number) => {
-    currentImageIndex.value = index
-    isCarouselOpen.value = true
-    document.body.style.overflow = 'hidden'
-}
-
-const closeCarousel = () => {
-    isCarouselOpen.value = false
-    document.body.style.overflow = 'auto'
-}
-
-const nextImage = () => {
-    if (currentImageIndex.value < props?.images?.length - 1) {
-        currentImageIndex.value++
-    } else {
-        currentImageIndex.value = 0
-    }
-}
-
-const previousImage = () => {
-    if (currentImageIndex.value > 0) {
-        currentImageIndex.value--
-    } else {
-        currentImageIndex.value = props?.images?.length - 1
-    }
-}
-
-// Handle keyboard navigation
-onMounted(() => {
-    const handleKeydown = (e: KeyboardEvent) => {
-        if (!isCarouselOpen.value) return
-
-        switch (e.key) {
-            case 'ArrowRight':
-                nextImage()
-                break
-            case 'ArrowLeft':
-                previousImage()
-                break
-            case 'Escape':
-                closeCarousel()
-                break
-        }
-    }
-
-    window.addEventListener('keydown', handleKeydown)
-
-    onUnmounted(() => {
-        window.removeEventListener('keydown', handleKeydown)
-    })
-})
-</script> -->
-
 
 
 <script setup lang="ts">

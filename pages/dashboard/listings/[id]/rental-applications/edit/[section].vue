@@ -159,11 +159,18 @@
       <form @submit.prevent="saveSection">
         <!-- Standard Fields -->
         <div v-for="(field, index) in fields" :key="index" class="mb-4">
-          <label v-if="field.label !== 'State of Origin' && field.label !== 'Local Government'"
+          <!-- <label v-if="field.label !== 'State of Origin' && field.label !== 'Local Government'"
             class="text-sm font-medium text-[#1D2739]"
           >
-            {{ field.label }}
+            {{ field }}
             <span v-if="field.isCompulsory" class="text-red-600">*</span>
+          </label> -->
+          <!-- {{ field }} -->
+          <label v-if="field.label !== 'State of Origin' && field.label !== 'Local Government' && field.label !== 'Reference Contacts' && field.label !== 'Consent to Contact References'"
+              class="text-sm font-medium text-[#1D2739]"
+          >
+              {{ field }}
+              <span v-if="field.isCompulsory" class="text-red-600">*</span>
           </label>
 
           <div v-if="field.type === 'text'">
@@ -185,7 +192,7 @@
         </div>
 
         <!-- 🟢 Emergency Contacts Section -->
-        <h3 class="text-lg font-semibold mt-6 mb-2 text-[#1D2739]">Reference and Emergency Contacts</h3>
+        <!-- <h3 class="text-lg font-semibold mt-6 mb-2 text-[#1D2739]">Reference and Emergency Contacts</h3> -->
 
         <div v-for="(contact, index) in referenceContacts" :key="index" class="mb-6 border p-4 rounded-lg">
           <h4 class="font-semibold text-sm text-gray-700">
@@ -231,19 +238,19 @@
           </div>
 
           <!-- Remove Contact Button -->
-          <button v-if="referenceContacts.length > 1"
+          <!-- <button v-if="referenceContacts.length > 1"
             type="button"
             @click="removeReferenceContact(index)"
             class="mt-4 px-3 py-2.5 text-sm rounded-md bg-red-500 text-white">
             Remove Contact
-          </button>
+          </button> -->
         </div>
 
         <!-- Add Emergency Contact Button -->
-        <button type="button" @click="addReferenceContact"
+        <!-- <button type="button" @click="addReferenceContact"
           class="mt-4 px-4 py-2.5 bg-[#292929] text-white rounded-md text-sm">
           + Add Another Contact
-        </button>
+        </button> -->
 
         <!-- Consent Checkbox -->
         <div class="mt-4 flex items-center">
@@ -346,6 +353,12 @@ const referenceContacts = ref([
     phoneNumber: "",
     residentialAddress: "",
   },
+  {
+    fullName: "",
+    relationship: "",
+    phoneNumber: "",
+    residentialAddress: "",
+  },
 ]);
 
 const consentToContactReferences = ref(false);
@@ -392,78 +405,7 @@ watch(
   }
 );
 
-// const prefillProfileData = () => {
-//   fields.value.forEach((field) => {
-//     if (field.label === "Name") {
-//       field.value = `${profileObj.value.firstName} ${profileObj.value.lastName}`;
-//     } else if (field.label === "Email address") {
-//       field.value = profileObj.value.email || "";
-//     } else if (field.label === "Phone number") {
-//       field.value = profileObj.value.phoneNumber || "";
-//     } else if (field.label === "Date of Birth") {
-//       // Convert date string from backend (ISO format) to 'YYYY-MM-DD' format for HTML input
-//       if (profileObj.value.dateOfBirth) {
-//         const dateObj = new Date(profileObj.value.dateOfBirth);
-//         const formattedDate = dateObj.toISOString().split("T")[0]; // YYYY-MM-DD format
-//         field.value = formattedDate;
-//       } else {
-//         field.value = "";
-//       }
-//       field.max = maxAllowableDate.value; // Set the max attribute to the computed max allowable date
-//     } else if (field.label === "Gender") {
-//       field.value = profileObj.value.gender || "";
-//     } else if (field.label === "Marital status") {
-//       field.value = profileObj.value.maritalStatus || "";
-//     } else if (field.label === "State of Origin") {
-//       selectedState.value = profileObj.value.stateOfOrigin || "";
-//     } else if (field.label === "Local Government") {
-//       selectedLga.value = profileObj.value.lga || "";
-//     }
 
-//     // Rental history pre-fill
-//     else if (field.label === "Current Landlord") {
-//       field.value = profileObj.value.currentLandlord || "";
-//     } else if (field.label === "Rental Address") {
-//       field.value = profileObj.value.rentalAddress || "";
-//     } else if (field.label === "Length of Tenancy") {
-//       field.value = profileObj.value.lengthOfTenancy || "";
-//     } else if (field.label === "Reason for moving out") {
-//       field.value = profileObj.value.reasonForMovingOut || "";
-//     }
-
-//     // Employment information pre-fill
-//     else if (field.label === "Current employment status") {
-//       field.value = profileObj.value.employmentStatus || "";
-//     } else if (field.label === "Employer's full name") {
-//       field.value = profileObj.value.employerName || "";
-//     } else if (field.label === "Organization address") {
-//       field.value = profileObj.value.employerAddress || "";
-//     } else if (field.label === "Occupation") {
-//       field.value = profileObj.value.occupation || "";
-//     } else if (field.label === "Monthly Net Salary") {
-//       field.value = profileObj.value.monthlyNetSalary || "";
-//     }
-
-//     // Next of kin pre-fill
-//     else if (field.label === "Full Name") {
-//       field.value = profileObj.value.nextOfKinName || "";
-//     } else if (field.label === "Relationship") {
-//       field.value = profileObj.value.nextOfKinRelationship || "";
-//     } else if (field.label === "Next of kin email address") {
-//       field.value = profileObj.value.nextOfKinEmail || "";
-//     } else if (field.label === "Residential address") {
-//       field.value = profileObj.value.nextOfKinAddress || "";
-//     } else if (field.label === "Phone Number") {
-//       field.value = profileObj.value.nextOfKinPhone || "";
-//     } else if (field.label === "Occupation") {
-//       field.value = profileObj.value.nextOfKinOccupation || "";
-//     } else if (field.label === "Organization name") {
-//       field.value = profileObj.value.nextOfKinEmployer || "";
-//     } else if (field.label === "Office address") {
-//       field.value = profileObj.value.nextOfKinEmployerAddress || "";
-//     }
-//   });
-// };
 
 const prefillProfileData = () => {
   fields.value.forEach((field) => {

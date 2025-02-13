@@ -10,7 +10,7 @@
             </svg>
           </button>
   
-          <button @click="saveData" class="text-green-600 font-medium cursor-pointer">Save</button>
+          <!-- <button @click="saveData" class="text-green-600 font-medium cursor-pointer">Save</button> -->
         </div>
   
         <div v-if="route.query.step !== 'preview'" class="relative w-full mb-6">

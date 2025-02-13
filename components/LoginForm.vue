@@ -143,7 +143,7 @@
   
       <p class="mt-6 text-center text-[#1D2739] text-sm">
         Don't have an account?
-        <NuxtLink to="/signup" class="text-[#326543] font-semibold">Sign Up</NuxtLink>
+        <NuxtLink to="/" class="text-[#326543] font-semibold">Sign Up</NuxtLink>
       </p>
     </div>
   <CoreFullScreenLoader

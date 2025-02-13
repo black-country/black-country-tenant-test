@@ -264,15 +264,17 @@
         <!-- Property Manager -->
         <div class="bg-[#F0F2F5] p-6 rounded-md">
             <div class="flex items-center justify-between space-x-4">
-          <div class="flex items-center space-x-4">
-            <img  :src="dynamicImage(propertyManagerImage)" alt="Property Manager" class="w-10 h-10 rounded-full">
+              <!-- {{ property.agent }} -->
+          <div class="flex items-center space-x-2">
+            <img class="w-10 h-10 rounded-full" v-if="property?.agent?.profilePicture" :src="property.agent.profilePicture" />
+            <img v-else  src="@/assets/icons/users-avatar.svg" alt="Property Manager" class="w-14 h-14 rounded-full">
             <div>
               <h3 class="font-bold text-[#1D2739]">{{property?.agent?.firstName}} {{property?.agent?.lastName}}</h3>
               <p class="text-xs text-[#1D2739]">Property Manager</p>
             </div>
           </div>
           <div class="ml-auto flex space-x-2">
-            <button :disabled="!property?.agent?.phoneNumber" @click="copyToClipboard(property?.agent?.phoneNumber)" class="p-2 disabled:cursor-not-allowed disabled:opacity-50 rounded-full">
+            <button disabled :disabled="!property?.agent?.phoneNumber" @click="copyToClipboard(property?.agent?.phoneNumber)" class="p-2 disabled:cursor-not-allowed disabled:opacity-50 rounded-full">
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="44" height="44" rx="22" fill="#EBE5E0"/>
                 <path d="M15.1483 21.9523C14.3583 20.5747 13.9769 19.4499 13.7469 18.3097C13.4067 16.6233 14.1852 14.976 15.4748 13.9249C16.0199 13.4806 16.6447 13.6324 16.967 14.2107L17.6946 15.5161C18.2714 16.5508 18.5598 17.0682 18.5026 17.6167C18.4454 18.1652 18.0565 18.6119 17.2786 19.5053L15.1483 21.9523ZM15.1483 21.9523C16.7474 24.7406 19.2569 27.2514 22.0483 28.8523M22.0483 28.8523C23.4259 29.6423 24.5507 30.0238 25.691 30.2538C27.3773 30.594 29.0247 29.8155 30.0757 28.5258C30.52 27.9808 30.3682 27.356 29.79 27.0337L28.4846 26.306C27.4498 25.7292 26.9325 25.4409 26.384 25.4981C25.8355 25.5552 25.3887 25.9442 24.4953 26.722L22.0483 28.8523Z" stroke="#1D2739" stroke-width="1.5" stroke-linejoin="round"/>
@@ -280,7 +282,7 @@
                 </svg>
                 
             </button>
-            <button @click="sendSms" class="p-2 rounded-full">
+            <button disabled @click="sendSms" class="p-2 disabled:cursor-not-allowed disabled:opacity-50 rounded-full">
               <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="44" height="44" rx="22" fill="#5B8469"/>
                 <path d="M22.417 14.5031C21.6711 14.492 20.9209 14.5107 20.1915 14.5592C16.7056 14.7909 13.929 17.607 13.7005 21.1422C13.6558 21.8341 13.6558 22.5506 13.7005 23.2424C13.7837 24.53 14.3532 25.7222 15.0236 26.7288C15.4128 27.4336 15.1559 28.3132 14.7505 29.0815C14.4582 29.6355 14.312 29.9125 14.4294 30.1126C14.5467 30.3127 14.8089 30.3191 15.3332 30.3318C16.37 30.3571 17.0692 30.0631 17.6242 29.6538C17.939 29.4217 18.0964 29.3057 18.2049 29.2923C18.3133 29.279 18.5268 29.3669 18.9537 29.5427C19.3373 29.7007 19.7828 29.7982 20.1915 29.8254C21.3783 29.9043 22.6199 29.9045 23.8092 29.8254C27.295 29.5937 30.0717 26.7777 30.3002 23.2424C30.3354 22.6967 30.3428 22.1356 30.3225 21.5833" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>

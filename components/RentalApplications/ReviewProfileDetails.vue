@@ -91,12 +91,12 @@
             >
               <strong>Gender: </strong>{{ profile.personal.gender || "---" }}
             </li>
-            <li
+            <!-- <li
               class="text-[#667185] text-sm font-light flex justify-between items-center"
             >
               <strong>Marital status: </strong
               >{{ profile.personal.maritalStatus || "---" }}
-            </li>
+            </li> -->
             <li
               class="text-[#667185] text-sm font-light flex justify-between items-center"
             >
@@ -370,9 +370,8 @@
               </div>
             </div>
           </div>
-        </div>
-              <!-- Marital Information (Only if Married) -->
-        <div v-if="profile.personal.maritalStatus === 'married'">
+
+          <div v-if="profile.personal.maritalStatus === 'married'">
           <div
             class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
           >
@@ -393,12 +392,10 @@
               </div>
             </li>
           </ul>
-        </div>
+          </div>
 
-      </div>
-      <!-- {{ profile }} -->
-            <!-- Guarantor Information -->
-      <div class="pb-32 -mt-16" v-if="profile.guarantorData">
+
+          <div class="pb-32 -mt-16" v-if="profile.guarantorData">
           <div
             class="flex justify-between items-center text-gray-600  space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
           >
@@ -419,7 +416,56 @@
               </div>
             </li>
           </ul>
+           </div>
+        </div>
+              <!-- Marital Information (Only if Married) -->
+        <!-- <div v-if="profile.personal.maritalStatus === 'married'">
+          <div
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
+          >
+            <h3 class="text-base font-medium">Marital Information</h3>
+            <button class="text-[#1D2739] cursor-pointer" @click="editSection('marital-information')">
+              Edit
+            </button>
+          </div>
+          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Spouse Name:</strong> {{ profile.maritalData.fullName || '---' }}</li>
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email Address:</strong> {{ profile.maritalData.email || '---' }}</li>
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone Number:</strong> {{ profile.maritalData.phoneNumber || '---' }}</li>
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>ID Type:</strong> {{ profile.maritalData.idDocs.type || '---' }}</li>
+            <li v-if="profile.maritalData.idDocs.fileUrls.length">
+              <strong>ID Images:</strong>
+              <div class="grid grid-cols-2 gap-4 mt-2">
+                <img v-for="(url, idx) in profile.maritalData.idDocs.fileUrls" :key="idx" :src="url" class="w-full object-cover rounded-md" />
+              </div>
+            </li>
+          </ul>
+        </div> -->
+
       </div>
+            <!-- Guarantor Information -->
+      <!-- <div class="pb-32 -mt-16" v-if="profile.guarantorData">
+          <div
+            class="flex justify-between items-center text-gray-600  space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
+          >
+            <h3 class="text-base font-medium">Guarantor's Information</h3>
+            <button class="text-[#1D2739] cursor-pointer" @click="editSection('guarantor-information')">
+              Edit
+            </button>
+          </div>
+          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Full Name:</strong> {{ profile.guarantorData.fullName || '---' }}</li>
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email Address:</strong> {{ profile.guarantorData.email || '---' }}</li>
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone Number:</strong> {{ profile.guarantorData.phoneNumber || '---' }}</li>
+            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Relationship:</strong> {{ profile.guarantorData.relationship || '---' }}</li>
+            <li v-if="profile.guarantorData.idDocs.fileUrls.length">
+              <strong>ID Images:</strong>
+              <div class="grid grid-cols-2 gap-4 mt-2">
+                <img v-for="(url, idx) in profile.guarantorData.idDocs.fileUrls" :key="idx" :src="url" class="w-full object-cover rounded-md" />
+              </div>
+            </li>
+          </ul>
+      </div> -->
 
       <div
         class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center border-[0.5px]"
