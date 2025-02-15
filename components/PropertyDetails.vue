@@ -226,7 +226,7 @@
             </div>
 
 
-            <HousingFees :roomObj="selectedRoomObj" class="mb-8" />
+            <HousingFees v-if="selectedRoomObj?.additionalCharges?.length" :roomObj="selectedRoomObj" class="mb-8" />
         
             <div class="mb-6 space-y-3">
               <h3 class="text- pl-4 font-medium text-[#1D2739] bg-white border-[0.5px] py-4 rounded-md border-gray-50">Interior Features</h3>

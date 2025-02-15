@@ -169,7 +169,7 @@
           <label v-if="field.label !== 'State of Origin' && field.label !== 'Local Government' && field.label !== 'Reference Contacts' && field.label !== 'Consent to Contact References'"
               class="text-sm font-medium text-[#1D2739]"
           >
-              {{ field }}
+              {{ field.label }}
               <span v-if="field.isCompulsory" class="text-red-600">*</span>
           </label>
 
