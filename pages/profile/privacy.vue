@@ -91,7 +91,7 @@
   const router = useRouter();
   
   // Extract last updated date if provided by the backend
-  const lastUpdated = computed(() => policiesList.value?.lastUpdated || "");
+  const lastUpdated = computed(() => policiesList.value?.createdAt || "");
   
   // Format the dynamic policiesList into an HTML structure
   const formattedPrivacy = computed(() => {
