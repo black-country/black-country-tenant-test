@@ -32,7 +32,7 @@
 
       <!-- Date -->
       <div class="text-sm text-gray-500 mb-6">
-        <p class="text-[#1D2739]">Current as of <strong>{{lastUpdated}}</strong></p>
+        <p class="text-[#1D2739]">Current as of <strong>{{  moment(lastUpdated).format("MMM Do YYYY, HH:MM A") ?? 'Nil' }}</strong></p>
       </div>
 
       <!-- Paragraphs -->
@@ -85,6 +85,7 @@
   import { useFetchPrivacyPolicy } from "@/composables/modules/settings/useFetchPrivacyPolicy";
   import { computed } from "vue";
   import { useRouter } from "vue-router";
+  import moment from "moment"
   
   // Fetch terms of use from the backend
   const { loading, policiesList } = useFetchPrivacyPolicy();
