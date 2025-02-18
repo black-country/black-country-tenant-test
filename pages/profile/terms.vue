@@ -24,7 +24,7 @@
 
       <!-- Rendered Terms List -->
       <div v-html="formattedTermsList" class="space-y-6 text-gray-700"></div>
-    </div>
+    </div> 
     <section v-else-if="loading && !Object.keys(termsList)?.length">
       <div class="rounded-md p-4 max-w-4xl mx-auto mx-auto">
         <div class="animate-pulse flex space-x-4">
