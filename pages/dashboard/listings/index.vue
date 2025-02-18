@@ -1553,13 +1553,6 @@
             </svg>
           </button>
           <ImageCarousel  v-if="property?.images?.length" :property="property"  />
-          <!-- <img
-            @click="router.push(`/dashboard/listings/${property.id}/preview`)"
-            v-if="property?.images?.length"
-            :src="property?.images[0]"
-            class="rounded-lg cursor-pointer object-cover h-56 w-full"
-            alt="alt"
-          /> -->
           <img
             @click="router.push(`/dashboard/listings/${property.id}/preview`)"
             v-else

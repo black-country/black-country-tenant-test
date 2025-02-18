@@ -1,6 +1,6 @@
 <template>
 <main>
-  <div class="min-h-screen hidden lg:flex">
+  <div class="min-h-screen flex">
     <div class="lg:w-1/2 w-full flex justify-center items-center bg-white">
       <div class="lg:w-2/4 flex flex-col justify-between h-full"> <!-- Added 'h-full' and 'justify-between' to distribute content properly -->
         <div>
@@ -42,8 +42,8 @@
         <div class="mt-auto pb-6"> 
           <p class="text-sm text-gray-500 font-medium mt-4 max-w-sm mx-auto text-center">
             By registering, you agree to BlackCountry’s
-            <a href="#" class="text-[#326543]">Terms of Service</a> and
-            <a href="#" class="text-[#326543]">Privacy Policy</a>
+            <NuxtLink to="/terms" class="text-[#326543]">Terms of Service</NuxtLink> and
+            <NuxtLink to="/privacy" class="text-[#326543]">Privacy Policy</NuxtLink>
           </p>
         </div>
       </div>
@@ -58,7 +58,7 @@
       </div>
     </div>
   </div>
-  <AnimatedCarousel class="lg:hidden block" />
+  <!-- <AnimatedCarousel class="lg:hidden block" /> -->
 </main>
 </template>
 
