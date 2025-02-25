@@ -175,8 +175,7 @@
             @click="toggleLike"
             class=" "
           >
-            <svg
-              v-if="!propertyObj?.bookmarked"
+            <svg v-if="propertyObj?.bookmarked"
               width="40"
               height="40"
               viewBox="0 0 40 40"
@@ -193,8 +192,7 @@
               />
             </svg>
         
-            <svg
-              v-if="propertyObj?.bookmarked"
+            <svg v-else
               width="40"
               height="40"
               viewBox="0 0 40 40"
@@ -527,9 +525,9 @@ import { useFetchSimilarProperty } from "@/composables/modules/property/fetchSim
 import { useBookmarkProperty } from "@/composables/modules/property/bookmark";
 import { useImageExtractor } from "@/composables/core/useExtractImages";
 const { bookmarkProperty, loading: favoriting } = useBookmarkProperty();
-import { dynamicImage } from "@/utils/assets";
+import { dynamicImage } from "@/utils/assets"; 
 const { showToast } = useCustomToast();
-const { propertyObj, loading } = useFetchProperty();
+const { propertyObj, loading, getProperty } = useFetchProperty();
 const { propertyList, loading: loadingSimilarProperties } = useFetchSimilarProperty()
 const router = useRouter();
 import { useCustomToast } from '@/composables/core/useCustomToast'
@@ -587,8 +585,9 @@ definePageMeta({
   middleware: "auth",
 });
 
-const toggleLike = () => {
-  bookmarkProperty(propertyObj.value.id);
+const toggleLike = async() => {
+  await bookmarkProperty(propertyObj.value.id);
+  getProperty();
 };
 
 // Define the link and text you want to share

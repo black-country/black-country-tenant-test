@@ -14,7 +14,7 @@ export const useBookmarkProperty = () => {
         if (res.type !== 'ERROR') {
             showToast({
                 title: "Success",
-                message: "Success",
+                message: `Success! ${res.data.message}`,
                 toastType: "success",
                 duration: 3000
               });

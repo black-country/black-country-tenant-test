@@ -1143,7 +1143,7 @@
           <li
             v-for="option in sortOptions"
             :key="option.value"
-            @click="selectOption(option)"
+            @click="selectOption(option.value)"
             class="px-3 py-3 cursor-pointer flex justify-between items-center"
           >
             <span class="text-sm text-[#1D2739]">{{
@@ -2734,7 +2734,7 @@ const sortOptions = ref([
 ]);
 
 const isDropdownOpen = ref(false);
-const selectedOption = ref(sortOptions.value[1]);
+const selectedOption = ref(sortOptions.value[0]);
 
 const toggleDropdown = () => {
   isDropdownOpen.value = !isDropdownOpen.value;
@@ -2745,9 +2745,8 @@ const closeDropdown = () => {
 };
 
 const selectOption = (option: any) => {
-  // console.log(option, 'fghjk')
   sortBy.value = option
-  selectedOption.value = option;
+  selectedOption.value = sortOptions.value.find(item => item.value === option);;
   closeDropdown();
 };
 

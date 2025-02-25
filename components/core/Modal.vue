@@ -1,6 +1,6 @@
 <template>
-    <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div class="bg-white p-6 rounded-lg max-w-full sm:max-w-[90%] md:max-w-[50%] lg:max-w-[30%] w-full">
+    <div v-if="isOpen" @click="closeModal"  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+        <div @click.stop class="bg-white p-6 rounded-lg max-w-full sm:max-w-[90%] md:max-w-[50%] lg:max-w-[30%] w-full">
             <!-- Modal Header -->
             <slot name="header"></slot>
 

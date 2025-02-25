@@ -109,7 +109,7 @@
       <!-- Days of Week -->
       <div class="grid bg-white grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7 gap-4 mb-8">
         <button 
-          v-for="day in daysOfWeek" 
+          v-for="day in availableDays" 
           :key="day.value"
           :class="[
             'text-xs font-medium flex justify-center items-center rounded-lg p-2.5  transition-all',
@@ -204,6 +204,13 @@
   
   const selectedDay = ref<number | null>(null)
   const selectedTime = ref<string | null>(null)
+
+  const availableDays = computed(() => {
+  return daysOfWeek.filter(day => {
+    const daySchedule = props.intervals.find(interval => interval.dayOfWeek === day.value)
+    return daySchedule?.allIntervals?.length > 0
+  })
+})
   
   const availableTimesForDay = computed(() => {
     if (selectedDay.value === null) return []

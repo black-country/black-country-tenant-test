@@ -446,7 +446,7 @@ const previewRoomImages = (itemTab: any) => {
     router.push(`/dashboard/listings/${props.propertyObj.id}/room-interior-images`);
 }
 
-const phoneNumber = "+1234567890"; // Replace with a dynamic number if needed
+const phoneNumber = "01234567890"; // Replace with a dynamic number if needed
 
 const makeCall = () => {
   window.location.href = `tel:${phoneNumber}`;
