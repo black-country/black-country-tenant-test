@@ -56,7 +56,7 @@
               v-model="credential.phoneNumber"
               type="tel"
               class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
-              placeholder="Enter phone number"
+              placeholder="01234567890"
             />
           </div>
 
@@ -267,7 +267,6 @@ const handleSave = async () => {
     cityId: selectedLocation.value.id,
   });
   router.back();
-  // router.push("/profile/profile-update-success");
 };
 
 // Helper function to format date

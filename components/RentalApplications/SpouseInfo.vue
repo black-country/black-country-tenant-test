@@ -33,7 +33,7 @@
         </label>
         <input
           v-model="spouse.phone"
-          type="tel"
+          type="tel" placeholder="01234567890"
            class="w-full p-3.5 text-sm text-[#98A2B3] rounded-lg bg-[#F0F2F5] border border-[0.5px] border-gray-100"
         />
       </div>

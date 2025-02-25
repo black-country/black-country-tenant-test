@@ -2,19 +2,11 @@
   <div class="space-y-4">
     <!-- State Dropdown -->
     <div class="flex flex-col gap-2">
-      <label  class="text-sm font-medium text-gray-700">State</label>
-      <select
-        v-model="selectedStateCode"
-        @change="handleStateSelection"
-        :disabled="loadingStates"
-        class="w-full p-2 mt-1 border-[0.5px] outline-none focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4"
-      >
+      <label class="text-sm font-medium text-gray-700">State</label>
+      <select v-model="selectedStateCode" @change="handleStateSelection" :disabled="loadingStates"
+        class="w-full p-2 mt-1 border-[0.5px] outline-none focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
         <option value="">Select State</option>
-        <option
-          v-for="state in statesList"
-          :key="state.id"
-          :value="state.stateCode"
-        >
+        <option v-for="state in sortedStatesList" :key="state.id" :value="state.stateCode">
           {{ state.name }}
         </option>
       </select>
@@ -24,18 +16,10 @@
     <!-- City Dropdown -->
     <div class="flex flex-col gap-2">
       <label class="text-sm font-medium text-gray-700">Local Government</label>
-      <select
-        v-model="selectedCityId"
-        @change="handleCitySelection"
-        :disabled="loadingCities || !selectedStateCode"
-        class="w-full p-2 mt-1 border-[0.5px] outline-none focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4"
-      >
+      <select v-model="selectedCityId" @change="handleCitySelection" :disabled="loadingCities || !selectedStateCode"
+        class="w-full p-2 mt-1 border-[0.5px] outline-none focus-within:border-2 focus-within:border-[#5B8469] text-sm rounded-md bg-[#E4E7EC] py-4">
         <option value="">Select Local Government</option>
-        <option
-          v-for="city in citiesList"
-          :key="city.id"
-          :value="city.id"
-        >
+        <option v-for="city in sortedCitiesList" :key="city.id" :value="city.id">
           {{ city.name }}
         </option>
       </select>
@@ -160,4 +144,17 @@ onMounted(async () => {
     handleCitySelection();
   }
 });
+
+const sortedStatesList = computed(() => {
+  return statesList.value.slice().sort((a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+});
+
+const sortedCitiesList = computed(() => {
+  return citiesList.value.slice().sort((a, b) => {
+    return a.name.localeCompare(b.name);
+  });
+})
+
 </script>

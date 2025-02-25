@@ -170,7 +170,7 @@ export const use_update_profile = () => {
           duration: 3000
         });
 
-        router.push('/profile/profile-update-success');
+        // router.push('/profile/profile-update-success');
         
         return res;
       } else {

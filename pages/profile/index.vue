@@ -505,11 +505,11 @@ const legalSettings = ref([
     icon: "privacy",
     path: "/profile/privacy",
   },
-  {
-    label: "Third Party Licenses",
-    icon: "privacy",
-    path: "/profile/third-party",
-  },
+  // {
+  //   label: "Third Party Licenses",
+  //   icon: "privacy",
+  //   path: "/profile/third-party",
+  // },
 ]);
 
 const helpSettings = ref([
