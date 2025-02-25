@@ -4,7 +4,7 @@
     "dockerfile": "../Dockerfile",
     "target": "node-base"
   },
-  "forwardPorts": [ 3000 ],
+  "forwardPorts": [ 3001 ],
   "workspaceFolder": "/home/node/app",
   "containerUser": "node",
   "mounts": [
