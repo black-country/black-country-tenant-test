@@ -8,8 +8,12 @@ dist
 .DS_Store
 .env
 .env*
+.cache/
 .cache/*
+.devcontainer/
 .devcontainer/*
+.nuxt/
 .nuxt/*
+.vscode/
 .vscode/*
 yarn.lock
