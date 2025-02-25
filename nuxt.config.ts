@@ -63,11 +63,12 @@ export default {
         },
       },
     },
-    // server: {
-    //   fs: {
-    //     allow: ["public/lib"],
-    //   },
-    // },
+    server: {
+      port: 3001
+      // fs: {
+      //   allow: ["public/lib"],
+      // },
+    },
   },
 
   compatibilityDate: "2024-09-30"

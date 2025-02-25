@@ -16,4 +16,4 @@ dist
 .nuxt/*
 .vscode/
 .vscode/*
-yarn.lock
+.idea/
