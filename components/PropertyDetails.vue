@@ -552,9 +552,11 @@
 
     <CoreModal
     :isOpen="showBookingModal"
-    @close="showBookingModal = false"
+    @close="showBookingModal = false" 
     >
-    <VisitationCalender @close="showBookingModal = false" class="" />
+    <!-- <VisitationCalender @close="showBookingModal = false" class="lg:w-5/12  w-full m-6 lg:m-0" /> -->
+    <VisitationCalender @close="showBookingModal = false"  />
+      <!-- <BookingModal :property="property" class="lg:w-4/12 m-6 lg:m-0" /> -->
     </CoreModal>
   </main>
   </template>
@@ -645,7 +647,7 @@ const groupedAmenities = computed(() => {
   }
 });
 
-const phoneNumber = "+1234567890"; // Replace with a dynamic number if needed
+const phoneNumber = "01234567890"; // Replace with a dynamic number if needed
 
 const makeCall = () => {
   window.location.href = `tel:${phoneNumber}`;

@@ -1,79 +1,69 @@
 <template>
   <div class="w-full custom-scroll relative max-w-md space-y-6">
 
-   <section class="space-y-1">
-    <div class="">
-      <h3 class="font-medium text-sm bg-white py-3 bg-white border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Sort by</h3>
-    </div>
+    <section class="space-y-1">
+      <div class="">
+        <h3
+          class="font-medium text-sm bg-white py-3 bg-white border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">
+          Sort by</h3>
+      </div>
 
-    <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 px-4">
-      <div
-    v-for="option in sortOptions"
-    :key="option.id"
-    class="flex justify-between items-center py-1"
-  >
-    <label :for="'sort-' + option.id" class="ml-3 text-sm text-gray-700">
-      {{ option.label }}
-    </label>
-    <CoreCustomCheckbox
-      :id="'sort-' + option.id"
-      :checkbox-id="option.id"
-      v-model="selectedSortOptions"
-    />
-  </div>
-    </div>
-   </section>
+      <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 px-4">
+        <div v-for="option in sortOptions" :key="option.id" class="flex justify-between items-center py-1">
+          <label :for="'sort-' + option.id" class="ml-3 text-sm text-gray-700">
+            {{ option.label }}
+          </label>
+          <CoreCustomRadio :id="'sort-' + option.id" :checkbox-id="option.id" v-model="selectedSortOptions" />
+        </div>
+      </div>
+    </section>
 
 
     <section class="space-y-1">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Co-living with</h3>
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">
+        Co-living with</h3>
       <div class="flex items-center space-x-4 bg-white rounded-md border-[0.5px] border-gray-50 py-4 px-2">
         <button @click="sharedCount = Math.max(0, sharedCount - 1)"
-                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
-                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.3333 10H4" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+          class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.3333 10H4" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
 
         </button>
         <span class="w-20 text-center bg-[#EAEAEA] py-3 px-20 rounded-md">{{ sharedCount }}</span>
         <button @click="sharedCount++"
-                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
-                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.334 3.33301V16.6663" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M3.66699 10H17.0003" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+          class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.334 3.33301V16.6663" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M3.66699 10H17.0003" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
 
         </button>
       </div>
     </section>
 
     <section class="space-y-1">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Property type</h3>
-      <div v-for="type in propertyTypesList" :key="type.id"
-       class="flex justify-between items-center">
-    <label :for="'property-' + type.id" class="ml-3 text-sm text-gray-700">
-      {{ type.name }}
-    </label>
-    <CoreCustomCheckbox
-      :id="'property-' + type.id"
-      :checkbox-id="type.id"
-      v-model="selectedPropertyTypes"
-    />
-  </div>
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Property
+        type</h3>
+      <div v-for="type in propertyTypesList" :key="type.id" class="flex justify-between items-center">
+        <label :for="'property-' + type.id" class="ml-3 text-sm text-gray-700">
+          {{ type.name }}
+        </label>
+        <CoreCustomCheckbox :id="'property-' + type.id" :checkbox-id="type.id" v-model="selectedPropertyTypes" />
+      </div>
     </section>
 
 
     <section class="space-y-1">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Building amenities</h3>
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Building
+        amenities</h3>
       <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <div v-for="amenity in commonAreasList" :key="amenity.id"
-             class="flex justify-between items-center">
+        <div v-for="amenity in commonAreasList" :key="amenity.id" class="flex justify-between items-center">
           <label :for="'amenity-' + amenity.id" class="ml-3 text-sm text-gray-700">{{ amenity.name }}</label>
-          <CoreCustomCheckbox
-             :id="'amenity-' + amenity.id"
-            :checkbox-id="amenity.name"
-            v-model="selectedAmenities"
-          />
+          <CoreCustomCheckbox :id="'amenity-' + amenity.id" :checkbox-id="amenity.name" v-model="selectedAmenities" />
 
         </div>
       </div>
@@ -91,130 +81,109 @@
     <p>Current Value: {{ sliderValue }}</p>
   </div> -->
 
-  <!-- {{ getFilterPayload() }} -->
+    <!-- {{ getFilterPayload() }} -->
 
 
-    <FiltersRangeSlider
-      v-model="filters.priceRange"
-      :min="200000"
-      :max="3000000"
-      :step="100000"
-      title="Price range"
-      prefix="₦ "
-    />
+    <FiltersRangeSlider v-model="filters.priceRange" :min="200000" :max="3000000" :step="100000" title="Price range"
+      prefix="₦ " />
 
-   
-    <FiltersRangeSlider
-      v-model="filters.roomSizeRange"
-      :min="200"
-      :max="6000"
-      :step="100"
-      code="room"
-      title="Average Room size range"
-      prefix=""
-      @update:selectedUnit="onUnitUpdate"
-    />
+
+    <FiltersRangeSlider v-model="filters.roomSizeRange" :min="200" :max="6000" :step="100" code="room"
+      title="Average Room size range" prefix="" @update:selectedUnit="onUnitUpdate" />
 
 
     <div class="space-y-1">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Bedrooms</h3>
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Bedrooms
+      </h3>
       <div class="flex flex-wrap gap-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <button
-          class="px-4 py-2 text-xs rounded-md"
+        <button class="px-4 py-2 text-xs rounded-md"
           :class="selectedBedrooms.length === 0 ? 'bg-[#5B8469] text-white' : 'border border-gray-100 text-gray-700'"
-          @click="selectedBedrooms = []"
-        >
+          @click="selectedBedrooms = []">
           Any
         </button>
-        <button
-          v-for="num in bedroomOptions"
-          :key="num"
-          class="px-4 py-2 text-xs rounded-md"
+        <button v-for="num in bedroomOptions" :key="num" class="px-4 py-2 text-xs rounded-md"
           :class="selectedBedrooms.includes(num) ? 'bg-[#5B8469] text-white' : 'border-[0.5px] border-gray-100 text-gray-700'"
-          @click="selectedBedrooms = selectedBedrooms.includes(num) ? selectedBedrooms.filter(n => n !== num) : [...selectedBedrooms, num]"
-        >
+          @click="selectedBedrooms = selectedBedrooms.includes(num) ? selectedBedrooms.filter(n => n !== num) : [...selectedBedrooms, num]">
           {{ num }}
         </button>
-        <button
-          class="px-4 py-2 text-xs rounded-md border-[0.5px] border-gray-100 text-gray-700"
+        <button class="px-4 py-2 text-xs rounded-md border-[0.5px] border-gray-100 text-gray-700"
           :class="selectedBedrooms.includes(9) ? 'bg-[#5B8469] text-white' : ''"
-          @click="selectedBedrooms = selectedBedrooms.includes(9) ? selectedBedrooms.filter(n => n !== 9) : [...selectedBedrooms, 9]"
-        >
+          @click="selectedBedrooms = selectedBedrooms.includes(9) ? selectedBedrooms.filter(n => n !== 9) : [...selectedBedrooms, 9]">
           9+
         </button>
       </div>
     </div>
 
     <div class="space-y-1">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Bathrooms</h3>
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">
+        Bathrooms</h3>
       <div class="flex items-center space-x-4 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
         <button @click="bathroomCount = String(Math.max(1, parseInt(bathroomCount || '1') - 1))"
-                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
-                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M17.3333 10H4" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+          class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M17.3333 10H4" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
         </button>
         <span class="w-20 text-center bg-[#EAEAEA] py-3 px-20 rounded-md">{{ bathroomCount || 1 }}</span>
         <button @click="bathroomCount = String(parseInt(bathroomCount || '1') + 1)"
-                class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
-                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M10.334 3.33301V16.6663" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M3.66699 10H17.0003" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>
+          class="border-[0.5px] rounded-lg bg-white py-3 w-full border-gray-50 flex items-center justify-center">
+          <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.334 3.33301V16.6663" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+            <path d="M3.66699 10H17.0003" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round"
+              stroke-linejoin="round" />
+          </svg>
         </button>
       </div>
     </div>
 
 
-    <div class="space-y-1">
-  <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Pets</h3>
-  <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-    <div v-for="pet in petsList" :key="pet.id" class="flex justify-between items-center">
-      <label :for="'pet-' + pet.id" class="ml-3 text-sm text-gray-700">{{ pet.name }}</label>
-      <div class="relative flex items-center">
-        <CoreCustomCheckbox
-             :id="'pet-' + pet.id"
-            :checkbox-id="pet.name"
-            v-model="selectedPets"
-          />
+    <!-- <div class="space-y-1">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Pets
+      </h3>
+      <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
+        <div v-for="pet in petsList" :key="pet.id" class="flex justify-between items-center">
+          <label :for="'pet-' + pet.id" class="ml-3 text-sm text-gray-700">{{ pet.name }}</label>
+          <div class="relative flex items-center">
+            <CoreCustomCheckbox :id="'pet-' + pet.id" :checkbox-id="pet.name" v-model="selectedPets" />
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-   </div>
+    </div> -->
 
-   <div class="pb-20">
-      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 mb-3 rounded-lg px-4 text-gray-900">Move-in-date</h3>
+    <div class="pb-20">
+      <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 mb-3 rounded-lg px-4 text-gray-900">
+        Move-in-date</h3>
       <div class="border-[0.5px] bg-white border-gray-100 rounded-lg p-3">
-        <input type="date" class="w-full border-[0.5px] text-sm rounded-lg p-2 py-3 mt-3" v-model="filters.availabilityFrom" />
-      <div class="flex justify-between items-center items-center pt-6">
-        <h3 class="text-sm">Available Now</h3>
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" v-model="filters.availableNow" class="sr-only peer">
-          <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
-        </label>
-      </div>
+        <input type="date" class="w-full border-[0.5px] text-sm rounded-lg p-2 py-3 mt-3"
+          v-model="filters.availabilityFrom" />
+        <div class="flex justify-between items-center items-center pt-6">
+          <h3 class="text-sm">Available Now</h3>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input type="checkbox" v-model="filters.availableNow" class="sr-only peer">
+            <div
+              class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600">
+            </div>
+          </label>
+        </div>
       </div>
     </div>
 
-    <section class="fixed w-full lg:w-[440px] bottom-0 bg-white right-0 flex justify-center items-center  z-[999999] px-4 py-3 border-t border-gray-100">
-  <div id="footer" class="flex justify-between items-center items-center gap-x-6 mx-auto w-full">
-    <button 
-      @click="resetFilterOptions" 
-      class="text-gray-800 font-semibold border w-full text-sm py-3 rounded-lg"
-    >
-      Reset
-    </button>
-    <button 
-      :disabled="loading" 
-      @click="handleSubmit" 
-      class="bg-[#292929] disabled:cursor-not-allowed w-full disabled:opacity-25 text-sm text-white rounded-lg py-3"
-    >
-      {{ loading ? 'processing..' : 'Apply Filter' }}
-    </button>
-  </div>
-</section>
+    <section
+      class="fixed w-full lg:w-[440px] bottom-0 bg-white right-0 flex justify-center items-center  z-[999999] px-4 py-3 border-t border-gray-100">
+      <div id="footer" class="flex justify-between items-center items-center gap-x-6 mx-auto w-full">
+        <button @click="resetFilterOptions" class="text-gray-800 font-semibold border w-full text-sm py-3 rounded-lg">
+          Reset
+        </button>
+        <button :disabled="loading" @click="handleSubmit"
+          class="bg-[#292929] disabled:cursor-not-allowed w-full disabled:opacity-25 text-sm text-white rounded-lg py-3">
+          {{ loading ? 'processing..' : 'Apply Filter' }}
+        </button>
+      </div>
+    </section>
 
-<!-- <section class="fixed w-full bottom-0 bg-white z-[999999px]">
+    <!-- <section class="fixed w-full bottom-0 bg-white z-[999999px]">
   <div id="footer" class="flex justify-between items-center gap-x-6 w-full">
         <button @click="resetFilterOptions" class="text-[#EBE5E0] w-full text-gray-800 font-semibold border text-sm py-3 rounded-lg">Reset</button>
         <button :disabled="loading" @click="handleSubmit" class="bg-[#292929] w-full disabled:cursor-not-allowed disabled:opacity-25 text-sm text-white rounded-lg py-3">{{ loading ? 'processing..' : 'Apply Filter' }}</button>
@@ -252,8 +221,8 @@ interface FilterPayload {
 
 const onUnitUpdate = (newUnit: any) => {
   filterPayload.value.roomSizeUnit = newUnit
-      // console.log('Unit updated:', newUnit);
-    }
+  // console.log('Unit updated:', newUnit);
+}
 
 const filters = reactive({
   sortBy: '',
@@ -363,7 +332,7 @@ const getFilterPayload = (): FilterPayload => {
 
 
 watch([selectedSortOptions, selectedPropertyTypes, selectedAmenities, selectedFeatures,
-      sharedCount, priceRange, roomSize, selectedBedrooms, bathroomCount, moveInDate, availableNow],
+  sharedCount, priceRange, roomSize, selectedBedrooms, bathroomCount, moveInDate, availableNow],
   () => {
     const payload = getFilterPayload()
     console.log('Filter payload:', payload)
@@ -458,7 +427,7 @@ const handleSortChange = (option: SortOption) => {
   } else {
     selectedSortOptions.value.add(option.id)
   }
-  
+
   const payload = getFilterPayload()
   // setPayload(payload)
   // filterProperty()
@@ -467,7 +436,7 @@ const handleSortChange = (option: SortOption) => {
 
 // const handleSortChange = (option: SortOption) => {
 //   selectedSort.value = option.id
-  
+
 //   // Update the main filter payload
 //   const payload = getFilterPayload()
 //   if (option.sortConfig) {
@@ -482,7 +451,7 @@ const handleSortChange = (option: SortOption) => {
 //       value: SortValue.DESC
 //     }]
 //   }
-  
+
 //   // setPayload(payload)
 //   // filterProperty()
 // }
@@ -501,7 +470,7 @@ const handleSubmit = async () => {
   const payload = getFilterPayload()
   setPayload(payload)
   const result = await filterProperty()
-  emit('result',result)
+  emit('result', result)
   emit('close')
 }
 
@@ -583,6 +552,7 @@ input[type="range"] {
   width: 100%;
   margin: 10px 0;
 }
+
 /* Custom checkbox styles */
 input[type="checkbox"] {
   appearance: none;
@@ -600,19 +570,16 @@ input[type="checkbox"]:checked {
 
 /* Ensure proper spacing on mobile */
 @media (max-width: 640px) {
-  .space-y-6 > * + * {
+  .space-y-6>*+* {
     margin-top: 1.5rem;
   }
-  
-  .space-y-3 > * + * {
+
+  .space-y-3>*+* {
     margin-top: 0.75rem;
   }
-  
-  .space-y-2 > * + * {
+
+  .space-y-2>*+* {
     margin-top: 0.5rem;
   }
 }
-
-
 </style>
-

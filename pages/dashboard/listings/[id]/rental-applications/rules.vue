@@ -19,7 +19,7 @@
     <p class="text-lg font-medium text-[#1D2739] mb-6 pt-5">To begin your application process, follow these steps:</p>
 
     <!-- Steps list (Scrollable) -->
-    <div class="flex-grow overflow-y-auto space-y-4">
+    <div class="flex-grow overflow-y-auto space-y-4 mb-20">
       <div v-for="({title, desc}, idx) in rulesArray" :key="idx" class="p-4 bg-gray-25 rounded-lg shadow-sm flex items-center">
         <div class="flex-shrink-0 relative">
            <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">

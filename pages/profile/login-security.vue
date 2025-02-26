@@ -63,7 +63,7 @@
         </div>
       </section>
 
-      <section
+      <!-- <section
         class="space-y-6 mt-5 border-[0.5px] disabled opacity-25 bg-white rounded-md border-gray-50 p-3"
       >
         <CoreToggleSwitch
@@ -77,7 +77,7 @@
           label="Enable Biometrics"
           v-model="options.biometricsLogin"
           extra="On clicking the switch, you enable fingerprint & face id login option"
-        />
+        /> -->
 
         <!-- Enable Password Login (disabled) -->
         <!-- <div class="flex justify-between items-center p-4 bg-gray-100">
@@ -95,7 +95,7 @@
     </div>
     <input type="checkbox" class="form-checkbox h-5 w-5 text-gray-400" disabled />
   </div> -->
-      </section>
+      <!-- </section> -->
     </div>
   </div>
   </main>

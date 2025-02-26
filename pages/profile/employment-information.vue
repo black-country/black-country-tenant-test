@@ -12,7 +12,7 @@
           </div>
           <form @submit.prevent="handleSave" class="mt-6 space-y-5">
             <div>
-              <label class="text-[#1D2739] text-sm">Are you currently employed? <span class="text-red-500">*</span></label>
+              <label class="text-[#1D2739] text-sm">Current Employment Status<span class="text-red-500">*</span></label>
               <select v-model="credential.employmentStatus" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4">
                 <option value="employed">Employed</option>
                 <option value="unemployed">Un-Employed</option>

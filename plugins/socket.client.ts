@@ -4,7 +4,7 @@ import { defineNuxtPlugin } from '#app';
 
 export default defineNuxtPlugin((nuxtApp) => {
   // Initialize the socket.io client connection
-  const socket: Socket = io('http://localhost:3000', {
+  const socket: Socket = io('http://localhost:3001', {
     transports: ['websocket', 'polling'],
   });
 

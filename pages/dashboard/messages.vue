@@ -642,6 +642,12 @@ watch(selectedUser, async (newVal) => {
     }
   }
 });
+const showDropdown = ref(false);
+
+function toggleDropdown() {
+  showDropdown.value = !showDropdown.value;
+}
+
 
 // Watch for new messages and scroll to the bottom
 watch(

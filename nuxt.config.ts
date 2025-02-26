@@ -1,6 +1,9 @@
 export default {
   ssr: false,
   target: "static",
+  // router: {
+  //   base: '/tenant/'
+  // },
   app: {
     baseURL: '/tenant/',
     head: {
@@ -71,6 +74,12 @@ export default {
           },
         },
       },
+    },
+    server: {
+      port: 3001
+      // fs: {
+      //   allow: ["public/lib"],
+      // },
     },
   },
 
