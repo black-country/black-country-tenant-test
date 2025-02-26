@@ -391,10 +391,14 @@ const createInfoWindowContent = (property: Property) => {
            ${saving.value ? "saving.." : "Save search"}
         </button>
       </div>
-      <img class="h-32 object-cover w-full" src="${
-        property?.images[0] || "/placeholder-property.jpg"
-      }" />
-      <h3 class="font-bold text-sm mb-2">${property.name}</h3>
+      <img class="h-32 object-cover w-full cursor-pointer" 
+        src="${property?.images[0] || "/placeholder-property.jpg"}"
+        onclick="window.location.href='/dashboard/listings/${property.id}/preview'"
+      />
+      <h3 class="font-bold text-sm mb-2 cursor-pointer" 
+        onclick="window.location.href='/dashboard/listings/${property.id}/preview'">
+        ${property.name}
+      </h3>
       <p class="mb-2 flex items-center gap-x-2">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7.94366 12.4644C7.69072 12.7012 7.35257 12.8337 7.00064 12.8337C6.64872 12.8337 6.31062 12.7012 6.05762 12.4644C3.74093 10.2822 0.636277 7.84435 2.15032 4.30513C2.96895 2.3915 4.93403 1.16699 7.00064 1.16699C9.06727 1.16699 11.0323 2.3915 11.851 4.30513C13.3631 7.83992 10.2661 10.2897 7.94366 12.4644Z" fill="#5B8469" stroke="#5B8469"/>
@@ -421,6 +425,49 @@ const createInfoWindowContent = (property: Property) => {
     </div>
   `;
 };
+
+// const createInfoWindowContent = (property: Property) => {
+//   return `
+//     <div class="max-w-sm">
+//       <div class="w-full pb-3">
+//         <button 
+//           id="saveSearchBtn" 
+//           type="button" 
+//           class="bg-gray-800 w-full outline-none border-none text-white py-3 rounded-lg text-sm hover:bg-gray-700 transition-colors"
+//         >
+//            ${saving.value ? "saving.." : "Save search"}
+//         </button>
+//       </div>
+//       <img class="h-32 object-cover w-full" src="${
+//         property?.images[0] || "/placeholder-property.jpg"
+//       }" />
+//       <h3 class="font-bold text-sm mb-2">${property.name}</h3>
+//       <p class="mb-2 flex items-center gap-x-2">
+//         <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+//           <path d="M7.94366 12.4644C7.69072 12.7012 7.35257 12.8337 7.00064 12.8337C6.64872 12.8337 6.31062 12.7012 6.05762 12.4644C3.74093 10.2822 0.636277 7.84435 2.15032 4.30513C2.96895 2.3915 4.93403 1.16699 7.00064 1.16699C9.06727 1.16699 11.0323 2.3915 11.851 4.30513C13.3631 7.83992 10.2661 10.2897 7.94366 12.4644Z" fill="#5B8469" stroke="#5B8469"/>
+//           <path d="M9.04159 6.41667C9.04159 7.54425 8.1275 8.45833 6.99992 8.45833C5.87234 8.45833 4.95825 7.54425 4.95825 6.41667C4.95825 5.28908 5.87234 4.375 6.99992 4.375C8.1275 4.375 9.04159 5.28908 9.04159 6.41667Z" fill="#EAEAEA" stroke="#5B8469"/>
+//         </svg>
+//         ${property.address}
+//       </p>
+//       <p class="text-[#1D2739] font-medium text-sm">
+//         ${property?.bedroomCount || 0} bedrooms |
+//         ${property?.bathroomCount || 0} baths | 
+//         ${property?.size || 0} ${property?.sizeUnit || "sq ft"}
+//       </p>
+//       <p class="text-[#1D2739] text-xs">
+//         ${property?.availableRoomsCount || 0} rooms avail.
+//         <span class="font-medium text-[#326543]">Now</span>
+//         ${
+//           property.futureAvailableRoomsCount &&
+//           property.futureAvailableRoomsCount > 0
+//             ? `| ${property.futureAvailableRoomsCount} room avail. on
+//              ${moment(property.leastAvailableDate).format("MMMM Do YYYY")}`
+//             : ""
+//         }
+//       </p>
+//     </div>
+//   `;
+// };
 
 // Function to create property markers
 const createPropertyMarkers = (

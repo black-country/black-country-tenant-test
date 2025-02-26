@@ -76,7 +76,7 @@
           </NuxtLink>
         </div> -->
 
-        <div class="flex justify-between mb-8 rounded-lg">
+        <div v-if="user.hasHome" class="flex justify-between mb-8 rounded-lg">
           <button
             v-for="payment in paymentActions"
             :key="payment.title"
@@ -109,7 +109,6 @@
           </button>
         </div>
 
-        <!-- Rental Applications -->
         <div
           class="bg-white p-4 py-6 rounded-lg mb-8 flex justify-between items-center"
         >
@@ -183,12 +182,12 @@
           <h2 class="text-base font-medium text-[#171717]  text-[#171717] bg-white rounded-md py-5 px-4">
             Recent applications
           </h2>
-          <div v-if="!loadingRentals && rentalsList.length" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div v-if="!loadingRentals && rentalsList.length" class="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
             <div
               v-for="rental in filteredRentals"
               @click="handleSelectedRental(rental)"
               :key="rental.id"
-              class=" cursor-pointer rounded-l overflow-hidden relative"
+              class="cursor-pointer rounded-l-lg w-full overflow-hidden relative"
             >
 
             <img v-if="rental.house.bookmark !== null" class='absolute right-2 top-2' src="@/assets/icons/liked.svg" />
@@ -201,8 +200,8 @@
                 class="object-cover"
               /> -->
               <!-- {{ rental.house.images[0] }} -->
-              <img v-if="!rental?.house?.images[0]?.length" class='h-72 object-cover rounded-xl' src="@/assets/img/home-Image.png" />
-              <img v-else class='h-72 object-cover rounded-xl' :src="rental?.house?.images[0]" />
+              <img v-if="!rental?.house?.images[0]?.length" class='h-72 w-full object-cover rounded-xl' src="@/assets/img/home-Image.png" />
+              <img v-else class='h-72 object-cover w-full rounded-xl' :src="rental?.house?.images[0]" />
 
               <!-- Text Overlay with Transparent Background -->
               <div
@@ -230,7 +229,38 @@
 
                 <!-- Price and Status -->
                 <div class="flex justify-between absolute top-60 left-2 items-center mt-2">
+                  <!-- {{ rental.status }} -->
                   <!-- Status Badge with Light Background -->
+                  <span
+                    v-if="rental.status === 'LEASE_SENT'"
+                    class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center"
+                  >
+                    <svg
+                      width="8"
+                      height="8"
+                      viewBox="0 0 8 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="4" cy="4" r="3" fill="#099137" />
+                    </svg>
+                    Lease Sent
+                  </span>
+                  <span
+                    v-if="rental.status === 'LEASE_SIGNED'"
+                    class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center"
+                  >
+                    <svg
+                      width="8"
+                      height="8"
+                      viewBox="0 0 8 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="4" cy="4" r="3" fill="#099137" />
+                    </svg>
+                    Lease Signed
+                  </span>
                   <span
                     v-if="rental.status === 'PENDING'"
                     class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center"
@@ -244,7 +274,7 @@
                     >
                       <circle cx="4" cy="4" r="3" fill="#099137" />
                     </svg>
-                    Application sent
+                    Application Sent
                   </span>
                   <span
                     v-if="rental.status === 'APPROVED'"

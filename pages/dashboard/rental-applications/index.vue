@@ -69,6 +69,18 @@
               <!-- Price and Status -->
               <div class="flex justify-between items-center mt-2">          
                 <!-- Status Badge with Light Background -->
+                <span v-if="rental.status === 'LEASE_SENT'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="4" cy="4" r="3" fill="#099137"/>
+                      </svg>                        
+                Lease Sent
+              </span>
+              <span v-if="rental.status === 'LEASE_SIGNED'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="4" cy="4" r="3" fill="#099137"/>
+                      </svg>                        
+                Lease Signed
+              </span>
                 <span v-if="rental.status === 'PENDING'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
                   <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="4" cy="4" r="3" fill="#099137"/>

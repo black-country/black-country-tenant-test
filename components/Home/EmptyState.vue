@@ -77,5 +77,11 @@
     router.push('/dashboard/home/details')
   }
 
+  onMounted(() => {
+  if(user?.value?.hasHome){
+    router.push('/dashboard/home/details')
+  }
+})
+
 </script>
   

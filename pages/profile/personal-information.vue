@@ -259,15 +259,17 @@ const handleSave = async () => {
   await updateProfile({
     firstName,
     lastName,
-    email: credential.value.email,
-    phoneNumber: credential.value.phoneNumber,
-    dateOfBirth: credential.value.dateOfBirth,
-    gender: credential.value.gender,
+    email: credential?.value?.email,
+    phoneNumber: credential?.value?.phoneNumber,
+    dateOfBirth: credential?.value?.dateOfBirth,
+    gender: credential?.value?.gender,
     maritalStatus: credential.value.maritalStatus,
-    cityId: selectedLocation.value.id,
-  });
-  router.back();
-  // router.push("/profile/profile-update-success");
+    cityId: selectedLocation?.value?.id,
+  }).then(() => {
+    router.back();
+    router.push("/profile/profile-update-success");
+  })
+  await router.back();
 };
 
 // Helper function to format date
