@@ -43,6 +43,7 @@ const handleSuccess = () => {
 definePageMeta({
   middleware: "auth",
 });
+// gggggghhhh
 </script>
   
   <style scoped>

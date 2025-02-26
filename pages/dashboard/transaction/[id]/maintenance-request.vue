@@ -33,7 +33,7 @@
           <section class="space-y-4 border-[0.5px] border-gray-100 rounded-lg p-3">
             <div class="flex justify-between items-center">
               <div class="text-sm text-[#667185]">Service assigned to</div>
-              <div class="text-sm text-[#1D2739]">{{ maintenanceInfo?.serviceProvider ?? 'Nil' }}</div>
+              <div class="text-sm text-[#1D2739]">{{ maintenanceInfo?.serviceProvider?.firstName}} {{ maintenanceInfo?.serviceProvider?.lastName}} </div>
             </div>
   
             <div class="flex justify-between items-center">
@@ -76,7 +76,7 @@
         </section>
   
           <!-- Images -->
-          <div class="border-[0.5px] border-gray-100 rounded-lg p-3">
+          <div v-if="maintenanceInfo?.images" class="border-[0.5px] border-gray-100 rounded-lg p-3">
             <div class="text-sm text-gray-600 mb-4">Images</div>
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               <img 

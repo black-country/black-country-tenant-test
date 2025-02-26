@@ -150,6 +150,7 @@
    console.log(item, 'item herre')
    window.location.href = item.contacts[0]
  }
+//  dfghjkjcx
  
    </script>
    
