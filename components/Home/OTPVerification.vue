@@ -31,10 +31,10 @@
         </p>
       <section>
         <div class="flex justify-center space-x-2 mb-4">
-          <input :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[0]" @input="focusNext(0)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
-          <input :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[1]" @input="focusNext(1)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
-          <input :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[2]" @input="focusNext(2)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
-          <input :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[3]" @input="focusNext(3)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
+          <input placeholder="0" :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[0]" @input="focusNext(0)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
+          <input placeholder="0" :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[1]" @input="focusNext(1)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
+          <input placeholder="0" :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[2]" @input="focusNext(2)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
+          <input placeholder="0" :class="[errorMessage ? 'border-[#9E0A05] border-2' : '']" v-model="otp[3]" @input="focusNext(3)" type="text" maxlength="1" class="w-16 outline-none focus-within:border-2 focus-within:border-[#5B8469] h-14 text-center border rounded-lg text-2xl" />
         </div>
         <p v-if="errorMessage" class="text-sm text-[#1D2739]">The entered OTP code is incorrect. Please verify or click 'Resend code' for a new one.</p>
       </section>
@@ -53,8 +53,10 @@
     <script setup lang="ts">
       import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
     import { useVerifyMoveInOTP } from '@/composables/modules/maintenance/useVerifyMoveIn'
+      import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
 const router = useRouter()
   const { intiateMoveIn, loading: processing } = useInitiateMoveIn()
+  const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
   const { loading,
     setCredential,
     credential,
@@ -88,8 +90,10 @@ const router = useRouter()
     if (newOtp.every((digit: any) => digit.length === 1)) {
   
       const payload = {
-        otp: otp.value
+        otp: otp.value, 
+        applicationId: myHomeInfo?.value?.rentPayment?.rentalApplicationId
       }
+      console.log('gere')
       // Trigger OTP verification
       setCredential(payload)
       verifyMoveIn().catch((error: any) => {

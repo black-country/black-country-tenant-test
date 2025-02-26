@@ -59,8 +59,11 @@
           </NuxtLink>
         </div> -->
 
-        <div class="flex justify-between mb-8 rounded-lg" v-if="user.hasMovedIn">
-          <button v-for="payment in paymentActions" :key="payment.title" :disabled="!Object.keys(myHomeInfo).length"
+        <div v-if="user.hasHome" class="flex justify-between mb-8 rounded-lg">
+          <button
+            v-for="payment in paymentActions"
+            :key="payment.title"
+            :disabled="!Object.keys(myHomeInfo).length"
             :class="[
               'w-1/3 block bg-white p-6 text-center',
               payment.isDisabled ? 'cursor-not-allowed opacity-25' : '',
@@ -82,10 +85,20 @@
           </button>
         </div>
 
-        <!-- Rental Applications -->
-        <div class="bg-white p-4 py-6 rounded-lg mb-8 flex justify-between items-center">
-          <div @click="router.push('/dashboard/rental-applications')" class="flex cursor-pointer items-center gap-x-3">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div
+          class="bg-white p-4 py-6 rounded-lg mb-8 flex justify-between items-center"
+        >
+          <div
+            @click="router.push('/dashboard/rental-applications')"
+            class="flex cursor-pointer items-center gap-x-3"
+          >
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M9.99935 18.3332L9.99935 4.99984C9.99935 3.42849 9.99935 2.64281 9.51118 2.15466C9.02302 1.6665 8.23737 1.6665 6.66602 1.6665L4.99935 1.6665C3.428 1.6665 2.64232 1.6665 2.15417 2.15466C1.66602 2.64281 1.66602 3.42849 1.66602 4.99984L1.66602 14.9998C1.66602 16.5712 1.66602 17.3568 2.15417 17.845C2.64232 18.3332 3.428 18.3332 4.99935 18.3332H9.99935Z"
                 fill="#1A47C5" stroke="#1A47C5" stroke-width="1.5" />
@@ -120,10 +133,13 @@
           <h2 class="text-base font-medium text-[#171717]  text-[#171717] bg-white rounded-md py-5 px-4">
             Recent applications
           </h2>
-          <div v-if="!loadingRentals && rentalsList.length"
-            class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div v-for="rental in filteredRentals" @click="handleSelectedRental(rental)" :key="rental.id"
-              class=" cursor-pointer rounded-l overflow-hidden relative">
+          <div v-if="!loadingRentals && rentalsList.length" class="grid mt-5 grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
+            <div
+              v-for="rental in filteredRentals"
+              @click="handleSelectedRental(rental)"
+              :key="rental.id"
+              class="cursor-pointer rounded-l-lg w-full overflow-hidden relative"
+            >
 
               <img v-if="rental.house.bookmark !== null" class='absolute right-2 top-2'
                 src="@/assets/icons/liked.svg" />
@@ -137,9 +153,8 @@
                 class="object-cover"
               /> -->
               <!-- {{ rental.house.images[0] }} -->
-              <img v-if="!rental?.house?.images[0]?.length" class='h-72 object-cover rounded-xl'
-                src="@/assets/img/home-Image.png" />
-              <img v-else class='h-72 object-cover rounded-xl' :src="rental?.house?.images[0]" />
+              <img v-if="!rental?.house?.images[0]?.length" class='h-72 w-full object-cover rounded-xl' src="@/assets/img/home-Image.png" />
+              <img v-else class='h-72 object-cover w-full rounded-xl' :src="rental?.house?.images[0]" />
 
               <!-- Text Overlay with Transparent Background -->
               <div class="m-2 mt-3 rounded-b-lg">
@@ -169,13 +184,52 @@
 
                 <!-- Price and Status -->
                 <div class="flex justify-between absolute top-60 left-2 items-center mt-2">
+                  <!-- {{ rental.status }} -->
                   <!-- Status Badge with Light Background -->
-                  <span v-if="rental.status === 'PENDING'"
-                    class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
-                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <span
+                    v-if="rental.status === 'LEASE_SENT'"
+                    class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center"
+                  >
+                    <svg
+                      width="8"
+                      height="8"
+                      viewBox="0 0 8 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
                       <circle cx="4" cy="4" r="3" fill="#099137" />
                     </svg>
-                    Application sent
+                    Lease Sent
+                  </span>
+                  <span
+                    v-if="rental.status === 'LEASE_SIGNED'"
+                    class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center"
+                  >
+                    <svg
+                      width="8"
+                      height="8"
+                      viewBox="0 0 8 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="4" cy="4" r="3" fill="#099137" />
+                    </svg>
+                    Lease Signed
+                  </span>
+                  <span
+                    v-if="rental.status === 'PENDING'"
+                    class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center"
+                  >
+                    <svg
+                      width="8"
+                      height="8"
+                      viewBox="0 0 8 8"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <circle cx="4" cy="4" r="3" fill="#099137" />
+                    </svg>
+                    Application Sent
                   </span>
                   <span v-if="rental.status === 'APPROVED'"
                     class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">

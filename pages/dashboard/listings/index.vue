@@ -1553,13 +1553,6 @@
             </svg>
           </button>
           <ImageCarousel  v-if="property?.images?.length" :property="property"  />
-          <!-- <img
-            @click="router.push(`/dashboard/listings/${property.id}/preview`)"
-            v-if="property?.images?.length"
-            :src="property?.images[0]"
-            class="rounded-lg cursor-pointer object-cover h-56 w-full"
-            alt="alt"
-          /> -->
           <img
             @click="router.push(`/dashboard/listings/${property.id}/preview`)"
             v-else
@@ -2036,17 +2029,7 @@
                 </a>
               </NuxtLink> -->
               <li class="mt-auto">
-                <!-- <a
-                  href="#"
-                  class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
-                >
-                  <img
-                    :src="dynamicIcons('settings')"
-                    alt="settings"
-                    class="h-6 w-6"
-                  />
-                  Settings
-                </a> -->
+
                 <a
                   href="#"
                   @click="showBLogoutModal = true"
@@ -2059,15 +2042,18 @@
                   />
                   Logout
                 </a>
+                <!-- {{ user }} -->
                 <NuxtLink
                   to="/profile"
                   class="group -mx-2 flex gap-x-3 rounded-md p-2 text-sm font-semibold leading-6 text-gray-400 hover:bg-gray-800 hover:text-white"
                 >
                   <img
+                    v-if="user?.profilePicture"
                     :src="user?.profilePicture"
                     alt="logout"
                     class="h-6 w-6 rounded-full bg-gray-800"
                   />
+                  <img class="h-10 w-10 rounded-full bg-gray-800" v-else src="@/assets/icons/users-avatar.svg" />
                   <span aria-hidden="true">{{user?.firstName}} {{user?.lastName}}</span>
                 </NuxtLink>
                 <!-- <NuxtLink  @click.native="isOpen = false" to="/profile" class="mr-32 mt-auto">
@@ -2358,6 +2344,47 @@
   <CoreDrawer :footer="false" title="Filters" @close="showFilterDrawer = false" :show="showFilterDrawer">
     <CorePropertyFilters @close="showFilterDrawer = false" />
   </CoreDrawer>
+
+  <CoreModalWithoutCloseBtn
+  :isOpen="showBLogoutModal"
+  @close="showBLogoutModal = false"
+  >
+  <div
+  class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+  @click.self="onCancel"
+>
+  <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg">
+    <div class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4">
+      <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="0.921875" width="63.1513" height="64" rx="31.5756" fill="#F3A218"/>
+        <path d="M42.2031 32.375C42.2031 26.8521 37.7259 22.375 32.2031 22.375C26.6803 22.375 22.2031 26.8521 22.2031 32.375C22.2031 37.8978 26.6803 42.375 32.2031 42.375C37.7259 42.375 42.2031 37.8978 42.2031 32.375Z" stroke="white" stroke-width="1.5"/>
+        <path d="M32.4453 37.375V32.375C32.4453 31.9036 32.4453 31.6679 32.2988 31.5214C32.1524 31.375 31.9167 31.375 31.4453 31.375" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M32.1953 28.377H32.2043" stroke="white" stroke-width="3.25" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        
+    </div>
+    <h2 class="text-lg font-semibold text-gray-700 mb-2">Logout</h2>
+    <p class="text-gray-500 mb-6">Are you sure you want to logout?</p>
+    <div class="space-y-3">
+      <button
+        type="button"
+        class="w-full disabled:cursor-not-allowed text-sm disabled:opacity-25 bg-[#292929] text-white py-3.5 rounded-md font-semibold"
+        @click="onConfirm"
+        :disabled="loading"
+      >
+        Yes, log out
+      </button>
+      <button
+        type="button"
+        class="w-full bg-[#EBE5E0] text-gray-700 text-sm py-3.5 rounded-md font-semibold"
+        @click="onCancel"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+</div>
+  </CoreModalWithoutCloseBtn>
   </main>
 </template>
 
@@ -2957,6 +2984,27 @@ const modalValue = localStorage.getItem('welcome-modal-shown') === 'true'; // Ex
 //     return
 //   }
 // })
+
+const showBLogoutModal = ref(false)
+
+const onCancel = () => {
+  showBLogoutModal.value = false
+  // Logic to close the modal
+  console.log("Cancelled");
+};
+
+const onConfirm = () => {
+  showBLogoutModal.value = true
+  // Logic for logout
+  localStorage.clear()
+  setTimeout(() => {
+    // loading.value = false
+    showBLogoutModal.value = false
+    router.push('/login')
+    window.location.href = "/login"
+  }), 3000
+  console.log("Logging out...");
+};
 
 
 const handleTabSetup = (tab: any) => {

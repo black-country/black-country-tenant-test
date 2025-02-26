@@ -2,40 +2,6 @@
     <div class="container mx-auto p-6">
       <!-- Property Images Section -->
       <div class="flex flex-col lg:flex-row gap-6 mb-6">
-        <!-- <div class="flex-1">
-          <img
-            src="/path/to/property-main-image.jpg"
-            alt="Property Main"
-            class="w-full h-96 object-cover rounded-lg mb-4"
-          />
-          <div class="grid grid-cols-2 gap-4">
-            <img
-              src="/path/to/property-image-1.jpg"
-              alt="Property 1"
-              class="w-full h-48 object-cover rounded-lg"
-            />
-            <img
-              src="/path/to/property-image-2.jpg"
-              alt="Property 2"
-              class="w-full h-48 object-cover rounded-lg"
-            />
-            <img
-              src="/path/to/property-image-3.jpg"
-              alt="Property 3"
-              class="w-full h-48 object-cover rounded-lg"
-            />
-            <div class="relative">
-              <img
-                src="/path/to/property-image-4.jpg"
-                alt="Property 4"
-                class="w-full h-48 object-cover rounded-lg"
-              />
-              <div class="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center rounded-lg">
-                <span class="text-white text-lg">View all +12</span>
-              </div>
-            </div>
-          </div>
-        </div> -->
         <div class="w-full lg:w-1/3">
           <h1 class="text-3xl font-bold mb-2">Jason Gardens</h1>
           <p class="text-gray-600 mb-4">Iconic Tower, off Ajose Adegun VI, Lagos.</p>

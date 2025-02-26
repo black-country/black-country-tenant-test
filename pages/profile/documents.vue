@@ -1,26 +1,26 @@
-<template>
+<!-- <template>
 <main>
   <TopNavBar />
   <div class="lg:p-8 p-3 bg-gray-25 min-h-screen">
     <div class="max-w-xl mx-auto">
       <CoreGoBack class="mb-4" />
-      <!-- Breadcrumbs -->
+
       <div class="text-sm text-gray-500 mb-4">
         <span>Profile</span>
         <span class="mx-2">|</span>
         <span class="font-semibold text-gray-700">My Documents</span>
       </div>
 
-      <!-- Search and Filter Row -->
+
       <div class="flex justify-between items-center mb-6">
-        <!-- Search Bar -->
+
         <div class="relative w-full max-w-lg">
           <input
             type="text"
             placeholder="Search"
             class="w-full p-3 py-4 border text-sm border-gray-25 outline-none rounded-md bg-[#EAEAEA] pl-10"
           />
-          <!-- Search Icon -->
+
           <svg class="absolute top-5 left-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M11.6641 11.666L14.6641 14.666" stroke="#667185" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               <path d="M13.3359 7.33398C13.3359 4.02028 10.6497 1.33398 7.33594 1.33398C4.02223 1.33398 1.33594 4.02028 1.33594 7.33398C1.33594 10.6477 4.02223 13.334 7.33594 13.334C10.6497 13.334 13.3359 10.6477 13.3359 7.33398Z" stroke="#667185" stroke-width="1.5" stroke-linejoin="round"/>
@@ -28,7 +28,6 @@
               
         </div>
 
-        <!-- Filter Button -->
         <button
           class="ml-4 flex items-center text-sm text-[#1D2739] space-x-2 p-2 bg-gray-100 border rounded-md text-gray-700"
         >
@@ -53,7 +52,7 @@
         </button>
       </div>
 
-      <!-- Documents Grid -->
+
       <div v-if="leaseDocuments?.length && !loading" class="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <div v-for="itm in leaseDocuments" :key="itm" class="">
           <div class="flex justify-center mb-4 border-[0.5px] border-gray-100 py-10 rounded-lg bg-[#F0F2F5]">
@@ -69,7 +68,7 @@
           <p class="text-gray-500 text-xs"> {{  moment(itm?.createdAt).format("MMM Do YYYY, HH:MM A") ?? 'Nil' }}</p>
         </div>
         <div class="flex justify-center mt-4">
-          <button @click="downloadAgreement(itm)" class="text-gray-500 hover:text-gray-600">
+          <button @click="downloadPolicy(itm)" class="text-gray-500 hover:text-gray-600">
             <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M8.5026 9.66667V3M8.5026 9.66667C8.0358 9.66667 7.16362 8.33713 6.83594 8M8.5026 9.66667C8.9694 9.66667 9.8416 8.33713 10.1693 8" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 <path d="M13.8307 11C13.8307 12.6547 13.4854 13 11.8307 13H5.16406C3.5094 13 3.16406 12.6547 3.16406 11" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -115,8 +114,7 @@
   
   <script setup lang="ts">
     import moment from "moment";
-    import { useDownloadPdf } from '@/composables/core/useDownloadPdf'; 
-    const { downloadPdf, isDownloading } = useDownloadPdf();
+    import { useHtmlToPdf } from '@/composables/core/useDownloadHtmlPdf';
   import { useFetchLeaseDocuments } from '@/composables/modules/home/useFetchLeaseDocuments'
   const { leaseDocuments, loading } = useFetchLeaseDocuments()
   import { useCustomToast } from '@/composables/core/useCustomToast'
@@ -126,19 +124,22 @@ const { showToast } = useCustomToast();
   ])
 
   const selectedLease = ref({})
+  const { downloadHtmlAsPdf, isDownloading } = useHtmlToPdf();
 
 
-  const downloadAgreement = async (item: any) => {
-  if (item) {
-    await downloadPdf(item?.leaseAgreementContent, `${item?.agreementName}-lease-agreement`); // Pass the ref element directly
-  } else {
-    showToast({
-          title: "Error",
-          message: "No lease agreement content available",
-          toastType: "error",
-          duration: 3000
-        });
-  }
+const downloadPolicy = async (item: any) => {
+  await downloadHtmlAsPdf(item?.leaseAgreementContent, {
+    fileName: `${item?.agreementName}-lease-agreement`,
+    orientation: 'p',
+    pageSize: 'a4',
+    margins: {
+      top: 10,
+      right: 10,
+      bottom: 10,
+      left: 10
+    },
+    scaling: 2
+  });
 };
 
 
@@ -148,4 +149,127 @@ const { showToast } = useCustomToast();
   </script>
   
   <style scoped></style>
-  
+   -->
+
+   <template>
+    <main>
+      <TopNavBar />
+      <div class="lg:p-8 m-3 bg-gray-25 min-h-screen">
+        <div class="max-w-6xl m-6 mx-auto">
+          <CoreGoBack class="mb-4" />
+          
+          <!-- Breadcrumbs -->
+          <div class="text-sm text-gray-500 mb-4">
+            <span>Profile</span>
+            <span class="mx-2">|</span>
+            <span class="font-semibold text-gray-700">My Documents</span>
+          </div>
+    
+          <!-- Search and Filter Row -->
+          <div class="flex justify-between items-center mb-6">
+            <!-- Search Bar -->
+            <div class="relative w-full max-w-lg">
+              <input
+                type="text"
+                v-model="searchQuery"
+                placeholder="Search"
+                class="w-full p-3 py-4 border text-sm border-gray-25 outline-none rounded-md bg-[#EAEAEA] pl-10"
+              />
+              <svg class="absolute top-5 left-4" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.6641 11.666L14.6641 14.666" stroke="#667185" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M13.3359 7.33398C13.3359 4.02028 10.6497 1.33398 7.33594 1.33398C4.02223 1.33398 1.33594 4.02028 1.33594 7.33398C1.33594 10.6477 4.02223 13.334 7.33594 13.334C10.6497 13.334 13.3359 10.6477 13.3359 7.33398Z" stroke="#667185" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </div>
+          </div>
+    
+          <!-- Documents Grid -->
+          <div v-if="filteredDocuments.length && !loading" class="grid grid-cols-2 lg:grid-cols-3 gap-4">
+            <div v-for="itm in filteredDocuments" :key="itm.id" class="">
+              <div class="flex justify-center mb-4 border-[0.5px] border-gray-100 py-10 rounded-lg bg-[#F0F2F5]">
+                <img src="@/assets/img/pdf.png" alt="PDF Icon" class="h-16" />
+              </div>
+              <div class="flex justify-between items-center w-full px-2">
+                <div class="lg:text-center space-y-1">
+                  <p class="text-gray-700 font-medium text-sm">{{ truncateName(itm?.agreementName) ?? 'Nil' }}</p>
+                  <p class="text-gray-500 text-xs">{{ moment(itm?.createdAt).format("MMM Do YYYY, HH:MM A") ?? 'Nil' }}</p>
+                </div>
+                <div class="flex justify-center mt-4">
+                  <button @click="downloadPolicy(itm)" type="button" class="text-gray-500 hover:text-gray-600">
+                    <svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M8.5026 9.66667V3M8.5026 9.66667C8.0358 9.66667 7.16362 8.33713 6.83594 8M8.5026 9.66667C8.9694 9.66667 9.8416 8.33713 10.1693 8" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          <section v-else class="flex justify-center items-center flex-col gap-y-2">
+            <p class="text-[#1D2739]">No document found</p>
+          </section>
+        </div>
+      </div>
+    </main>
+    </template>
+    
+    <script setup lang="ts">
+    import { ref, computed } from "vue";
+    import moment from "moment";
+    // import { useDownloadPdf } from '@/composables/core/useDownloadPdf';
+    import { useHtmlToPdf } from '@/composables/core/useDownloadHtmlPdf';
+    import { useFetchLeaseDocuments } from '@/composables/modules/home/useFetchLeaseDocuments';
+    import { useCustomToast } from '@/composables/core/useCustomToast';
+    
+    // const { downloadPdf } = useDownloadPdf();
+    const { downloadHtmlAsPdf, isDownloading } = useHtmlToPdf();
+    const { leaseDocuments, loading } = useFetchLeaseDocuments();
+    const { showToast } = useCustomToast();
+    
+    const searchQuery = ref("");
+    
+    // Computed property to filter documents based on search query
+    const filteredDocuments = computed(() => {
+      if (!searchQuery.value.trim()) {
+        return leaseDocuments.value;
+      }
+      return leaseDocuments.value.filter(doc =>
+        doc.agreementName.toLowerCase().includes(searchQuery.value.toLowerCase())
+      );
+    });
+    
+    // const downloadAgreement = async (item: any) => {
+    //   if (item) {
+    //     await downloadPdf(item?.leaseAgreementContent, `${item?.agreementName}-lease-agreement`);
+    //   } else {
+    //     showToast({
+    //       title: "Error",
+    //       message: "No lease agreement content available",
+    //       toastType: "error",
+    //       duration: 3000
+    //     });
+    //   }
+    // };
+    const downloadPolicy = async (item: any) => {
+      console.log(item, 'item heree')
+        await downloadHtmlAsPdf(item?.leaseAgreementContent, {
+          fileName: `${item?.agreementName}-lease-agreement`,
+          orientation: 'p',
+          pageSize: 'a4',
+          margins: {
+            top: 10,
+            right: 10,
+            bottom: 10,
+            left: 10
+          },
+          scaling: 2
+        });
+      };
+
+    
+    const truncateName = (name) => {
+      return name?.length > 18 ? `${name.slice(0, 18)}...` : name;
+    };
+    </script>
+    
+    <style scoped></style>
+    

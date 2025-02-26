@@ -1,7 +1,9 @@
 import { ref } from 'vue'
 import { maintenance_api } from '@/api_factory/modules/maintenance'
+import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
 import { useCustomToast } from '@/composables/core/useCustomToast'
 const { showToast } = useCustomToast();
+const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
 
 export const useInitiateMoveIn = () => {
   const loading = ref(false)

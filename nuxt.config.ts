@@ -19,8 +19,6 @@ export default {
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css' }
       ],
       script: [
-        // { src: '/webviewer/ui/webviewer-ui.min.js' },
-        // { src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js", defer: true }
         {
           src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js",
           defer: true,
@@ -41,6 +39,16 @@ export default {
   runtimeConfig: {
     public: {
       googleMapsApiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg'
+    }
+  },
+  router: {
+    extendRoutes(routes: any, resolve: any) {
+      // Adjust all routes to be prefixed with `/about/`
+      routes.forEach((route: any) => {
+        if (route.path !== '/tenant') {
+           route.path = `/tenant${route.path}`
+        }
+      })
     }
   },
 
@@ -66,12 +74,6 @@ export default {
           },
         },
       },
-    },
-    server: {
-      port: 3001
-      // fs: {
-      //   allow: ["public/lib"],
-      // },
     },
   },
 

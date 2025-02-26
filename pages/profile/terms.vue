@@ -19,15 +19,12 @@
 
       <!-- Date -->
       <div v-if="lastUpdated" class="text-sm text-gray-500 mb-6">
-        <p>Current as of <strong>{{ lastUpdated }}</strong></p>
+        <p>Current as of <strong>{{  moment(lastUpdated).format("MMM Do YYYY, HH:MM A") ?? 'Nil' }}</strong></p>
       </div>
-
-      <!-- Title -->
-      <h1 class="text-2xl font-semibold text-gray-800 mb-6">Terms & Conditions</h1>
 
       <!-- Rendered Terms List -->
       <div v-html="formattedTermsList" class="space-y-6 text-gray-700"></div>
-    </div>
+    </div> 
     <section v-else-if="loading && !Object.keys(termsList)?.length">
       <div class="rounded-md p-4 max-w-4xl mx-auto mx-auto">
         <div class="animate-pulse flex space-x-4">
@@ -75,13 +72,14 @@
 import { useFetchTermsOfUse } from "@/composables/modules/settings/useFetchTermsOfUse";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+import moment from "moment"
 
 // Fetch terms of use from the backend
 const { loading, termsList } = useFetchTermsOfUse();
 const router = useRouter();
 
 // Extract last updated date if provided by the backend
-const lastUpdated = computed(() => termsList.value?.lastUpdated || "");
+const lastUpdated = computed(() => termsList.value?.createdAt || "");
 
 // Format the dynamic termsList into an HTML structure
 const formattedTermsList = computed(() => {

@@ -1,111 +1,4 @@
-<!-- <template>
-    <div class="mb-6">
-      <h4 class="font- text-md mb-2">{{ title }}</h4>
-      <div class="grid grid-cols-3 gap-4 items-center">
-        <div
-          v-for="item in items"
-          :key="item.itemName"
-          class="col-span-3 flex justify-between items-center py-2"
-        >
-          <span class="text-[#667185] text-sm">{{ item.itemName }}</span>
-          <div class="flex space-x-20">
-            <label class="flex items-center space-x-6">
-              <span class="text-[#667185] text-sm">Good</span>
-              <HomeActiveCheckbox
-               :uncheckedObj="uncheckedObj"
-               :checkedObj="checkedObj"
-                @update="state => emitUpdateState(item, 'good', state)"
-              />
-            </label>
-            <label class="flex items-center space-x-6">
-              <span class="text-[#667185] text-sm">Needs repair</span>
-              <HomeActiveCheckbox
-                @update="state => emitUpdateState(item, 'bad', state)"
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </template>
-  
-  <script lang="ts" setup>
-  import { defineProps, defineEmits } from 'vue';
-  
-  const props = defineProps<{
-    title: string;
-    items: { itemName: string; group: string }[];
-    uncheckedObj: { type: Object, required: true },
-    checkedObj: { type: Object, required: true }
-
-  }>();
-  
-  const emits = defineEmits(['update-state']);
-  
-  const emitUpdateState = (item, state, isChecked) => {
-    if (isChecked) {
-      emits('update-state', { ...item, state });
-    }
-  };
-  </script>
-   -->
-
-   <!-- <template>
-    <div class="mb-6">
-      {{ rentalChecklist }}
-      <h4 class="font- text-md mb-2">{{ title }}</h4>
-      <div class="grid grid-cols-3 gap-4 items-center">
-        <div
-          v-for="item in items"
-          :key="item.itemName"
-          class="col-span-3 flex justify-between items-center py-2"
-        >
-          <span class="text-[#667185] text-sm">{{ item.itemName }}</span>
-          <div class="flex space-x-20">
-            <label class="flex items-center space-x-6">
-              <span class="text-[#667185] text-sm">Good</span>
-              <input
-                type="radio"
-                :name="`item-${item.itemName}`"
-                value="good"
-                v-model="item.state"
-                @change="emitUpdateState(item, 'good')"
-              />
-            </label>
-            <label class="flex items-center space-x-6">
-              <span class="text-[#667185] text-sm">Needs repair</span>
-              <input
-                type="radio"
-                :name="`item-${item.itemName}`"
-                value="bad"
-                v-model="item.state"
-                @change="emitUpdateState(item, 'bad')"
-              />
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </template>
-  
-  <script lang="ts" setup>
-  import { defineProps, defineEmits } from 'vue';
-  
-  const props = defineProps<{
-    title: string;
-    items: { itemName: string; state: string }[];
-    rentalChecklist: { itemName: string; state: string }[];
-  }>();
-  
-  const emits = defineEmits(['update-state']);
-  
-  const emitUpdateState = (item, state) => {
-    emits('update-state', { ...item, state });
-  };
-  </script>
-   -->
-
-   <template>
+<template>
     <div class="mb-6">
       <h4 class="font- text-md mb-2">{{ title }}</h4>
       <!-- {{ data }} -->
@@ -129,6 +22,7 @@
                 <span class="text-[#667185] text-sm">Good</span>
                 <input
                   type="radio"
+                  class="w-6 h-6 border-gray-300 focus:ring-4 focus:ring-blue-500 checked:bg-blue-600 checked:border-transparent transition-all duration-300 ease-in-out transform hover:scale-110"
                   :name="`item-${item.itemName}-${group}`"
                   value="good"
                   v-model="item.state"
@@ -140,6 +34,7 @@
                 <span class="text-[#667185] text-sm">Needs repair</span>
                 <input
                   type="radio"
+                  class="w-6 h-6 border-gray-300 focus:ring-4 focus:ring-blue-500 checked:bg-blue-600 checked:border-transparent transition-all duration-300 ease-in-out transform hover:scale-110"
                   :name="`item-${item.itemName}-${group}`"
                   value="bad"
                   v-model="item.state"
