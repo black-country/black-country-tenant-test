@@ -2,6 +2,7 @@ export default {
   ssr: false,
   target: "static",
   app: {
+    baseURL: '/tenant/',
     head: {
       title: "Black Country",
       htmlAttrs: { lang: "en" },
@@ -15,8 +16,6 @@ export default {
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css' }
       ],
       script: [
-        // { src: '/webviewer/ui/webviewer-ui.min.js' },
-        // { src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js", defer: true }
         {
           src: "https://newwebpay.qa.interswitchng.com/inline-checkout.js",
           defer: true,
@@ -37,6 +36,16 @@ export default {
   runtimeConfig: {
     public: {
       googleMapsApiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg'
+    }
+  },
+  router: {
+    extendRoutes(routes: any, resolve: any) {
+      // Adjust all routes to be prefixed with `/about/`
+      routes.forEach((route: any) => {
+        if (route.path !== '/tenant') {
+           route.path = `/tenant${route.path}`
+        }
+      })
     }
   },
 
@@ -63,11 +72,6 @@ export default {
         },
       },
     },
-    // server: {
-    //   fs: {
-    //     allow: ["public/lib"],
-    //   },
-    // },
   },
 
   compatibilityDate: "2024-09-30"

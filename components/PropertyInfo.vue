@@ -129,7 +129,7 @@
                 </span>
                 <span v-else>Nil</span>
               </h3>
-              <p class="text-xs text-[#1D2739]">Property Manager</p>
+              <p class="text-xs text-[#1D2739]">Agent</p>
             </div>
           </div>
           <div class="ml-auto flex space-x-2">

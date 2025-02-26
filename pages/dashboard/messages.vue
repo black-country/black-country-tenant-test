@@ -106,7 +106,7 @@
                 placeholder="Search"
               />
             </div>
-            <button @click="toggleMembers">
+            <!-- <button @click="toggleMembers">
               <svg
                 width="44"
                 height="44"
@@ -130,7 +130,7 @@
                   stroke-linejoin="round"
                 />
               </svg>
-            </button>
+            </button> -->
             <!-- <div
               v-if="showMembersList"
               class="fixed inset-0 z-50 bg-black/50"

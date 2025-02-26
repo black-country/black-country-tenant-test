@@ -50,25 +50,6 @@
                 </div>
                 <span class="text-sm font-semibold text-[#292929]">{{ formatCurrency(transaction?.amountSubunit) ?? '0.00' }}</span>
               </div>
-        <!-- <div v-for="transaction in group" :key="transaction.id" 
-             class="p-4 flex items-center justify-between">
-          <div class="flex items-center gap-4">
-            <div class="w-10 h-10 bg-blue-50 rounded-full flex items-center justify-center">
-              <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <path d="M17 10H3M3 10L8 15M3 10L8 5" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </div>
-            <div>
-              <p class="font-medium">{{ getTransactionTitle(transaction) }}</p>
-              <p class="text-sm text-gray-500">
-                {{ formatDateTime(transaction.transactionDate) }}
-              </p>
-            </div>
-          </div>
-          <p class="font-semibold" :class="transaction.transactionType === 'CREDIT' ? 'text-green-600' : 'text-red-600'">
-            ₦{{ formatAmount(transaction.amountSubunit) }}
-          </p>
-        </div> -->
       </div>
     </div>
   </section>
@@ -168,38 +149,4 @@ const getTransactionTitle = (transaction: Transaction) => {
 };
 
 const router = useRouter()
-
-// Fetch transactions on mount
-// onMounted(async () => {
-//   try {
-//     // Replace with actual API call
-//     transactions.value = [
-//       {
-//         id: "2a72aa41-9696-4218-90e3-e35b2dc06218",
-//         amountSubunit: "800000000",
-//         transactionDate: "2024-11-15T20:13:16.665Z",
-//         transactionType: "RENT",
-//         narration: "rent payment",
-//         rentPayment: {
-//           rentFrequency: "annual",
-//           rentAmount: "8000000",
-//           room: {
-//             name: "Room 3",
-//             rentAmount: 80000,
-//             currency: {
-//               code: "NGN",
-//               name: "Nigerian Naira",
-//               conversionFactor: 100
-//             }
-//           },
-//           house: {
-//             name: "Marquis Abah Properties"
-//           }
-//         }
-//       }
-//     ];
-//   } catch (error) {
-//     console.error('Failed to fetch transactions:', error);
-//   }
-// });
 </script>
