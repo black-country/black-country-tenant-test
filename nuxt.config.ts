@@ -1,7 +1,11 @@
 export default {
   ssr: false,
   target: "static",
+  router: {
+    base: '/tenant/'
+  },
   app: {
+    baseURL: '/tenant/',
     head: {
       title: "Black Country",
       htmlAttrs: { lang: "en" },
