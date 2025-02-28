@@ -53,8 +53,8 @@ export default {
   },
 
   axios: {
-    // Axios options here
     timeout: 10000, // Example: set timeout to 10 seconds
+    // Axios options here
   },
 
   plugins: ['~/plugins/google-maps.client.ts', '~/plugins/intro.client.ts', '~/plugins/dayjs.ts', '~/plugins/vee-validate.ts'],
@@ -64,7 +64,6 @@ export default {
       include: ['fast-deep-equal']
     },
     build: {
-      // transpile: ['@vueup/vue-quill'],
       rollupOptions: {
         output: {
           manualChunks(id) {
@@ -74,6 +73,7 @@ export default {
           },
         },
       },
+      // transpile: ['@vueup/vue-quill'],
     },
     server: {
       port: 3001
