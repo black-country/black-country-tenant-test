@@ -29,7 +29,7 @@
               <DialogPanel class="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 shadow-xl transition-all">
                 <div class="relative">
                   <button
-                    @click="endTour"
+                    @click="handleClose"
                     class="absolute right-0 top-0 p-2"
                   >
                     <XMarkIcon class="h-6 w-6 text-gray-500" />
@@ -105,6 +105,8 @@ import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } fro
 import { XMarkIcon } from '@heroicons/vue/24/outline'
 import { onMounted, watch, ref, defineExpose } from 'vue'
 import { useTourGuide } from '@/composables/core/useTourGuide'
+import { use_update_profile } from '@/composables/auth/updateProfile'
+const { updateProfile, credential, } = use_update_profile()
 
 const {
   isTourActive,
@@ -118,7 +120,7 @@ const {
 } = useTourGuide()
 
 const props = defineProps<{
-  pageName: 'home-page' | 'list-page'
+  pageName: 'home-page' | 'list-page',
 }>()
 
 // // Lifecycle method to initialize the tour
@@ -164,6 +166,20 @@ defineExpose({
 watch(isTourActive, (newVal) => {
   console.log('isTourActive changed:', newVal);
 });
+const handleClose = async () => {
+  if(props.pageName === 'list-page' ){
+    await updateProfile({
+      hasExploredListing: true
+    })
+    endTour()
+  }
+  else{
+    await updateProfile({
+      hasTakenTour: true
+    })
+    endTour()
+  }
+}
 
 
 </script>

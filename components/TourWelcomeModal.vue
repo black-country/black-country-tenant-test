@@ -9,7 +9,7 @@
   
         <!-- Title -->
         <h1 class="text-xl font-semibold mb-2 text-[#1D2739]">
-            Welcome to BlackCountry! 🥳 🥳🥳
+            Welcome to BlackCountry! 🥳 🥳🥳 
         </h1>
   
         <!-- Description -->
@@ -34,6 +34,14 @@
   const handleAction = (action: 'skip' | 'continue') => {
     handleWelcomeModalAction(action);
   };
+
+  onMounted(() => {
+    console.log('mount baby')
+  })
+
+  onUnmounted(() => {
+    console.log('unmount baby')
+  })
 
 
   </script>

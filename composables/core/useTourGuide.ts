@@ -9,7 +9,7 @@ import image6 from '@/assets/img/save.png'
 import image7 from '@/assets/img/map-view.png'
 import image8 from '@/assets/img/list-view.png'
 import { use_update_profile } from '@/composables/auth/updateProfile'
-const {  updateProfile, credential, } = use_update_profile()
+const { updateProfile, credential, } = use_update_profile()
 
 const isTourActive = ref(false)
 const currentStep = ref(0)
@@ -100,33 +100,33 @@ export const useTourGuide = () => {
       localStorage.setItem(currentConfig.storageKey, 'true')
     }
 
-       // API call to update profile
-      //  try {
-      //   await updateProfile({
-      //     hasTakenTour: true
-      //   })
-      //   console.log('Profile updated successfully');
-      // } catch (error) {
-      //   console.error('Error updating profile:', error);
-      // }
+    // API call to update profile
+    //  try {
+    //   await updateProfile({
+    //     hasTakenTour: true
+    //   })
+    //   console.log('Profile updated successfully');
+    // } catch (error) {
+    //   console.error('Error updating profile:', error);
+    // }
 
-      try {
-        // Check if the user is on the specific URL path
-        const currentUrl = window.location.pathname + window.location.search
-        if (currentUrl === '/dashboard/listings?view=grid') {
-          await updateProfile({
-            hasExploredListings: true
-          })
-          console.log('Profile updated with hasExploredListings: true')
-        } else {
-          await updateProfile({
-            hasTakenTour: true
-          })
-          console.log('Profile updated with hasTakenTour: true')
-        }
-      } catch (error) {
-        console.error('Error updating profile:', error)
+    try {
+      // Check if the user is on the specific URL path
+      const currentUrl = window.location.pathname + window.location.search
+      if (currentUrl === '/dashboard/listings?view=grid') {
+        await updateProfile({
+          hasExploredListing: true
+        })
+        console.log('Profile updated with hasExploredListings: true')
+      } else {
+        await updateProfile({
+          hasTakenTour: true
+        })
+        console.log('Profile updated with hasTakenTour: true')
       }
+    } catch (error) {
+      console.error('Error updating profile:', error)
+    }
 
     isTourActive.value = false
   }
@@ -156,39 +156,39 @@ export const useTourGuide = () => {
     return localStorage.getItem(config.storageKey) === 'true'
   }
 
-  
 
 
-const startTourGuide = (pageName: 'home-page' | 'list-page') => {
+
+  const startTourGuide = (pageName: 'home-page' | 'list-page') => {
     console.log(`Starting tour guide for: ${pageName}`);
 
-            // Show welcome modal before starting the tour
-            if (pageName === 'home-page') {
-                isWelcomeModalActive.value = true;
-              }
-              
-            //   else {
-            //     initializeTour(config);
-            //   }
-      
-  
+    // Show welcome modal before starting the tour
+    if (pageName === 'home-page') {
+      isWelcomeModalActive.value = true;
+    }
+
+    //   else {
+    //     initializeTour(config);
+    //   }
+
+
     const config = tourConfigs[pageName];
     if (!config) {
       console.warn(`No tour configuration found for page: ${pageName}`);
       return;
     }
-  
+
     // Check if the current tour is already completed
     if (isTourCompleted(pageName)) {
       console.log(`Tour for ${pageName} already completed. Skipping.`);
       return;
     }
-  
+
     // Refactor logic for skipping tours based on dependencies
     if (pageName === 'list-page' && isTourCompleted('home-page')) {
       console.log('Home tour completed, but starting list-page tour as it should not be skipped.');
     }
-  
+
     if (pageName === 'home-page' && isTourCompleted('list-page')) {
       console.log('List tour completed. Skipping home-page tour.');
       return;
@@ -200,7 +200,7 @@ const startTourGuide = (pageName: 'home-page' | 'list-page') => {
     isTourActive.value = true;
     console.log('Tour guide started:', { activeTourSteps: activeTourSteps.value });
   };
-  
+
 
   const initializeTour = (config: any) => {
     activeTourSteps.value = getTourStepsForPage(config);
@@ -219,12 +219,12 @@ const startTourGuide = (pageName: 'home-page' | 'list-page') => {
       localStorage.setItem(tourConfigs['home-page'].storageKey, 'true');
     }
   };
-  
+
 
   onMounted(() => {
     checkMobileView()
     isWelcomeModalActive.value = !isTourCompleted('home-page');
-  })
+  }) 
 
   return {
     isMobileView,

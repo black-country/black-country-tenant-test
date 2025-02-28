@@ -21,7 +21,7 @@ export const use_update_profile = () => {
     firstName: string;
     lastName: string;
     email: string;
-    hasExploredListings: boolean;
+    hasExploredListing: boolean;
     hasTakenTour: boolean;
     isEmailVerified: boolean;
     isActive: boolean;
@@ -58,7 +58,7 @@ export const use_update_profile = () => {
     isEmailVerified: false,
     isActive: false,
     phoneNumber: "",
-    hasExploredListings: false,
+    hasExploredListing: false,
     dateOfBirth: "",
     gender: "",
     hasTakenTour: false,
