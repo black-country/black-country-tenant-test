@@ -1,9 +1,9 @@
 export default {
   ssr: false,
   target: "static",
-  // router: {
-  //   base: '/tenant/'
-  // },
+  router: {
+    base: '/tenant/'
+  },
   app: {
     baseURL: '/tenant/',
     head: {
@@ -28,7 +28,7 @@ export default {
     },
   },
   modules: ["@nuxtjs/tailwindcss"],
-  css: ["/assets/css/main.css",  'intro.js/minified/introjs.min.css'],
+  css: ["/assets/css/main.css", 'intro.js/minified/introjs.min.css'],
 
   tailwindcss: {
     cssPath: "@/assets/css/main.css",
@@ -38,19 +38,20 @@ export default {
   },
   runtimeConfig: {
     public: {
-      googleMapsApiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg'
+      googleMapsApiKey: 'AIzaSyCTBVK36LVNlXs_qBOC4RywX_Ihf765lDg',
+      // imageBaseUrl: process.env.VITE_IMAGE_URL || 'https://blackcountrypub.blob.core.windows.net/assets/', 
     }
   },
-  router: {
-    extendRoutes(routes: any, resolve: any) {
-      // Adjust all routes to be prefixed with `/about/`
-      routes.forEach((route: any) => {
-        if (route.path !== '/tenant') {
-           route.path = `/tenant${route.path}`
-        }
-      })
-    }
-  },
+  // router: {
+  //   extendRoutes(routes: any, resolve: any) {
+  //     // Adjust all routes to be prefixed with `/about/`
+  //     routes.forEach((route: any) => {
+  //       if (route.path !== '/tenant') {
+  //          route.path = `/tenant${route.path}`
+  //       }
+  //     })
+  //   }
+  // },
 
   axios: {
     timeout: 10000, // Example: set timeout to 10 seconds
@@ -82,6 +83,7 @@ export default {
       // },
     },
   },
+
 
   compatibilityDate: "2024-09-30"
 };

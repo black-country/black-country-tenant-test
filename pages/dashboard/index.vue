@@ -13,10 +13,9 @@
 
         <!-- Setup Actions Section -->
         <!-- {{  myHomeInfo }} -->
-        <div class="space-y-2 mb-8">
-          <div v-for="action in setupActions" :key="action.title" @click="action.clickAct" class="">
-            <div class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg"
-              v-if="action.vif">
+        <div class="space-y-2 mb-8" v-if="!hasExploredListings || !isComplete">
+          <div v-for="action in computedActions" :key="action.title" @click="action.clickAct" class="">
+            <div class="flex cursor-pointer justify-between items-center bg-white p-4 py-6 rounded-lg">
               <div class="flex items-center gap-x-3">
                 <div>
                   <input disabled type="checkbox" :checked="action.checked"
@@ -59,7 +58,7 @@
           </NuxtLink>
         </div> -->
 
- <div class="flex justify-between mb-8 rounded-lg" v-if="user.hasMovedIn">
+        <div class="flex justify-between mb-8 rounded-lg" v-if="user.hasMovedIn">
           <button v-for="payment in paymentActions" :key="payment.title" :disabled="!Object.keys(myHomeInfo).length"
             :class="[
               'w-1/3 block bg-white p-6 text-center',
@@ -67,11 +66,7 @@
             ]" @click.prevent="
               !Object.keys(myHomeInfo).length && handleAction(payment)
               ">
-               <img
-              :src="dynamicIcons(payment.icon)"
-              alt=""
-              class="h-10 w-10 mx-auto mb-2"
-            />
+            <img :src="dynamicIcons(payment.icon)" alt="" class="h-10 w-10 mx-auto mb-2" />
 
             <h3 class="text-xs font-medium text-[#1D2739]">
               {{
@@ -556,7 +551,6 @@ const setupActions = ref([
       "Complete your profile for a better chance of approval when applying to rent a home.",
     path: "/profile",
     clickAct: () => updateTourState('profile'),
-    vif: completionPercentage.value !== 100
 
   },
   {
@@ -565,11 +559,17 @@ const setupActions = ref([
     description:
       "Explore a wide range of properties to find the perfect match for your lifestyle and budget.",
     path: "/dashboard/listings",
-    vif: profileObj.value === false,
     clickAct: () => updateTourState('dashboard/listings'),
   },
   // { checked: isAccountSetupComplete.value, title: 'Set up your payment preference', description: 'Search for homes that suit your preferences.', path: '/profile/payment-information' }
 ]);
+
+
+const computedActions = computed(() =>
+  setupActions.value.map(action => ({ ...action,
+    checked: action.title === "Profile Information" ? isComplete : hasExploredListings.value,
+  }))
+);
 
 
 const paymentActions = ref([

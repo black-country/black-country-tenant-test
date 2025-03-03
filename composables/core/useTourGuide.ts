@@ -1,6 +1,19 @@
 import { ref, onMounted } from 'vue'
 
-import image1 from '@/assets/img/welcome.png'
+// const imageUrl = useRuntimeConfig().public.imageBaseUrl
+
+// const imageUrls = {
+//   welcome: `${imageUrl}img/welcome.png`,
+//   dashboard: `${imageUrl}img/dashboard.png`,
+//   listings: `${imageUrl}img/listings.png`,
+//   saved: `${imageUrl}img/saved.svg`,
+//   myHome: `${imageUrl}img/my-home.png`,
+//   save: `${imageUrl}img/save.png`,
+//   mapView: `${imageUrl}img/map-view.png`,
+//   listView: `${imageUrl}img/list-view.png`,
+// };
+
+import image1 from  '@/assets/img/welcome.png'
 import image2 from '@/assets/img/dashboard.png'
 import image3 from '@/assets/img/listings.png'
 import image4 from '@/assets/img/saved.svg'
@@ -112,18 +125,19 @@ export const useTourGuide = () => {
 
     try {
       // Check if the user is on the specific URL path
-      const currentUrl = window.location.pathname + window.location.search
-      if (currentUrl === '/dashboard/listings?view=grid') {
+      // const currentUrl = window.location.pathname + window.location.search
+      // if (currentUrl === '/dashboard/listings?view=grid') {
         await updateProfile({
           hasExploredListing: true
         })
         console.log('Profile updated with hasExploredListings: true')
-      } else {
-        await updateProfile({
-          hasTakenTour: true
-        })
-        console.log('Profile updated with hasTakenTour: true')
-      }
+      // } 
+      // else {
+      //   await updateProfile({
+      //     hasTakenTour: true
+      //   })
+      //   console.log('Profile updated with hasTakenTour: true')
+      // }
     } catch (error) {
       console.error('Error updating profile:', error)
     }
@@ -217,6 +231,9 @@ export const useTourGuide = () => {
     } else if (action === 'skip') {
       isWelcomeModalActive.value = false;
       localStorage.setItem(tourConfigs['home-page'].storageKey, 'true');
+      updateProfile({
+        hasTakenTour : true
+      })
     }
   };
 

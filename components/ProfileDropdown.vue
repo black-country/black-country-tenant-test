@@ -25,9 +25,11 @@
             fill="#D6D0CC"
           />
         </svg>
-        <span class="font-semibold"
+        <NuxtLink to="/profile">
+          <span class="font-semibold"
           >{{ user?.firstName }} {{ user?.lastName }}</span
         >
+        </NuxtLink>
         <button @click="clickme">
           <svg
             class="transform transition-transform duration-200"
