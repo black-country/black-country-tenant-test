@@ -84,6 +84,7 @@
       <div class="mb-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-100">
         <button class="w-full flex items-center justify-between">
           <div class="flex items-center gap-4">
+            <!-- <img :src="`${imageUrl}gallery3.png`"  alt="Gallery preview" class="w-12 h-12 rounded-lg object-cover" /> -->
             <img src="@/assets/img/gallery3.png" alt="Gallery preview" class="w-12 h-12 rounded-lg object-cover" />
             <div class="flex justify-start items-start flex-col">
               <h3 class="font-medium">Gallery</h3>

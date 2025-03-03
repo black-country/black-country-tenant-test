@@ -78,7 +78,7 @@ const isFormDisabled = computed(() => {
     !credential.agreement.value ||
     !credential.fullName.value ||
     !credential.password.value ||
-    credential.password.value.length <= 6 ||  // Password length must be greater than 6 characters
+    credential.password.value.length < 6 ||  // Password length must be greater than 6 characters
     !credential.confirmPassword.value ||
     passwordMismatch.value
   );
