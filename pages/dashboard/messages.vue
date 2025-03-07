@@ -522,32 +522,16 @@ const sendMessageToUser = async (content: string) => {
   }
   await getActiveChats();
 };
-
 onMounted(async () => {
-  const userId = route.query.agentId;
-
-  if (userId) {
-    if (activeChatsList.value?.length > 0) {
-      const user = activeChatsList.value.find((u) => u?.participant?.id === userId);
-      if (user) {
-        await selectUser(user);
-      } else {
-        console.log("User not found in active chats");
-      }
-    } else {
-      const interval = setInterval(() => {
-        if (activeChatsList.value?.length > 0) {
-          clearInterval(interval);
-          const user = activeChatsList.value.find((u) => u?.participant?.id === userId);
-          if (user) {
-            selectUser(user);
-          }
-        }
-      }, 100);
-    }
+  if (route.query.agentId) {
+    const payload = {
+      participantId: route.query.agentId as string,
+      participantType: "AGENT",
+    };
+    await createRoom(payload);
+    getActiveChats();
   }
 
-  // Listen for custom events after initial setup
   $emitter.on("customEvent", async (payload: any) => {
     if (payload.data) {
       await getRoomChats(payload.data);
@@ -555,6 +539,40 @@ onMounted(async () => {
     }
   });
 });
+
+
+// onMounted(async () => {
+//   const userId = route.query.agentId;
+
+//   if (userId) {
+//     if (activeChatsList.value?.length > 0) {
+//       const user = activeChatsList.value.find((u) => u?.participant?.id === userId);
+//       if (user) {
+//         await selectUser(user);
+//       } else {
+//         console.log("User not found in active chats");
+//       }
+//     } else {
+//       const interval = setInterval(() => {
+//         if (activeChatsList.value?.length > 0) {
+//           clearInterval(interval);
+//           const user = activeChatsList.value.find((u) => u?.participant?.id === userId);
+//           if (user) {
+//             selectUser(user);
+//           }
+//         }
+//       }, 100);
+//     }
+//   }
+
+//   // Listen for custom events after initial setup
+//   $emitter.on("customEvent", async (payload: any) => {
+//     if (payload.data) {
+//       await getRoomChats(payload.data);
+//       scrollToBottom();
+//     }
+//   });
+// });
 
 
 onUnmounted(() => {
