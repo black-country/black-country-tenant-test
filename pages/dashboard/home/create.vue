@@ -36,7 +36,7 @@
           <div>
           <label class="text-[#1D2739] text-sm">Maintenance type</label>
           <select v-model="payload.type" class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4">
-          <option v-for="item in maintanceTypes" :key="item">
+          <option v-for="item in maintanceTypes" :key="item" >
             {{ item }}
           </option>
           </select>
@@ -45,8 +45,8 @@
     
     <div class="">
       <label class="text-[#1D2739] text-sm" for="urgencyLevel">Urgency level</label>
-      <select v-model="payload.urgencyLevel"  class="w-full p-2 mt-1 outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4">
-          <option v-for="item in urgencyLevels" :key="item">
+      <select v-model="payload.urgencyLevel"  class="w-full p-2 mt-1 capitalize outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4">
+          <option v-for="item in urgencyLevels" :key="item" class="capitalize">
             {{ item }}
           </option>
           </select>

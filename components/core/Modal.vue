@@ -1,6 +1,6 @@
 <template>
     <div v-if="isOpen" @click="closeModal"  class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div @click.stop class="bg-white p-6 rounded-lg max-w-full sm:max-w-[90%] md:max-w-[50%] lg:max-w-[30%] w-full">
+        <div @click.stop class="bg-white p-4 rounded-lg max-w-full sm:max-w-[90%] md:max-w-[50%] lg:max-w-[30%] w-full h-[60%] overflow-y-scroll custom-scrollbar">
             <!-- Modal Header -->
             <slot name="header"></slot>
 
@@ -43,4 +43,30 @@ const closeModal = () => {
         max-width: 90%;
     }
 }
-</style>
+
+  .modal-enter-active, .modal-leave-active {
+    transition: opacity 0.3s ease;
+  }
+  .modal-enter-from, .modal-leave-to {
+    opacity: 0;
+  }
+  .custom-scrollbar {
+    scrollbar-width: thin; 
+    scrollbar-color: #cccccc #f1f1f1; 
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px; 
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #cccccc;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #cccccc; 
+    border-radius: 4px; 
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #cccccc; 
+  }
+  </style>

@@ -48,12 +48,15 @@
     <section class="space-y-1">
       <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Property
         type</h3>
-      <div v-for="type in propertyTypesList" :key="type.id" class="flex justify-between items-center">
+      <div v-for="type in visiblePropertyTypes" :key="type.id" class="flex justify-between items-center">
         <label :for="'property-' + type.id" class="ml-3 text-sm text-gray-700">
           {{ type.name }}
         </label>
         <CoreCustomCheckbox :id="'property-' + type.id" :checkbox-id="type.id" v-model="selectedPropertyTypes" />
       </div>
+      <button @click="togglePropertiesVisibility" class="text-xs mt-1 text-right w-full">
+      {{ showAllProperties ? 'Show Less' : 'Show More' }}
+    </button>
     </section>
 
 
@@ -61,11 +64,12 @@
       <h3 class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">Building
         amenities</h3>
       <div class="space-y-2 bg-white rounded-md border-[0.5px] border-gray-50 py-3 p-1">
-        <div v-for="amenity in commonAreasList" :key="amenity.id" class="flex justify-between items-center">
+        <div v-for="amenity in visibleAmenitiesTypes" :key="amenity.id" class="flex justify-between items-center">
           <label :for="'amenity-' + amenity.id" class="ml-3 text-sm text-gray-700">{{ amenity.name }}</label>
           <CoreCustomCheckbox :id="'amenity-' + amenity.id" :checkbox-id="amenity.name" v-model="selectedAmenities" />
-
         </div>
+        <button @click="toggleAmenitiesVisibility" class="text-xs mt-1 text-right w-full">
+          {{ showAllAmenities ? 'Show Less' : 'Show More' }}</button>
       </div>
     </section>
 
@@ -201,6 +205,43 @@ const { propertyTypesList } = useGetPropertyTypes()
 const { loading: fetchingCommonAreas, commonAreasList } = useGetCommonAreas()
 import { ref, reactive, watch } from 'vue'
 
+const visiblePropertyCount = ref(5)
+const showAllProperties = ref(false)
+
+const visiblePropertyTypes = computed(() => {
+  return propertyTypesList.value.slice(0, visiblePropertyCount.value);
+})
+
+const togglePropertiesVisibility = () => {
+  if (showAllProperties.value) {
+    visiblePropertyCount.value = 5; 
+    showAllProperties.value = false;
+  } else {
+    visiblePropertyCount.value = propertyTypesList.value.length; 
+    showAllProperties.value = true;
+  }
+}
+
+const visibleAmenitiesCount = ref(5)
+const showAllAmenities = ref(false)
+
+const visibleAmenitiesTypes = computed(() => {
+  return commonAreasList.value.slice(0, visibleAmenitiesCount.value);
+})
+
+const toggleAmenitiesVisibility = () => {
+  if (showAllAmenities.value) {
+    visibleAmenitiesCount.value = 5; 
+    showAllAmenities.value = false;
+  } else {
+    visibleAmenitiesCount.value = commonAreasList.value.length; 
+    showAllAmenities.value = true;
+  }
+}
+
+const STORAGE_KEY = 'property-filter-state'
+
+
 interface FilterPayload {
   order: Array<{ field: string; value: string }>;
   sharedCount: number;
@@ -218,9 +259,24 @@ interface FilterPayload {
   isFurnished: [boolean, boolean],
   availableNow: boolean
 }
+interface FilterState {
+  selectedSortOptions: string[];
+  selectedPropertyTypes: string[];
+  selectedAmenities: string[];
+  selectedPets: string[];
+  sharedCount: number;
+  priceRange: { min: number; max: number };
+  roomSize: { min: number; max: number };
+  selectedBedrooms: number[];
+  bathroomCount: string;
+  availabilityFrom: string;
+  availableNow: boolean;
+  roomSizeUnit: string;
+}
 
 const onUnitUpdate = (newUnit: any) => {
   filterPayload.value.roomSizeUnit = newUnit
+  saveFilterState()
   // console.log('Unit updated:', newUnit);
 }
 
@@ -238,14 +294,66 @@ const filters = reactive({
   availableNow: false
 });
 
+const saveFilterState = () => {
+  const state: FilterState = {
+    selectedSortOptions: Array.from(selectedSortOptions.value),
+    selectedPropertyTypes: Array.from(selectedPropertyTypes.value),
+    selectedAmenities: Array.from(selectedAmenities.value),
+    selectedPets: Array.from(selectedPets.value),
+    sharedCount: sharedCount.value,
+    priceRange: { min: priceRange.min, max: priceRange.max },
+    roomSize: { min: roomSize.min, max: roomSize.max },
+    selectedBedrooms: selectedBedrooms.value,
+    bathroomCount: bathroomCount.value,
+    availabilityFrom: filters.availabilityFrom,
+    availableNow: filters.availableNow,
+    roomSizeUnit: filterPayload?.value?.roomSizeUnit || '',
+  }
+  
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  } catch (e) {
+    console.error('didnt save to localStorage:', e);
+  }
+}
+
+const loadFilterState = () => {
+  try {
+    const storedState = localStorage.getItem(STORAGE_KEY);
+    if (!storedState) return;
+    const state: FilterState = JSON.parse(storedState);
+    selectedSortOptions.value = new Set(state.selectedSortOptions);
+    selectedPropertyTypes.value = new Set(state.selectedPropertyTypes);
+    selectedAmenities.value = new Set(state.selectedAmenities);
+    selectedPets.value = new Set(state.selectedPets);
+    sharedCount.value = state.sharedCount;
+    priceRange.min = state.priceRange.min;
+    priceRange.max = state.priceRange.max;
+    filters.priceRange = [state.priceRange.min, state.priceRange.max];
+    roomSize.min = state.roomSize.min;
+    roomSize.max = state.roomSize.max;
+    filters.roomSizeRange = [state.roomSize.min, state.roomSize.max];
+    selectedBedrooms.value = state.selectedBedrooms;
+    bathroomCount.value = state.bathroomCount;
+    filters.availabilityFrom = state.availabilityFrom;
+    filters.availableNow = state.availableNow;
+    
+    if (filterPayload.value && state.roomSizeUnit) {
+      filterPayload.value.roomSizeUnit = state.roomSizeUnit;
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
 // Reactive filters object
 const filtersObj = reactive({ ...filters });
 
-// Function to reset filters to their default state
+
 const resetFilterOptions = () => {
   Object.assign(filtersObj, filters);
   emit('close')
   window.location.reload()
+  localStorage.removeItem(STORAGE_KEY);
 };
 
 const selectedSortOptions = ref<Set<string>>(new Set())
@@ -330,20 +438,8 @@ const getFilterPayload = (): FilterPayload => {
   }
 }
 
-
-watch([selectedSortOptions, selectedPropertyTypes, selectedAmenities, selectedFeatures,
-  sharedCount, priceRange, roomSize, selectedBedrooms, bathroomCount, moveInDate, availableNow],
-  () => {
-    const payload = getFilterPayload()
-    console.log('Filter payload:', payload)
-  }
-)
-
-// Watch for changes in selectedSortOptions
 watch(selectedSortOptions, (newSelections) => {
-  const payload = getFilterPayload()
-  // setPayload(payload)
-  // filterProperty()
+  saveFilterState();
 }, { deep: true })
 
 enum SortField {
@@ -456,7 +552,6 @@ const handleSortChange = (option: SortOption) => {
 //   // filterProperty()
 // }
 
-// Watch for sort changes
 watch(selectedSort, (newSort) => {
   const selectedOption = sortOptions.value.find(option => option.id === newSort)
   if (selectedOption) {
@@ -470,6 +565,7 @@ const handleSubmit = async () => {
   const payload = getFilterPayload()
   setPayload(payload)
   const result = await filterProperty()
+  saveFilterState();
   emit('result', result)
   emit('close')
 }
@@ -483,6 +579,14 @@ const petsList = [
 ]
 
 const selectedPets = ref(new Set<string>()) // Initialize with an empty Set
+
+watch([selectedSortOptions, selectedPropertyTypes, selectedAmenities, selectedPets,
+  sharedCount, priceRange, roomSize, selectedBedrooms, bathroomCount, moveInDate, availableNow],
+  () => {
+    saveFilterState();
+  },
+  { deep: true }
+)
 
 const togglePetSelection = (petId: string) => {
   if (selectedPets.value.has(petId)) {
@@ -514,6 +618,10 @@ watch(
   },
   { immediate: true }
 );
+
+onMounted(() => {
+  loadFilterState();
+})
 
 
 // Minimum and maximum values

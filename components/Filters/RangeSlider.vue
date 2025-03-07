@@ -1,39 +1,27 @@
 <template>
   <div class="w-full">
-    <div class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">{{ title }}</div>
+    <div class="font-medium text-sm bg-white py-3 border-[0.5px] border-gray-50 rounded-lg px-4 text-gray-900">{{ title
+    }}</div>
     <div class="border-[0.5px] border-gray-50 p-2 py-3 rounded-lg mt-1">
-      <div class="relative w-full h-2 bg-gray-200 rounded-full mt-2">
-        <div
-          class="absolute h-full bg-[#5B8469] rounded-full"
-          :style="{
+      <div>
+        <div class="relative w-full h-2 bg-gray-200 rounded-full mt-2">
+          <div class="absolute h-full bg-[#5B8469] rounded-full" :style="{
             left: `${((modelValue[0] - min) / (max - min)) * 100}%`,
             right: `${100 - ((modelValue[1] - min) / (max - min)) * 100}%`
-          }"
-        ></div>
-        <input
-          type="range"
-          :min="min"
-          :max="max"
-          :step="step"
-          :value="modelValue[0]"
-          @input="updateMin"
-          class="absolute w-full h-2 opacity-0 cursor-pointer"
-        />
-        <input
-          type="range"
-          :min="min"
-          :max="max"
-          :step="step"
-          :value="modelValue[1]"
-          @input="updateMax"
-          class="absolute w-full h-2 opacity-0 cursor-pointer"
-        />
+          }"></div>
+        </div>
+        <div class="relative sliders">
+          <input type="range" :min="min" :max="max" :step="step" :value="modelValue[0]" @input="updateMin"
+            class="absolute w-full h-2 -top-2 cursor-pointer" />
+          <input type="range" :min="min" :max="max" :step="step" :value="modelValue[1]" @input="updateMax"
+            class="absolute w-full h-2 -top-2 cursor-pointer " />
+        </div>
       </div>
       <div class="flex justify-between mt-2">
-        <div class="text-sm text-gray-600">
+        <div class="text-sm text-gray-600">  
           <p class="text-xs">Minimum</p>
           <select class="outline-none border-none" v-model="selectedUnit" v-if="code === 'room'">
-              <option v-for="item in propertyUnits" :key="item" :value="item">{{ item }}</option>
+            <option v-for="item in propertyUnits" :key="item" :value="item">{{ item }}</option>
           </select>
           {{ formatValue(modelValue[0]) }}
         </div>
@@ -104,3 +92,19 @@ watch(selectedUnit, (newUnit) => {
   emit('update:selectedUnit', newUnit);
 });
 </script>
+
+<style scoped>
+.sliders input{
+  pointer-events: none;
+  -webkit-appearance: none;
+  background: none;
+}
+input[type="range"]::-webkit-slider-thumb{
+  pointer-events: auto;
+  -webkit-appearance: none;
+  background: #A1B8A9;
+  border-radius: 100%;
+  height: 16px;
+  width: 16px
+}
+</style>

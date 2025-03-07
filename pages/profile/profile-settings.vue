@@ -175,16 +175,16 @@ const onFileSelected = async (event: Event) => {
       icon: "notification",
       path: "/profile/employment-information",
     },
-    {
-      label: "Next of Kin",
-      icon: "login",
-      path: "/profile/next-of-kin",
-    },
     // {
-    //   label: "Reference and emergency contacts",
+    //   label: "Next of Kin",
     //   icon: "login",
-    //   path: "/profile/reference-and-emergency",
+    //   path: "/profile/next-of-kin",
     // },
+    {
+      label: "Reference and emergency contacts",
+      icon: "login",
+      path: "/profile/reference-and-emergency",
+    },
   ]);
 
   definePageMeta({

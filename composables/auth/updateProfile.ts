@@ -49,6 +49,7 @@ export const use_update_profile = () => {
     nextOfKinEmployerAddress: string | null;
     shouldContactReferences: boolean | null;
     cityId: string | null;
+    referenceContacts : null
   }
 
   const credential = ref<ProfileCredential>({
@@ -82,7 +83,8 @@ export const use_update_profile = () => {
     nextOfKinEmployer: null,
     nextOfKinEmployerAddress: null,
     shouldContactReferences: null,
-    cityId: null
+    cityId: null,
+    referenceContacts: null
   });
 
   const locationCredential = ref<LocationCredential>({
@@ -222,7 +224,8 @@ export const use_update_profile = () => {
       nextOfKinEmployer: null,
       nextOfKinEmployerAddress: null,
       shouldContactReferences: null,
-      cityId: null
+      cityId: null,
+      referenceContacts: null
     };
     locationCredential.value = {
       state: '',
