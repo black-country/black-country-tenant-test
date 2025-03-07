@@ -35,7 +35,7 @@
                     <p class="text-[#1D2739] text-sm">{{ maintenanceDetails.type ?? 'Nil' }}</p>
                 </div>
                 <div class="flex justify-between items-center">
-                    <p class="text-[#667185] text-sm">Rent Amount</p>
+                    <p class="text-[#667185] text-sm">Urgency Level</p>
                     <p class="text-[#1D2739] bg-[#F9FAFB] rounded-full px-6 py-2 text-sm">{{ maintenanceDetails.urgencyLevel ?? 'Nil' }}</p>
                 </div>
 

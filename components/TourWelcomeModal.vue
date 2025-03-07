@@ -2,18 +2,24 @@
     <div v-if="isWelcomeModalActive && !isTourCompleted('home-page')" class="modal-overlay">
       <div class="modal">
         <div class="text-4xl mb-4  flex justify-center items-center">
-           <span class="border-2 p-1 border-gray-100 rounded-lg">
+          <img src="@/assets/img/party-cone.png" alt="" class=" w-36 h-36">
+           <!-- <span class="border-2 p-1 border-gray-100 rounded-lg">
              🤝        
-           </span>
+           </span> -->
         </div>
   
         <!-- Title -->
-        <h1 class="text-xl font-semibold mb-2 text-[#1D2739]">
-            Welcome to BlackCountry! 🥳 🥳🥳 
-        </h1>
+        <h1 class="text-xl font-semibold mb-2 text-[#1D2739] flex items-center justify-center">
+            <span>Welcome to BlackCountry! </span>
+            <div class="flex items-center">
+              <img src="@/assets/img/party-face.png" alt="" class="w-6 h-6">
+              <img src="@/assets/img/party-face.png" alt="" class="w-6 h-6">
+              <img src="@/assets/img/party-face.png" alt="" class="w-6 h-6">
+            </div>
+        </h1> 
   
         <!-- Description -->
-        <p class="text-[#667185] mb-6 leading-snug">
+        <p class="text-[#667185] mb-6 leading-snug text-[15px]">
           Welcome to your all-in-one shared-living platform. Search for your ideal  
           home and manage it effortlessly, all within our user-friendly app. Click
           <span class="text-[#1D2739] font-semibold">'Continue'</span> to embark on your personalized <span class="font-semibold text-[#1D2739]">tour</span> of the platform!
@@ -63,7 +69,7 @@
   .modal {
     background: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 20px;
     width: 90%;
     max-width: 400px;
     text-align: center;

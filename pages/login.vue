@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen lg:flex">
+  <div class="min-h-screen lg:flex b">
     <!-- Left Section (Login Form) -->
     <div class="lg:w-1/2 flex pt-20 lg:pt-0 justify-center items-center bg-white">
       <LoginForm />

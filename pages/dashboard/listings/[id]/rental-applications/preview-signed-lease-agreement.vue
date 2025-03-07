@@ -89,8 +89,10 @@
                 placeholder="Full name"
                 class="w-full border-b-2 border-dotted py-2 mb-4 bg-transparent outline-none placeholder-gray-400" />
               <label class="block text-sm text-gray-500 mb-1">Signature</label>
-              <img :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl" alt="Signature"
-                class="w-full border-b-2 border-dotted py-2 mb-4 bg-transparent outline-none placeholder-gray-400" />
+              <div class="w-full border-b-2 border-dotted py-2 mb-4 bg-transparent outline-none">
+                <img v-if="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl" :src="propertyObj?.rentalApplication?.rentalLeaseAgreement?.signatureUrl" alt="Signature"
+                class="h-[60px] w-auto  object-fill  placeholder-gray-400" />
+              </div>
               <label class="block text-sm text-gray-500 mb-1">Date</label>
               <input type="text" diabled :value="propertyObj?.rentalApplication?.rentalLeaseAgreement?.createdAt"
                 placeholder="Date"
@@ -103,7 +105,7 @@
       <!-- Display Signed Signature -->
       <div v-if="signedSignature" class="mt-6">
         <h4 class="font-bold">Signature:</h4>
-        <img :src="signedSignature" alt="Signature" class="mt-2 h-16 border" />
+        <img :src="signedSignature" alt="Signature" class="mt-2 h-5 w-5 border" />
       </div>
 
       <!-- Signature Modal -->

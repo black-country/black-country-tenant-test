@@ -1,9 +1,9 @@
 <template>
     <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div class="bg-white rounded-lg shadow-lg w-full max-w-xl mx-4">
+      <div class="bg-white rounded-lg shadow-lg w-full max-w-xl mx-4 h-[60%] overflow-y-scroll custom-scrollbar">
         <h2 class="text-lg font-medium text-[#1D2739] mb-4 pl-6 pt-6">Select Utility Bill</h2>
-        Selected ID: {{ selectedOption }}
-        <div class="space-y-4 mb-6 border-t-[0.5px] pt-6 border-gray-100 h-96 overflow-y-auto">
+        <p class="mx-4">Selected ID: {{ selectedOption }}</p>
+        <div class="space-y-4 mb-6 border-t-[0.5px] pt-6 border-gray-100 ">
           <div
             v-for="(option, idx) in billingCategories"
             :key="option.id"
@@ -68,5 +68,29 @@
   </script>
   
   <style scoped>
-  /* Additional styling if necessary */
+.modal-enter-active, .modal-leave-active {
+    transition: opacity 0.3s ease;
+  }
+  .modal-enter-from, .modal-leave-to {
+    opacity: 0;
+  }
+  .custom-scrollbar {
+    scrollbar-width: thin; 
+    scrollbar-color: #cccccc #f1f1f1; 
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px; 
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #cccccc;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #cccccc; 
+    border-radius: 4px; 
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #cccccc; 
+  }
   </style>  

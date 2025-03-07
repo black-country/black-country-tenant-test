@@ -211,39 +211,20 @@
           </div>
         </aside> -->
         <div class="flex-1 lg:flex flex-col">
-          <header
-            class="bg-white shadow-sm hidden lg:flex justify-between items-center p-4"
-          >
+          <header class="bg-white shadow-sm hidden lg:flex justify-between items-center p-4">
             <div class="text-lg font-semibold text-gray-800">Notification</div>
             <div class="flex items-center space-x-4">
               <div class="relative">
-                <svg
-                  width="40"
-                  height="40"
-                  viewBox="0 0 40 40"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M12.107 22.3093C11.9298 23.471 12.722 24.2773 13.6921 24.6791C17.411 26.2198 22.5864 26.2198 26.3053 24.6791C27.2754 24.2773 28.0676 23.471 27.8905 22.3093C27.7815 21.5954 27.243 21.0009 26.844 20.4204C26.3214 19.6507 26.2695 18.8111 26.2695 17.918C26.2695 14.4662 23.4619 11.668 19.9987 11.668C16.5355 11.668 13.728 14.4662 13.728 17.918C13.7279 18.8111 13.676 19.6507 13.1534 20.4204C12.7544 21.0009 12.2159 21.5954 12.107 22.3093Z"
-                    stroke="#1D2739"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
+                    stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                   <path
                     d="M16.668 25.832C17.05 27.2697 18.3976 28.332 20.0013 28.332C21.6051 28.332 22.9526 27.2697 23.3346 25.832"
-                    stroke="#1D2739"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
+                    stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
               </div>
-              <div
-                @click="router.push('/profile')"
-                class="flex cursor-pointer items-center space-x-2"
-              >
+              <div @click="router.push('/profile')" class="flex cursor-pointer items-center space-x-2">
                 <p class="bg-gray-900 text-white p-2 font-semibold rounded-lg">
                   {{ initials }}
                 </p>
@@ -259,80 +240,39 @@
           <div class="lg:flex space-y-6 w-full flex-1 overflow-hidden">
             <div class="lg:w-1/3 w-full border-r border-gray-200 p-6 overflow-y-auto h-screen">
               <div class="relative mb-4">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  class="w-full p-3 pl-12 bg-gray-100 text-sm rounded-lg text-gray-700 outline-none"
-                />
-                <svg
-                  class="absolute top-3 left-5"
-                  width="16"
-                  height="17"
-                  viewBox="0 0 16 17"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.668 12.166L14.668 15.166"
-                    stroke="#667185"
-                    stroke-width="1.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
+                <input type="text" placeholder="Search"
+                  class="w-full p-3 pl-12 bg-gray-100 text-sm rounded-lg text-gray-700 outline-none" />
+                <svg class="absolute top-3 left-5" width="16" height="17" viewBox="0 0 16 17" fill="none"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.668 12.166L14.668 15.166" stroke="#667185" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
                   <path
                     d="M13.332 7.83398C13.332 4.52028 10.6458 1.83398 7.33203 1.83398C4.01832 1.83398 1.33203 4.52028 1.33203 7.83398C1.33203 11.1477 4.01832 13.834 7.33203 13.834C10.6458 13.834 13.332 11.1477 13.332 7.83398Z"
-                    stroke="#667185"
-                    stroke-width="1.5"
-                    stroke-linejoin="round"
-                  />
+                    stroke="#667185" stroke-width="1.5" stroke-linejoin="round" />
                 </svg>
               </div>
               <div v-if="notificationList?.length && !loadingNotification" class="space-y-6">
                 <div v-for="(group, index) in groupedNotifications" :key="index">
-                  <p
-                    class="text-[#1D2739] mb-4 rounded-md px-6 py-3 bg-white text-sm"
-                  >
+                  <p class="text-[#1D2739] mb-4 rounded-md px-6 py-3 bg-white text-sm">
                     {{ group.date }}
                   </p>
                   <div class="bg-white rounded-xl">
-                    <div
-                      v-for="(notification, i) in group.notifications"
-                      :key="i"
+                    <div v-for="(notification, i) in group.notifications" :key="i"
                       @click="viewNotification(notification)"
-                      class="bg-white border-b cursor-pointer last:border-b-0 border-gray-50 p-4 flex items-start justify-between"
-                    >
+                      class="bg-white border-b cursor-pointer last:border-b-0 border-gray-50 p-4 flex items-start justify-between">
                       <div class="flex items-start">
-                        <div
-                          class="h-10 w-10 rounded-full flex items-center justify-center"
-                        >
-                          <svg
-                            width="44"
-                            height="44"
-                            viewBox="0 0 44 44"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
+                        <div class="h-10 w-10 rounded-full flex items-center justify-center">
+                          <svg width="44" height="44" viewBox="0 0 44 44" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
                             <rect width="44" height="44" rx="22" fill="#6888E5" />
                             <path
                               d="M23.2193 18.2116L20.4473 19.5422C20.234 19.6447 20.006 19.6703 19.7736 19.6183C19.6216 19.5842 19.5455 19.5672 19.4843 19.5602C18.7239 19.4733 18.25 20.0751 18.25 20.7671V21.1469C18.25 21.8389 18.7239 22.4407 19.4843 22.3539C19.5455 22.3469 19.6216 22.3299 19.7736 22.2958C20.006 22.2437 20.234 22.2694 20.4473 22.3718L23.2193 23.7024C23.8556 24.0079 24.1737 24.1606 24.5285 24.0416C24.8832 23.9225 25.005 23.6671 25.2485 23.1562C25.9172 21.7534 25.9172 20.1607 25.2485 18.7578C25.005 18.247 24.8832 17.9915 24.5285 17.8725C24.1737 17.7534 23.8556 17.9062 23.2193 18.2116Z"
-                              stroke="white"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
+                              stroke="white" stroke-linecap="round" stroke-linejoin="round" />
                             <path
                               d="M21.7755 25.6558L21.1541 26.168C19.7534 25.0571 19.9246 24.5273 19.9246 22.418H20.397C20.5887 23.61 21.0409 24.1746 21.6649 24.5834C22.0493 24.8351 22.1286 25.3648 21.7755 25.6558Z"
-                              fill="white"
-                              stroke="white"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
-                            <path
-                              d="M20.125 22.207V19.707"
-                              stroke="white"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                            />
+                              fill="white" stroke="white" stroke-linecap="round" stroke-linejoin="round" />
+                            <path d="M20.125 22.207V19.707" stroke="white" stroke-width="1.5" stroke-linecap="round"
+                              stroke-linejoin="round" />
                           </svg>
                         </div>
                         <div class="ml-4">
@@ -346,8 +286,9 @@
                           </p>
                         </div>
                       </div>
-                      <div class="text-xs text-gray-500">
-                        {{ formatDate(notification.createdAt) }}
+                      <div class="text-xs text-gray-500 flex items-center gap-0.5">
+                        <span>{{ formatDate(notification.createdAt) }}</span>
+                        <div v-if="notification.readAt === null" class="h-1.5 w-1.5 bg-red-600 rounded-full"></div>
                       </div>
                     </div>
                   </div>
@@ -370,98 +311,52 @@
                   </div>
                 </div>
               </section>
-              <div
-              v-else
-              class="flex-1 flex items-center justify-center mt-20"
-            >
-              <div
-                class="flex justify-center items-center flex-col w-full gap-y-4"
-              >
-                <svg
-                  width="152"
-                  height="124"
-                  viewBox="0 0 152 124"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle cx="76" cy="58" r="52" fill="#EAEAEA" />
-                  <circle cx="21" cy="25" r="5" fill="#BDBDBD" />
-                  <circle cx="18" cy="109" r="7" fill="#BDBDBD" />
-                  <circle cx="145" cy="41" r="7" fill="#BDBDBD" />
-                  <circle cx="134" cy="14" r="4" fill="#BDBDBD" />
-                  <g filter="url(#filter0_b_6853_116899)">
-                    <rect
-                      x="52"
-                      y="34"
-                      width="48"
-                      height="48"
-                      rx="24"
-                      fill="#9D9D9D"
-                    />
-                    <path
-                      d="M66.5299 60.7696C66.3173 62.1636 67.268 63.1312 68.4321 63.6134C72.8948 65.4622 79.1052 65.4622 83.5679 63.6134C84.732 63.1312 85.6827 62.1636 85.4701 60.7696C85.3394 59.9129 84.6932 59.1995 84.2144 58.5029C83.5873 57.5793 83.525 56.5718 83.5249 55.5C83.5249 51.3579 80.1559 48 76 48C71.8441 48 68.4751 51.3579 68.4751 55.5C68.475 56.5718 68.4127 57.5793 67.7856 58.5029C67.3068 59.1995 66.6606 59.9129 66.5299 60.7696Z"
-                      stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M72 65C72.4585 66.7252 74.0755 68 76 68C77.9245 68 79.5415 66.7252 80 65"
-                      stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </g>
-                  <defs>
-                    <filter
-                      id="filter0_b_6853_116899"
-                      x="44"
-                      y="26"
-                      width="64"
-                      height="64"
-                      filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
-                    >
-                      <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                      <feGaussianBlur in="BackgroundImageFix" stdDeviation="4" />
-                      <feComposite
-                        in2="SourceAlpha"
-                        operator="in"
-                        result="effect1_backgroundBlur_6853_116899"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in="SourceGraphic"
-                        in2="effect1_backgroundBlur_6853_116899"
-                        result="shape"
-                      />
-                    </filter>
-                  </defs>
-                </svg>
-                <p class="text-[#1D2739] text-sm font-medium">
-                  No notifications found
-                </p>
+              <div v-else class="flex-1 flex items-center justify-center mt-20">
+                <div class="flex justify-center items-center flex-col w-full gap-y-4">
+                  <svg width="152" height="124" viewBox="0 0 152 124" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="76" cy="58" r="52" fill="#EAEAEA" />
+                    <circle cx="21" cy="25" r="5" fill="#BDBDBD" />
+                    <circle cx="18" cy="109" r="7" fill="#BDBDBD" />
+                    <circle cx="145" cy="41" r="7" fill="#BDBDBD" />
+                    <circle cx="134" cy="14" r="4" fill="#BDBDBD" />
+                    <g filter="url(#filter0_b_6853_116899)">
+                      <rect x="52" y="34" width="48" height="48" rx="24" fill="#9D9D9D" />
+                      <path
+                        d="M66.5299 60.7696C66.3173 62.1636 67.268 63.1312 68.4321 63.6134C72.8948 65.4622 79.1052 65.4622 83.5679 63.6134C84.732 63.1312 85.6827 62.1636 85.4701 60.7696C85.3394 59.9129 84.6932 59.1995 84.2144 58.5029C83.5873 57.5793 83.525 56.5718 83.5249 55.5C83.5249 51.3579 80.1559 48 76 48C71.8441 48 68.4751 51.3579 68.4751 55.5C68.475 56.5718 68.4127 57.5793 67.7856 58.5029C67.3068 59.1995 66.6606 59.9129 66.5299 60.7696Z"
+                        stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                      <path d="M72 65C72.4585 66.7252 74.0755 68 76 68C77.9245 68 79.5415 66.7252 80 65" stroke="white"
+                        stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                    </g>
+                    <defs>
+                      <filter id="filter0_b_6853_116899" x="44" y="26" width="64" height="64"
+                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                        <feGaussianBlur in="BackgroundImageFix" stdDeviation="4" />
+                        <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_6853_116899" />
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_6853_116899"
+                          result="shape" />
+                      </filter>
+                    </defs>
+                  </svg>
+                  <p class="text-[#1D2739] text-sm font-medium">
+                    No notifications found
+                  </p>
+                </div>
               </div>
             </div>
-            </div>
-            <div
-              v-if="Object.keys(selectedNotification)?.length"
-              class="hidden flex-1 lg:flex items-center justify-center bg-gray-25"
-            >
+            <div v-if="Object.keys(selectedNotification)?.length"
+              class="hidden flex-1 lg:flex items-center justify-center bg-gray-25">
               <div class="max-w-2xl w-full lg:w-[800px] mx-auto mt-10 p-4">
                 <div class="relative flex items-center justify-center my-6">
                   <div class="absolute inset-0 flex items-center">
                     <div class="border-t w-full border-gray-100"></div>
                   </div>
                   <div class="relative px-1 bg-white">
-                    <span
-                      class="text-[#1D2739] bg-[#F0F2F5] text-xs px-3 py-2 rounded-full"
-                      >{{ formatDate(selectedNotification?.createdAt) }}</span
-                    >
+                    <span class="text-[#1D2739] bg-[#F0F2F5] text-xs px-3 py-2 rounded-full">{{
+                      formatDate(selectedNotification?.createdAt) }}</span>
                   </div>
                 </div>
-  
+
                 <div class="bg-white rounded-lg p-6">
                   <p class="font-semibold text-sm text-[#1D2739]">
                     Property Listing
@@ -469,12 +364,9 @@
                   <p class="text-[#1D2739] mt-2 text-sm">
                     {{ selectedNotification?.notification?.content ?? "Nil" }}
                   </p>
-                  <NuxtLink
-                  to="#"
-                  class="text-[#326543] underline text-sm font-medium mt-4 inline-block"
-                >
-                  Click to view Property created
-                </NuxtLink>
+                  <NuxtLink to="#" class="text-[#326543] underline text-sm font-medium mt-4 inline-block">
+                    Click to view Property created
+                  </NuxtLink>
                   <!-- <NuxtLink
                     :to="`/dashboard/listings/${selectedNotification?.notification?.metadata?.data?.houseId}/preview`"
                     class="text-[#326543] underline text-sm font-medium mt-4 inline-block"
@@ -484,72 +376,30 @@
                 </div>
               </div>
             </div>
-            <div
-              v-else
-              class="flex-1 flex py-20 items-center justify-center bg-gray-50"
-            >
-              <div
-                class="flex justify-center items-center flex-col w-full gap-y-4"
-              >
-                <svg
-                  width="152"
-                  height="124"
-                  viewBox="0 0 152 124"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
+            <div v-else class="flex-1 flex py-20 items-center justify-center bg-gray-50">
+              <div class="flex justify-center items-center flex-col w-full gap-y-4">
+                <svg width="152" height="124" viewBox="0 0 152 124" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <circle cx="76" cy="58" r="52" fill="#EAEAEA" />
                   <circle cx="21" cy="25" r="5" fill="#BDBDBD" />
                   <circle cx="18" cy="109" r="7" fill="#BDBDBD" />
                   <circle cx="145" cy="41" r="7" fill="#BDBDBD" />
                   <circle cx="134" cy="14" r="4" fill="#BDBDBD" />
                   <g filter="url(#filter0_b_6853_116899)">
-                    <rect
-                      x="52"
-                      y="34"
-                      width="48"
-                      height="48"
-                      rx="24"
-                      fill="#9D9D9D"
-                    />
+                    <rect x="52" y="34" width="48" height="48" rx="24" fill="#9D9D9D" />
                     <path
                       d="M66.5299 60.7696C66.3173 62.1636 67.268 63.1312 68.4321 63.6134C72.8948 65.4622 79.1052 65.4622 83.5679 63.6134C84.732 63.1312 85.6827 62.1636 85.4701 60.7696C85.3394 59.9129 84.6932 59.1995 84.2144 58.5029C83.5873 57.5793 83.525 56.5718 83.5249 55.5C83.5249 51.3579 80.1559 48 76 48C71.8441 48 68.4751 51.3579 68.4751 55.5C68.475 56.5718 68.4127 57.5793 67.7856 58.5029C67.3068 59.1995 66.6606 59.9129 66.5299 60.7696Z"
-                      stroke="white"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                    <path
-                      d="M72 65C72.4585 66.7252 74.0755 68 76 68C77.9245 68 79.5415 66.7252 80 65"
-                      stroke="white"
-                      stroke-width="1.5"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
+                      stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    <path d="M72 65C72.4585 66.7252 74.0755 68 76 68C77.9245 68 79.5415 66.7252 80 65" stroke="white"
+                      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
                   </g>
                   <defs>
-                    <filter
-                      id="filter0_b_6853_116899"
-                      x="44"
-                      y="26"
-                      width="64"
-                      height="64"
-                      filterUnits="userSpaceOnUse"
-                      color-interpolation-filters="sRGB"
-                    >
+                    <filter id="filter0_b_6853_116899" x="44" y="26" width="64" height="64" filterUnits="userSpaceOnUse"
+                      color-interpolation-filters="sRGB">
                       <feFlood flood-opacity="0" result="BackgroundImageFix" />
                       <feGaussianBlur in="BackgroundImageFix" stdDeviation="4" />
-                      <feComposite
-                        in2="SourceAlpha"
-                        operator="in"
-                        result="effect1_backgroundBlur_6853_116899"
-                      />
-                      <feBlend
-                        mode="normal"
-                        in="SourceGraphic"
-                        in2="effect1_backgroundBlur_6853_116899"
-                        result="shape"
-                      />
+                      <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_6853_116899" />
+                      <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_6853_116899"
+                        result="shape" />
                     </filter>
                   </defs>
                 </svg>
@@ -561,72 +411,33 @@
           </div>
         </div>
       </div>
-  
-      <CoreModalWithoutCloseBtn
-        :isOpen="showBLogoutModal"
-        @close="showBLogoutModal = false"
-      >
-        <div
-          class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
-          @click.self="onCancel"
-        >
-          <div
-            class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg"
-          >
-            <div
-              class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4"
-            >
-              <svg
-                width="65"
-                height="64"
-                viewBox="0 0 65 64"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  x="0.921875"
-                  width="63.1513"
-                  height="64"
-                  rx="31.5756"
-                  fill="#F3A218"
-                />
+
+      <CoreModalWithoutCloseBtn :isOpen="showBLogoutModal" @close="showBLogoutModal = false">
+        <div class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50" @click.self="onCancel">
+          <div class="bg-white rounded-xl p-6 max-w-sm w-full text-center shadow-lg">
+            <div class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4">
+              <svg width="65" height="64" viewBox="0 0 65 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0.921875" width="63.1513" height="64" rx="31.5756" fill="#F3A218" />
                 <path
                   d="M42.2031 32.375C42.2031 26.8521 37.7259 22.375 32.2031 22.375C26.6803 22.375 22.2031 26.8521 22.2031 32.375C22.2031 37.8978 26.6803 42.375 32.2031 42.375C37.7259 42.375 42.2031 37.8978 42.2031 32.375Z"
-                  stroke="white"
-                  stroke-width="1.5"
-                />
+                  stroke="white" stroke-width="1.5" />
                 <path
                   d="M32.4453 37.375V32.375C32.4453 31.9036 32.4453 31.6679 32.2988 31.5214C32.1524 31.375 31.9167 31.375 31.4453 31.375"
-                  stroke="white"
-                  stroke-width="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M32.1953 28.377H32.2043"
-                  stroke="white"
-                  stroke-width="3.25"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
+                  stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M32.1953 28.377H32.2043" stroke="white" stroke-width="3.25" stroke-linecap="round"
+                  stroke-linejoin="round" />
               </svg>
             </div>
             <h2 class="text-lg font-semibold text-gray-700 mb-2">Logout</h2>
             <p class="text-gray-500 mb-6">Are you sure you want to logout?</p>
             <div class="space-y-3">
-              <button
-                type="button"
+              <button type="button"
                 class="w-full disabled:cursor-not-allowed text-sm disabled:opacity-25 bg-[#292929] text-white py-3.5 rounded-md font-semibold"
-                @click="onConfirm"
-                :disabled="loading"
-              >
+                @click="onConfirm" :disabled="loading">
                 Yes, log out
               </button>
-              <button
-                type="button"
-                class="w-full bg-[#EBE5E0] text-gray-700 text-sm py-3.5 rounded-md font-semibold"
-                @click="onCancel"
-              >
+              <button type="button" class="w-full bg-[#EBE5E0] text-gray-700 text-sm py-3.5 rounded-md font-semibold"
+                @click="onCancel">
                 Cancel
               </button>
             </div>
@@ -635,79 +446,82 @@
       </CoreModalWithoutCloseBtn>
     </main>
   </MessagingView>
-  </template>
-  
-  <script lang="ts" setup>
-  import MessagingView from "@/layouts/MessagingView.vue";
-  import { useFormatNotifications } from '@/composables/core/useFormatNotifications';
-  import { useUserInitials } from "@/composables/core/useUserInitials";
-  import { useUser } from "@/composables/auth/user";
-  const { user } = useUser();
-  import { useGetNotifications } from "@/composables/modules/notification/fetch";
-  const { loadingNotification, notificationList } = useGetNotifications();
-  import { useRouter } from "vue-router";
-  import { dynamicIcons } from "@/utils/assets";
-  const showBLogoutModal = ref(false);
-  const router = useRouter();
-  const initials = ref("") as any;
-  
-  const { groupedNotifications, formatNotifications } = useFormatNotifications();
-  
-  // Format the notifications when the component is mounted
-  formatNotifications(notificationList.value);
-  
-  onMounted(() => {
-    // Get initials from the composable
-    const { getInitials } = useUserInitials(user.value);
-    initials.value = getInitials.value;
-  });
-  
-  const isOpen = ref(false);
-  
-  const onConfirm = () => {
-    showBLogoutModal.value = true;
-    // Logic for logout
-    localStorage.clear();
-    setTimeout(() => {
-      // loading.value = false
-      showBLogoutModal.value = false;
-      router.push("/login");
-      window.location.href = "/login";
-    }),
-      3000;
-    console.log("Logging out...");
-  };
-  
-  const onCancel = () => {
+</template>
+
+<script lang="ts" setup>
+import MessagingView from "@/layouts/MessagingView.vue";
+import { useFormatNotifications } from '@/composables/core/useFormatNotifications';
+import { useUserInitials } from "@/composables/core/useUserInitials";
+import { useUser } from "@/composables/auth/user";
+const { user } = useUser();
+import { useGetNotifications } from "@/composables/modules/notification/fetch";
+import { useMarkNotificationAsRead } from '@/composables/modules/notification/markAsRead'
+const { loadingNotification, notificationList } = useGetNotifications();
+import { useRouter } from "vue-router";
+import { dynamicIcons } from "@/utils/assets";
+const showBLogoutModal = ref(false);
+const router = useRouter();
+const initials = ref("") as any;
+
+const { groupedNotifications, formatNotifications } = useFormatNotifications();
+const { markNotificationAsRead } = useMarkNotificationAsRead()
+
+// Format the notifications when the component is mounted
+formatNotifications(notificationList.value);
+
+onMounted(() => {
+  // Get initials from the composable
+  const { getInitials } = useUserInitials(user.value);
+  initials.value = getInitials.value;
+});
+
+const isOpen = ref(false);
+
+const onConfirm = () => {
+  showBLogoutModal.value = true;
+  // Logic for logout
+  localStorage.clear();
+  setTimeout(() => {
+    // loading.value = false
     showBLogoutModal.value = false;
-    // Logic to close the modal
-    console.log("Cancelled");
-  };
-  
-  definePageMeta({
-    middleware: "auth",
+    router.push("/login");
+    window.location.href = "/login";
+  }),
+    3000;
+  console.log("Logging out...");
+};
+
+const onCancel = () => {
+  showBLogoutModal.value = false;
+  // Logic to close the modal
+  console.log("Cancelled");
+};
+
+definePageMeta({
+  middleware: "auth",
+});
+
+const selectedNotification = ref({}) as any;
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
   });
-  
-  const selectedNotification = ref({}) as any;
-  
-  function formatDate(dateString: string) {
-    const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
-  }
-  
-  const viewNotification = (item: any) => {
-    console.log(item, "here");
-    selectedNotification.value = item;
-  };
+}
+
+const viewNotification = async (item: any) => {
+  console.log(item, "here");
+  selectedNotification.value = item;
+  await markNotificationAsRead(item?.id)
+  formatNotifications(notificationList.value);
+};
 
 watch(notificationList, (newVal) => {
   if (newVal && newVal.length) {
     formatNotifications(newVal);
   }
 }, { immediate: true });
-  </script>
-  
+</script>

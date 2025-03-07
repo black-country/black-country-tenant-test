@@ -1,46 +1,29 @@
 <template>
-    <div class="h-[500px] overflow-y-auto">
+    <!-- <div class="h-[500px] overflow-y-auto px-3 custom-scrollbar"> -->
+    <div class="">
         <!-- <h2 class="text- text-[#1D2739] font-medium mb-6">Pick a visitation day</h2> -->
-
         <div v-if="!fetchingAvailabilities" class="flex items-center justify-between mb-4">
-            <div class="text-[#1D2739] flex items-center gap-x-4 text-lg px-4 py-2">
-                <span class="text-[#1D2739] font-semibold">
-                    {{ formattedMonth }}
-                </span>
-                <span>
-                    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M10 9C9.99023 8.6582 9.86328 8.36523 9.59961 8.10156L2.00195 0.669922C1.77734 0.455078 1.51367 0.337891 1.19141 0.337891C0.537109 0.337891 0.0292969 0.845703 0.0292969 1.5C0.0292969 1.8125 0.15625 2.10547 0.380859 2.33008L7.2168 9L0.380859 15.6699C0.15625 15.8945 0.0292969 16.1777 0.0292969 16.5C0.0292969 17.1543 0.537109 17.6621 1.19141 17.6621C1.50391 17.6621 1.77734 17.5449 2.00195 17.3301L9.59961 9.88867C9.87305 9.63477 10 9.3418 10 9Z"
-                            fill="#101928" />
-                    </svg>
-                </span>
-            </div>
-            <div class="flex gap-2 space-x-6">
-                <button @click="navigateMonth('prev')" class="">
-                    <!-- <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0.5" y="0.5" width="43" height="43" rx="7.5" stroke="#F0F2F5"/>
-                        <path d="M24.5 17C24.5 17 19.5 20.6824 19.5 22C19.5 23.3177 24.5 27 24.5 27" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg> -->
-                    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M0 9C0 9.3418 0.126953 9.63477 0.400391 9.88867L7.99805 17.3301C8.21289 17.5449 8.48633 17.6621 8.80859 17.6621C9.45312 17.6621 9.9707 17.1543 9.9707 16.5C9.9707 16.1777 9.83398 15.8945 9.61914 15.6699L2.77344 9L9.61914 2.33008C9.83398 2.10547 9.9707 1.8125 9.9707 1.5C9.9707 0.845703 9.45312 0.337891 8.80859 0.337891C8.48633 0.337891 8.21289 0.455078 7.99805 0.669922L0.400391 8.10156C0.126953 8.36523 0 8.6582 0 9Z"
-                            fill="#101928" />
-                    </svg>
+            <div class="flex items-center justify-between w-full">
+                <div class="text-[#1D2739] font-medium text-[15px] border p-2 rounded-md">{{formattedMonth}}</div>
+                <div class="flex gap-4">
+                    <button @click="navigateMonth('prev')" class=" border p-2 rounded-md">
+                        <svg width="12" height="12" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M0 9C0 9.3418 0.126953 9.63477 0.400391 9.88867L7.99805 17.3301C8.21289 17.5449 8.48633 17.6621 8.80859 17.6621C9.45312 17.6621 9.9707 17.1543 9.9707 16.5C9.9707 16.1777 9.83398 15.8945 9.61914 15.6699L2.77344 9L9.61914 2.33008C9.83398 2.10547 9.9707 1.8125 9.9707 1.5C9.9707 0.845703 9.45312 0.337891 8.80859 0.337891C8.48633 0.337891 8.21289 0.455078 7.99805 0.669922L0.400391 8.10156C0.126953 8.36523 0 8.6582 0 9Z"
+                                fill="#101928" />
+                        </svg>
+                    </button>
+                    <button @click="navigateMonth('next')" class="border p-2 rounded-md">
+                        <svg width="12" height="12" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M10 9C9.99023 8.6582 9.86328 8.36523 9.59961 8.10156L2.00195 0.669922C1.77734 0.455078 1.51367 0.337891 1.19141 0.337891C0.537109 0.337891 0.0292969 0.845703 0.0292969 1.5C0.0292969 1.8125 0.15625 2.10547 0.380859 2.33008L7.2168 9L0.380859 15.6699C0.15625 15.8945 0.0292969 16.1777 0.0292969 16.5C0.0292969 17.1543 0.537109 17.6621 1.19141 17.6621C1.50391 17.6621 1.77734 17.5449 2.00195 17.3301L9.59961 9.88867C9.87305 9.63477 10 9.3418 10 9Z"
+                                fill="#101928" />
+                        </svg>
 
-                </button>
-                <button @click="navigateMonth('next')" class="">
-                    <!-- <svg width="44" height="44" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="0.5" y="0.5" width="43" height="43" rx="7.5" stroke="#F0F2F5"/>
-                        <path d="M19.5 17C19.5 17 24.5 20.6824 24.5 22C24.5 23.3177 19.5 27 19.5 27" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg> -->
-                    <svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M10 9C9.99023 8.6582 9.86328 8.36523 9.59961 8.10156L2.00195 0.669922C1.77734 0.455078 1.51367 0.337891 1.19141 0.337891C0.537109 0.337891 0.0292969 0.845703 0.0292969 1.5C0.0292969 1.8125 0.15625 2.10547 0.380859 2.33008L7.2168 9L0.380859 15.6699C0.15625 15.8945 0.0292969 16.1777 0.0292969 16.5C0.0292969 17.1543 0.537109 17.6621 1.19141 17.6621C1.50391 17.6621 1.77734 17.5449 2.00195 17.3301L9.59961 9.88867C9.87305 9.63477 10 9.3418 10 9Z"
-                            fill="#101928" />
-                    </svg>
-
-                </button>
+                    </button>
+                </div>
             </div>
+            
         </div>
 
         <!-- Loading State -->
@@ -48,7 +31,7 @@
             <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#5B8469]"></div>
         </div>
 
-        <div v-else class="mb-8">
+        <div v-else class="mb-4">
             <div class="grid grid-cols-7 mb-2">
                 <div v-for="day in weekDays" :key="day" class="text-center text-gray-500 text-sm py-2">
                     {{ day }}
@@ -59,11 +42,10 @@
                 <div v-for="(day, dayIndex) in week" :key="`${weekIndex}-${dayIndex}`"
                     class="aspect-square flex items-center justify-center">
                     <button v-if="day" @click="handleDateSelect(day.fullDate)" :disabled="!day.isAvailable"
-                        class="w-10 h-10 rounded-full flex items-center justify-center" :class="{
-                            'bg-[#EBF0EC] text-[#326543]': day?.isAvailable && !day?.isWithinRange,
-                            'text-[#1D2739]': day?.isAvailable && day?.isWithinRange,
+                        class="w-8 h-8 text-sm rounded-full flex items-center justify-center" :class="{
+                            'border-2 border-[#5B8469] bg-[#5B8469] text-white': selectedDate === day?.fullDate,
+                            'text-[#326543] bg-[#EBF0EC] border-[#EBF0EC]': day?.isAvailable && day?.isWithinRange && selectedDate !== day?.fullDate,
                             'disabled:cursor-not-allowed disabled:opacity-25': !day?.isAvailable,
-                            'border-2 border-[#5B8469] bg-[#5B8469] text-white': selectedDate === day?.fullDate
                         }">
                         {{ day.date }}
                     </button>
@@ -94,7 +76,8 @@
         <!-- {{ filteredAvailabilityTimes }} -->
         <!-- {{ processAvailabilityTimes(availabilityTimes) }} -->
         <h3 v-if="selectedDate && availabilityTimes.length > 0 && !fetchingAvailabilityTimes"
-            class="text-[#1D2739] font-medium mb-4">Time</h3>
+            class="text-[#1D2739] font-medium">Pick a visitation time</h3>
+            <p v-if="selectedDate && availabilityTimes.length > 0 && !fetchingAvailabilityTimes" class=" text-sm mb-4">Please note that time selected would be 30 minutes per visitation.</p>
         <div v-if="selectedDate && availabilityTimes.length > 0 && !fetchingAvailabilityTimes" class="mb-6">
             <div class="grid grid-cols-3 gap-2">
                 <!-- <button
@@ -144,11 +127,11 @@
             <div class="rounded-md bg-slate-200 h-20 w-full"></div>
         </div>
 
-        <div v-else
+        <!-- <div v-else
             class="flex justify-center text-xs border-gray-100 border-[0.5px] py-4 rounded-lg items-center flex-col">
             <img class="h-20 w-20" src="@/assets/icons/event-illustrations.svg" />
             AVAILABILITY TIMES NOT FOUND
-        </div>
+        </div> -->
 
         <div v-if="selectedDate && selectedTime" class="pt-6">
             <button @click="handleSchedule"
@@ -228,3 +211,25 @@ const processedAvailabilityTimes = computed(() =>
     processAvailabilityTimes(availabilityTimes.value)
 );
 </script>
+
+<style scoped>
+.custom-scrollbar {
+    scrollbar-width: thin; 
+    scrollbar-color: #cccccc #f1f1f1; 
+  }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px; 
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background-color: #cccccc;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #cccccc; 
+    border-radius: 4px; 
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #cccccc; 
+  }
+</style>

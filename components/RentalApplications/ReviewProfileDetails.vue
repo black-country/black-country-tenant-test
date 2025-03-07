@@ -395,7 +395,7 @@
           </div>
 
 
-          <div class="pb-32 -mt-16" v-if="profile.guarantorData">
+          <div class="pb-32 mt-2" v-if="profile.guarantorData">
           <div
             class="flex justify-between items-center text-gray-600  space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
           >
