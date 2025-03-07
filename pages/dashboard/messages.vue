@@ -522,23 +522,6 @@ const sendMessageToUser = async (content: string) => {
   }
   await getActiveChats();
 };
-onMounted(async () => {
-  if (route.query.agentId) {
-    const payload = {
-      participantId: route.query.agentId as string,
-      participantType: "AGENT",
-    };
-    await createRoom(payload);
-    getActiveChats();
-  }
-
-  $emitter.on("customEvent", async (payload: any) => {
-    if (payload.data) {
-      await getRoomChats(payload.data);
-      scrollToBottom();
-    }
-  });
-});
 
 
 // onMounted(async () => {

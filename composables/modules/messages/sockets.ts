@@ -424,6 +424,17 @@ export const useWebSocket = () => {
         //     ? { ...msg, unreadMessagesCount: 0 }
         //     : msg
         // );
+
+         if (messagesByRoom.value[roomId]) {
+             messagesByRoom.value = {
+               ...messagesByRoom.value,
+               [roomId]: messagesByRoom.value[roomId].map(msg => 
+                 (!recipientId || msg.recipientId === recipientId)
+                   ? { ...msg, unreadMessagesCount: 0 }
+                   : msg
+               )
+             };
+           }
       } else {
         console.error("Failed to mark message as read:", response);
       }
