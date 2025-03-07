@@ -456,7 +456,7 @@ import { useUser } from "@/composables/auth/user";
 const { user } = useUser();
 import { useGetNotifications } from "@/composables/modules/notification/fetch";
 import { useMarkNotificationAsRead } from '@/composables/modules/notification/markAsRead'
-const { loadingNotification, notificationList } = useGetNotifications();
+const { loadingNotification, notificationList, getNotifications} = useGetNotifications();
 import { useRouter } from "vue-router";
 import { dynamicIcons } from "@/utils/assets";
 const showBLogoutModal = ref(false);
@@ -516,7 +516,7 @@ const viewNotification = async (item: any) => {
   console.log(item, "here");
   selectedNotification.value = item;
   await markNotificationAsRead(item?.id)
-  formatNotifications(notificationList.value);
+  getNotifications();
 };
 
 watch(notificationList, (newVal) => {

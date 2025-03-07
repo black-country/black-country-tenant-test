@@ -69,7 +69,7 @@ export const useCreateMaintenanceRequest = () => {
   const isFormEnabled = computed(() => {
     return (
       payload.value.description &&
-      payload.value.images.length > 0 &&
+      // payload.value.images.length > 0 &&
       payload.value.type &&
       payload.value.urgencyLevel
     )
