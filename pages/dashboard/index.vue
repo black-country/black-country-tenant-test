@@ -269,7 +269,7 @@
             <div v-else>
               <div @click="
                 router.push(
-                  `/dashboard/transaction/${transaction.id}/maintenance-request`
+                  `/dashboard/transaction/${transaction.id}/payment`
                 )
                 " v-for="transaction in paymentList" :key="transaction.id"
                 class="flex justify-between items-center bg-white p-4 rounded-lg mb-2">

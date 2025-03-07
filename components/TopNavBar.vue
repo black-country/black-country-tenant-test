@@ -460,7 +460,7 @@ watch(
 
 <style scoped>
 .router-link-exact-active {
-  background-color: gray;
+  /* background-color: gray;  */
   color: white;
 }
 </style>

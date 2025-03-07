@@ -49,10 +49,10 @@
          </section>
 
             <!-- Images Section -->
-            <div>
+            <div v-if="maintenanceDetails?.images?.length > 0">
                 <p class="text-gray-600 text-sm font-medium mb-2">Images</p>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <img v-for="item in maintenanceDetails.images" :src="item" alt="Plumbing issue 1"
+                    <img v-for="item in maintenanceDetails.images" :key="item" :src="item" alt="Plumbing issue 1"
                         class="rounded-lg object-cover h-60 w-full">
                 </div>
             </div>
