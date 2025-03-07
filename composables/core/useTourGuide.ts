@@ -14,13 +14,13 @@ import { ref, onMounted } from 'vue'
 // };
 
 import image1 from  '@/assets/img/welcome.png'
-import image2 from '@/assets/img/dashboard.png'
-import image3 from '@/assets/img/listings.png'
-import image4 from '@/assets/img/saved.svg'
-import image5 from '@/assets/img/my-home.png'
-import image6 from '@/assets/img/save.png'
-import image7 from '@/assets/img/map-view.png'
-import image8 from '@/assets/img/list-view.png'
+import image2 from '@/assets/img/dashboard.jpg'
+import image3 from '@/assets/img/listings.jpg'
+import image4 from '@/assets/img/saved.jpg'
+import image5 from '@/assets/img/my-home.jpg'
+import image6 from '@/assets/img/save.jpg'
+import image7 from '@/assets/img/map-view.jpg'
+import image8 from '@/assets/img/list-view.jpg'
 import { use_update_profile } from '@/composables/auth/updateProfile'
 const { updateProfile, credential, } = use_update_profile()
 
