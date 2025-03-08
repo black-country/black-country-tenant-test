@@ -9,7 +9,7 @@ export const auth_api = {
 		return GATEWAY_ENDPOINT.post(url, credential)
 	},
 	$_login: (credential: any) => {
-		// const url = '/auth/login'
+		const url = '/auth/login'
 		return GATEWAY_ENDPOINT.post(url, credential)
 	},
 	$_reset_password: (credential: any) => {
