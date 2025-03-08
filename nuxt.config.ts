@@ -15,7 +15,8 @@ export default {
         { name: "format-detection", content: "telephone=no" },
       ],
       link: [
-        { rel: "icon", type: "image/x-icon", href: "/favicon.svg" },
+        { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+        { rel: 'icon', type: 'image/png', href: '/favicon.png' },
         { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/driver.js/dist/driver.min.css' }
       ],
       script: [
