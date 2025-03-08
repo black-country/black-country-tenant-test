@@ -22,7 +22,7 @@ export function useInactivity(timeout = 600000) { // default to 10 minutes (600,
   const handleLogout = () => {
     // Clear any user data or tokens here
     localStorage.removeItem('userToken'); // Adjust based on how you're storing user data
-    router.push('/login'); // Redirect to login page
+    router.push('/tenant/login'); // Redirect to login page
   };
 
   // Set up event listeners to detect user activity

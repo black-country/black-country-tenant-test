@@ -301,7 +301,7 @@
 
     <p class="mt-6 text-center text-gray-600">
       Have an account?
-      <NuxtLink to="/login" class="text-[#326543] font-semibold"
+      <NuxtLink to="/tenant/login" class="text-[#326543] font-semibold"
         >Login</NuxtLink
       >
     </p>
