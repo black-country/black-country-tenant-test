@@ -126,12 +126,12 @@ export const useTourGuide = () => {
     try {
       // Check if the user is on the specific URL path
       // const currentUrl = window.location.pathname + window.location.search
-      // if (currentUrl === '/dashboard/listings?view=grid') {
+      if (currentUrl === '/dashboard/listings?view=grid') {
         await updateProfile({
           hasExploredListing: true
         })
-        console.log('Profile updated with hasExploredListings: true')
-      // } 
+        // console.log('Profile updated with hasExploredListings: true mehhhhh')
+      } 
       // else {
       //   await updateProfile({
       //     hasTakenTour: true

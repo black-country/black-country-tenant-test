@@ -205,7 +205,7 @@ canvas {
 
 
 <template>
-  <div class="bg-white rounded-lg w-full relative">
+  <div class="bg-white rounded-lg w-full relative mt-6 overflow-x-hidden">
     <button
       @click="emit('close')"
       class="absolute -top-10 -right-6 bg-white rounded-full p-2 text-[#1D2739] hover:text-red-600"
