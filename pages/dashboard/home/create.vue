@@ -146,17 +146,111 @@
   const urgencyLevels = ref(['emergency', 'high', 'medium', 'low'])
   
   // Handle Image Upload
-  const onImageUpload = async (event: Event) => {
-    const target = event.target as HTMLInputElement
-    const files = target.files
-    if (files && files[0]) {
-      const file = files[0]
-      await uploadFile(file)
-      if (uploadResponse.value) {
-        payload.value.images.push(uploadResponse.value.url)
-      }
+  // const onImageUpload = async (event: Event) => {
+  //   const target = event.target as HTMLInputElement
+  //   const files = target.files
+  //   if (files && files[0]) {
+  //     const file = files[0]
+  //     await uploadFile(file)
+  //     if (uploadResponse.value) {
+  //       payload.value.images.push(uploadResponse.value.url)
+  //     }
+  //   }
+  // }
+
+  // Handle Image Upload with compression
+const onImageUpload = async (event: Event) => {
+  const target = event.target as HTMLInputElement
+  const files = target.files
+  
+  if (files && files[0]) {
+    const file = files[0]
+    
+    // Compress the image before uploading
+    const compressedFile = await compressImage(file)
+    
+    // Upload the compressed file instead of the original
+    await uploadFile(compressedFile)
+    
+    if (uploadResponse.value) {
+      payload.value.images.push(uploadResponse.value.url)
     }
   }
+}
+
+// Image compression function
+const compressImage = (file: File): Promise<File> => {
+  return new Promise((resolve, reject) => {
+    // Create a FileReader to read the file
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    
+    reader.onload = (event) => {
+      // Create an image element to load the file data
+      const img = new Image()
+      img.src = event.target?.result as string
+      
+      img.onload = () => {
+        // Create a canvas element to perform the compression
+        const canvas = document.createElement('canvas')
+        
+        // Calculate new dimensions while maintaining aspect ratio
+        let width = img.width
+        let height = img.height
+        
+        // Define max dimensions for the compressed image
+        const MAX_WIDTH = 1200
+        const MAX_HEIGHT = 1200
+        
+        // Scale down if image is larger than max dimensions
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height = Math.round(height * (MAX_WIDTH / width))
+            width = MAX_WIDTH
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width = Math.round(width * (MAX_HEIGHT / height))
+            height = MAX_HEIGHT
+          }
+        }
+        
+        // Set canvas dimensions to the new size
+        canvas.width = width
+        canvas.height = height
+        
+        // Draw image on canvas with new dimensions
+        const ctx = canvas.getContext('2d')
+        ctx?.drawImage(img, 0, 0, width, height)
+        
+        // Convert to Blob with reduced quality (0.6-0.8 usually offers good balance)
+        canvas.toBlob((blob) => {
+          if (blob) {
+            // Create a new File object from the compressed blob
+            const compressedFile = new File(
+              [blob], 
+              file.name, 
+              { type: 'image/jpeg', lastModified: Date.now() }
+            )
+            
+            console.log(`Original size: ${file.size / 1024}KB, Compressed size: ${compressedFile.size / 1024}KB`)
+            resolve(compressedFile)
+          } else {
+            reject(new Error('Canvas to Blob conversion failed'))
+          }
+        }, 'image/jpeg', 0.7) // Adjust quality here (0.7 = 70% quality)
+      }
+      
+      img.onerror = () => {
+        reject(new Error('Failed to load image'))
+      }
+    }
+    
+    reader.onerror = () => {
+      reject(new Error('Failed to read file'))
+    }
+  })
+}
   
   // Remove Image
   const removeImage = (index: number) => {

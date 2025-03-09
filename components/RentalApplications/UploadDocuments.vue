@@ -278,32 +278,177 @@ const submitForm = () => {
   }
 };
 
+// // Handle Front ID upload with API call and preview
+// const handleFrontIdUpload = async (event: Event) => {
+//   const input = event.target as HTMLInputElement;
+//   if (input.files && input.files[0]) {
+//     const file = input.files[0];
+//     const fileName = file.name;  // Get the file name
+
+//     // Show loader
+//     loadingFrontId.value = true;
+
+//     // Upload file using composable
+//     await uploadFile(file);
+
+//     if (uploadResponse.value) {
+//       frontIdPreview.value = uploadResponse.value.url;
+//       isFrontImage.value = uploadResponse.value.type?.startsWith('image');
+//       isFrontPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
+
+//       // Push the uploaded file URL to the fileUrls array
+//       documentData.value.fileUrls[0] = uploadResponse.value.url;
+//       documentData.value.type = idType.value;
+//       saveData('uploaded-document', documentData.value);
+//     }
+
+//     // Hide loader after upload is done
+//     loadingFrontId.value = false;
+//   }
+// };
+
+// // Handle Back ID upload with API call and preview
+// const handleBackIdUpload = async (event: Event) => {
+//   const input = event.target as HTMLInputElement;
+//   if (input.files && input.files[0]) {
+//     const file = input.files[0];
+//     const fileName = file.name;  // Get the file name
+
+//     // Show loader
+//     loadingBackId.value = true;
+
+//     // Upload file using composable
+//     await uploadFile(file);
+
+//     if (uploadResponse.value) {
+//       backIdPreview.value = uploadResponse.value.url;
+//       isBackImage.value = uploadResponse.value.type?.startsWith('image');
+//       isBackPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
+
+//       // Push the uploaded file URL to the fileUrls array
+//       documentData.value.fileUrls[1] = uploadResponse.value.url;
+//       documentData.value.type = idType.value;
+//       saveData('uploaded-document', documentData.value);
+//     }
+
+//     // Hide loader after upload is done
+//     loadingBackId.value = false;
+//   }
+// };
+// Function to compress image
+const compressImage = async (file: File): Promise<File> => {
+  // Skip compression for non-image files or PDFs
+  if (!file.type.startsWith('image/') || file.type === 'application/pdf') {
+    return file;
+  }
+
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target?.result as string;
+      img.onload = () => {
+        // Calculate scaled dimensions
+        let width = img.width;
+        let height = img.height;
+        
+        // Maximum dimensions for ID documents (IDs don't need to be large)
+        const MAX_WIDTH = 1000;
+        const MAX_HEIGHT = 800;
+        
+        // Scale down dimensions
+        if (width > height) {
+          if (width > MAX_WIDTH) {
+            height = Math.round((height * MAX_WIDTH) / width);
+            width = MAX_WIDTH;
+          }
+        } else {
+          if (height > MAX_HEIGHT) {
+            width = Math.round((width * MAX_HEIGHT) / height);
+            height = MAX_HEIGHT;
+          }
+        }
+        
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        
+        const ctx = canvas.getContext('2d');
+        ctx?.drawImage(img, 0, 0, width, height);
+        
+        // Target quality (0.6 = 60%, good for ID documents where legibility is important)
+        const QUALITY = 0.6;
+        
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error('Canvas to Blob conversion failed'));
+              return;
+            }
+            // Create new file from the compressed blob
+            const compressedFile = new File(
+              [blob], 
+              file.name,
+              { type: 'image/jpeg', lastModified: Date.now() }
+            );
+            
+            console.log(`Compressed ID image from ${(file.size/1024).toFixed(2)}KB to ${(compressedFile.size/1024).toFixed(2)}KB`);
+            resolve(compressedFile);
+          },
+          'image/jpeg',
+          QUALITY
+        );
+      };
+      img.onerror = () => {
+        reject(new Error('Image loading failed'));
+      };
+    };
+    reader.onerror = () => {
+      reject(new Error('File reading failed'));
+    };
+  });
+};
+
 // Handle Front ID upload with API call and preview
 const handleFrontIdUpload = async (event: Event) => {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files[0]) {
-    const file = input.files[0];
-    const fileName = file.name;  // Get the file name
+    const originalFile = input.files[0];
+    const fileName = originalFile.name;
 
     // Show loader
     loadingFrontId.value = true;
+    
+    try {
+      // Process file (compress if it's an image)
+      let fileToUpload;
+      
+      if (originalFile.type.startsWith('image/')) {
+        fileToUpload = await compressImage(originalFile);
+      } else {
+        fileToUpload = originalFile;
+      }
 
-    // Upload file using composable
-    await uploadFile(file);
+      // Upload file using composable
+      await uploadFile(fileToUpload);
 
-    if (uploadResponse.value) {
-      frontIdPreview.value = uploadResponse.value.url;
-      isFrontImage.value = uploadResponse.value.type?.startsWith('image');
-      isFrontPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
+      if (uploadResponse.value) {
+        frontIdPreview.value = uploadResponse.value.url;
+        isFrontImage.value = uploadResponse.value.type?.startsWith('image');
+        isFrontPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
 
-      // Push the uploaded file URL to the fileUrls array
-      documentData.value.fileUrls[0] = uploadResponse.value.url;
-      documentData.value.type = idType.value;
-      saveData('uploaded-document', documentData.value);
+        // Push the uploaded file URL to the fileUrls array
+        documentData.value.fileUrls[0] = uploadResponse.value.url;
+        documentData.value.type = idType.value;
+        saveData('uploaded-document', documentData.value);
+      }
+    } catch (error) {
+      console.error("Error processing or uploading front ID:", error);
+    } finally {
+      // Hide loader after upload is done
+      loadingFrontId.value = false;
     }
-
-    // Hide loader after upload is done
-    loadingFrontId.value = false;
   }
 };
 
@@ -311,28 +456,41 @@ const handleFrontIdUpload = async (event: Event) => {
 const handleBackIdUpload = async (event: Event) => {
   const input = event.target as HTMLInputElement;
   if (input.files && input.files[0]) {
-    const file = input.files[0];
-    const fileName = file.name;  // Get the file name
+    const originalFile = input.files[0];
+    const fileName = originalFile.name;
 
     // Show loader
     loadingBackId.value = true;
+    
+    try {
+      // Process file (compress if it's an image)
+      let fileToUpload;
+      
+      if (originalFile.type.startsWith('image/')) {
+        fileToUpload = await compressImage(originalFile);
+      } else {
+        fileToUpload = originalFile;
+      }
 
-    // Upload file using composable
-    await uploadFile(file);
+      // Upload file using composable
+      await uploadFile(fileToUpload);
 
-    if (uploadResponse.value) {
-      backIdPreview.value = uploadResponse.value.url;
-      isBackImage.value = uploadResponse.value.type?.startsWith('image');
-      isBackPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
+      if (uploadResponse.value) {
+        backIdPreview.value = uploadResponse.value.url;
+        isBackImage.value = uploadResponse.value.type?.startsWith('image');
+        isBackPdf.value = uploadResponse.value.type?.startsWith('application/pdf');
 
-      // Push the uploaded file URL to the fileUrls array
-      documentData.value.fileUrls[1] = uploadResponse.value.url;
-      documentData.value.type = idType.value;
-      saveData('uploaded-document', documentData.value);
+        // Push the uploaded file URL to the fileUrls array
+        documentData.value.fileUrls[1] = uploadResponse.value.url;
+        documentData.value.type = idType.value;
+        saveData('uploaded-document', documentData.value);
+      }
+    } catch (error) {
+      console.error("Error processing or uploading back ID:", error);
+    } finally {
+      // Hide loader after upload is done
+      loadingBackId.value = false;
     }
-
-    // Hide loader after upload is done
-    loadingBackId.value = false;
   }
 };
 </script>
