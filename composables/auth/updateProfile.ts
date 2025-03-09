@@ -165,12 +165,12 @@ export const use_update_profile = () => {
           });
         }
 
-        showToast({
-          title: "Success",
-          message: 'Profile was updated successfully',
-          toastType: "success",
-          duration: 3000
-        });
+        // showToast({
+        //   title: "Success",
+        //   message: 'Profile was updated successfully',
+        //   toastType: "success",
+        //   duration: 3000
+        // });
 
         // router.push('/profile/profile-update-success');
         
