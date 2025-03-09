@@ -75,14 +75,63 @@ export const useFileUpload = () => {
           const targetSize = targetKB * 1024; // Convert KB to bytes
           let quality = 0.7; // Start with 70% quality
           
+          // const compressWithQuality = (currentQuality: number) => {
+          //   canvas.toBlob(
+          //     (blob) => {
+          //       if (!blob) {
+          //         reject(new Error('Canvas to Blob conversion failed'));
+          //         return;
+          //       }
+                
+          //       // If blob is still too large and quality can be reduced further
+          //       if (blob.size > targetSize && currentQuality > 0.1) {
+          //         // Reduce quality and try again
+          //         compressWithQuality(currentQuality - 0.1);
+          //       } else {
+          //         // Create new file from the compressed blob
+          //         const compressedFile = new File(
+          //           [blob], 
+          //           file.name.replace(/\.[^/.]+$/, "") + ".jpg", // Force .jpg extension
+          //           { type: 'image/jpeg', lastModified: Date.now() }
+          //         );
+                  
+          //         // Store sizes for reference
+          //         originalSize.value = file.size;
+          //         compressedSize.value = compressedFile.size;
+                  
+          //         console.log(`Compressed from ${(file.size/1024).toFixed(2)}KB to ${(compressedFile.size/1024).toFixed(2)}KB`);
+          //         resolve(compressedFile);
+          //       }
+          //     },
+          //     'image/jpeg',
+          //     currentQuality
+          //   );
+          // };
           const compressWithQuality = (currentQuality: number) => {
+            // Get file extension to determine format
+            const fileExtension = file.name.split('.').pop()?.toLowerCase();
+            let mimeType: string;
+          
+            // Set MIME type based on file extension
+            if (fileExtension === 'png') {
+              mimeType = 'image/png';
+            } else if (fileExtension === 'jpeg' || fileExtension === 'jpg') {
+              mimeType = 'image/jpeg';
+            } else if (fileExtension === 'webp') {
+              mimeType = 'image/webp';
+            } else {
+              reject(new Error('Unsupported file format'));
+              return;
+            }
+          
+            // Convert canvas to blob and compress image
             canvas.toBlob(
               (blob) => {
                 if (!blob) {
                   reject(new Error('Canvas to Blob conversion failed'));
                   return;
                 }
-                
+          
                 // If blob is still too large and quality can be reduced further
                 if (blob.size > targetSize && currentQuality > 0.1) {
                   // Reduce quality and try again
@@ -90,23 +139,24 @@ export const useFileUpload = () => {
                 } else {
                   // Create new file from the compressed blob
                   const compressedFile = new File(
-                    [blob], 
-                    file.name.replace(/\.[^/.]+$/, "") + ".jpg", // Force .jpg extension
-                    { type: 'image/jpeg', lastModified: Date.now() }
+                    [blob],
+                    file.name.replace(/\.[^/.]+$/, "") + `.${fileExtension}`, // Preserve the original file extension
+                    { type: mimeType, lastModified: Date.now() }
                   );
-                  
+          
                   // Store sizes for reference
                   originalSize.value = file.size;
                   compressedSize.value = compressedFile.size;
-                  
-                  console.log(`Compressed from ${(file.size/1024).toFixed(2)}KB to ${(compressedFile.size/1024).toFixed(2)}KB`);
+          
+                  console.log(`Compressed from ${(file.size / 1024).toFixed(2)}KB to ${(compressedFile.size / 1024).toFixed(2)}KB`);
                   resolve(compressedFile);
                 }
               },
-              'image/jpeg',
+              mimeType, // Use the correct MIME type based on the format
               currentQuality
             );
           };
+
           
           compressWithQuality(quality);
         };
