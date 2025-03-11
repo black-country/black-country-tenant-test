@@ -280,8 +280,8 @@
     localStorage.clear();
     setTimeout(() => {
       showBLogoutModal.value = false;
-      router.push('/login');
-      // window.location.href = '/tenant/login';
+      // router.push('/login');
+      window.location.href = '/tenant/login';
     }, 3000);
   };
   
