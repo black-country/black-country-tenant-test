@@ -334,7 +334,7 @@
                 @click="setActiveAmenity(amenity)"
                 :class="['px-4 py-2 rounded-full border', activeAmenity === amenity ? 'border-black bg-gray-100' : 'border-gray-300']"
               >
-                {{ amenity }}
+                {{ formatAmenities(amenity) }}
               </button>
             </div>
   
@@ -393,6 +393,7 @@
   
   <script setup lang="ts">
 import { ref } from 'vue';
+import { formatAmenities } from '~/composables/core/useFormatAmenities';
 
 const property = ref({
   name: 'Jason Gardens',

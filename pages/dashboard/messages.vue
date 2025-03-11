@@ -366,6 +366,7 @@ const selectedUser = ref<any>(null);
 const messageStatus = ref("idle");
 
 const openSideNav = ref(false);
+const usedAgentQueryId = ref(false);
 
 // Watch for selected user changes and fetch room chats
 watch(selectedUser, async (newVal) => {
@@ -399,22 +400,23 @@ watch(
 watch(
   activeChatsList,
   (newVal) => {
-    console.log(newVal, "active chats (watch)");
-    const userId = route.query.userId;
-    if (userId) {
-      const user = newVal.find((u) => u?.participant?.id === userId);
-      if (user) {
-        selectUser(user);
-      } else {
-        if (newVal.length === 1) {
-          selectUser(newVal[0]);
+    if (!usedAgentQueryId.value) {
+      const userId = route.query.agentId;
+      if (userId) {
+        const user = newVal.find((u) => u?.participant?.id === userId);
+        if (user) {
+          selectUser(user); 
+          usedAgentQueryId.value = true;
+        } else {
+          if (newVal.length === 1) {
+            selectUser(newVal[0]); 
+          }
         }
       }
     }
 
-    if (newVal.length) {
-      selectUser(newVal[0]);
-      console.log("only one item found");
+    if (newVal.length && !usedAgentQueryId.value) {
+      selectUser(newVal[0]); 
     }
   },
   { immediate: true }
@@ -437,6 +439,14 @@ onMounted(async () => {
     }
   });
 });
+
+watch(messagesByRoom, (newVal) => {
+  const currentRoomId = selectedUser.value?.id;
+  if (currentRoomId && newVal[currentRoomId]) {
+    getRoomChats(currentRoomId);
+    getActiveChats();
+  }
+}, { deep: true });
 
 // Scroll to the bottom of the chat window
 const scrollToBottom = () => {

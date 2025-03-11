@@ -36,8 +36,8 @@ export const use_auth_login = () => {
         toastType: "success",
         duration: 3000
       });
-      router.push("/tenant/dashboard");
-      window.location.href = '/tenant/dashboard'
+      router.push("/dashboard");
+      window.location.href = '/dashboard'
     } else {
       console.log(res, 'tes here')
       showToast({

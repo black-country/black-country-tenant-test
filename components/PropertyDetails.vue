@@ -346,7 +346,7 @@
                     visibleType === type ? 'bg-[#EBE5E0] text-[#344054]' : 'bg-[#F0F2F5]',
                   ]"
                 >
-                  {{ type }}
+                  {{ formatAmenities(type) }}
                 </button>
               </div>
             </div>
@@ -580,6 +580,7 @@ const { formatCurrency } = useCurrencyFormatter('en-NG', 'NGN');
 const activeTab = ref('property-overview')
 const { getVisitations, loading, visitations } = useFetchVisitations()
 import { useClipboard } from '@/composables/core/useCopyToClipboard'
+import { formatAmenities } from "~/composables/core/useFormatAmenities";
 const { copied, copyToClipboard } = useClipboard();
 const { user } = useUser()
 const router = useRouter()
@@ -747,24 +748,34 @@ if(props.property.rooms){
 
 // Function to extract images from a room object
 const extractRoomImages = (room: any): string[] => {
-  const allImages: string[] = [];
+  // const allImages: string[] = [];
+  const allImages: Set<string> = new Set();
+
 
   // Check if the room itself has images
   if (room?.images && Array.isArray(room.images)) {
-    allImages.push(...room.images);
+    // allImages.push(...room.images);
+    room.images.forEach((image: string) => allImages.add(image));
   }
 
   // Extract images from features array
   if (room?.features && Array.isArray(room.features)) {
     room.features.forEach((feature: any) => {
       if (feature?.images && Array.isArray(feature.images)) {
-        allImages.push(...feature.images);
+        // allImages.push(...feature.images);
+        feature.images.forEach((image: string) => allImages.add(image));
+
       }
     });
   }
 
-  return allImages;
+  // return allImages;
+  return Array.from(allImages);
 };
+
+
+
+
 
 const previewRoomImages = (itemTab: any) => {
   const selectedRoom = props.property.rooms.find((room: any) => room?.name === itemTab)
