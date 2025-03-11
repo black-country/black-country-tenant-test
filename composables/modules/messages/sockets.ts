@@ -241,7 +241,17 @@ export const useWebSocket = () => {
         duration: 3000
       });
       isConnected.value = true;
-      fetchInitialMessages();
+
+      if (activeRoomId.value) {
+        fetchInitialMessages();
+      }
+    });
+
+    socket.value.on("reconnect", () => {
+      isConnected.value = true;
+      if (activeRoomId.value) {
+        fetchInitialMessages();
+      }
     });
 
     socket.value.on("disconnect", () => {
@@ -286,15 +296,19 @@ export const useWebSocket = () => {
       }
 
       if (!messagesByRoom.value[roomId].some(msg => msg.id === message.message.id)) {
-        const newMsg = {
+        const updatedMessages = [...messagesByRoom.value[roomId], {
           ...message.message,
           status: 'received'
-        };
+        }];
 
         messagesByRoom.value = {
           ...messagesByRoom.value,
-          [roomId]: [...messagesByRoom.value[roomId], newMsg]
+          [roomId]: updatedMessages
         };
+
+        if (activeRoomId.value === roomId) {
+          getRoomChats(roomId);
+        }
       }
     });
 
@@ -321,20 +335,15 @@ export const useWebSocket = () => {
     });
   };
 
-  // const fetchInitialMessages = () => {
-  //   if (!socket.value?.connected) return;
-
-  //   socket.value.emit("messages.fetch", {}, (response: any) => {
-  //     if (response.status === "success") {
-  //       messages.value = response.data.map((msg: any) => ({
-  //         ...msg,
-  //         status: 'received'
-  //       }));
-  //     } else {
-  //       console.error("Failed to fetch messages:", response);
-  //     }
-  //   });
-  // };
+  const fetchInitialMessages = async () => {
+    if (activeRoomId.value) {
+      try {
+        await getRoomChats(activeRoomId.value);
+      } catch (error) {
+        console.error('Failed to fetch initial messages:', error);
+      }
+    }
+  };
 
   const sendMessage = async (payload: {
     recipientId: string;
@@ -425,16 +434,16 @@ export const useWebSocket = () => {
         //     : msg
         // );
 
-         if (messagesByRoom.value[roomId]) {
-             messagesByRoom.value = {
-               ...messagesByRoom.value,
-               [roomId]: messagesByRoom.value[roomId].map(msg => 
-                 (!recipientId || msg.recipientId === recipientId)
-                   ? { ...msg, unreadMessagesCount: 0 }
-                   : msg
-               )
-             };
-           }
+        if (messagesByRoom.value[roomId]) {
+          messagesByRoom.value = {
+            ...messagesByRoom.value,
+            [roomId]: messagesByRoom.value[roomId].map(msg =>
+              (!recipientId || msg.recipientId === recipientId)
+                ? { ...msg, unreadMessagesCount: 0 }
+                : msg
+            )
+          };
+        }
       } else {
         console.error("Failed to mark message as read:", response);
       }
