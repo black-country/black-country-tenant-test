@@ -133,23 +133,11 @@
   <main>
     <TopNavBar />
     <div class="max-w-2xl mx-auto p-6 mb-20">
-      <svg
-        @click="router.back()"
-        class="cursor-pointer"
-        width="36"
-        height="36"
-        viewBox="0 0 36 36"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
+      <svg @click="router.back()" class="cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
         <rect width="36" height="36" rx="18" fill="#EAEAEA" />
-        <path
-          d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23"
-          stroke="#1D2739"
-          stroke-width="1.5"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+        <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739" stroke-width="1.5"
+          stroke-linecap="round" stroke-linejoin="round" />
       </svg>
 
       <h2 class="text-xl font-medium mb-4 text-[#1D2739] my-4">
@@ -166,28 +154,48 @@
             <span v-if="field.isCompulsory" class="text-red-600">*</span>
           </label> -->
           <!-- {{ field }} -->
-          <label v-if="field.label !== 'State of Origin' && field.label !== 'Local Government' && field.label !== 'Reference Contacts' && field.label !== 'Consent to Contact References'"
-              class="text-sm font-medium text-[#1D2739]"
-          >
-              {{ field.label }}
-              <span v-if="field.isCompulsory" class="text-red-600">*</span>
+          <label
+            v-if="field.label !== 'State of Origin' && field.label !== 'Local Government' && field.label !== 'Reference Contacts' && field.label !== 'Consent to Contact References'"
+            class="text-sm font-medium text-[#1D2739]">
+            {{ field.label }}
+            <span v-if="field.isCompulsory" class="text-red-600">*</span>
           </label>
 
           <div v-if="field.type === 'text'">
-            <input v-model="field.value" type="text" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
+            <input v-model="field.value" type="text"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
           </div>
           <div v-if="field.type === 'email'">
-            <input v-model="field.value" type="email" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
+            <input v-model="field.value" type="email"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
           </div>
           <div v-if="field.type === 'number'">
-            <input v-model="field.value" type="number" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
+            <input v-model="field.value" type="number"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
           </div>
           <div v-if="field.type === 'textarea'">
-            <textarea v-model="field.value" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" rows="4"></textarea>
+            <textarea v-model="field.value"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" rows="4"></textarea>
           </div>
           <div v-if="field.type === 'file'">
-            <input type="file" @change="handleFileUpload($event, field)" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
+            <input type="file" @change="handleFileUpload($event, field)"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" />
             <p v-if="field.preview">{{ field.preview }}</p>
+          </div>
+          <div class="w-full" v-if="field.type === 'date'">
+            <AgeValidationDatePicker v-model="field.value" label="" />
+          </div>
+          <div v-if="
+            field.type === 'select' &&
+            field.label !== 'State of Origin' &&
+            field.label !== 'Local Government'
+          ">
+            <select v-model="field.value"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3">
+              <option v-for="option in field.options" :key="option" :value="option">
+                {{ option }}
+              </option>
+            </select>
           </div>
         </div>
 
@@ -205,14 +213,17 @@
               <label class="text-sm font-medium text-[#1D2739]">
                 Full Name <span class="text-red-600">*</span>
               </label>
-              <input v-model="contact.fullName" type="text" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" placeholder="Enter full name" />
+              <input v-model="contact.fullName" type="text"
+                class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3"
+                placeholder="Enter full name" />
             </div>
 
             <div>
               <label class="text-sm font-medium text-[#1D2739]">
                 Relationship <span class="text-red-600">*</span>
               </label>
-              <select v-model="contact.relationship" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3">
+              <select v-model="contact.relationship"
+                class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3">
                 <option v-for="option in ['Mother', 'Father', 'Sibling', 'Spouse', 'Friend', 'Colleague', 'Other']"
                   :key="option" :value="option">
                   {{ option }}
@@ -226,7 +237,9 @@
             <label class="text-sm font-medium text-[#1D2739]">
               Phone Number <span class="text-red-600">*</span>
             </label>
-            <input v-model="contact.phoneNumber" type="number" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" placeholder="Enter your phone number" />
+            <input v-model="contact.phoneNumber" type="number"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3"
+              placeholder="Enter your phone number" />
           </div>
 
           <!-- Residential Address -->
@@ -234,7 +247,9 @@
             <label class="text-sm font-medium text-[#1D2739]">
               Residential Address <span class="text-red-600">*</span>
             </label>
-            <input v-model="contact.residentialAddress" type="text" class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3" placeholder="Enter residential address" />
+            <input v-model="contact.residentialAddress" type="text"
+              class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg w-full py-3"
+              placeholder="Enter residential address" />
           </div>
 
           <!-- Remove Contact Button -->
@@ -266,9 +281,7 @@
             <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">
               Cancel
             </button>
-            <button
-              :disabled="!isFormValid || loading"
-              type="submit"
+            <button :disabled="!isFormValid || loading" type="submit"
               class="px-6 py-3 text-sm rounded-md bg-[#292929] text-white disabled:cursor-not-allowed disabled:opacity-25">
               {{ loading ? "Processing..." : "Save" }}
             </button>
@@ -298,14 +311,14 @@ const { removeNullValues } = useRemoveNullValues();
 const { states, cities, loadingStates, loadingCities, getStates, getCities } =
   useGetLocation();
 
-  const currentEmploymentStatus =ref('')
-  // const router = useRouter()
+const currentEmploymentStatus = ref('')
+// const router = useRouter()
 
-  const handleEmploymentStatusChang = (event) => {
-      currentEmploymentStatus.value = event.target.value;
-    }
+const handleEmploymentStatusChang = (event) => {
+  currentEmploymentStatus.value = event.target.value;
+}
 
-    
+
 
 const cleanedObject = ref({});
 const selectedState = ref(""); // Define selectedState to track selected state
@@ -946,7 +959,7 @@ const isFormValid = computed(() => {
     if (!isValid) {
       console.log(`Invalid contact at index ${index}:`, contact);
     }
-    
+
     return isValid;
   });
 
@@ -1077,7 +1090,7 @@ const saveSection = async () => {
     // ✅ Ensure phoneNumber is stored as a string & pass consent checkbox
     const cleanedData = {
       referenceContacts: referenceContacts.value
-        .filter(contact => 
+        .filter(contact =>
           contact.fullName &&
           contact.relationship &&
           contact.phoneNumber &&
@@ -1094,7 +1107,7 @@ const saveSection = async () => {
     cleanedObject.value = removeNullValues({ ...credential.value, ...cleanedData });
     // console.log(cleanedObject.value, 'cleanted')
     await updateProfile(cleanedObject.value).then((data) => {
-       console.log(data, 'success fata')
+      console.log(data, 'success fata')
     })
 
     showToast({
