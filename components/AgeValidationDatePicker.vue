@@ -10,7 +10,7 @@
       @input="handleInput"
       :min="minDate"
       :max="maxDate"
-      class="w-full p-2 mt-1 w-full outline-none focus-within:border-2 focus-within:border-[#5B8469] border-[0.5px] text-sm rounded-md bg-[#E4E7EC] py-4"
+      class="border-[0.5px] border-gray-100 bg-gray-25 pl-3 rounded-lg py-3 p-2 mt-1 w-full outline-none focus-within:border-2 focus-within:border-[#5B8469] text-sm "
       :class="{ 'border-red-500': error }"
     />
     <p v-if="error" class="mt-1 text-sm text-red-600">
