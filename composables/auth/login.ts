@@ -32,7 +32,7 @@ export const use_auth_login = () => {
       useUser().createUser(res.data);
       showToast({
         title: "Success",
-        message: 'Login was successfully',
+        message: 'Login was successfull',
         toastType: "success",
         duration: 3000
       });
