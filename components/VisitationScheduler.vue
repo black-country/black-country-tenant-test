@@ -124,7 +124,7 @@
       </div>
   
       <!-- Time Slots -->
-      <div v-if="selectedDay !== null && availableTimesForDay?.length" class="grid py-4 rounded-md border-[0.5px] border-gray-50 bg-white grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 -mt-6">
+      <div v-if="selectedDay !== null && availableTimesForDay?.length" class="grid py-4 rounded-md border-[0.5px] border-gray-50 bg-white grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 -mt-6">
         <button
           v-for="time in availableTimesForDay"
           :key="time"
@@ -142,7 +142,7 @@
       </div>
       <div
       v-else
-      class="bg-white px-4 py-5 sm:p-6 h-80 rounded-lg flex flex-col gap-y-4 justify-center border items-center border-gray-50"
+      class="bg-white px-4 py-5 sm:p-6 h-80 rounded-lg flex flex-col gap-y-4 justify-center border items-center border-gray-50" 
     >
       <img
         :src="dynamicIcons('payment-empty-state')"
