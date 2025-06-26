@@ -24,7 +24,9 @@ export const useFetchMyHomeDetails = () => {
   };
 
   // Fetch data on component mount
-  onMounted(fetchMyHomeDetails);
+  onMounted(() => {
+    fetchMyHomeDetails()
+  });
 
   return {
     fetchMyHomeDetails,
