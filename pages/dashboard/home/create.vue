@@ -1,7 +1,7 @@
 <template>
     <TopNavBar />
     <main class="p-4">
-      <div class="flex items-center text-gray-600 mb-4 max-w-3xl mx-auto mt-6">
+      <div class="flex items-center max-w-3xl mx-auto mt-6 mb-4 text-gray-600">
             <svg
             @click="router.back()"
               width="36"
@@ -27,7 +27,7 @@
               ></span
             >
           </div>
-      <form @submit.prevent="handleSubmit" class="min-h-screen flex flex-col justify-between max-w-3xl mx-auto mt-6">
+      <form @submit.prevent="handleSubmit" class="flex flex-col justify-between max-w-3xl min-h-screen mx-auto mt-6">
         <!-- Form header and other fields remain the same -->
         <section class="space-y-6">
           <h2 class="text-xl font-semibold">Maintenance request</h2>
@@ -69,14 +69,14 @@
           <!-- Image Upload Section -->
           <div class="">
             <label class="text-[#1D2739] text-sm">Upload image (Optional)</label>
-            <div class="grid grid-cols-2 lg:grid-cols-3 gap-3 w-full mt-2">
+            <div class="grid w-full grid-cols-2 gap-3 mt-2 lg:grid-cols-3">
               <!-- Uploaded Images -->
               <div
                 v-for="(image, index) in payload.images"
                 :key="index"
                 class="relative h-44 bg-[#F0F2F5] rounded overflow-hidden"
               >
-                <img :src="image" alt="Uploaded" class="w-full h-full object-cover" />
+                <img :src="image" alt="Uploaded" class="object-cover w-full h-full" />
                 <button
                   @click="removeImage(index)"
                   class="absolute top-3 right-3 bg-[#F0F2F5] text-white rounded-full w-6 h-6 flex items-center justify-center"
@@ -111,7 +111,7 @@
                 </span>
     
                 <!-- Loader overlay -->
-                <div v-if="processing" class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center rounded">
+                <div v-if="processing" class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 rounded">
                   <span class="loader"></span>
                 </div>
               </div>
@@ -171,7 +171,7 @@
   
   // Cancel Request
   const cancelRequest = () => {
-    payload.value = { maintenanceType: '', urgencyLevel: '', description: '', images: [] }
+    payload.value = { type: '', urgencyLevel: '', description: '', images: [] }
   }
   </script>
   

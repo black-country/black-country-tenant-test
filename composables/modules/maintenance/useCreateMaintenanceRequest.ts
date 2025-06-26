@@ -29,7 +29,8 @@ export const useCreateMaintenanceRequest = () => {
           toastType: "success",
           duration: 3000,
         });
-        window.location.href = '/dashboard/home/success'
+        // window.location.href = '/dashboard/home/success'
+        router.back();
      } else {
         showToast({
           title: "Error",
