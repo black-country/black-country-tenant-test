@@ -1,14 +1,14 @@
 <template>
-   <main>
+  <main>
     <TopNavBar />
-    <div v-if="!loadingRentals && rentalsList.length" class="p-8 max-w-5xl mx-auto">
-      <div class="flex items-center justify-between py-4  bg-white">
+    <div class="max-w-5xl p-8 mx-auto">
+      <div class="flex items-center justify-between py-4 bg-white">
         <div class="flex items-center space-x-2">
           <a href="#" class="text-gray-500">Dashboard</a>
           <span class="text-gray-300">|</span>
           <span class="font-semibold text-gray-900">Rental Application</span>
         </div>
-        <div class="flex items-center space-x-4">
+        <!-- <div class="flex items-center space-x-4">
           <button class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full">
             <svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
@@ -26,123 +26,133 @@
                 </svg>
                 
           </button>
-        </div>
+        </div> -->
       </div>
-      <div class="overflow-x-auto scrollbar-hidden mb-6">
+      <div class="mb-6 overflow-x-auto scrollbar-hidden">
         <div class="flex space-x-4 whitespace-nowrap">
-          <button
-            v-for="filter in filters"
-            :key="filter.value"
-            @click="setActiveFilter(filter.value)"
-            :class="[
-              'px-4 py-2.5 rounded-lg text-sm',
-              activeFilter === filter.value ? 'bg-[#5B8469] text-white' : 'text-[#1D2739] bg-[#F0F2F5]'
-            ]"
-          >
+          <button v-for="filter in filters" :key="filter.value" @click="setActiveFilter(filter.value)" :class="[
+            'px-4 py-2.5 rounded-lg text-sm',
+            activeFilter === filter.value ? 'bg-[#5B8469] text-white' : 'text-[#1D2739] bg-[#F0F2F5]'
+          ]">
             {{ filter.label }}
           </button>
         </div>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        <div  v-for="rental in filteredRentals"
-         @click="handleSelectedRental(rental)"
-        :key="rental.id" class="max-w-sm cursor-pointer rounded-lg overflow-hidden h-96 shadow-lg relative">
-            <!-- Image Section -->
-            <img v-if="rental?.house?.images" :src="rental?.house?.images[0]" alt="Living Room" class="w-full h-96 object-cover rounded-t-lg" />
-          
-            <!-- Text Overlay with Transparent Background -->
-            <div class="absolute bottom-0 left-0 right-0 p-4 bg-black/50 m-2 rounded-b-lg">
-              <!-- Property Title -->
-              <div class="flex justify-between items-center pb-2">
-                <h3 class="text-white font-semibold">{{rental?.house?.name}}</h3>
-                <span class="text-white font-medium text-base">{{formatCurrency(rental?.room?.rentAmount)}}</span>
-             </div>
-          
-              <!-- Address with Location Icon -->
-              <p class="text-[#E4E7EC] text-xs flex items-center space-x-1">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-400" viewBox="0 0 24 24" fill="currentColor">
-                  <path fill-rule="evenodd" d="M12 2C8.13 2 5 5.13 5 9c0 4.41 4.15 10.04 6.17 12.32a.999.999 0 0 0 1.66 0C14.85 19.04 19 13.41 19 9c0-3.87-3.13-7-7-7zm0 2c2.76 0 5 2.24 5 5 0 3.06-2.94 7.19-5 9.88C9.94 16.19 7 12.06 7 9c0-2.76 2.24-5 5-5zm0 2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" clip-rule="evenodd"/>
-                </svg>
-                <span>{{rental?.house?.address.slice(0, 30)}}...</span>
-              </p>
-          
-              <!-- Price and Status -->
-              <div class="flex justify-between items-center mt-2">          
-                <!-- Status Badge with Light Background -->
-                <span v-if="rental.status === 'LEASE_SENT'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="4" cy="4" r="3" fill="#099137"/>
-                      </svg>                        
-                Lease Sent
-              </span>
-              <span v-if="rental.status === 'LEASE_SIGNED'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="4" cy="4" r="3" fill="#099137"/>
-                      </svg>                        
-                Lease Signed
-              </span>
-                <span v-if="rental.status === 'PENDING'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
-                  <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                      <circle cx="4" cy="4" r="3" fill="#099137"/>
-                      </svg>                        
-                Application sent
-              </span>
-                <span v-if="rental.status === 'APPROVED'" class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
-                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="4" cy="4" r="3" fill="#099137"/>
-                        </svg>                        
-                  Approved application
-                </span>
-                <span v-if="rental.status === 'CANCELLED'" class="bg-[#F9FAFB] text-[#1D2739] text-xs px-2 py-2 rounded-full flex items-center">
-                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="4" cy="4" r="3" fill="#1D2739"/>
-                        </svg>
-                                               
-                  Cancelled
-                </span>
-                <span v-if="rental.status === 'REJECTED'" class="bg-[#FBEAE9] text-[#BA110B] text-xs px-2 py-2 rounded-full flex items-center">
-                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="4" cy="4" r="3" fill="#BA110B"/>
-                        </svg>
-                                               
-                  Rejected
-                </span>
-                <span v-if="rental.status === 'Scheduled visitation'" class="bg-[#FEF6E7] text-[#DD900D] text-xs px-2 py-2 rounded-full flex items-center">
-                    <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="4" cy="4" r="3" fill="#DD900D"/>
-                        </svg>
-                        
-                                               
-                        Scheduled visitation
-                </span>
-              </div>
-            </div>
-          </div>
-      </div>
-    </div>
-    <section  class="p-8 max-w-7xl mx-auto" v-else>
-        <div class="rounded-md p-4 w-full mx-auto">
-          <div class="animate-pulse flex space-x-4">
-            <div class="flex-1 space-y-6 py-1">
-              <div class="h-32 bg-slate-200 rounded"></div>
+      <div v-if="loadingRentals" class="p-8 mx-auto max-w-7xl">
+        <div class="w-full p-4 mx-auto rounded-md">
+          <div class="flex space-x-4 animate-pulse">
+            <div class="flex-1 py-1 space-y-6">
+              <div class="h-32 rounded bg-slate-200"></div>
               <div class="space-y-3">
                 <div class="grid grid-cols-3 gap-4">
-                  <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
-                  <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
+                  <div class="w-full h-32 col-span-2 rounded bg-slate-200"></div>
+                  <div class="w-full h-32 col-span-1 rounded bg-slate-200"></div>
                 </div>
-                <div class="h-32 w-full bg-slate-200 rounded"></div>
+                <div class="w-full h-32 rounded bg-slate-200"></div>
               </div>
             </div>
           </div>
         </div>
-      </section>
-   </main>
-  </template>
-  
-  <script setup lang="ts">
-  import rentalHome from '@/assets/img/rental-home.png'
-  import { useGetRentals  } from '@/composables/modules/rentals/fetchAllRentals'
-  const { loadingRentals, rentalsList } = useGetRentals()
+      </div>
+      <div v-else-if="filteredRentals.length" class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <div v-for="rental in filteredRentals" @click="handleSelectedRental(rental)" :key="rental.id"
+          class="relative max-w-sm overflow-hidden rounded-lg shadow-lg cursor-pointer h-96">
+          <!-- Image Section -->
+          <img v-if="rental?.house?.images" :src="rental?.house?.images[0]" alt="Living Room"
+            class="object-cover w-full rounded-t-lg h-96" />
+
+          <!-- Text Overlay with Transparent Background -->
+          <div class="absolute bottom-0 left-0 right-0 p-4 m-2 rounded-b-lg bg-black/50">
+            <!-- Property Title -->
+            <div class="flex items-center justify-between pb-2">
+              <h3 class="font-semibold text-white">{{ rental?.house?.name }}</h3>
+              <span class="text-base font-medium text-white">{{ formatCurrency(rental?.room?.rentAmount) }}</span>
+            </div>
+
+            <!-- Address with Location Icon -->
+            <p class="text-[#E4E7EC] text-xs flex items-center space-x-1">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-green-400" viewBox="0 0 24 24"
+                fill="currentColor">
+                <path fill-rule="evenodd"
+                  d="M12 2C8.13 2 5 5.13 5 9c0 4.41 4.15 10.04 6.17 12.32a.999.999 0 0 0 1.66 0C14.85 19.04 19 13.41 19 9c0-3.87-3.13-7-7-7zm0 2c2.76 0 5 2.24 5 5 0 3.06-2.94 7.19-5 9.88C9.94 16.19 7 12.06 7 9c0-2.76 2.24-5 5-5zm0 2.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"
+                  clip-rule="evenodd" />
+              </svg>
+              <span>{{ rental?.house?.address.slice(0, 30) }}...</span>
+            </p>
+
+            <!-- Price and Status -->
+            <div class="flex items-center justify-between mt-2">
+              <!-- Status Badge with Light Background -->
+              <span v-if="rental.status === 'LEASE_SENT'"
+                class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="4" cy="4" r="3" fill="#099137" />
+                </svg>
+                Lease Sent
+              </span>
+              <span v-if="rental.status === 'LEASE_SIGNED'"
+                class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="4" cy="4" r="3" fill="#099137" />
+                </svg>
+                Lease Signed
+              </span>
+              <span v-if="rental.status === 'PENDING'"
+                class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="4" cy="4" r="3" fill="#099137" />
+                </svg>
+                Application sent
+              </span>
+              <span v-if="rental.status === 'APPROVED'"
+                class="bg-[#E7F6EC] text-[#099137] text-xs px-2 py-2 rounded-full flex items-center">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="4" cy="4" r="3" fill="#099137" />
+                </svg>
+                Approved application
+              </span>
+              <span v-if="rental.status === 'CANCELLED'"
+                class="bg-[#F9FAFB] text-[#1D2739] text-xs px-2 py-2 rounded-full flex items-center">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="4" cy="4" r="3" fill="#1D2739" />
+                </svg>
+
+                Cancelled
+              </span>
+              <span v-if="rental.status === 'REJECTED'"
+                class="bg-[#FBEAE9] text-[#BA110B] text-xs px-2 py-2 rounded-full flex items-center">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="4" cy="4" r="3" fill="#BA110B" />
+                </svg>
+
+                Rejected
+              </span>
+              <span v-if="rental.status === 'Scheduled visitation'"
+                class="bg-[#FEF6E7] text-[#DD900D] text-xs px-2 py-2 rounded-full flex items-center">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="4" cy="4" r="3" fill="#DD900D" />
+                </svg>
+
+
+                Scheduled visitation
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-else class="flex flex-col items-center justify-center p-10 mx-auto max-w-7xl">
+        <img :src="dynamicIcons('leases-empty-state')" alt="leases empty state" class="" />
+        <h2 class="text-xl font-semibold text-gray-700">No rental applications found.</h2>
+      </div>
+    </div>
+  </main>
+</template>
+
+<script setup lang="ts">
+import { dynamicIcons } from "@/utils/assets";
+import rentalHome from '@/assets/img/rental-home.png'
+import { useGetRentals } from '@/composables/modules/rentals/fetchAllRentals'
+const { loadingRentals, rentalsList } = useGetRentals()
 const router = useRouter()
 
 interface Rental {
@@ -156,11 +166,11 @@ interface Rental {
 // const loadingRentals = ref(false) as any
 
 const handleSelectedRental = (item) => {
-   if(item.status === 'Scheduled visitation'){
-     router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details?type=scheduled?rentalId=${item?.id}`)
-   } else {
+  if (item.status === 'Scheduled visitation') {
+    router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details?type=scheduled?rentalId=${item?.id}`)
+  } else {
     router.push(`/dashboard/listings/${item?.house?.id}/rental-applications/details?rentalId=${item?.id}`)
-   }
+  }
 }
 
 const formatCurrency = (amount: number | undefined) => {
@@ -217,7 +227,9 @@ const filteredRentals = computed(() => {
 }
 
 .scrollbar-hidden {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 </style>

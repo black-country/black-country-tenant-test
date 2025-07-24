@@ -1,44 +1,20 @@
 <template>
   <main>
-    <div v-if="!loadingProfile" class="h-screen flex flex-col justify-between">
-      <h2 class="text-xl font-medium text-[#1D2739] mb-4">
-        Review your profile details
-      </h2>
-      <!-- {{ profile }} -->
-      <p v-if="route.query.step !== 'preview'" class="mb-6 text-[#667185]">
-        Please review your profile details and make any necessary edits before
-        proceeding. Fields marked with a <span class="text-red-600">*</span> are
-        required to complete your application.
-      </p>
-      <p class="text-[#667185]" v-else>
-        Please review your application and make any necessary edits before
-        proceeding submit your application.
-      </p>
-
-      <div class="space-y-4 pb-20">
-        <!-- Personal Information -->
-
-        <!-- Pre-Screening Questions -->
+    <div v-if="!loadingProfile" class="flex flex-col justify-between h-screen">
+      <div class="pb-20 space-y-4">
         <div v-if="route?.query?.step === 'preview'" class="">
           <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <h3 class="text-base font-medium">Pre-Screening Questions</h3>
             <button
               class="text-[#1D2739] disabled:cursor-not-allowed disabled:opacity-25 text-base font-medium cursor-pointer"
-              @click="editSection('screening-questions')"
-            >
+              @click="editSection('screening-questions')">
               Edit
             </button>
           </div>
-          <ul
-            class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <li
-              v-for="(question, idx) in profile.screeningQuestions"
-              :key="idx"
-              class="text-sm font-light flex flex-col justify-between"
-            >
+          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <li v-for="(question, idx) in profile.screeningQuestions" :key="idx"
+              class="flex flex-col justify-between text-sm font-light">
               <p>{{ question?.question }}</p>
               <p class="font-semibold">{{ question?.answer || "---" }}</p>
             </li>
@@ -47,110 +23,60 @@
 
         <div class="">
           <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <h3 class="text-base font-medium">Personal Information</h3>
-            <button
-              class="text-[#1D2739] text-base font-medium cursor-pointer"
-              @click="editSection('personal-information')"
-            >
+            <button class="text-[#1D2739] text-base font-medium cursor-pointer"
+              @click="editSection('personal-information')">
               Edit
             </button>
           </div>
-          <ul
-            class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <li
-              class="text-[#6617185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Name: <span class="text-red-600">*</span></strong
-              >{{ profile.personal.name || "---" }}
+          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <li class="text-[#6617185] text-sm font-light flex justify-between items-center">
+              <strong>Name: <span class="text-red-600">*</span></strong>{{ profile.personal.name || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Email address: <span class="text-red-600">*</span></strong
-              >{{ profile.personal.email || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Email address: <span class="text-red-600">*</span></strong>{{ profile.personal.email || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Phone number: <span class="text-red-600">*</span></strong
-              >{{ profile.personal.phone || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Phone number: <span class="text-red-600">*</span></strong>{{ profile.personal.phone || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Date of Birth: <span class="text-red-600">*</span></strong
-              >{{
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Date of Birth: <span class="text-red-600">*</span></strong>{{
                 moment(profile.personal.dob).format("MMMM Do YYYY") || "---"
               }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
               <strong>Gender: </strong>{{ profile.personal.gender || "---" }}
             </li>
-            <!-- <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Marital status: </strong
-              >{{ profile.personal.maritalStatus || "---" }}
-            </li> -->
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong
-                >State of Origin: <span class="text-red-600">*</span></strong
-              >{{ profile.personal.lga.stateName || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>State of Origin: <span class="text-red-600">*</span></strong>{{ profile.personal.lga.stateName ||
+              "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
               <strong>LGA: </strong>{{ profile.personal.lga.name || "---" }}
             </li>
           </ul>
         </div>
-
-        <!-- Rental History -->
         <div class="">
           <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <h3 class="text-base font-medium">Rental History</h3>
-            <button
-              class="text-[#1D2739] cursor-pointer"
-              @click="editSection('rental-history')"
-            >
+            <button class="text-[#1D2739] cursor-pointer" @click="editSection('rental-history')">
               Edit
             </button>
           </div>
-          <ul
-            class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Current Landlord: </strong
-              >{{ profile.rental.currentLandlord || "---" }}
+          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Current Landlord: </strong>{{ profile.rental.currentLandlord || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Rental Address: </strong
-              >{{ profile.rental.address || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Rental Address: </strong>{{ profile.rental.address || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Length of Tenancy: </strong
-              >{{ profile.rental.lengthOfTenancy || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Length of Tenancy: </strong>{{ profile.rental.lengthOfTenancy || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Reason for moving out: </strong
-              >{{ profile.rental.reasonForMovingOut || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Reason for moving out: </strong>{{ profile.rental.reasonForMovingOut || "---" }}
             </li>
           </ul>
         </div>
@@ -158,177 +84,76 @@
         <!-- Employment Information -->
         <div class="">
           <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <h3 class="text-base font-medium">Employment Information</h3>
-            <button
-              class="text-[#1D2739] cursor-pointer"
-              @click="editSection('employment-information')"
-            >
+            <button class="text-[#1D2739] cursor-pointer" @click="editSection('employment-information')">
               Edit
             </button>
           </div>
-          <ul
-            class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Employment Status: </strong
-              >{{ profile.employment.status || "---" }}
+          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Employment Status: </strong>{{ profile.employment.status || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Employer's full name: </strong
-              >{{ profile.employment.employerName || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Employer's full name: </strong>{{ profile.employment.employerName || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Occupation: </strong
-              >{{ profile.employment.occupation || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Occupation: </strong>{{ profile.employment.occupation || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Organization Address: </strong
-              >{{ profile.employment.organizationAddress || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Organization Address: </strong>{{ profile.employment.organizationAddress || "---" }}
             </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Monthly Net Salary: </strong
-              >{{ profile.employment.salary || "---" }}
+            <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+              <strong>Monthly Net Salary: </strong>{{ profile.employment.salary || "---" }}
             </li>
           </ul>
         </div>
 
-        <!-- Next of Kin -->
-        <!-- <div class="">
-          <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <h3 class="text-base font-medium">
-              Reference and Emergency Contacts
-            </h3>
-            <button
-              class="text-[#1D2739] cursor-pointer"
-              @click="editSection('next-of-kin')"
-            >
-              Edit
-            </button>
-          </div>
-          <ul
-            class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Full Name: </strong
-              >{{ profile.nextOfKin.fullName || "---" }}
-            </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Relationship: </strong
-              >{{ profile.nextOfKin.relationship || "---" }}
-            </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Phone number: </strong
-              >{{ profile.nextOfKin.phone || "---" }}
-            </li>
-            <li
-              class="text-[#667185] text-sm font-light flex justify-between items-center"
-            >
-              <strong>Residential Address: </strong
-              >{{ profile.nextOfKin.address || "---" }}
-            </li>
-            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email address:
-              </strong>{{ profile.nextOfKin.email || '---' }}</li>
-            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Occupation:
-              </strong>{{ profile.nextOfKin.occupation || '---' }}</li>
-            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Organization Name:
-              </strong>{{ profile.nextOfKin.organizationName || '---' }}</li>
-            <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Office Address:
-              </strong>{{ profile.nextOfKin.officeAddress || '---' }}</li>
-          </ul>
-        </div> -->
-
         <div class="">
           <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <h3 class="text-base font-medium">
               Reference and Emergency Contacts
             </h3>
-            <button
-              class="text-[#1D2739] cursor-pointer"
-              @click="editSection('reference-and-emergency')"
-            >
+            <button class="text-[#1D2739] cursor-pointer" @click="editSection('reference-and-emergency')">
               Edit
             </button>
           </div>
 
-          <!-- ✅ Fix: Check if referenceContacts exists -->
           <div v-if="profile?.referenceContacts?.length">
-            <ul
-              v-for="(item, idx) in profile?.referenceContacts"
-              :key="idx"
-              class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-            >
+            <ul v-for="(item, idx) in profile?.referenceContacts" :key="idx"
+              class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
               <p>{{ idx + 1 }}. Emergency contact</p>
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Full Name: *</strong> {{ item.fullName || "---" }}
               </li>
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Relationship: *</strong>
                 {{ item.relationship || "---" }}
               </li>
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Phone number: *</strong> {{ item.phoneNumber || "---" }}
               </li>
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Residential Address: *</strong>
                 {{ item.residentialAddress || "---" }}
               </li>
             </ul>
           </div>
 
-          <!-- ✅ Fix: Default empty reference contacts display -->
           <div class="py-6" v-else>
             <p>1. Emergency contact</p>
-            <ul
-              class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-            >
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+            <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Full Name: *</strong> ---
               </li>
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Relationship: *</strong> ---
               </li>
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Phone number: *</strong> ---
               </li>
-              <li
-                class="text-[#667185] text-sm font-light flex justify-between items-center"
-              >
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
                 <strong>Residential Address: *</strong> ---
               </li>
             </ul>
@@ -338,173 +163,96 @@
         <!-- Uploaded Document Section -->
         <div v-if="route?.query?.step === 'preview'" class="">
           <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
+            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
             <h3 class="text-base font-medium">Uploaded Document</h3>
-            <button
-              class="text-[#1D2739]"
-              @click="editSection('uploaded-document')"
-            >
+            <button class="text-[#1D2739]" @click="editSection('uploaded-document')">
               Edit
             </button>
           </div>
 
-          <div
-            class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <div class="flex justify-between items-center">
-              <strong>Document Type: </strong
-              >{{ profile.document.type || "---" }}
+          <div class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+            <div class="flex items-center justify-between">
+              <strong>Document Type: </strong>{{ profile.document.type || "---" }}
             </div>
-            <div class="mt-2 space-x-2 grid grid-cols-2 gap-6">
-              <div
-                v-for="(url, idx) in profile.document.fileUrls"
-                :key="idx"
-                class="bg-gray-200 rounded-md"
-              >
-                <img
-                  :src="url"
-                  alt="Document Image"
-                  class="w-full h-full object-cover rounded-md"
-                />
+            <div class="grid grid-cols-2 gap-6 mt-2 space-x-2">
+              <div v-for="(url, idx) in profile.document.fileUrls" :key="idx" class="bg-gray-200 rounded-md">
+                <img :src="url" alt="Document Image" class="object-cover w-full h-full rounded-md" />
               </div>
             </div>
           </div>
 
           <div v-if="profile.personal.maritalStatus === 'married'">
-          <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <h3 class="text-base font-medium">Marital Information</h3>
-            <button class="text-[#1D2739] cursor-pointer" @click="editSection('marital-information')">
-              Edit
-            </button>
-          </div>
-          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Spouse Name:</strong> {{ profile.maritalData.fullName || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email Address:</strong> {{ profile.maritalData.email || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone Number:</strong> {{ profile.maritalData.phoneNumber || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>ID Type:</strong> {{ profile.maritalData.idDocs.type || '---' }}</li>
-            <li v-if="profile.maritalData.idDocs.fileUrls.length">
-              <strong>ID Images:</strong>
-              <div class="grid grid-cols-2 gap-4 mt-2">
-                <img v-for="(url, idx) in profile.maritalData.idDocs.fileUrls" :key="idx" :src="url" class="w-full object-cover rounded-md" />
-              </div>
-            </li>
-          </ul>
+            <div
+              class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+              <h3 class="text-base font-medium">Marital Information</h3>
+              <button class="text-[#1D2739] cursor-pointer" @click="editSection('marital-information')">
+                Edit
+              </button>
+            </div>
+            <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Spouse
+                  Name:</strong> {{ profile.maritalData.fullName || '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email
+                  Address:</strong> {{ profile.maritalData.email || '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone
+                  Number:</strong> {{ profile.maritalData.phoneNumber || '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>ID Type:</strong>
+                {{ profile.maritalData.idDocs.type || '---' }}</li>
+              <li v-if="profile.maritalData.idDocs.fileUrls.length">
+                <strong>ID Images:</strong>
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                  <img v-for="(url, idx) in profile.maritalData.idDocs.fileUrls" :key="idx" :src="url"
+                    class="object-cover w-full rounded-md" />
+                </div>
+              </li>
+            </ul>
           </div>
 
 
           <div class="pb-32 mt-2" v-if="profile.guarantorData">
-          <div
-            class="flex justify-between items-center text-gray-600  space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <h3 class="text-base font-medium">Guarantor's Information</h3>
-            <button class="text-[#1D2739] cursor-pointer" @click="editSection('guarantor-information')">
-              Edit
-            </button>
+            <div
+              class="flex justify-between items-center text-gray-600  space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+              <h3 class="text-base font-medium">Guarantor's Information</h3>
+              <button class="text-[#1D2739] cursor-pointer" @click="editSection('guarantor-information')">
+                Edit
+              </button>
+            </div>
+            <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Full
+                  Name:</strong> {{ profile.guarantorData.fullName || '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email
+                  Address:</strong> {{ profile.guarantorData.email || '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone
+                  Number:</strong> {{ profile.guarantorData.phoneNumber || '---' }}</li>
+              <li class="text-[#667185] text-sm font-light flex justify-between items-center">
+                <strong>Relationship:</strong> {{ profile.guarantorData.relationship || '---' }}</li>
+              <li v-if="profile.guarantorData.idDocs.fileUrls.length">
+                <strong>ID Images:</strong>
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                  <img v-for="(url, idx) in profile.guarantorData.idDocs.fileUrls" :key="idx" :src="url"
+                    class="object-cover w-full rounded-md" />
+                </div>
+              </li>
+            </ul>
           </div>
-          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Full Name:</strong> {{ profile.guarantorData.fullName || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email Address:</strong> {{ profile.guarantorData.email || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone Number:</strong> {{ profile.guarantorData.phoneNumber || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Relationship:</strong> {{ profile.guarantorData.relationship || '---' }}</li>
-            <li v-if="profile.guarantorData.idDocs.fileUrls.length">
-              <strong>ID Images:</strong>
-              <div class="grid grid-cols-2 gap-4 mt-2">
-                <img v-for="(url, idx) in profile.guarantorData.idDocs.fileUrls" :key="idx" :src="url" class="w-full object-cover rounded-md" />
-              </div>
-            </li>
-          </ul>
-           </div>
         </div>
-              <!-- Marital Information (Only if Married) -->
-        <!-- <div v-if="profile.personal.maritalStatus === 'married'">
-          <div
-            class="flex justify-between items-center text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <h3 class="text-base font-medium">Marital Information</h3>
-            <button class="text-[#1D2739] cursor-pointer" @click="editSection('marital-information')">
-              Edit
-            </button>
-          </div>
-          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Spouse Name:</strong> {{ profile.maritalData.fullName || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email Address:</strong> {{ profile.maritalData.email || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone Number:</strong> {{ profile.maritalData.phoneNumber || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>ID Type:</strong> {{ profile.maritalData.idDocs.type || '---' }}</li>
-            <li v-if="profile.maritalData.idDocs.fileUrls.length">
-              <strong>ID Images:</strong>
-              <div class="grid grid-cols-2 gap-4 mt-2">
-                <img v-for="(url, idx) in profile.maritalData.idDocs.fileUrls" :key="idx" :src="url" class="w-full object-cover rounded-md" />
-              </div>
-            </li>
-          </ul>
-        </div> -->
-
       </div>
-            <!-- Guarantor Information -->
-      <!-- <div class="pb-32 -mt-16" v-if="profile.guarantorData">
-          <div
-            class="flex justify-between items-center text-gray-600  space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]"
-          >
-            <h3 class="text-base font-medium">Guarantor's Information</h3>
-            <button class="text-[#1D2739] cursor-pointer" @click="editSection('guarantor-information')">
-              Edit
-            </button>
-          </div>
-          <ul class="text-gray-600 space-y-3 mt-2 bg-white rounded-lg p-3 border-gray-50 border-[0.5px]">
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Full Name:</strong> {{ profile.guarantorData.fullName || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Email Address:</strong> {{ profile.guarantorData.email || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Phone Number:</strong> {{ profile.guarantorData.phoneNumber || '---' }}</li>
-            <li  class="text-[#667185] text-sm font-light flex justify-between items-center"><strong>Relationship:</strong> {{ profile.guarantorData.relationship || '---' }}</li>
-            <li v-if="profile.guarantorData.idDocs.fileUrls.length">
-              <strong>ID Images:</strong>
-              <div class="grid grid-cols-2 gap-4 mt-2">
-                <img v-for="(url, idx) in profile.guarantorData.idDocs.fileUrls" :key="idx" :src="url" class="w-full object-cover rounded-md" />
-              </div>
-            </li>
-          </ul>
-      </div> -->
-
-      <div
-        class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center border-[0.5px]"
-      >
-        <div class="max-w-2xl w-full flex justify-between">
-          <button
-            class="px-6 py-3 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none"
-            @click="router.back()"
-          >
+      <div class="bg-white fixed bottom-0 left-0 right-0 px-6 py-4 flex justify-center border-[0.5px]">
+        <div class="flex justify-between w-full max-w-2xl">
+          <button class="px-6 py-3 text-sm text-gray-600 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none"
+            @click="router.back()">
             Back
           </button>
           <!-- <CoreGoBack /> -->
           <!-- <button class="px-6 py-3 text-sm rounded-md bg-white border text-[#292929]" @click="goBack">Go Back</button> -->
-          <button
-            :disabled="processing"
+          <button :disabled="processing || isProfileIncomplete"
             class="px-6 py-3 text-sm rounded-md disabled:cursor-not-allowed disabled:opacity-25 bg-[#292929] text-white"
-            @click="goNext"
-          >
+            @click="goNext">
             {{ processing ? "processing.." : "Continue" }}
           </button>
         </div>
       </div>
     </div>
-    <section class="p-8 max-w-7xl mx-auto" v-else>
-      <div class="rounded-md p-4 w-full mx-auto">
-        <div class="animate-pulse flex space-x-4">
-          <div class="flex-1 space-y-6 py-1">
-            <div class="h-32 bg-slate-200 rounded"></div>
-            <div class="space-y-3">
-              <div class="grid grid-cols-3 gap-4">
-                <div class="h-32 w-full bg-slate-200 rounded col-span-2"></div>
-                <div class="h-32 w-full bg-slate-200 rounded col-span-1"></div>
-              </div>
-              <div class="h-32 w-full bg-slate-200 rounded"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </main>
 </template>
 
@@ -903,5 +651,37 @@ const editSection = (section: string) => {
     );
   }
 };
+
+const isProfileIncomplete = computed(() => {
+  const personal = profile.value.personal;
+  const rental = profile.value.rental;
+  const employment = profile.value.employment;
+  const references = profile.value.referenceContacts || [];
+  const document = profile.value.document;
+
+  const screeningValid = profile.value.screeningQuestions.every((q) => q.answer && q.answer.trim() !== "");
+
+  const personalValid = personal.name && personal.email && personal.phone && personal.dob && personal.stateOfOrigin;
+
+  const rentalValid = rental.currentLandlord && rental.address && rental.lengthOfTenancy && rental.reasonForMovingOut;
+
+  const employmentValid = employment.status && employment.employerName && employment.occupation && employment.organizationAddress && employment.salary;
+
+  const referencesValid = references.every((item) => item.fullName && item.relationship && item.phoneNumber && item.residentialAddress);
+
+  const documentValid = document.type && document.fileUrls.length > 0;
+
+  const maritalValid =
+    personal.maritalStatus !== "married" ||
+    (profile.value.maritalData.fullName && profile.value.maritalData.email && profile.value.maritalData.phoneNumber && 
+    profile.value.maritalData.idDocs.type && profile.value.maritalData.idDocs.fileUrls.length > 0);
+
+  const guarantorValid =
+    profile.value.guarantorData.fullName && profile.value.guarantorData.email && profile.value.guarantorData.phoneNumber && 
+    profile.value.guarantorData.relationship && profile.value.guarantorData.idDocs.type && profile.value.guarantorData.idDocs.fileUrls.length > 0;
+
+  return !( personalValid && rentalValid && employmentValid && referencesValid && screeningValid );
+});
+
 
 </script>

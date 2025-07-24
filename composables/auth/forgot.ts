@@ -37,7 +37,7 @@ export const use_auth_forgot_password = () => {
 		} else {
 			showToast({
 				title: "Error",
-				message: res.data?.error || 'Something went wrong.',
+				message: res.data?.error || "Error kindly check your network connection.",
 				toastType: "error",
 				duration: 3000
 			});

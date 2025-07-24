@@ -1,16 +1,16 @@
 <template>
   <main>
     <TopNavBar />
-    <div class="lg:p-6 p-3 bg-gray-25 min-h-screen">
+    <div class="min-h-screen p-3 lg:p-6 bg-gray-25">
       <div class="max-w-xl mx-auto">
-        <svg @click="router.back()" class="cursor-pointer mb-3" width="36" height="36" viewBox="0 0 36 36" fill="none"
+        <svg @click="router.back()" class="mb-3 cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none"
           xmlns="http://www.w3.org/2000/svg">
           <rect width="36" height="36" rx="18" fill="#EAEAEA" />
           <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739"
             stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
-        <div class="text-sm text-gray-500 mb-4">
-          <span>Profile</span>
+        <div class="mb-4 text-sm text-gray-500">
+          <span @click="router.back()" class="cursor-pointer">Profile</span>
           <span class="mx-2">|</span>
           <span class="font-semibold text-gray-700">FAQs</span>
         </div>
@@ -37,12 +37,12 @@
         </div>
         <section v-if="!loading && faqList.length" class="space-y-4">
           <div v-for="item in filteredFaqList" :key="item.id" class="overflow-hidden border-[0.5px] border-gray-50 px-3 bg-white rounded-lg">
-            <button class="w-full text-left py-3  transition-colors duration-300 flex justify-between items-center"
+            <button class="flex items-center justify-between w-full py-3 text-left transition-colors duration-300"
               @click="toggle(item.id)">
               <p class="text-[#1D2739] font-light">
                 {{ item.question }}
               </p>
-              <span class="relative h-5 w-5 shrink-0">
+              <span class="relative w-5 h-5 shrink-0">
                 <svg v-if="isClose(item.id)" width="16" height="16" viewBox="0 0 16 16" fill="none"
                   xmlns="http://www.w3.org/2000/svg">
                   <path d="M12 6.00003C12 6.00003 9.05407 10 8 10C6.94587 10 4 6 4 6" stroke="#667185"
@@ -56,19 +56,19 @@
                 </svg>
               </span>
             </button>
-            <div v-if="isOpen(item.id)" class="overflow-hidden transition-max-height duration-500 pb-3"
+            <div v-if="isOpen(item.id)" class="pb-3 overflow-hidden duration-500 transition-max-height"
               :style="{ maxHeight: isOpen(item.id) ? `${maxHeight}px` : '0' }">
-              <p class="p-1 lg:p-4 text-gray-700 text-sm font-light md:text-base rounded-lg">
+              <p class="p-1 text-sm font-light text-gray-700 rounded-lg lg:p-4 md:text-base">
                 {{ item.answer }}
               </p>
             </div>
           </div>
         </section>
 
-        <div v-else class="rounded-md container mx-auto">
-        <div class="animate-pulse flex space-x-4">
-          <div class="flex-1 space-y-6 py-1">
-            <div class="h-44 bg-slate-200 rounded"></div>
+        <div v-else class="container mx-auto rounded-md">
+        <div class="flex space-x-4 animate-pulse">
+          <div class="flex-1 py-1 space-y-6">
+            <div class="rounded h-44 bg-slate-200"></div>
           </div>
         </div>
       </div>

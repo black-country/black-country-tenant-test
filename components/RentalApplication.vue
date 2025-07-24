@@ -2,8 +2,8 @@
 <template>
    <main>
     <!-- {{ !!rentalObj?.rentalLeaseAgreement }} -->
-     <!-- <div v-if="!loading && Object.keys(propertyObj?.rentalApplication).length" class="max-w-3xl mx-auto p-4"> -->
-      <div v-if="!loading && propertyObj?.rentalApplication && Object.keys(propertyObj.rentalApplication).length" class="max-w-3xl mx-auto p-4">
+     <!-- <div v-if="!loading && Object.keys(propertyObj?.rentalApplication).length" class="max-w-3xl p-4 mx-auto"> -->
+      <div v-if="!loading && propertyObj?.rentalApplication && Object.keys(propertyObj.rentalApplication).length" class="max-w-3xl p-4 mx-auto">
       <!-- Navigation -->
       <div class="flex items-center gap-2 mb-8 text-gray-600">
         <button @click="router.back()" class="">
@@ -26,7 +26,7 @@
       <ProgressSteps :rentalObj="rentalObj"  />
   
       <!-- Property Details -->
-      <div class="mb-6 mt-16 ">
+      <div class="mt-16 mb-6 ">
         <div v-if="rentalObj?.house?.images" class="flex items-center gap-4">
           <div class="border-[0.5px] border-gray-100 rounded-lg rounded-xl">
             <img :src="rentalObj?.house?.images[0]" alt="Room preview" class="w-20 border-[0.5px] border-gray-100 rounded-lg rounded-xl h-20 object-cover" />
@@ -55,11 +55,11 @@
       <!-- Availability and Price -->
       <div class="flex border-[0.5px] py-4 px-3 rounded-lg border-gray-100 justify-between items-center mb-6">
         <div>
-          <span class="text-gray-900 font-medium text-sm">Available Now</span>
+          <span class="text-sm font-medium text-gray-900">Available Now</span>
         </div>
         <div>
-          <span class="text-gray-900 font-medium">{{ formatCurrency(rentalObj?.room?.rentAmount) ?? '0.00' }}</span>
-          <span class="text-gray-600 ml-2">{{rentalObj?.room?.rentFrequency ?? 'Nil'}}</span>
+          <span class="font-medium text-gray-900">{{ formatCurrency(rentalObj?.room?.rentAmount) ?? '0.00' }}</span>
+          <span class="ml-2 text-gray-600">{{rentalObj?.room?.rentFrequency ?? 'Nil'}}</span>
         </div>
       </div>
 <!-- {{ rentalObj }} -->
@@ -67,7 +67,7 @@
   
       <!-- Room Type -->
       <div class="mb-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-100 flex justify-between items-center">
-        <span class="text-gray-600 text-sm">Room Type</span>
+        <span class="text-sm text-gray-600">Room Type</span>
         <div v-if="rentalObj?.room?.isMaster" class="inline-flex items-center gap-2 px-3 py-3 bg-[#FEF6E7] text-xs text-[#DD900D] rounded-full mt-2">
           <span>Master Bedroom</span>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,16 +82,16 @@
   
       <!-- Gallery -->
       <div class="mb-6 border-[0.5px] py-4 px-3 rounded-lg border-gray-100">
-        <button class="w-full flex items-center justify-between">
+        <button class="flex items-center justify-between w-full">
           <div class="flex items-center gap-4">
-            <!-- <img :src="`${imageUrl}gallery3.png`"  alt="Gallery preview" class="w-12 h-12 rounded-lg object-cover" /> -->
-            <img src="@/assets/img/gallery3.png" alt="Gallery preview" class="w-12 h-12 rounded-lg object-cover" />
-            <div class="flex justify-start items-start flex-col">
+            <!-- <img :src="`${imageUrl}gallery3.png`"  alt="Gallery preview" class="object-cover w-12 h-12 rounded-lg" /> -->
+            <img src="@/assets/img/gallery3.png" alt="Gallery preview" class="object-cover w-12 h-12 rounded-lg" />
+            <div class="flex flex-col items-start justify-start">
               <h3 class="font-medium">Gallery</h3>
               <NuxtLink :to="`/dashboard/listings/${rentalObj?.house?.id}/room-interior-images`" class="text-sm text-[#2E5C3D] underlined">Click to view photos of all common areas</NuxtLink>
             </div>
           </div>
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
           </svg>
         </button>
@@ -102,14 +102,14 @@
           <h5 class="font-medium mb-4 px-3 border-[0.5px] border-gray-50 py-4 rounded-lg">Interior Features</h5>
           
           <div class="mb-4 border-[0.5px] border-gray-50 py-4 rounded-lg px-3">
-            <span class="text-gray-600 text-sm">Furnished:</span>
+            <span class="text-sm text-gray-600">Furnished:</span>
             <span class="ml-2">{{ rentalObj?.room?.isFurnished ? 'Yes' : 'No' }}</span>
           </div>
 
       <div class="border-[0.5px] rounded-lg border-gray-50 p-3 bg-white">
-        <h4 class="text-gray-600 mb-3 text-sm">Amenities</h4>
+        <h4 class="mb-3 text-sm text-gray-600">Amenities</h4>
 
-<div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+<div class="grid grid-cols-2 gap-3 md:grid-cols-3">
   <div 
     v-for="(amenity, idx) in displayedCommonAreas" 
     :key="idx" 
@@ -139,7 +139,7 @@
           </div>
         </div>
         <!-- {{ currentStage }} -->
-        <div class="flex mt-8 p-0 m-0 w-full">
+        <div class="flex w-full p-0 m-0 mt-8">
     <!-- Cancel Application Button -->
     <button
       :disabled="!isCancelApplicationEnabled"
@@ -164,7 +164,7 @@
     <button
       :disabled="!isSignAgreementEnabled"
       @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement?rentalId=${route?.query?.rentalId}`)"
-      class="flex-1 flex justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4 text-gray-400 rounded-lg disabled:opacity-25 disabled:cursor-not-allowed"
+      class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-gray-400 rounded-lg gap-y-3 disabled:opacity-25 disabled:cursor-not-allowed"
     >
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect width="40" height="40" rx="8" fill="#292929" />
@@ -187,9 +187,8 @@
 
     <!-- Make Payment Button -->
     <button
-      :disabled="!isMakePaymentEnabled"
       @click="proceed"
-      class="flex-1 flex disabled:cursor-not-allowed disabled:opacity-25 justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4 text-gray-400 rounded-lg"
+      class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-gray-400 rounded-lg disabled:cursor-not-allowed disabled:opacity-25 gap-y-3"
     >
       <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="0.666016" width="40" height="40" rx="8" fill="#292929" />
@@ -218,7 +217,7 @@
     <button
       v-if="isMoveInEnabled"
       @click="moveIn"
-      class="flex-1 flex justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4 text-green-600 rounded-lg"
+      class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-green-600 rounded-lg gap-y-3"
     >
     <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.666016" width="40" height="40" rx="8" fill="#292929"/>
@@ -232,7 +231,7 @@
       Move In
     </button>
        </div>
-        <!-- <div class="flex mt-8 p-0 m-0 w-full">
+        <!-- <div class="flex w-full p-0 m-0 mt-8">
             <button
               :disabled="currentStage !== 'Application Sent'"
               @click="showCancelModal = true"
@@ -260,7 +259,7 @@
             <button
               :disabled="currentStage !== 'Application Approved'"
               @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement`)"
-              class="flex-1 flex justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4 text-gray-400 rounded-lg disabled:opacity-25 disabled:cursor-not-allowed"
+              class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-gray-400 rounded-lg gap-y-3 disabled:opacity-25 disabled:cursor-not-allowed"
             >
               <svg
                 width="40"
@@ -290,7 +289,7 @@
             <button
               :disabled="currentStage !== 'Application Signed'"
               @click="proceed"
-              class="flex-1 flex disabled:cursor-not-allowed disabled:opacity-25 justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4 text-gray-400 rounded-lg"
+              class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-gray-400 rounded-lg disabled:cursor-not-allowed disabled:opacity-25 gap-y-3"
             >
               <svg
                 width="41"
@@ -324,7 +323,7 @@
             <button
               v-if="currentStage === 'Payment made'"
               @click="moveIn"
-              class="flex-1 flex justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4 text-green-600 rounded-lg"
+              class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-green-600 rounded-lg gap-y-3"
             >
             <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="0.666016" width="40" height="40" rx="8" fill="#292929"/>
@@ -350,7 +349,7 @@
         <button
          :disabled="propertyObj?.rentalApplication?.progress === 'application-sent' || propertyObj?.rentalApplication?.status === 'PENDING' || !isSignBtnEnabled || propertyObj?.rentalApplication?.rentalLeaseAgreement.status === 'SIGNED'"
                   @click="router.push(`/dashboard/listings/${route?.params?.id}/rental-applications/lease-agreement`)"
-         class="flex-1 flex justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4  text-gray-400 rounded-lg disabled:opacity-25 disabled:cursor-not-allowed">
+         class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-gray-400 rounded-lg gap-y-3 disabled:opacity-25 disabled:cursor-not-allowed">
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect width="40" height="40" rx="8" fill="#292929"/>
 <path d="M22.8101 15.3221L23.7445 14.3876C24.2607 13.8715 25.0975 13.8715 25.6136 14.3876C26.1297 14.9037 26.1297 15.7405 25.6136 16.2566L24.6791 17.1911M22.8101 15.3221L19.3208 18.8114C18.6239 19.5082 18.2755 19.8566 18.0382 20.2812C17.801 20.7058 17.5623 21.7084 17.334 22.6672C18.2927 22.4389 19.2953 22.2002 19.7199 21.9629C20.1445 21.7256 20.4929 21.3772 21.1898 20.6804L24.6791 17.1911M22.8101 15.3221L24.6791 17.1911" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -362,7 +361,7 @@
         <button
          :disabled="propertyObj?.rentalApplication?.progress === 'agreement-pending-signage' || isMakePaymentDisabled"
                   @click="proceed"
-         class="flex-1 flex disabled:cursor-not-allowed disabled:opacity-25 justify-center items-center text-sm flex-col gap-y-3 text-sm py-3 px-4  text-gray-400 rounded-lg cursor-not-allowed">
+         class="flex flex-col items-center justify-center flex-1 px-4 py-3 text-sm text-gray-400 rounded-lg cursor-not-allowed disabled:cursor-not-allowed disabled:opacity-25 gap-y-3">
           <svg class="" width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
 <rect x="0.666016" width="40" height="40" rx="8" fill="#292929"/>
 <path d="M22.3324 20.0002C22.3324 20.9206 21.5862 21.6668 20.6657 21.6668C19.7452 21.6668 18.999 20.9206 18.999 20.0002C18.999 19.0797 19.7452 18.3335 20.6657 18.3335C21.5862 18.3335 22.3324 19.0797 22.3324 20.0002Z" stroke="white" stroke-width="1.5"/>
@@ -378,7 +377,7 @@
             <img class="" src="@/assets/icons/event-illustrations.svg" />
             No rental application available
 
-    <div class="px-6 pt-6 w-full flex justify-center items-center">
+    <div class="flex items-center justify-center w-full px-6 pt-6">
             <button 
             class="bg-[#292929] text-white max-w-xl w-full text-sm py-4 rounded-lg font-semibold" 
             @click="handleSuccess">
@@ -390,11 +389,11 @@
 
     <CoreModal :isOpen="showShareModal" @close="showShareModal = false">
       <div
-        class="bg-white p-6 w-full m-14 lg:m-0 rounded-lg lg:w-3/12 relative space-y-10"
+        class="relative w-full p-6 space-y-10 bg-white rounded-lg m-14 lg:m-0 lg:w-3/12"
         @click.stop
       >
         <div class="space-y-7">
-          <div class="flex justify-between items-center">
+          <div class="flex items-center justify-between">
             <div>
               <h2 class="text-lg pt-3 font-medium text-[#1D2739]">
                 Share using
@@ -605,7 +604,7 @@
               readonly
             />
             <button
-              class="absolute top-1/2 right-2 transform -translate-y-1/2 bg-gray-100 p-2 rounded-full"
+              class="absolute p-2 transform -translate-y-1/2 bg-gray-100 rounded-full top-1/2 right-2"
               @click="copyLink"
             >
               <svg
@@ -636,7 +635,7 @@
 
     <CoreModal :isOpen="showPaymentModal" @close="showPaymentModal = false">
       <div
-        class="bg-white rounded-lg max-w-lg w-full lg:w-1/2 mx-auto text-center"
+        class="w-full max-w-lg mx-auto text-center bg-white rounded-lg lg:w-1/2"
       >
         <h2
           class="text-xl font-medium text-[#1D2739] text-start px-6 pt-6 mb-4"
@@ -647,7 +646,7 @@
           <div
             v-for="(option, index) in paymentOptions"
             :key="index"
-            class="flex px-6 justify-between border-b last:border-b-0 items-center p-3 cursor-pointer"
+            class="flex items-center justify-between p-3 px-6 border-b cursor-pointer last:border-b-0"
             @click="selectPaymentOption(option.value)"
           >
             <span class="text- text-[#1D2739]">{{ option.label }}</span>
@@ -655,11 +654,11 @@
               type="radio"
               :value="option.value"
               v-model="selectedOption"
-              class="text-green-600 h-6 w-6"
+              class="w-6 h-6 text-green-600"
             />
           </div>
         </div>
-        <div class="flex justify-between mt-10 px-6 pb-6">
+        <div class="flex justify-between px-6 pb-6 mt-10">
           <button
             @click="cancel"
             class="w-full mr-2 py-3.5 border border-gray-300 rounded-md text-[#292929] font-semibold text-sm hover:bg-gray-100"
@@ -682,14 +681,14 @@
       @close="showCancelModal = false"
     >
       <div
-        class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
         @click.self="onCancel"
       >
         <div
-          class="bg-white rounded-xl p-6 max-w-sm w-full text-center"
+          class="w-full max-w-sm p-6 text-center bg-white rounded-xl"
         >
           <div
-            class="flex justify-center items-center bg-yellow-500 rounded-full w-16 h-16 mx-auto mb-4"
+            class="flex items-center justify-center w-16 h-16 mx-auto mb-4 bg-yellow-500 rounded-full"
           >
             <svg
               width="65"
@@ -726,10 +725,10 @@
               />
             </svg>
           </div>
-          <h2 class="text-lg font-semibold text-gray-700 mb-2">
+          <h2 class="mb-2 text-lg font-semibold text-gray-700">
             Cancel Rental Application
           </h2>
-          <p class="text-gray-500 mb-6">
+          <p class="mb-6 text-gray-500">
             Are you sure you want to cancel rental application process?
           </p>
           <div class="space-y-3">
@@ -828,17 +827,19 @@ const isSignBtnEnabled = computed(() => {
 })
 
 const proceed = async () => {
-  if(propertyObj?.value?.rentalApplication?.progress === 'agreement-pending-signage' || propertyObj?.value?.rentalApplication?.progress === 'application-sent') {
-    return 
-  } else {
-    const payloadObj = {
-      rentalApplicationId: rentalObj?.value?.id,
-      rentAmount: rentalObj.value?.room?.rentAmount
-    };
+  // if(propertyObj?.value?.rentalApplication?.progress === 'agreement-pending-signage' || propertyObj?.value?.rentalApplication?.progress === 'application-sent') {
+  //   return 
+  // } else {
+  //   const payloadObj = {
+  //     rentalApplicationId: rentalObj?.value?.id,
+  //     rentAmount: rentalObj.value?.room?.rentAmount
+  //   };
     
-    setPayloadObj(payloadObj);
+  //   setPayloadObj(payloadObj);
+  //   await initializeRentPayment();
+  // }
     await initializeRentPayment();
-  }
+
 };
 
 // State to track whether the user wants to see more common areas

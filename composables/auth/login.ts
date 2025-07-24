@@ -42,11 +42,11 @@ export const use_auth_login = () => {
       console.log(res, 'tes here')
       showToast({
         title: "Error",
-        message: res?.data?.error  || "Something went wrong",
+        message: res?.data?.error  || "No internet connection. Please check your network and try again.",
         toastType: "error",
         duration: 3000
       });
-    }
+    } 
   };
   return { credential, login, loading, isFormDisabled };
 };

@@ -49,11 +49,13 @@
 // }
 
 import { ref } from 'vue'
+import { useCustomToast } from '~/composables/core/useCustomToast';
 
 const paymentResponse = ref({})
 const paymentStatus = ref('idle') // Will track payment status
 
 export function useCheckout({ amount, cust_id, currency, transRef }) {
+  const { showToast } = useCustomToast();
   const paymentResponse = ref({});
 
   // Define payment status constants
@@ -104,7 +106,7 @@ export function useCheckout({ amount, cust_id, currency, transRef }) {
         };
 
         document.addEventListener('visibilitychange', handleVisibilityChange);
-        
+
         window.webpayCheckout(paymentRequest);
       } catch (error) {
         console.error("Error invoking webpayCheckout:", error);
@@ -130,15 +132,21 @@ export function useCheckout({ amount, cust_id, currency, transRef }) {
     ) {
       paymentStatus.value = PAYMENT_STATUS.COMPLETED;
       resolve({ transactionReference: transRefValue, response });
+      showToast({
+        title: "Success",
+        message: 'Payment successful',
+        toastType: "success",
+        duration: 3000
+      });
     } else if (
       response.resp === "Z6" || // Transaction Cancelled
       response.resp === "Z7"    // Payment page closed
     ) {
       paymentStatus.value = PAYMENT_STATUS.CANCELLED;
-      reject({ 
+      reject({
         status: 'cancelled',
         message: 'Payment was cancelled by user',
-        response 
+        response
       });
     } else {
       paymentStatus.value = PAYMENT_STATUS.FAILED;
@@ -150,8 +158,8 @@ export function useCheckout({ amount, cust_id, currency, transRef }) {
     }
   }
 
-  return { 
-    checkout, 
+  return {
+    checkout,
     paymentResponse,
     paymentStatus,
     PAYMENT_STATUS // Export status constants

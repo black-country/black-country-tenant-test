@@ -67,7 +67,7 @@
 
    <template>
     <div class="py-4">
-      {{ computedList }}
+      <!-- {{ computedList }} -->
       <h2 class="text-lg text-[#1D2739] mb-4">Electricity Bill</h2>
       <div class="space-y-4">
         <div>
