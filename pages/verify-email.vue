@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex justify-center items-center bg-white">
-    <form @submit.prevent="handleResendOtp" class="w-full max-w-md text-center">
+    <form @submit.prevent="verify_OTP" class="w-full max-w-md text-center">
       <svg
             @click="router.back()"
             class="cursor-pointer"

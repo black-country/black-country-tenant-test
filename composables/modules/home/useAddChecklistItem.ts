@@ -17,7 +17,7 @@ export const useAddChecklistItem = () => {
         if (res.type !== 'ERROR') {
             showToast({
                 title: "Success",
-                message: "Checklist item was added successfully",
+                message: res.data.message || "Checklist item was added successfully",
                 toastType: "success",
                 duration: 3000
               });

@@ -95,9 +95,9 @@ interface Transaction {
   rentPayment: RentPayment | null;
 }
 
-definePageMeta({
-  middleware: "auth",
-});
+// definePageMeta({
+//   middleware: "auth",
+// });
 
 // const transactions = ref<Transaction[]>([]);
 

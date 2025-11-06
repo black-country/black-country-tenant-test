@@ -431,7 +431,7 @@ const checkOnlineStatus = () => {
   if (navigator.onLine) {
     router.push(router?.options?.history?.state?.current);
   } else {
-    router.push("/tenant/login");
+    router.push("/login");
     // useNuxtApp().$toast.success("You are currently offline.", {
     //   autoClose: 5000,
     //   dangerouslyHTMLString: true,

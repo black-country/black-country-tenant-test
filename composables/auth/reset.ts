@@ -36,7 +36,7 @@ export const use_auth_reset_password = () => {
         toastType: "success",
         duration: 3000
       });
-      Router.push("/tenant/login");
+      Router.push("/login");
     } else {
       showToast({
         title: "Error",
