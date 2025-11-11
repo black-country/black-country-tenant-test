@@ -1,16 +1,15 @@
 <!-- components/EmptyState.vue -->
 <template>
    <main v-if="!fetching">
-    <!-- {{ Object.keys(myHomeInfo).length }} -->
     <div class="flex items-center text-gray-600 mb-4">
-        <svg @click="router.back()"  width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg @click="router.back()" class="cursor-pointer" width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
       <rect width="36" height="36" rx="18" fill="#EAEAEA"/>
       <path d="M20.5 13C20.5 13 15.5 16.6824 15.5 18C15.5 19.3177 20.5 23 20.5 23" stroke="#1D2739" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
 
         <span class="ml-2 text-[#667185]">Dashboard | <span class="text-[#1D2739] font-medium">My Home</span></span>
       </div>
-    <div class="flex flex-col items-center p-6 bg-white rounded-lg border-[0.5px] border-gray-you 50 text-center">
+    <div class="flex flex-col items-center p-6 bg-white rounded-lg border-[0.5px] border-gray-50 text-center">
       <div class="mb-4">
         <div class="">
           <svg width="152" height="124" viewBox="0 0 152 124" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,9 +40,16 @@
         To begin managing your rented room or home, click on "Move in" or "Go to listings" to search for a property.
       </p>
       <div class="flex gap-4 w-full pt-6">
-        <button :disabled="loading || !Object.keys(myHomeInfo)?.length" @click="handleMoveIn()" class="bg-[#292929] text-sm w-full disabled:cursor-not-allowed disabled:opacity-25 text-white px-4 py-3 rounded-md">{{ loading ? 'processing..': 'Move in' }}</button>
-        <!-- <NuxtLink to="/dashboard/home/details" class="bg-[#292929] w-full text-white px-4 py-4 rounded-md">Move in</NuxtLink> -->
-        <NuxtLink to="/dashboard/listings" class="bg-[#EBE5E0] text-sm w-full text-[#292929] text-gray-600 px-4 py-3 rounded-md">Go to Listings</NuxtLink>
+        <button 
+          :disabled="loading || !hasHomeInfo" 
+          @click="handleMoveIn()" 
+          class="bg-[#292929] text-sm w-full disabled:cursor-not-allowed disabled:opacity-25 text-white px-4 py-3 rounded-md hover:bg-gray-800 transition-colors"
+        >
+          {{ loading ? 'Processing...' : 'Move in' }}
+        </button>
+        <NuxtLink to="/dashboard/listings" class="bg-[#EBE5E0] text-sm w-full text-[#292929] text-center flex items-center justify-center px-4 py-3 rounded-md hover:bg-gray-300 transition-colors">
+          Go to Listings
+        </NuxtLink>
       </div>
     </div>
    </main>
@@ -52,36 +58,51 @@
       text="Fetching Home Details"
       logo=""
   />
-  </template>
+</template>
   
-  <script setup lang="ts">
-  import { useUser } from '@/composables/auth/user';
-  import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome'
-  import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn'
-  const { user } = useUser()
-  const { intiateMoveIn, loading } = useInitiateMoveIn()
-  const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo()
-  const route = useRoute()
-  const router = useRouter()
+<script setup lang="ts">
+import { ref, computed, onMounted } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { useUser } from '@/composables/auth/user';
+import { useFetchMyHomeInfo } from '@/composables/modules/maintenance/useGetMyHome';
+import { useInitiateMoveIn } from '@/composables/modules/maintenance/useInitiateMoveIn';
 
-  const handleMoveIn = () => {
-    if(!myHomeInfo.value?.movedIn){
-          router.push({
-            query: { ...route.query, applicationId:  myHomeInfo.value ? myHomeInfo?.value?.id : '' }
-          })
-          intiateMoveIn();
-        }
+const route = useRoute();
+const router = useRouter();
+
+// Initialize composables
+const { user } = useUser();
+const { intiateMoveIn, loading } = useInitiateMoveIn();
+const { loading: fetching, myHomeInfo } = useFetchMyHomeInfo();
+
+// Computed property to check if home info exists
+const hasHomeInfo = computed(() => {
+  return myHomeInfo.value && Object.keys(myHomeInfo.value).length > 0;
+});
+
+// Handle move in action
+const handleMoveIn = () => {
+  if (!myHomeInfo.value?.movedIn && hasHomeInfo.value) {
+    router.push({
+      query: { 
+        ...route.query, 
+        applicationId: myHomeInfo.value?.id || '' 
+      }
+    });
+    intiateMoveIn();
   }
+};
 
-  if(user?.value?.hasMovedIn && user?.value?.hasHome){
-    router.push('/dashboard/home/details')
+// Check user status and redirect if already has home
+onMounted(() => {
+  if (user?.value?.hasMovedIn && user?.value?.hasHome) {
+    router.push('/dashboard/home/details');
+  } else if (user?.value?.hasHome) {
+    router.push('/dashboard/home/details');
   }
-
-  onMounted(() => {
-  if(user?.value?.hasHome){
-    router.push('/dashboard/home/details')
-  }
-})
-
+});
 </script>
-  
+
+<style scoped>
+/* Add any component-specific styles here if needed */
+</style>

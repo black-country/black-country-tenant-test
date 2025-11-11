@@ -174,6 +174,7 @@
   // Cancel Request
   const cancelRequest = () => {
     payload.value = { type: '', urgencyLevel: '', description: '', images: [] }
+    router.back()
   }
 
   onMounted(() => {

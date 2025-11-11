@@ -72,6 +72,7 @@
   
       <div v-if="Object.keys(checklist)?.length" class="flex justify-between items-center max-w-3xl mx-auto px-4 py-10">
         <button
+         @click="router.back()"
           class="rouned-lg text-sm px-6 py-3 text-[#292929] rounded-lg border-[0.5px] border-gray-100"
         >
           Cancel

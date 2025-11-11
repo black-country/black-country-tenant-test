@@ -485,7 +485,7 @@ const onConfirm = () => {
     // loading.value = false
     showBLogoutModal.value = false;
     // router.push("/login");
-    window.location.href = "/tenant/login";
+    window.location.href = "/login";
   }),
     3000;
   console.log("Logging out...");

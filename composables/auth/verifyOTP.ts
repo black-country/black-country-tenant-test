@@ -26,6 +26,8 @@ export const use_auth_verify_otp = () => {
         otpCode: otp,
       })) as any;
 
+      console.log(otpRes, 'OTP RES HERE')
+
       loading.value = false;
 
       if (otpRes.type !== "ERROR") {

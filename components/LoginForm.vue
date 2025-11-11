@@ -161,9 +161,9 @@ const { signInWithGoogle, signInWithApple } = useAuth()
 
 const router = useRouter()
 
-const handleSignup = () => {
-  window.location.href = "/signup"
-}
+// const handleSignup = () => {
+//   window.location.href = "/signup"
+// }
 
   const toggleShowPassword = () => {
   showPassword.value = !showPassword.value;

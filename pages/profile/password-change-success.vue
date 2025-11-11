@@ -39,7 +39,7 @@ const router = useRouter();
 
 const handleSuccess = () => {
   localStorage.clear()
-  router.push("/tenant/login")
+  router.push("/login")
 };
 
 // definePageMeta({
