@@ -11,7 +11,7 @@ export const useFetchPayItemsByBillers = () => {
       const response = await home_api.$_get_payitem_for_billers(id) as any
 
       if (response?.type !== 'ERROR') {
-        payItemsList.value = response?.data || [];
+        payItemsList.value = response?.data?.PaymentItems || [];
 
       } else {
         console.error('Failed to fetch home info:', response);

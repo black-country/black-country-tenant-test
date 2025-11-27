@@ -3,14 +3,14 @@ import { home_api } from '@/api_factory/modules/home';
 
 const route = useRoute()
 
-export const useFetchBillersByCategories = () => {
+export const useFetchBillersInfo = () => {
   const loading = ref(false);
   const billersListObj = ref([]);
 
-  const fetchBillersByCategories = async () => {
+  const fetchBillersInfo = async (billerId: any) => {
     try {
       loading.value = true;
-      const response = await home_api.$_get_billers_by_category(route?.query?.billType) as any
+      const response = await home_api.$_get_billers_info(billerId) as any
       console.log(response, 'res ponse gere')
 
       if (response?.status === 200 || response?.status === 201) {
@@ -27,14 +27,10 @@ export const useFetchBillersByCategories = () => {
     loading.value = false;
   };
 
-  onMounted(() => {
-    fetchBillersByCategories()
-  })
-
 
   return {
     loading,   
     billersListObj,
-    fetchBillersByCategories
+    fetchBillersInfo
   };
 };

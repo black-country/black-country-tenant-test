@@ -2,7 +2,7 @@
     <div v-if="isOpen" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div class="bg-white rounded-lg shadow-lg w-full max-w-xl mx-4 max-h-[60%] overflow-y-auto custom-scrollbar">
         <h2 class="text-lg font-medium text-[#1D2739] mb-4 pl-6 pt-6">Select Utility Bill</h2>
-        <p class="mx-4">Selected ID: {{ selectedOption }}</p>
+        <!-- <p class="mx-4">Selected ID: {{ selectedOption }}</p> -->
         <div class="space-y-4 mb-6 border-t-[0.5px] pt-6 border-gray-100 ">
           <div
             v-for="(option, idx) in billingCategories"
@@ -10,6 +10,7 @@
             class="flex justify-between items-center pb-5 px-3 cursor-pointer items-center border-gray-100 border-b-[0.5px] last:border-b-0"
           >
             <label :for="option.id" class="ml-3 text-sm cursor-pointer text-gray-700">{{ option?.Name ?? 'Nil' }}</label>
+            <p class="text-sm">{{ option?.Description ?? 'Nil' }}</p>
             <input
               type="radio"
               :id="option.Id"
