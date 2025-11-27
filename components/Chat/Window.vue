@@ -20,19 +20,21 @@
       <TransitionGroup name="message">
         <!-- {{ user }} -->
         <div v-for="(item, index) in sortedMessages" :key="item.id || `header-${index}`">
+          <!-- {{ item }} -->
           <div v-if="item.isHeader" class="flex justify-center my-6">
             <span class="bg-gray-100 rounded-full px-4 py-1.5 text-xs font-medium text-gray-600">
               {{ item.date }}
             </span>
           </div>
 
+          <!-- :is-mine="item.isMine === user.id" -->
           <ChatMessageBubble
             v-else
             :message="item"
-            :is-mine="item.recipientId !== agentId"
+            :is-mine="item.recipientId === route?.query?.agentId"
             :status="item.status"
           />
-          <!-- {{ item }} -->
+          <!-- {{ item?.isMine }} -->
         </div>
       </TransitionGroup>
       

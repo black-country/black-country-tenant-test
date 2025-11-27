@@ -185,6 +185,7 @@
 <script setup lang="ts">
 import { ref, computed, watch, onMounted, nextTick } from 'vue';
 import { useRouter, useRoute } from '#app';
+import MessagingView from "@/layouts/MessagingView.vue"
 import { useWebSocket } from '@/composables/modules/messages/sockets';
 import { useGetActiveChats } from '@/composables/modules/messages/fetchActiveChats';
 import { useGetRoomChats } from '@/composables/modules/messages/fetchRoomMessages';
