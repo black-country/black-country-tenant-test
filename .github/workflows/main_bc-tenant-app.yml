@@ -50,7 +50,7 @@ jobs:
             cd ..
             echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             docker-compose up -d tenant
-            echo "Prod image deployed and running..."
+            echo "Dev image deployed and running..."
             docker system prune --force
             echo "Cleanup complete"
 
@@ -72,7 +72,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY_PROD }}
           script: |
-            cd ~/bc_main/black-country-tenant-test/
+            cd ~/black-country-tenant-test/
             sudo git pull
             cd ..
             echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
