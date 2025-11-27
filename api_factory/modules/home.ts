@@ -39,5 +39,14 @@ export const home_api = {
       $_get_lease_documents: (id: any) => {
         let url =  `/tenants/${id}/lease-documents`
         return GATEWAY_ENDPOINT.get(url);
-      }
+      },
+      $_get_billers_info: (id: any) => {
+        let url =  `/utility-payments/billers/${id}/options`
+        return GATEWAY_ENDPOINT.get(url);
+      },
+       $_initialize_bill_payment: (payload: any) => {
+        let url = `/payments/utility-bills/initialize`;
+        return GATEWAY_ENDPOINT.post(url, payload);
+      },
+      
 }

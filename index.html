@@ -1,0 +1,16 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title></title><link href=./static/css/4.d4afb2782cedfbdb85d4.css rel=stylesheet><link href=./static/css/125.73572e65098f5c655f0a.css rel=stylesheet></head><body><div id=app></div><link href=static/elementui/index.css rel=stylesheet><script src=static/tinymce/tinymce.min.js></script><script type=text/javascript src=static/elementui/axios.min.js></script><script>window.onload = function(){
+          // var url='https://javauat.yuanfengtest.com/'+'mallms/web/index/quertNavLogo';
+          var url='/mall-base/base/merchantSysConfig/quertNavLogo';
+          var data={
+          	configKey:'',
+          	configType:'logo_copywriting'
+          }
+         axios.post(url,data).then(res => {
+             var link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+             link.type = 'image/x-icon';
+             link.rel = 'shortcut icon';
+             link.href = res.data.data[0].configValue;
+             document.getElementsByTagName('head')[0].appendChild(link);
+             document.title=res.data.data[9].configValue
+         })
+        }</script><script type=text/javascript src=./static/js/4.0d97a38e84b20b054f46.js></script><script type=text/javascript src=./static/js/124.9b9748dfbaf0e4a44400.js></script><script type=text/javascript src=./static/js/125.f3f7a137c7bddf500dcb.js></script><script type=text/javascript src=./static/js/runtime.5bc253f3d353098bbc6e.js></script></body></html>

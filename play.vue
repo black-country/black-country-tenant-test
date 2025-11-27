@@ -17,26 +17,21 @@
 
     <!-- Messages - ALWAYS RENDERED -->
     <div v-else class="space-y-2 pb-4">
-      <TransitionGroup name="message">
-        <!-- {{ user }} -->
+      <!-- <TransitionGroup name="message">
         <div v-for="(item, index) in sortedMessages" :key="item.id || `header-${index}`">
-          <!-- {{ item }} -->
           <div v-if="item.isHeader" class="flex justify-center my-6">
             <span class="bg-gray-100 rounded-full px-4 py-1.5 text-xs font-medium text-gray-600">
               {{ item.date }}
             </span>
           </div>
 
-          <!-- :is-mine="item.isMine === user.id" -->
           <ChatMessageBubble
             v-else
             :message="item"
-            :is-mine="item.recipientId === route?.query?.agentId"
-            :status="item.status"
+            :is-mine="item.isMine"
           />
-          <!-- {{ item?.isMine }} -->
         </div>
-      </TransitionGroup>
+      </TransitionGroup> -->
       
       <!-- Scroll anchor -->
       <div ref="scrollAnchor" class="h-px"></div>
@@ -66,15 +61,35 @@ const scrollAnchor = ref<HTMLElement | null>(null);
 const userScrolledUp = ref(false);
 const lastMessageCount = ref(0);
 const isFirstLoad = ref(true);
-const route = useRoute()
-const agentId = ref(route.query.agentId)
 
 const sortedMessages = computed(() => {
   const messages = props.messages || [];
   if (!messages.length) return [];
 
-  // Sort messages by creation time
-  const sorted = [...messages].sort((a, b) =>
+  // Get current user ID
+  const currentUserId = user.value?.id;
+  
+  console.log('ChatWindow - Current User ID:', currentUserId);
+
+  // Enrich and sort
+  const enriched = messages.map(msg => {
+    // A message is "mine" if I sent it (my ID matches senderId)
+    const isMine = msg.senderId === currentUserId;
+    
+    console.log('ChatWindow Message:', { 
+      id: msg.id,
+      senderId: msg.senderId,
+      recipientId: msg.recipientId, 
+      currentUserId, 
+      isMine,
+      content: msg.content?.substring(0, 30)
+    });
+    
+    return {
+      ...msg,
+      isMine
+    };
+  }).sort((a, b) =>
     new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
   );
 
@@ -82,7 +97,7 @@ const sortedMessages = computed(() => {
   const withHeaders: any[] = [];
   let lastDate = '';
 
-  sorted.forEach(msg => {
+  enriched.forEach(msg => {
     const msgDate = formatDateHeader(msg.createdAt);
     
     if (msgDate !== lastDate) {
@@ -129,7 +144,7 @@ const isNearBottom = (): boolean => {
   const { scrollTop, scrollHeight, clientHeight } = chatContainer.value;
   const distanceFromBottom = scrollHeight - scrollTop - clientHeight;
   
-  return distanceFromBottom < 150;
+  return distanceFromBottom < 150; // Within 150px of bottom
 };
 
 const handleScroll = () => {
@@ -152,11 +167,13 @@ onMounted(() => {
 
 // Watch for new messages
 watch(() => props.messages.length, (newCount, oldCount) => {
+  // Skip on first load
   if (isFirstLoad.value) {
     lastMessageCount.value = newCount;
     return;
   }
   
+  // No change
   if (newCount === oldCount || newCount === 0) return;
   
   const isNewMessage = newCount > oldCount;
@@ -167,6 +184,7 @@ watch(() => props.messages.length, (newCount, oldCount) => {
   const isMyMessage = lastMessage?.senderId === user.value?.id;
   
   nextTick(() => {
+    // Always scroll for own messages, or if user was at bottom
     if (isMyMessage || wasAtBottom) {
       scrollToBottom(isMyMessage ? 'auto' : 'smooth');
     }
@@ -179,6 +197,7 @@ watch(() => props.messages.length, (newCount, oldCount) => {
 watch(() => props.messages.map(m => m.status).join(','), () => {
   if (isFirstLoad.value) return;
   
+  // Don't scroll on status updates, but maintain position
   if (!userScrolledUp.value && isNearBottom()) {
     nextTick(() => scrollToBottom('auto'));
   }
@@ -186,6 +205,7 @@ watch(() => props.messages.map(m => m.status).join(','), () => {
 </script>
 
 <style scoped>
+/* Smooth transitions for new messages */
 .message-enter-active {
   transition: all 0.2s ease-out;
 }
